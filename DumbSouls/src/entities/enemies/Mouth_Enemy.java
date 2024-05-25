@@ -22,12 +22,12 @@ public class Mouth_Enemy extends Enemy {
 		this.soulValue = 2 * specialMult;
 		this.maxLife = 12 * specialMult + (int)(0.12 * World.wave);
 		this.life = maxLife;
-		this.maxSpeed = 1 + Game.player.maxSpeed/2 + (specialMult - 1)/3;
+		this.maxSpeed = 1 * specialMult + Game.player.maxSpeed * (World.wave * 0.1);
 		this.frost = 0;
 		this.speed = this.maxSpeed;
 		this.setMask(0, 2, 16, 14);
 		this.spawning = true;
-		this.timeSpawn = 180;
+		this.timeSpawn = 240;
 	}
 	
 	private void animate() {
@@ -64,7 +64,7 @@ public class Mouth_Enemy extends Enemy {
 				timer += 1;
 			}
 			
-			this.frostEffect(0.8);
+			this.frostEffect(0.85);
 			
 			shotDamage();
 			if (this.life <= 0) {
@@ -72,7 +72,7 @@ public class Mouth_Enemy extends Enemy {
 			}
 		}
 		else {
-			this.spawnAnimation(60);
+			this.spawnAnimation(timeSpawn / 3);
 		}
 	}
 	

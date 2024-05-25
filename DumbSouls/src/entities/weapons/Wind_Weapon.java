@@ -137,18 +137,8 @@ public class Wind_Weapon extends Weapon {
 			Game.entities.add(new AE_WindDS(Game.player.getX(), Game.player.getY(), 16, 16, null, (int)(dashDistance / 4)));
 			di += 4.0;
 			if (di < dashDistance) {
-				if (Game.player.right) {
-					Game.player.x += 4.0;
-				}
-				else if (Game.player.left) {
-					Game.player.x -= 4.0;
-				}
-				if (Game.player.down) {
-					Game.player.y += 4.0;
-				}
-				else if (Game.player.up) {
-					Game.player.y -= 4.0;
-				}
+				Game.player.moveCos -= Math.signum(Game.player.moveX) * 4;
+				Game.player.moveSin += Math.signum(Game.player.moveY) * 4;
 			}
 			else {
 				di = 0;

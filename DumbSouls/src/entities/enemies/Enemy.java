@@ -41,12 +41,9 @@ public class Enemy extends Entity{
 		}
 	}
 
-	protected void frostEffect(double measure) {
-		speed = maxSpeed - frost;
-		if (speed < 0) {
-			speed = 0;
-		}
-		frost *= measure;
+	protected void frostEffect(double thaw) {
+		speed = maxSpeed / (1 + frost);
+		frost = frost < 0.01 ? 0 : frost * thaw;
 	}
 	
 	protected void shotDamage() {

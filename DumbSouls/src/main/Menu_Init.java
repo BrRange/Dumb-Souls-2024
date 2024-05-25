@@ -6,26 +6,18 @@ import java.awt.Font;
 
 public class Menu_Init {
 	private int cur = 0;
-	public boolean up, down, enter;
 	private String[] options = {"New Game", "Help", "Exit"};
 	
 	public void tick() {
-		if (down) {
+		if (Game.keyController.contains(83) || Game.keyController.contains(40)) {//S DOWN
 			cur++;
-			down = false;
-			if (cur > options.length - 1) {
-				cur = 0;
-			}
+			if (cur > options.length - 1) cur = 0;
 		}
-		else if (up) {
+		if (Game.keyController.contains(87) || Game.keyController.contains(38)) {//W UP
 			cur--;
-			up = false;
-			if (cur < 0) {
-				cur = options.length - 1;
-			}
+			if (cur < 0) cur = options.length - 1;
 		}
-		if (enter) {
-			enter = false;
+		if (Game.keyController.contains(10)) {
 			if (options[cur] == "New Game") {
 				Game.gameState = "MENUPLAYER";
 			}
@@ -36,6 +28,7 @@ public class Menu_Init {
 				System.exit(1);
 			}
 		}
+		Game.keyController.clear();
 	}
 	
 	public void render(Graphics g) {

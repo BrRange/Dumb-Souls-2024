@@ -150,18 +150,8 @@ public class Fisical_Weapon extends Weapon {
 				Game.entities.add(new AE_Animation(Game.player.getX() + Game.rand.nextInt(17) - 8, Game.player.getY() + Game.rand.nextInt(17) - 8, 16, 16, null, 20, 0, 1, 192, 128, 16, 16, "goToUp_1", null));
 			}
 			if (di < dashDistance) {
-				if (Game.player.right) {
-					Game.player.x += 5.0;
-				}
-				else if (Game.player.left) {
-					Game.player.x -= 5.0;
-				}
-				if (Game.player.down) {
-					Game.player.y += 5.0;
-				}
-				else if (Game.player.up) {
-					Game.player.y -= 5.0;
-				}
+				Game.player.moveX += Math.signum(Game.player.moveX) * 5;
+				Game.player.moveY += Math.signum(Game.player.moveY) * 5;
 			}
 			else {
 				di = 0;

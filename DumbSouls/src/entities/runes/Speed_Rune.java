@@ -6,7 +6,7 @@ import main.Game;
 
 public class Speed_Rune extends Rune {
 	
-	private boolean effectsApllyed;
+	private boolean effectsAplied;
 	public static BufferedImage sprite = Game.sheet.getSprite(32, 256, 16, 16);
 	
 	public Speed_Rune() {
@@ -16,10 +16,10 @@ public class Speed_Rune extends Rune {
 	}
 	
 	public void tick() {
-		if (!effectsApllyed) {
+		if (!effectsAplied) {
 			Game.player.maxSpeed += 0.5;
 			Game.player.speed = Game.player.maxSpeed;
-			effectsApllyed = true;
+			effectsAplied = true;
 		}
 	}
 }

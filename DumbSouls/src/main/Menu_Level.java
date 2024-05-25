@@ -7,8 +7,6 @@ import entities.Player;
 
 public class Menu_Level {
 	private String[] options;
-	
-	public boolean up, down, enter, space;
 	private int cur;
 	
 	public Menu_Level(int numOP) {
@@ -35,34 +33,29 @@ public class Menu_Level {
 			sortOptions(3);
 			Game.player.levelUp = false;
 		}
-		 if (up) {
-			 up = false;
-			 cur --;
-			 if (cur < 0) {
-				 cur = options.length - 1;
-			 }
-		 }
-		 else if (down) {
-			 down = false;
-			 cur ++;
-			 if (cur > options.length - 1) {
-				 cur = 0;
-			 }
-		 }
-		 if (enter) {
-			enter = false;
+		if (Game.keyController.contains(87) || Game.keyController.contains(38)) {//W UP
+			cur --;
+			if (cur < 0) 
+				cur = options.length - 1;
+		}
+		if (Game.keyController.contains(83) || Game.keyController.contains(40)) {//S DOWN
+			cur ++;
+			if (cur > options.length - 1)
+				cur = 0;
+		}
+		if (Game.keyController.contains(10)) {
 			Game.player.playerWeapon.checkOptions(options[cur]);
 			Game.player.life = Game.player.maxLife;
 			Game.gameState = "NORMAL";
-		 }
+		}
 		 
-		 if (space) {
-			 space = false;
-			 if (Player.souls >= 100) {
-				 Player.souls -= 100;
-				 sortOptions(3);
-			 }
-		 }
+		if (Game.keyController.contains(32)) {
+			if (Player.souls >= 100) {
+				Player.souls -= 100;
+				sortOptions(3);
+			}
+		}
+		Game.keyController.clear();
 	}
 	
 	public void render(Graphics g) {

@@ -1,78 +1,62 @@
 package main;
 
 import entities.Player;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
 public class Menu_Runes {
 	
-	private int cur, curR;
-	private String[] options = {"Runes", "Equipe", "Dequipe", "Delete", "+Limit", "Back"};
-	public boolean up, down, left, right, enter;
+	private int cur = 0, curR = 0;
+	private String[] options = {"Runes", "Equip", "Unequip", "Delete", "+Limit", "Back"};
 	private boolean clickR, clickL;
 	
 	public void tick() {
-		if (up) {
-			up = false;
+		boolean enter = Game.keyController.contains(10);
+		if (Game.keyController.contains(87) || Game.keyController.contains(38)) {//W UP
 			cur --;
-			if (cur < 0) {
-				cur = options.length - 1;
-			}
+			if (cur < 0) cur = options.length - 1;
 		}
-		else if (down) {
-			down = false;
+		if (Game.keyController.contains(83) || Game.keyController.contains(40)) {//S DOWN
 			cur ++;
-			if (cur > options.length - 1) {
-				cur = 0;
-			}
+			if (cur > options.length - 1) cur = 0;
 		}
 		
 		if (options[cur] == "Runes") {
-			if (right) {
+			if (Game.keyController.contains(68) || Game.keyController.contains(39)) {//A LEFT
 				clickR = true;
 				clickL = false;
-				right = false;
 				curR++;
-				if (curR > Player.runesInventory.size() - 1) {
-					curR = 0;
-				}
+				if (curR > Player.runesInventory.size() - 1) curR = 0;
 			}
-			else if (left) {
-				left = false;
+			if (Game.keyController.contains(65) || Game.keyController.contains(37)) {//D RIGHT
 				clickR = false;
 				clickL = true;
 				curR--;
-				if (curR < 0) {
-					curR = Player.runesInventory.size() - 1;
-				}
+				if (curR < 0) curR = Player.runesInventory.size() - 1;
 			}
 		}
 		
-		if(options[cur] == "Equipe") {
+		if(options[cur] == "Equip") {
 			if (enter) {
-				enter = false;
-				if (Game.player.runesEquiped.size() < Player.runeLimit ) {
-					if (!Player.runesInventory.get(curR).equiped) {
-						Game.player.runesEquiped.add(Player.runesInventory.get(curR));
-						Player.runesInventory.get(curR).equiped = true;
+				if (Game.player.runesEquipped.size() < Player.runeLimit ) {
+					if (!Player.runesInventory.get(curR).equipped) {
+						Game.player.runesEquipped.add(Player.runesInventory.get(curR));
+						Player.runesInventory.get(curR).equipped = true;
 					}
 				}
 			}	
 		}
 		
-		if(options[cur] == "Dequipe") {
+		if(options[cur] == "Unequip") {
 			if (enter) {
-				enter = false;
-				Game.player.runesEquiped.remove(Player.runesInventory.get(curR));
-				Player.runesInventory.get(curR).equiped = false;
+				Game.player.runesEquipped.remove(Player.runesInventory.get(curR));
+				Player.runesInventory.get(curR).equipped = false;
 			}	
 		}
 		
 		if (options[cur] == "Delete") {
 			if (enter) {
-				enter = false;
 				if (Player.runesInventory.size() > 1) {
 					Player.runesInventory.remove(Player.runesInventory.get(curR));
 				}
@@ -81,7 +65,6 @@ public class Menu_Runes {
 		
 		if (options[cur] == "+Limit") {
 			if (enter) {
-				enter = false;
 				if (Player.souls >= 5000) {
 					Player.runeLimit ++;
 					Player.souls -= 5000;
@@ -91,10 +74,11 @@ public class Menu_Runes {
 		
 		if (options[cur] == "Back") {
 			if (enter) {
-				enter = false;
 				Game.gameState = "MENUPLAYER";
 			}	
 		}
+
+		Game.keyController.clear();
 	}
 	
 	private void renderSprites(Graphics g) {
@@ -103,13 +87,13 @@ public class Menu_Runes {
 		
 		g.drawImage(Player.runesInventory.get(curR).sprite, 200, 54, 32, 32, null);
 		
-		if (Player.runesInventory.get(curR).equiped) {
+		if (Player.runesInventory.get(curR).equipped) {
 			g.setColor(new Color(0, 127, 14));
-			g.drawString("Equiped", 193, 100);
+			g.drawString("Equipped", 193, 100);
 		}
 		else {
 			g.setColor(new Color(127, 0, 0));
-			g.drawString("Unequiped", 193, 100);
+			g.drawString("Unequipped", 193, 100);
 		}
 		
 		g.setColor(Color.white);
@@ -127,8 +111,8 @@ public class Menu_Runes {
 		
 		g.setFont(new Font("arial", Font.BOLD, 9));
 		g.drawString(Player.runesInventory.get(curR).name, 30, 40);
-		g.drawString("Equipe", 30, 60);
-		g.drawString("Dequipe", 30, 80);
+		g.drawString("Equip", 30, 60);
+		g.drawString("Unequip", 30, 80);
 		g.drawString("Delete", 30, 100);
 		g.drawString("+Limit", 30, 120);
 		g.drawString("Back", 30, 140);
@@ -165,7 +149,7 @@ public class Menu_Runes {
 		
 		g.setColor(new Color(0, 127, 0));
 		g.setFont(new Font("arial", Font.BOLD, 9));
-		g.drawString("Rune Limit: " + Game.player.runesEquiped.size() + "/" + Player.runeLimit, 20, 150);
+		g.drawString("Rune Limit: " + Game.player.runesEquipped.size() + "/" + Player.runeLimit, 20, 150);
 		
 		g.setColor(new Color(74, 52, 160));
 		g.drawString("Souls : " + Player.souls, 255, 150);

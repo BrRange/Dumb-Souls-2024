@@ -6,7 +6,7 @@ import main.Game;
 
 public class Mana_Rune extends Rune{
 	
-	private boolean effectsApllyed;
+	private boolean effectsAplied;
 	public static BufferedImage sprite = Game.sheet.getSprite(16, 256, 16, 16);
 	
 	public Mana_Rune() {
@@ -16,10 +16,10 @@ public class Mana_Rune extends Rune{
 	}
 	
 	public void tick() {
-		if (!effectsApllyed) {
+		if (!effectsAplied) {
 			Game.player.maxMana += 50;
 			Game.player.manaRec += 2;
-			effectsApllyed = true;
+			effectsAplied = true;
 		}
 	}
 	

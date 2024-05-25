@@ -76,7 +76,7 @@ public class Mana_Weapon extends Weapon {
 				break;
 			case "Mana Step":
 				if (dashAva) {
-					maxTimeD += 60;
+					maxTimeD += 300;
 					dashPercent += 0.25;
 				}
 				else {

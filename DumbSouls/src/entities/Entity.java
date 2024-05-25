@@ -1,4 +1,4 @@
-package entities;
+ package entities;
 
 import java.awt.image.BufferedImage;
 import java.util.Comparator;

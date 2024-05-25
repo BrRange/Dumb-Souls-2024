@@ -41,7 +41,7 @@ public class AE_PoisonPool extends Attack_Entity {
 			for (int i = 0; i < Game.enemies.size(); i++) {
 				Enemy e = Game.enemies.get(i);
 				if(Entity.isColiding(e, this)) {
-					e.frost = e.maxSpeed * 0.5;
+					e.frost = Math.max(e.frost, 5);
 					e.life -= dmg;
 				}
 			}	

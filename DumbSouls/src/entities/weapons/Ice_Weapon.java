@@ -125,7 +125,7 @@ public class Ice_Weapon extends Weapon{
 
 	public static void IceAffect(Enemy e1, Shot e2) {
 		if (Entity.isColiding(e1, e2)) {
-			e1.frost += frost;
+			e1.frost = Math.max(frost, e1.frost);
 		}
 	}
 	
@@ -141,18 +141,8 @@ public class Ice_Weapon extends Weapon{
 			dt += 1;
 			double dashSpeed = Game.player.speed + 0.8;
 			if (dt != dashTime) {
-				if (Game.player.right) {
-					Game.player.x += dashSpeed ;
-				}
-				else if (Game.player.left) {
-					Game.player.x -= dashSpeed;
-				}
-				if (Game.player.down) {
-					Game.player.y += dashSpeed;
-				}
-				else if (Game.player.up) {
-					Game.player.y -= dashSpeed;
-				}
+				Game.player.moveX += Math.signum(Game.player.moveX) * dashSpeed;
+				Game.player.moveY += Math.signum(Game.player.moveY) * dashSpeed;
 				if(dt % 4 == 0) {
 					Game.entities.add(new AE_IceDs(Game.player.getX(), Game.player.getY() + 5, 16, 16, null, 60));
 				}

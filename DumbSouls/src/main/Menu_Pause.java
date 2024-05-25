@@ -7,27 +7,22 @@ import entities.Player;
 
 public class Menu_Pause {
     private String[] options = {"Resume", "Initial Menu"};
-	
-	public boolean up, down, enter, space;
 	private int cur;
 	
     public void tick() {
-		if (down) {
+		if (Game.keyController.contains(83) || Game.keyController.contains(40)) {//S DOWN
 			cur++;
-			down = false;
 			if (cur > options.length - 1) {
 				cur = 0;
 			}
 		}
-		else if (up) {
+		if (Game.keyController.contains(87) || Game.keyController.contains(38)) {//W UP
 			cur--;
-			up = false;
 			if (cur < 0) {
 				cur = options.length - 1;
 			}
 		}
-		if (enter) {
-			enter = false;
+		if (Game.keyController.contains(10)) {
 			if (options[cur] == "Resume") {
 				Game.player.stopMoving();
 				Game.gameState = "NORMAL";
@@ -37,6 +32,7 @@ public class Menu_Pause {
 				Player.die();
 			}
 		}
+		Game.keyController.clear();
 	}
 
     public void render(Graphics g) {

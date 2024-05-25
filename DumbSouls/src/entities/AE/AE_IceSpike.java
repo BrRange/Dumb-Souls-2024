@@ -33,7 +33,7 @@ public class AE_IceSpike extends Attack_Entity {
 			Enemy e = Game.enemies.get(i);
 			if (Entity.isColiding(this, e) && TickTimer(5)) {
 				e.life -= damage;
-				e.frost += 2;
+				e.frost = Math.max(e.frost, damage);
 			}
 		}
 	}

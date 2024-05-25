@@ -25,7 +25,7 @@ public class Trapper_Enemy extends Enemy{
 		xP = Game.player.getX();
 		yP = Game.player.getY();
 		this.spawning = true;
-		this.timeSpawn = 180;
+		this.timeSpawn = 600;
 	}
 	
 	private void animate() {
@@ -86,7 +86,7 @@ public class Trapper_Enemy extends Enemy{
 			}
 		}
 		else {
-			this.spawnAnimation(60);
+			this.spawnAnimation(timeSpawn / 3);
 		}
 	}
 	

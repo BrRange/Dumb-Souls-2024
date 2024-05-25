@@ -4,13 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 
 public class Menu_Help {
-	public boolean enter;
 	
 	public void  tick() {
-		if (enter) {
-			enter = false;
-			Game.gameState = "MENUINIT";
-		}
+		if (Game.keyController.contains(10)) Game.gameState = "MENUINIT";
 	}
 	
 	public void render(Graphics g) {

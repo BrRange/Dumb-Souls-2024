@@ -43,7 +43,7 @@ public class AE_PoisonDs extends Attack_Entity{
 			Enemy e = Game.enemies.get(i);
 			if(Entity.isColiding(e, this)) {
 				if (time % 5 == 0) {
-					e.frost = e.maxSpeed * 0.8;
+					e.frost = Math.max(e.frost, dmg);
 					e.life -= dmg;
 				}
 			}

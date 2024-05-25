@@ -77,7 +77,7 @@ public class Barrier_Enemy extends Enemy{
 
 		}
 		else {
-			this.spawnAnimation(60);
+			this.spawnAnimation(timeSpawn / 3);
 		}
 	}
 	

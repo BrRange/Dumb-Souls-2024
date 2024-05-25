@@ -11,6 +11,7 @@ import main.Game;
 
 public class Eye_Enemy extends Enemy{
 	private int frames, maxFrames = 15, index, maxIndex = 3, timeAtk = 0;
+	private float range = 80f;
 	private BufferedImage spriteAtk = Game.sheet.getSprite(0, 160, 16, 16);
 	public Enemy_Shot atk;
 	
@@ -23,7 +24,8 @@ public class Eye_Enemy extends Enemy{
 		this.getAnimation(48, 80, 16, 16, 3);
 		this.expValue = 25 * specialMult;
 		this.soulValue = 3 * specialMult;
-		this.maxLife = 15 * specialMult + (int)(15 * 0.01 * World.wave);
+		this.range += 0.08 * World.wave;
+		this.maxLife = 15 * specialMult + (int)(0.15 * World.wave);
 		this.life = maxLife;
 		this.maxSpeed = 0.8 + (specialMult - 1)/3;
 		this.frost = 0;
@@ -67,7 +69,7 @@ public class Eye_Enemy extends Enemy{
 	public void tick() {
 		animate();
 		if (!spawning) {
-			if (Entity.calculateDistance(this.getX(), this.getY(), Game.player.getX(), Game.player.getY()) >= 80) {
+			if (Entity.calculateDistance(this.getX(), this.getY(), Game.player.getX(), Game.player.getY()) >= range) {
 				this.movement();
 			}
 			else {
@@ -82,7 +84,7 @@ public class Eye_Enemy extends Enemy{
 			}
 		}
 		else {
-			this.spawnAnimation(60);
+			this.spawnAnimation(timeSpawn / 3);
 		}
 	}
 	

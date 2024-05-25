@@ -92,7 +92,8 @@ public class Fire_Weapon extends Weapon {
 		}
 	
 	public void Attack() {
-		sound1.PlaySound();
+		if(!sound1.clip.isActive())
+			sound1.PlaySound();
 		double ang = Math.atan2(my - (Game.player.getY() + 8 - Camera.y) , mx - (Game.player.getX() + 8 - Camera.x));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
@@ -132,18 +133,8 @@ public class Fire_Weapon extends Weapon {
 				sound3.PlaySound();
 			}
 			if (md1) {
-				if (Game.player.right) {
-					Game.player.x += 2.5;
-				}
-				if (Game.player.left) {
-					Game.player.x -= 2.5;
-				}
-				if (Game.player.down) {
-					Game.player.y += 2.5;
-				}
-				if (Game.player.up) {
-					Game.player.y -= 2.5;
-				}
+				Game.player.moveCos -= Math.signum(Game.player.moveX) * 2.5;
+				Game.player.moveSin += Math.signum(Game.player.moveY) * 2.5;
 				
 				di += 2.5;
 				if (tspw > 2) {

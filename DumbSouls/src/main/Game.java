@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.HashSet;
 
 import javax.swing.JFrame;
 
@@ -33,6 +34,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	private Thread thread;
 	private boolean isRuning = false;
 	
+	public static HashSet<Integer> keyController = new HashSet<Integer>();
 	public static JFrame frame;
 	public static final int width = 320;
 	public static final int height = 160;
@@ -78,7 +80,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		entities.add(player);
 		world = new World("map00.png");
 		ui = new UI();
-		soundtrack = new SoundPlayer("Gurenge.wav");
+		soundtrack = new SoundPlayer("sndTrack.wav");
 		startMenu = new Menu_Init();
 		playerMenu = new Menu_Player();
 		pauseMenu = new Menu_Pause();
@@ -138,6 +140,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	public void tick() {
 		switch(gameState){
 		case "NORMAL":
+			player.moveX = player.moveY = 0;
 			for(int i = 0; i < entities.size(); i++) {
 				entities.get(i).tick();
 			}
@@ -274,104 +277,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_UP) {
-			switch(gameState){
-				case "NORMAL":
-					player.up = true;
-					player.moving = true;
-					break;
-				case "LEVELUP":
-					levelUpMenu.up = true;
-					break;
-				case "MENUINIT":
-					startMenu.up = true;
-					break;
-				case "MENUPLAYER":
-					playerMenu.up = true;
-					break;
-				case "MENUPAUSE":
-					pauseMenu.up = true;
-					break;
-				case "MENURUNES":
-					runesMenu.up = true;
-					break;
-			}
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_DOWN) {
-			switch(gameState){
-				case "NORMAL":
-					player.down = true;
-					player.moving = true;
-					break;
-				case "LEVELUP":
-					levelUpMenu.down = true;
-					break;
-				case "MENUINIT":
-					startMenu.down = true;
-					break;
-				case "MENUPLAYER":
-					playerMenu.down = true;
-					break;
-				case "MENUPAUSE":
-					pauseMenu.down = true;
-					break;
-				case "MENURUNES":
-					runesMenu.down = true;
-					break;
-			}
-		}
-		if (e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT) {
-			switch(gameState){
-				case "NORMAL":
-					player.left = true;
-					player.moving = true;
-					break;
-				case "MENUPLAYER":
-					playerMenu.left = true;
-					break;
-				case "MENURUNES":
-					runesMenu.left = true;
-					break;
-			}
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			switch(gameState){
-				case "NORMAL":
-					player.right = true;
-					player.moving = true;
-					break;
-				case "MENUPLAYER":
-					playerMenu.right = true;
-					break;
-				case "MENURUNES":
-					runesMenu.right = true;
-					break;
-			}
-		}
-		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			switch(gameState){
-				case "LEVELUP":
-					levelUpMenu.enter = true;
-					break;
-				case "MENUINIT":
-					startMenu.enter = true;
-					break;
-				case "MENUPLAYER":
-					playerMenu.enter = true;
-					break;
-				case "MENUHELP":
-					helpMenu.enter = true;
-					break;
-				case "MENUPAUSE":
-					pauseMenu.enter = true;
-					break;
-				case "MENURUNES":
-					runesMenu.enter = true;
-					break;
-			}
-		}
+		keyController.add(e.getKeyCode());
 
-		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+		if (keyController.contains(KeyEvent.VK_ESCAPE)) {
 			switch(gameState) {
 				case "NORMAL":
 					gameState = "MENUPAUSE";
@@ -383,101 +291,19 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			}
 		}
 
-		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-			switch(gameState){
-				case "NORMAL":
-					player.dash = true;
-					break;
-				case "LEVELUP":
-					levelUpMenu.space = true;
-					break;
-			}
-		}
+		if (keyController.contains(KeyEvent.VK_SPACE) && gameState == "NORMAL")
+			player.dash = true;
 		
-		if (e.getKeyCode() == KeyEvent.VK_1) {
-			if (gameState == "NORMAL") {
-				player.ablt2 = true;
-			}
-		}
+		if (keyController.contains(KeyEvent.VK_1) && gameState == "NORMAL")
+			player.ablt2 = true;
 		
-		if (e.getKeyCode() == KeyEvent.VK_2) {
-			if (gameState == "NORMAL") {
-				player.ablt3 = true;
-			}
-		}
-		
+		if (keyController.contains(KeyEvent.VK_2) && gameState == "NORMAL")
+			player.ablt3 = true;
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_W) {
-			switch(gameState){
-				case "NORMAL":
-					player.up = false;
-					break;
-				case "LEVELUP":
-					levelUpMenu.up = false;
-					break;
-				case "MENUINIT":
-					startMenu.up = false;
-					break;
-				case "MENUPLAYER":
-					playerMenu.up = false;
-					break;
-		}
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_S) {
-			switch(gameState){
-				case "NORMAL":
-					player.down = false;
-					break;
-				case "LEVELUP":
-					levelUpMenu.down = false;
-					break;
-				case "MENUINIT":
-					startMenu.down = false;
-					break;
-				case "MENUPLAYER":
-					playerMenu.down = false;
-					break;
-			}
-		}
-		if (e.getKeyCode() == KeyEvent.VK_A) {
-			switch(gameState){
-				case "NORMAL":
-					player.left = false;
-					break;
-				case "MENUPLAYER":
-					playerMenu.left = false;
-					break;
-				}
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_D) {
-			switch(gameState){
-				case "NORMAL":
-					player.right = false;
-					break;
-				case "MENUPLAYER":
-					playerMenu.right = false;
-					break;
-				}
-		}
-		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			switch(gameState){
-			case "LEVELUP":
-				levelUpMenu.enter = false;
-				break;
-			case "MENUINIT":
-				startMenu.enter = false;
-				break;
-			case "MENUPLAYER":
-				playerMenu.enter = false;
-				break;
-			case "MENUHELP":
-				helpMenu.enter = false;
-				break;
-			}
-		}
+		keyController.remove(e.getKeyCode());
 	}
 
 	@Override
@@ -505,8 +331,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		keyController.clear();
 	}
 
 	@Override

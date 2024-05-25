@@ -9,46 +9,33 @@ import entities.weapons.*;
 public class Menu_Player {
 	private int cur, curW;
 	private String[] weapons = {"Mana Weapon", "Fire Weapon", "Wind Weapon", "Ice Weapon", "Fisical Weapon", "Poison Weapon"}, options = {"Books", "Start", "Runes", "Back"};
-	public boolean up, down, left, right, enter;
 	private boolean clickR, clickL;
 	private int weaponCost;
 	private boolean weaponBlock;
 	
 	public void tick() {
-		
-		if (up) {
-			up = false;
+		boolean enter = Game.keyController.contains(10);
+		if (Game.keyController.contains(87) || Game.keyController.contains(38)) {//W UP
 			cur --;
-			if (cur < 0) {
-				cur = options.length - 1;
-			}
+			if (cur < 0) cur = options.length - 1;
 		}
-		else if (down) {
-			down = false;
+		if (Game.keyController.contains(83) || Game.keyController.contains(40)) {//S DOWN
 			cur ++;
-			if (cur > options.length - 1) {
-				cur = 0;
-			}
+			if (cur > options.length - 1) cur = 0;
 		}
 		
 		if (options[cur] == "Books") {
-			if (right) {
+			if (Game.keyController.contains(65) || Game.keyController.contains(37)) {//D RIGHT
 				clickR = true;
 				clickL = false;
-				right = false;
 				curW++;
-				if (curW > weapons.length - 1) {
-					curW = 0;
-				}
+				if (curW > weapons.length - 1) curW = 0;
 			}
-			else if (left) {
-				left = false;
+			if (Game.keyController.contains(68) || Game.keyController.contains(39)) {//A LEFT
 				clickR = false;
 				clickL = true;
 				curW--;
-				if (curW < 0) {
-					curW = weapons.length - 1;
-				}
+				if (curW < 0) curW = weapons.length - 1;
 			}
 			costWeapon();
 		}
@@ -57,11 +44,8 @@ public class Menu_Player {
 			clickR = false;
 			clickL = false;
 			if (enter) {
-				enter = false;
 				if (costPossible() || isWeaponBlock()) {
-					if (!isWeaponBlock()) {
-						Player.souls -= weaponCost;
-					}
+					if (!isWeaponBlock()) Player.souls -= weaponCost;
 					Game.gameState = "NORMAL";
 					weaponVerification();
 				}
@@ -71,20 +55,16 @@ public class Menu_Player {
 		if (options[cur] == "Runes") {
 			clickR = false;
 			clickL = false;
-			if (enter) {
-				enter = false;
-				if (Player.runesInventory.size() > 0) {
-					Game.gameState = "MENURUNES";
-				}
-			}
+			if (enter && Player.runesInventory.size() > 1)
+				Game.gameState = "MENURUNES";
 		}
 		
 		if (options[cur] == "Back") {
 			if (enter) {
-				enter = false;
 				Game.gameState = "MENUINIT";
 			}	
 		}
+		Game.keyController.clear();
 	}
 	
 	private boolean isWeaponBlock() {
@@ -212,14 +192,8 @@ public class Menu_Player {
 				g.drawString("<", 20, 70);
 			}
 		}
-		else if (cur == 1) {
-			g.drawString(">", 20, 90);
-		}
-		else if (cur == 2) {
-			g.drawString(">", 20, 110);
-		}
-		else if (cur == 3) {
-			g.drawString(">", 20, 130);
+		else {
+			g.drawString(">", 20, 70 + 20 * cur);
 		}
 		
 		if (costPossible()) {
@@ -228,15 +202,15 @@ public class Menu_Player {
 		else {
 			g.setColor(new Color(127, 0, 0));
 		}
-		g.drawString("Soul Cost: " + weaponCost, 183, 100);
 		
 		if (isWeaponBlock()) {
 			g.setColor(new Color(0, 127, 14));
-			g.drawString("Unlocked", 183, 110);
+			g.drawString("Unlocked", 194, 100);
 		}
 		else {
 			g.setColor(new Color(127, 0, 0));
 			g.drawString("Locked", 183, 110);
+			g.drawString("Soul Cost: " + weaponCost, 183, 100);
 		}
 		
 		g.setColor(new Color(74, 52, 160));

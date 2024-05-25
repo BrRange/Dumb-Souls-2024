@@ -16,6 +16,15 @@ import entities.runes.*;
 public class Save_Game {
 	
 	private static int w1, w2, w3, w4, w5;
+
+	private static int booleanIntReader(boolean value) {
+		if (value == true) {
+			return 0;
+		}
+		else {
+			return 1;
+		}
+	}
 	
 	public static void save() throws IOException{
 		final int souls = Player.souls;
@@ -46,6 +55,15 @@ public class Save_Game {
 		     writer.flush();
 		     writer.close();
 		 }
+	}
+	
+	private static boolean booleanReader(int value) {
+		if (value == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public static void loadSave() {
@@ -92,24 +110,6 @@ public class Save_Game {
 			return new EXP_Rune();
 		default:
 			return null;
-		}
-	}
-	
-	private static boolean booleanReader(int value) {
-		if (value == 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
-	private static int booleanIntReader(boolean value) {
-		if (value == true) {
-			return 0;
-		}
-		else {
-			return 1;
 		}
 	}
 }

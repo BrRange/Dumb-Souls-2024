@@ -28,7 +28,7 @@ public class Base_Enemy extends Enemy{
 		this.frost = 0;
 		this.speed = this.maxSpeed;
 		this.setMask(3, 2, 8, 14);
-		this.timeSpawn = 180;
+		this.timeSpawn = 150;
 		spawning = true;
 	}
 	
@@ -75,7 +75,7 @@ public class Base_Enemy extends Enemy{
 			}
 		}
 		else {
-			this.spawnAnimation(60);
+			this.spawnAnimation(timeSpawn / 3);
 		}
 	}
 	
