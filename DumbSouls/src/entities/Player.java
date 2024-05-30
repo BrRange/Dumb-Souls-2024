@@ -196,7 +196,7 @@ public class Player extends Entity{
 		refreshTick();
 
 		if (life <= 0) {
-			//die();
+			die();
 		}
 		
 		playerWeapon.tick();
