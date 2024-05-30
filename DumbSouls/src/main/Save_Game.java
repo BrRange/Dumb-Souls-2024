@@ -2,6 +2,7 @@ package main;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,39 +16,25 @@ import entities.runes.*;
 
 public class Save_Game {
 	
-	private static int w1, w2, w3, w4, w5;
+	private static int weaponSum;
 
-	private static int booleanIntReader(boolean value) {
-		if (value == true) {
-			return 0;
-		}
-		else {
-			return 1;
-		}
+	private static int bitIntWriter(boolean value, int bitIndex) {
+		return value ? 0 : 1 << bitIndex;
 	}
 	
 	public static void save() throws IOException{
-		final int souls = Player.souls;
-		final int fireBlock = booleanIntReader(Fire_Weapon.block);
-		final int windBlock = booleanIntReader(Wind_Weapon.block);
-		final int iceBlock = booleanIntReader(Ice_Weapon.block);
-		final int fisicalBlock = booleanIntReader(Fisical_Weapon.block);
-		final int poisonBlock = booleanIntReader(Poison_Weapon.block);
+		weaponSum = bitIntWriter(Fire_Weapon.block, 0);
+		weaponSum += bitIntWriter(Wind_Weapon.block, 1);
+		weaponSum += bitIntWriter(Ice_Weapon.block, 2);
+		weaponSum += bitIntWriter(Fisical_Weapon.block, 3);
+		weaponSum += bitIntWriter(Poison_Weapon.block, 4);
 		
 		final Path path = Paths.get("SaveDS.txt");
 		
 		 try (final BufferedWriter writer = Files.newBufferedWriter(path,StandardCharsets.UTF_8, StandardOpenOption.CREATE);) {
-			 writer.write("" + souls);
+			 writer.write("" + Player.souls);
 			 writer.newLine();
-			 writer.write("" + fireBlock);
-			 writer.newLine();
-			 writer.write("" + windBlock);
-			 writer.newLine();
-			 writer.write("" + iceBlock);
-			 writer.newLine();
-			 writer.write("" + fisicalBlock);
-			 writer.newLine();
-			 writer.write("" + poisonBlock);
+			 writer.write("" + weaponSum);
 			 writer.newLine();
 			 for (int i = 0; i < Player.runesInventory.size(); i++) {
 				 writer.write(Player.runesInventory.get(i).name + ";");
@@ -56,14 +43,9 @@ public class Save_Game {
 		     writer.close();
 		 }
 	}
-	
-	private static boolean booleanReader(int value) {
-		if (value == 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
+
+	private static boolean intBitReader(int value, int bitIndex){
+		return (value & bitIndex) == 0;
 	}
 	
 	public static void loadSave() {
@@ -71,20 +53,16 @@ public class Save_Game {
 			BufferedReader reader = new BufferedReader(new FileReader("SaveDS.txt"));
 			
 			Player.souls = Integer.parseInt(reader.readLine());
-			w1 = Integer.parseInt(reader.readLine());
-			w2 = Integer.parseInt(reader.readLine());
-			w3 = Integer.parseInt(reader.readLine());
-			w4 = Integer.parseInt(reader.readLine());
-			w5 = Integer.parseInt(reader.readLine());
+			weaponSum = Integer.parseInt(reader.readLine());
 			String[] runes = reader.readLine().split(";");
 			
 			reader.close();
 			
-			Fire_Weapon.block = booleanReader(w1);
-			Wind_Weapon.block = booleanReader(w2);
-			Ice_Weapon.block = booleanReader(w3);
-			Fisical_Weapon.block = booleanReader(w4);
-			Poison_Weapon.block = booleanReader(w5);
+			Fire_Weapon.block = intBitReader(weaponSum, 1);
+			Wind_Weapon.block = intBitReader(weaponSum, 2);
+			Ice_Weapon.block = intBitReader(weaponSum, 4);
+			Fisical_Weapon.block = intBitReader(weaponSum, 8);
+			Poison_Weapon.block = intBitReader(weaponSum, 16);
 			if (runes.length > 0) {
 				for (int i = 0; i < runes.length; i++) {
 					Player.runesInventory.add(InventoryMaker(runes[i]));
@@ -93,6 +71,16 @@ public class Save_Game {
 		}
 		catch (IOException e) {
 			e.printStackTrace();
+			try{
+			PrintWriter writer = new PrintWriter("SaveDS.txt", "UTF-8");
+			writer.println("0");
+			writer.println("0");
+			writer.println(";");
+			writer.close();
+			loadSave();
+			} catch (IOException ee){
+				ee.printStackTrace();
+			}
 		}
 	}
 	

@@ -9,17 +9,16 @@ import world.Camera;
 public class Fisical_Weapon extends Weapon {
 	public static BufferedImage shotFace;
 	public static BufferedImage sprite = Game.sheet.getSprite(144, 16, 16, 16);
-	private int shotDamage = 4, ablt2Dmg = 10, ablt2W = 64, ablt2H = 64, ablt3Dmg = 6, tspw, combo;
-	private double di = 0, dashDistance = 30;
+	private int shotDamage = 4, di = 0, ablt2Dmg = 10, ablt2W = 64, ablt2H = 64, ablt3Dmg = 6, tspw, combo, dashDistance = 30;
 	public static int soulCost = 500;
-	 public static boolean block = true;
+	public static boolean block = true;
 	
 	public Fisical_Weapon() {
 		super(sprite);
 		shotFace = Game.sheet.getSprite(208, 16, 16, 16);
 		super.setAttackTimer(3);
-		Game.player.push = 2.5;
-
+		Game.player.push = 10;
+		this.attackTimer = 12;
 		setOptionsNames(9);
 		this.getAnimation(160, 16, 16, 16, 3);
 	}
@@ -138,22 +137,16 @@ public class Fisical_Weapon extends Weapon {
 	public void Dash() {
 		int manaCost = 4;
 		
-		if (this.dashAva && Game.player.mana >= manaCost) {
-			if (!md1) {
-				md1 = true;
-				Game.player.mana -= manaCost;
-			}
+		if (this.dashAva && Game.player.mana >= manaCost && !md1) {
+			md1 = true;
+			Game.player.mana -= manaCost;
 		}
 		if (md1) {
-			di += 5.0;
-			if (di % 5 == 0) {
-				Game.entities.add(new AE_Animation(Game.player.getX() + Game.rand.nextInt(17) - 8, Game.player.getY() + Game.rand.nextInt(17) - 8, 16, 16, null, 20, 0, 1, 192, 128, 16, 16, "goToUp_1", null));
-			}
-			if (di < dashDistance) {
-				Game.player.moveX += Math.signum(Game.player.moveX) * 5;
-				Game.player.moveY += Math.signum(Game.player.moveY) * 5;
-			}
-			else {
+			di += 5;
+			Game.entities.add(new AE_Animation(Game.player.getX() + Game.rand.nextInt(17) - 8, Game.player.getY() + Game.rand.nextInt(17) - 8, 16, 16, null, 20, 0, 1, 192, 128, 16, 16, "goToUp_1", null));
+			Game.player.moveCos -= Math.signum(Game.player.moveX) * 1.2;
+			Game.player.moveSin += Math.signum(Game.player.moveY) * 1.2;
+			if(di >= dashDistance) {
 				di = 0;
 				md1 = false;
 				Game.player.dash = false;

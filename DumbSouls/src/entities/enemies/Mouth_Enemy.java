@@ -15,7 +15,7 @@ public class Mouth_Enemy extends Enemy {
 		super(x, y, width, height, sprite);
 		if (specialRare){
 			this.specialMult = 2;
-			hue = 2502;
+			hue = 0xF00000;
 		}
 		this.getAnimation(96, 80, 16, 16, 3);
 		this.expValue = 20 * specialMult;
@@ -43,7 +43,7 @@ public class Mouth_Enemy extends Enemy {
 	
 	private void die() {
 		Game.enemies.remove(this);
-		Game.entities.add(new EXP_Orb((int)this.x, (int)this.y, 16, 16, Enemy.baseSprite, this.expValue, this.specialRare));
+		Game.entities.add(new EXP_Orb((int)this.x, (int)this.y, 16, 16, Enemy.baseSprite, this.expValue, this.hue));
 		Player.souls += this.soulValue;
 	}
 	

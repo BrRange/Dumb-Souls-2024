@@ -15,7 +15,7 @@ public class Enemy extends Entity{
 	public double speed, maxSpeed, frost, life;
 	protected boolean spawning, specialRare;
 	protected int timeSpawn, contTS, specialMult = 1;
-	protected static int hue = 0;
+	protected int hue = 0;
 	
 	public Enemy(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -23,10 +23,8 @@ public class Enemy extends Entity{
 	}
 
 	void isSpecial(){
-		int temp = Game.rand.nextInt(1024);
-		if (temp == 1){
+		if (Game.rand.nextInt(256) == 0)
 			this.specialRare = true;
-		}
 	}
 	
 	protected void getAnimation(int x, int y, int width, int height, int frames) {
@@ -34,9 +32,7 @@ public class Enemy extends Entity{
 		
 		for(int i = 0; i < animation.length; i++ ) {
 			animation[i] = Game.sheet.getSprite(x , y, width, height);
-			if (specialRare){
-				animation[i] = Shader.reColor(animation[i], hue);
-			}
+			animation[i] = Shader.reColor(animation[i], hue);
 			x += width;
 		}
 	}

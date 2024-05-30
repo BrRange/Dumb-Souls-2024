@@ -131,16 +131,14 @@ public class Ice_Weapon extends Weapon{
 	
 	public void Dash() {
 		int manaCost = 25;
-		if (this.dashAva && Game.player.mana >= manaCost) {
-			if (!md1) {
-				md1 = true;
-				Game.player.mana -= manaCost;
-			}
+		if (this.dashAva && Game.player.mana >= manaCost && !md1) {
+			md1 = true;
+			Game.player.mana -= manaCost;
 		}
 		if (md1) {
 			dt += 1;
-			double dashSpeed = Game.player.speed + 0.8;
-			if (dt != dashTime) {
+			double dashSpeed = Game.player.speed + 1;
+			if (dt < dashTime) {
 				Game.player.moveX += Math.signum(Game.player.moveX) * dashSpeed;
 				Game.player.moveY += Math.signum(Game.player.moveY) * dashSpeed;
 				if(dt % 4 == 0) {
@@ -202,7 +200,7 @@ public class Ice_Weapon extends Weapon{
 			}
 		}
 		if (md3) {
-			Game.entities.add(new AE_SnowStorm(Game.player.getX(), Game.player.getY(), 32, 32, null, 240, ablt3Spd, ablt3Dmg));
+			Game.entities.add(new AE_SnowStorm(Game.player.getX() - 16, Game.player.getY() - 16, 32, 32, null, 240, ablt3Spd, ablt3Dmg));
 			md3 = false;
 			Game.player.ablt3 = false;
 		}

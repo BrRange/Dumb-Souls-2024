@@ -6,6 +6,8 @@ import world.Camera;
 import world.World;
 import main.*;
 import entities.*;
+import entities.orbs.EXP_Orb;
+
 import java.awt.Graphics;
 
 public class Barrier_Enemy extends Enemy{
@@ -16,7 +18,7 @@ public class Barrier_Enemy extends Enemy{
 		super(x, y, width, height, sprite);
 		if (specialRare){
 			specialMult = 2;
-			hue = 199;
+			hue = 0xBBC6CC;
 		}
 		this.getAnimation(144, 80, 48, 32, 2);
 		this.expValue = 30 * specialMult;
@@ -49,9 +51,10 @@ public class Barrier_Enemy extends Enemy{
 	
 	private void die() {
 		Game.enemies.remove(this);
-		Game.enemies.add(new Mimic_Enemy(this.getX(), this.getY() - 16, 16, 16, Enemy.baseSprite, this.expValue, this.specialRare));
-		Game.enemies.add(new Mimic_Enemy(this.getX() - 16, this.getY() + 16, 16, 16, Enemy.baseSprite, this.expValue, this.specialRare));
-		Game.enemies.add(new Mimic_Enemy(this.getX() + 16, this.getY() + 16, 16, 16, Enemy.baseSprite, this.expValue, this.specialRare));
+		Game.enemies.add(new Debri_Enemy(this.getX(), this.getY() - 16, 16, 16, Enemy.baseSprite, this.expValue, this.specialRare));
+		Game.enemies.add(new Debri_Enemy(this.getX() - 16, this.getY() + 16, 16, 16, Enemy.baseSprite, this.expValue, this.specialRare));
+		Game.enemies.add(new Debri_Enemy(this.getX() + 16, this.getY() + 16, 16, 16, Enemy.baseSprite, this.expValue, this.specialRare));
+		Game.entities.add(new EXP_Orb(this.getX(), this.getY(), 16, 16, Enemy.baseSprite, this.expValue, this.hue));
 		Player.souls += this.soulValue;
 	}
 	

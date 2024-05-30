@@ -86,24 +86,7 @@ public class Player extends Entity{
 			}
 		}
 	}
-	
-	private void dashing() {
-		if (dash) {
-			playerWeapon.Dash();
-		}
-	}
-	
-	private void ablt2Using() {
-		if (ablt2) {
-			playerWeapon.Ablt2();
-		}
-	}
-	
-	private void ablt3Using() {
-		if (ablt3) {
-			playerWeapon.Ablt3();
-		}
-	}
+
 	
 	public static void die() {
 		Game.entities.clear();
@@ -190,14 +173,13 @@ public class Player extends Entity{
 		else if (moveY > 0) direct = 2;
 		else if (moveY < 0) direct = 3;
 
-
 		{
 			double tempAngle = Math.atan2(moveY, -moveX);
 			moveCos = Math.cos(tempAngle);
 			moveSin = Math.sin(tempAngle);
 		}
 
-		dashing();
+		if (Game.keyController.contains(32) || playerWeapon.md1) playerWeapon.Dash();
 
 		if(moving){
 			this.x += speed * moveCos;
@@ -214,7 +196,7 @@ public class Player extends Entity{
 		refreshTick();
 
 		if (life <= 0) {
-			die();
+			//die();
 		}
 		
 		playerWeapon.tick();
@@ -222,24 +204,15 @@ public class Player extends Entity{
 		
 		isAttacking();
 		checkExp();
-		ablt2Using();
-		ablt3Using();
+		if (Game.keyController.contains(49)) playerWeapon.Ablt2();
+		if (Game.keyController.contains(50)) playerWeapon.Ablt3();
 		shotDamage();
 		runeTick();
 		
 		if (playerWeapon instanceof Mana_Weapon) {
 			Mana_Weapon.graficEffect();
 		}
-		if (!playerWeapon.md1) {
-			dash = false;
-		}
-		if (!playerWeapon.md2) {
-			ablt2 = false;
-		}
-		if (!playerWeapon.md3) {
-			ablt3 = false;
-		}
-		
+
 		Camera.x = Camera.Clamp(this.getX() - (Game.width / 2), 0, World.WIDTH * 16 - Game.width);
 		Camera.y = Camera.Clamp(this.getY() - (Game.height / 2), 0, World.HEIGHT * 16 - Game.height);
 

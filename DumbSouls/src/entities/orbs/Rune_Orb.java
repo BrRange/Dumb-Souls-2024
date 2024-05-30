@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import entities.enemies.Enemy;
 import main.Game;
 import world.Camera;
-import entities.Entity;
 import entities.Player;
 import entities.runes.*;
 
@@ -35,15 +34,13 @@ public class Rune_Orb extends Enemy {
 				this.sprite = EXP_Rune.sprite;
 			break;
 		}
-		this.speed = 0.4;
+		this.speed = Game.player.maxSpeed * 1.1;
 		this.setMask(0, 0, 16, 16);
 		this.depth = 1;
 	}
 	
 	public void tick() {
-		if (Entity.calculateDistance(this.getX(), this.getY(), Game.player.getX(), Game.player.getY()) < 32){
-			this.movement();
-		}
+		this.movement();
 
 		if (isColiding(this, Game.player)){
 	        Game.entities.remove(this);

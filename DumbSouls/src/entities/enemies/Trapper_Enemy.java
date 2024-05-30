@@ -9,11 +9,15 @@ import entities.orbs.*;
 import world.Camera;
 
 public class Trapper_Enemy extends Enemy{
-	private int xP, yP, index = 1, maxIndex = 3, frames, maxFrames = 10, timer = 0, cont = 0;
-	private boolean stage2 = false;
+	private int xP, yP, index = 1, maxIndex = 3, frames, maxFrames = 10, timer = 0, cont = 120;
+	private boolean stage2 = true;
 	
 	public Trapper_Enemy(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
+		if(this.specialRare){
+			specialMult = 2;
+			hue = 0xF0DA5E;
+		}
 		this.getAnimation(240, 80, 16, 16, 3);
 		this.expValue = 37 * specialMult;
 		this.soulValue = 5 * specialMult;
@@ -22,8 +26,6 @@ public class Trapper_Enemy extends Enemy{
 		this.maxSpeed = 1 + (specialMult - 1)/3;
 		this.frost = 0;
 		this.speed = this.maxSpeed;
-		xP = Game.player.getX();
-		yP = Game.player.getY();
 		this.spawning = true;
 		this.timeSpawn = 600;
 	}
@@ -46,7 +48,7 @@ public class Trapper_Enemy extends Enemy{
 	
 	private void die() {
 		Game.enemies.remove(this);
-		Game.entities.add(new EXP_Orb(this.getX(), this.getY(), 16, 16, Enemy.baseSprite, this.expValue, this.specialRare));
+		Game.entities.add(new EXP_Orb(this.getX(), this.getY(), 16, 16, Enemy.baseSprite, this.expValue, this.hue));
 		Player.souls += this.soulValue;
 	}
 	private void stage2() {
@@ -70,7 +72,7 @@ public class Trapper_Enemy extends Enemy{
 	
 	public void tick() {
 		if (!spawning) {
-			if (this.getX() != xP && this.getY() != yP) {
+			if (this.getX() != xP && this.getY() != yP && !Entity.isColiding(this, Game.player)) {
 				objectiveMovement(xP, yP);
 				this.setMask(0, 0, 0, 0);
 			}

@@ -19,7 +19,8 @@ public class Eye_Enemy extends Enemy{
 		super(x, y, width, height, sprite);
 		if (specialRare){
 			this.specialMult = 2;
-			hue = 384;
+			hue = 0x8F0000;
+			this.range *= 1.25;
 		}
 		this.getAnimation(48, 80, 16, 16, 3);
 		this.expValue = 25 * specialMult;
@@ -48,7 +49,7 @@ public class Eye_Enemy extends Enemy{
 	
 	private void die() {
 		Game.enemies.remove(this);
-		Game.entities.add(new EXP_Orb((int)this.x, (int)this.y, 16, 16, Enemy.baseSprite, this.expValue, this.specialRare));
+		Game.entities.add(new EXP_Orb((int)this.x, (int)this.y, 16, 16, Enemy.baseSprite, this.expValue, this.hue));
 		Player.souls += this.soulValue;
 	}
 	
@@ -59,7 +60,7 @@ public class Eye_Enemy extends Enemy{
 			double dx = Math.cos(ang);
 			double dy =  Math.sin(ang);
 			
-			atk = new Enemy_Shot(this.getX(), this.getY(), 6, 3, spriteAtk, dx, dy, 15 * specialMult + (int)(0.15 * World.wave), 3, 35, "straight");
+			atk = new Enemy_Shot(this.getX(), this.getY(), 6, 3, spriteAtk, dx, dy, 15 * specialMult + (int)(0.15 * World.wave), 3, (int)(this.range / 2), "straight");
 			Game.eShots.add(atk);
 			timeAtk = 0;
 		}

@@ -13,9 +13,8 @@ public class Shader {
 		Graphics2D graphic = recolored.createGraphics();
 		 for(int x = 0; x < w; x++){
 			for(int y = 0; y < h; y++){
-				int color = sprite.getRGB(x, y);
-				int setColor = color + hue;
-				recolored.setRGB(x, y, setColor);
+				int color = sprite.getRGB(x, y) ^ hue;
+				recolored.setRGB(x, y, color);
 			}
 		 }
 		graphic.drawImage(recolored, null, 0, 0);

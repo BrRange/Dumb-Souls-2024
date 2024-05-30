@@ -39,8 +39,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	public static final int width = 320;
 	public static final int height = 160;
 	public static final int scale = 3;
-	public static int mx;
-	public static int my;
+	public static int mx, my, amountTicks;
 	
 	private BufferedImage image;
 	public static Spritesheet sheet;
@@ -250,21 +249,24 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	
 	public void run() {
 		requestFocus();
-		long lastTime = System.nanoTime();
-		double amountTicks = 60.0;
-		double ns = 1000000000 / amountTicks;
-		double delta = 0;
+		long lastTime = System.currentTimeMillis();
+		int amountTicks = 60;
+		float framesSec = 1f / amountTicks;
+		double delta;
 		
 		while(isRuning) {
-			long now = System.nanoTime();
-			delta += (now - lastTime) / ns;
-			lastTime = now;
-			
-			if(delta >= 1) {
+			long now = System.currentTimeMillis();
+			delta = (now - lastTime) / 1000.0;
+			if(delta >= framesSec) {
 				tick();
-				delta --;
+				lastTime = now;
 			}
 			render();
+			try { //Pq tem q ter try catch nessa merda, deixa o negocio dar erro em paz
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		end();
 	}
@@ -272,7 +274,6 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -290,15 +291,6 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 					break;
 			}
 		}
-
-		if (keyController.contains(KeyEvent.VK_SPACE) && gameState == "NORMAL")
-			player.dash = true;
-		
-		if (keyController.contains(KeyEvent.VK_1) && gameState == "NORMAL")
-			player.ablt2 = true;
-		
-		if (keyController.contains(KeyEvent.VK_2) && gameState == "NORMAL")
-			player.ablt3 = true;
 	}
 
 	@Override
@@ -309,7 +301,6 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -331,6 +322,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		if(gameState == "NORMAL") gameState = "MENUPAUSE";
 		keyController.clear();
 	}
 

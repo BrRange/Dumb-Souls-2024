@@ -25,13 +25,13 @@ public class Menu_Player {
 		}
 		
 		if (options[cur] == "Books") {
-			if (Game.keyController.contains(65) || Game.keyController.contains(37)) {//D RIGHT
+			if (Game.keyController.contains(68) || Game.keyController.contains(39)) {//D RIGHT
 				clickR = true;
 				clickL = false;
 				curW++;
 				if (curW > weapons.length - 1) curW = 0;
 			}
-			if (Game.keyController.contains(68) || Game.keyController.contains(39)) {//A LEFT
+			if (Game.keyController.contains(65) || Game.keyController.contains(37)) {//A LEFT
 				clickR = false;
 				clickL = true;
 				curW--;
@@ -182,10 +182,10 @@ public class Menu_Player {
 		
 		if (cur == 0) {
 			g.drawString("<", 20, 70);
-			g.drawString(">", 100, 70);
+			g.drawString(">", 105, 70);
 			if (clickR) {
 				g.setColor(Color.red);
-				g.drawString(">", 100, 70);
+				g.drawString(">", 105, 70);
 			}
 			if (clickL) {
 				g.setColor(Color.red);

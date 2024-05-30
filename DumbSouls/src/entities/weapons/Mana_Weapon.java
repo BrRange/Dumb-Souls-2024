@@ -11,7 +11,7 @@ public class Mana_Weapon extends Weapon {
 	public static BufferedImage shotFace;
 	public static BufferedImage sprite = Game.sheet.getSprite(64, 64, 16, 16);
 	private int shotDamage = 5, shotSpeed = 4, contUpgrades, spcShotsGain = 5, timeDash, maxTimeD = 120, timeAblt3 = 100, ablt3Dmg = 4;
-	private double dashPercent = 0.25;
+	private float dashPercent = 2;
 	private static int ablt2Dmg = 25, ablt2Knck = 8, qntSpcShots, grafEfcCont;
 	public static int soulCost = 0;
 	public static boolean block = false;
@@ -77,7 +77,7 @@ public class Mana_Weapon extends Weapon {
 			case "Mana Step":
 				if (dashAva) {
 					maxTimeD += 300;
-					dashPercent += 0.25;
+					dashPercent += 0.5f;
 				}
 				else {
 					dashAva = true;
@@ -123,7 +123,8 @@ public class Mana_Weapon extends Weapon {
 		}
 		if (md1) {
 			if (timeDash == 0) {
-				Game.player.speed += Game.player.maxSpeed * dashPercent;
+				Game.player.moveCos -= Math.signum(Game.player.moveX) * dashPercent;
+				Game.player.moveSin += Math.signum(Game.player.moveY) * dashPercent;
 			}
 			if (timeDash % 10 == 0) {
 				Game.entities.add(new AE_Animation(Game.player.getX(), Game.player.getY(), 16, 16, null, 20, 0, 1, 192, 128, 16, 16, "goToUp_1", null));
@@ -137,7 +138,6 @@ public class Mana_Weapon extends Weapon {
 				timeDash = 0;
 				md1 = false;
 				Game.player.dash = false;
-				Game.player.speed = Game.player.maxSpeed;
 			}
 		}
 	}

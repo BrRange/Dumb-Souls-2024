@@ -7,6 +7,7 @@ import world.World;
 import main.*;
 import entities.*;
 import entities.orbs.*;
+
 import java.awt.Graphics;
 
 public class Base_Enemy extends Enemy{
@@ -15,11 +16,11 @@ public class Base_Enemy extends Enemy{
 	
 	public Base_Enemy(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
-		this.getAnimation(0, 80, 16, 16, 3);
 		if (specialRare){
 			this.specialMult = 3;
-			hue = 65264;
+			hue = 0xFFFFFF;
 		}
+		this.getAnimation(0, 80, 16, 16, 3);
 		this.expValue = 10 * specialMult;
 		this.soulValue = 1 * specialMult;
 		this.maxLife = 10 * specialMult + (int)(0.1 * World.wave);
@@ -50,7 +51,7 @@ public class Base_Enemy extends Enemy{
 	
 	private void die() {
 		Game.enemies.remove(this);
-		Game.entities.add(new EXP_Orb(this.getX(), this.getY(), 16, 16, Enemy.baseSprite, this.expValue, this.specialRare));
+		Game.entities.add(new EXP_Orb(this.getX(), this.getY(), 16, 16, Enemy.baseSprite, this.expValue, this.hue));
 		Player.souls += this.soulValue;
 	}
 	

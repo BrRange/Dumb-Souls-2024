@@ -12,15 +12,15 @@ import java.awt.Graphics;
 public class EXP_Orb extends Enemy{
     private int index, maxIndex = 3, frames, maxFrames = 6;
 	
-	public EXP_Orb(int x, int y, int width, int height, BufferedImage sprite, int expValue, boolean specialRare) {
+	public EXP_Orb(int x, int y, int width, int height, BufferedImage sprite, int expValue, int hue) {
 		super(x, y, width, height, sprite);
 		if (World.wave % 11 == 0){
 			Game.entities.remove(this);
 		}
-		this.specialRare = specialRare;
+		this.hue = hue;
 		this.getAnimation(0, 144, 16, 16, 3);
 		this.expValue = expValue;
-		this.speed = 0.4;
+		this.speed = 0.8;
 		this.setMask(0, 0, 16, 16);
 		this.depth = 1;
 	}
@@ -39,7 +39,7 @@ public class EXP_Orb extends Enemy{
     public void tick() {
 		animate();
 
-		if (Entity.calculateDistance(this.getX(), this.getY(), Game.player.getX(), Game.player.getY()) < 32){
+		if (Entity.calculateDistance(this.getX(), this.getY(), Game.player.getX(), Game.player.getY()) < 128){
 			this.movement();
 		}
 
