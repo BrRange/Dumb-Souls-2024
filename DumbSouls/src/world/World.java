@@ -59,7 +59,7 @@ public class World {
 		}	
 	}
 	
-	public void rizeMaxEnemies() {
+	public void raiseMaxEnemies() {
 		maxEnemies += 2;
 	}
 	

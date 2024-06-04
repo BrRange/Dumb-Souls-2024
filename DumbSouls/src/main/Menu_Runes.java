@@ -7,11 +7,11 @@ import java.awt.Graphics;
 
 public class Menu_Runes {
 	
-	private int cur = 0, curR = 0;
-	private String[] options = {"Runes", "Equip", "Unequip", "Delete", "+Limit", "Back"};
-	private boolean clickR, clickL;
+	private static int cur = 0, curR = 0;
+	private static String[] options = {"Runes", "Equip", "Unequip", "Delete", "+Limit", "Back"};
+	private static boolean clickR, clickL;
 	
-	public void tick() {
+	public static void tick() {
 		boolean enter = Game.keyController.contains(10);
 		if (Game.keyController.contains(87) || Game.keyController.contains(38)) {//W UP
 			cur --;
@@ -74,14 +74,14 @@ public class Menu_Runes {
 		
 		if (options[cur] == "Back") {
 			if (enter) {
-				Game.gameState = "MENUPLAYER";
+				Game.gameStateHandler = Game.gameState.MENUPLAYER;
 			}	
 		}
 
 		Game.keyController.clear();
 	}
 	
-	private void renderSprites(Graphics g) {
+	private static void renderSprites(Graphics g) {
 		g.setColor(new Color(50, 50, 50));
 		g.fillRect(200, 54, 32, 32);
 		
@@ -101,7 +101,7 @@ public class Menu_Runes {
 		g.drawString(Player.runesInventory.get(curR).description, 145, 113);
 	}
 	
-	public void render(Graphics g) {
+	public static void render(Graphics g) {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, Game.width, Game.height);
 		

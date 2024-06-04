@@ -16,7 +16,7 @@ public class Trapper_Enemy extends Enemy{
 		super(x, y, width, height, sprite);
 		if(this.specialRare){
 			specialMult = 2;
-			hue = 0xF0DA5E;
+			hue = 0xFFFFFF;
 		}
 		this.getAnimation(240, 80, 16, 16, 3);
 		this.expValue = 37 * specialMult;

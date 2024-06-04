@@ -19,8 +19,8 @@ public class Eye_Enemy extends Enemy{
 		super(x, y, width, height, sprite);
 		if (specialRare){
 			this.specialMult = 2;
-			hue = 0x8F0000;
 			this.range *= 1.25;
+			this.hue = 0xFFFFFF;
 		}
 		this.getAnimation(48, 80, 16, 16, 3);
 		this.expValue = 25 * specialMult;

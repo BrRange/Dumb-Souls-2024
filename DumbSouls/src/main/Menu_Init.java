@@ -5,10 +5,10 @@ import java.awt.Color;
 import java.awt.Font;
 
 public class Menu_Init {
-	private int cur = 0;
-	private String[] options = {"New Game", "Help", "Exit"};
+	private static int cur = 0;
+	private static String[] options = {"New Game", "Help", "Exit"};
 	
-	public void tick() {
+	public static void tick() {
 		if (Game.keyController.contains(83) || Game.keyController.contains(40)) {//S DOWN
 			cur++;
 			if (cur > options.length - 1) cur = 0;
@@ -19,10 +19,10 @@ public class Menu_Init {
 		}
 		if (Game.keyController.contains(10)) {
 			if (options[cur] == "New Game") {
-				Game.gameState = "MENUPLAYER";
+				Game.gameStateHandler = Game.gameState.MENUPLAYER;
 			}
 			else if (options[cur] == "Help") {
-				Game.gameState = "MENUHELP";
+				Game.gameStateHandler = Game.gameState.MENUHELP;
 			}
 			else if (options[cur] == "Exit") {
 				System.exit(1);
@@ -31,7 +31,7 @@ public class Menu_Init {
 		Game.keyController.clear();
 	}
 	
-	public void render(Graphics g) {
+	public static void render(Graphics g) {
 		g.setColor(Color.black); 
 		g.fillRect(0, 0, Game.width, Game.height);
 		g.setColor(Color.white);

@@ -7,13 +7,11 @@ import entities.*;
 import entities.weapons.*;
 
 public class Menu_Player {
-	private int cur, curW;
-	private String[] weapons = {"Mana Weapon", "Fire Weapon", "Wind Weapon", "Ice Weapon", "Fisical Weapon", "Poison Weapon"}, options = {"Books", "Start", "Runes", "Back"};
-	private boolean clickR, clickL;
-	private int weaponCost;
-	private boolean weaponBlock;
+	private static int cur, curW, weaponCost;
+	private static String[] weapons = {"Mana Weapon", "Fire Weapon", "Wind Weapon", "Ice Weapon", "Fisical Weapon", "Poison Weapon"}, options = {"Books", "Start", "Runes", "Back"};
+	private static boolean clickR, clickL, weaponBlock;
 	
-	public void tick() {
+	public static void tick() {
 		boolean enter = Game.keyController.contains(10);
 		if (Game.keyController.contains(87) || Game.keyController.contains(38)) {//W UP
 			cur --;
@@ -46,7 +44,7 @@ public class Menu_Player {
 			if (enter) {
 				if (costPossible() || isWeaponBlock()) {
 					if (!isWeaponBlock()) Player.souls -= weaponCost;
-					Game.gameState = "NORMAL";
+					Game.gameStateHandler = Game.gameState.NORMAL;
 					weaponVerification();
 				}
 			}
@@ -56,18 +54,18 @@ public class Menu_Player {
 			clickR = false;
 			clickL = false;
 			if (enter && Player.runesInventory.size() > 1)
-				Game.gameState = "MENURUNES";
+				Game.gameStateHandler = Game.gameState.MENURUNES;
 		}
 		
 		if (options[cur] == "Back") {
 			if (enter) {
-				Game.gameState = "MENUINIT";
+				Game.gameStateHandler = Game.gameState.MENUINIT;
 			}	
 		}
 		Game.keyController.clear();
 	}
 	
-	private boolean isWeaponBlock() {
+	private static boolean isWeaponBlock() {
 		if (weaponBlock == false) {
 			return true;
 		}
@@ -76,7 +74,7 @@ public class Menu_Player {
 		}
 	}
 	
-	private boolean costPossible() {
+	private static boolean costPossible() {
 		if (Player.souls >= weaponCost) {
 			return true;
 		}
@@ -85,7 +83,7 @@ public class Menu_Player {
 		}
 	}
 	
-	private void weaponVerification() {
+	private static void weaponVerification() {
 		switch(weapons[curW]){
 			case "Mana Weapon": 
 				Game.player.playerWeapon = new Mana_Weapon();
@@ -114,7 +112,7 @@ public class Menu_Player {
 		}
 	}
 	
-	private void costWeapon() {
+	private static void costWeapon() {
 		switch(curW) {
 		case 0:
 			weaponCost = Mana_Weapon.soulCost;
@@ -143,7 +141,7 @@ public class Menu_Player {
 		}
 	}
 	
-	private void imgWeapon(Graphics g) {
+	private static void imgWeapon(Graphics g) {
 		switch(curW){
 		case 0: 
 			g.drawImage(Mana_Weapon.sprite, 200, 54, 32, 32, null);
@@ -166,7 +164,7 @@ public class Menu_Player {
 		}
 	}
 	
-	public void render(Graphics g) {
+	public static void render(Graphics g) {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, Game.width, Game.height);
 		

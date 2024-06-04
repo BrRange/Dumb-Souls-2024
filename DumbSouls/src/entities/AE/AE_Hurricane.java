@@ -16,7 +16,7 @@ public class AE_Hurricane extends Attack_Entity{
 		this.speed = spd;
 		this.damage = dmg;
 		this.timeLife = time;
-		this.push = - 2;
+		this.push = -2;
 		this.depth = 2;
 		this.getAnimation(16, 128, 16, 16, maxIndex);
 		this.setMask(6, 0, 52, 32);
@@ -28,8 +28,8 @@ public class AE_Hurricane extends Attack_Entity{
 		
 		double destX = Game.mx / Game.scale;
 		double destY = Game.my / Game.scale;
-		double startX = this.x + 26 - Camera.x;
-		double startY = this.y + 16 - Camera.y;
+		double startX = this.x + 28 - Camera.x;
+		double startY = this.y + 18 - Camera.y;
 
 		double ang = getAngle(destY, startY, destX, startX);
 

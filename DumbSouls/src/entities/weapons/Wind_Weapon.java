@@ -152,7 +152,6 @@ public class Wind_Weapon extends Weapon {
 		int manaCost = 64;
 		if (ablt2Ava && Game.player.mana >= manaCost) {
 			if (!md2) {
-				
 				md2 = true;
 				Game.player.mana -= manaCost;
 			}
@@ -160,7 +159,7 @@ public class Wind_Weapon extends Weapon {
 		if (md2) {
 			Game.player.ablt2 = false;
 			md2 = false;
-			Game.entities.add(new AE_Hurricane(Game.player.getX(), Game.player.getY(), 32, 32, null, 240, hrcSpeed, hrcDamage));
+			Game.entities.add(new AE_Hurricane(Game.player.getX() - 16, Game.player.getY() - 16, 32, 32, null, 240, hrcSpeed, hrcDamage));
 		}
 	}
 	

@@ -11,10 +11,11 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import javax.swing.JFrame;
@@ -41,10 +42,25 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	public static final int scale = 3;
 	public static int mx, my, amountTicks;
 	
-	private BufferedImage image;
+	private static BufferedImage image;
 	public static Spritesheet sheet;
-	
-	public static String gameState = "MENUINIT";
+	public enum gameState{
+		NORMAL(() -> Game.tick(), g -> render(g)),
+		MENULEVEL(() -> Menu_Level.tick(), g -> Menu_Level.render(g)),
+    	MENUINIT(() -> Menu_Init.tick(), g -> Menu_Init.render(g)),
+		MENUPLAYER(() -> Menu_Player.tick(), g -> Menu_Player.render(g)),
+		MENUHELP(() -> Menu_Help.tick(), g -> Menu_Help.render(g)),
+		MENUPAUSE(() -> Menu_Pause.tick(), g -> Menu_Pause.render(g)),
+		MENURUNES(() -> Menu_Runes.tick(), g -> Menu_Runes.render(g));
+
+		private Runnable stateTick;
+		private Consumer<Graphics> stateRender;
+		gameState(Runnable stateTick, Consumer<Graphics> stateRender){
+			this.stateTick = stateTick;
+			this.stateRender = stateRender;
+		}
+	} public static gameState gameStateHandler;
+
 	public static UI ui;
 	public static World world;
 	public static Player player;
@@ -86,6 +102,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		levelUpMenu = new Menu_Level(3);
 		helpMenu = new Menu_Help();
 		runesMenu = new Menu_Runes();
+		gameStateHandler = gameState.MENUINIT;
 		Save_Game.loadSave();
 	}
 	
@@ -118,12 +135,13 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.createBufferStrategy(3);
 	}
 	
-	private void spawnEnemies() {
+	private static void spawnEnemies() {
 		if (enemies.size() == 0) {
 			if (World.wave % 10 != 0) {
-				world.rizeMaxEnemies();
+				world.raiseMaxEnemies();
 				World.wave++;
 				for (int c = 0; c <= World.maxEnemies; c++) {
 					world.spawnEnemy();
@@ -135,116 +153,57 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			}
 		}
 	}
-	
-	public void tick() {
-		switch(gameState){
-		case "NORMAL":
-			player.moveX = player.moveY = 0;
-			for(int i = 0; i < entities.size(); i++) {
-				entities.get(i).tick();
-			}
-			for(int i = 0; i < shots.size(); i++) {
-				shots.get(i).tick();
-			}
-			for(int i = 0; i < enemies.size(); i++) {
-				enemies.get(i).tick();
-			}
-			for(int i = 0; i < eShots.size(); i++) {
-				eShots.get(i).tick();
-			}
-			
-			spawnEnemies();
-			break;
-		case "LEVELUP":
-			levelUpMenu.tick();
-			break;
-		case "MENUINIT":
-			startMenu.tick();
-			break;
-		case "MENUPLAYER":
-			playerMenu.tick();
-			break;
-		case "MENUHELP":
-			helpMenu.tick();
-			break;
-		case "MENUPAUSE":
-			pauseMenu.tick();
-			break;
-		case "MENURUNES":
-			runesMenu.tick();
-			break;
-		}
-	}
-	
-	public void render() {
+
+	private void baseRender(){
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
 			this.createBufferStrategy(3);
 			return;
 		}
-		Graphics g = image.getGraphics();
-		switch(gameState){
-		case "NORMAL":
-			g.setColor(new Color(0, 0, 0));
-			g.fillRect(0, 0, width, height);
-			world.render(g);
-			Collections.sort(entities, Entity.entityDepth);
-			Collections.sort(enemies, Entity.entityDepth);
-			for(int i = 0; i < entities.size(); i++) {
-				entities.get(i).render(g);
-			}
-			for(int i = 0; i < enemies.size(); i++) {
-				enemies.get(i).render(g);
-			}
-			for(int i = 0; i < shots.size(); i++) {
-				shots.get(i).render(g);
-			}
-			for(int i = 0; i < eShots.size(); i++) {
-				eShots.get(i).render(g);
-			}
-			g.dispose();
-			g = bs.getDrawGraphics();
-			g.drawImage(image, 0, 0, width * scale, height * scale, null);
-			ui.render(g);
-			break;
-		case "LEVELUP":
-			levelUpMenu.render(g);
-			g.dispose();
-			g = bs.getDrawGraphics();
-			g.drawImage(image, 0, 0, width * scale, height * scale, null);
-			break;
-		case "MENUINIT":
-			startMenu.render(g);
-			g.dispose();
-			g = bs.getDrawGraphics();
-			g.drawImage(image, 0, 0, width * scale, height * scale, null);
-			break;
-		case "MENUPLAYER":
-			playerMenu.render(g);
-			g.dispose();
-			g = bs.getDrawGraphics();
-			g.drawImage(image, 0, 0, width * scale, height * scale, null);
-			break;
-		case "MENUHELP":
-			helpMenu.render(g);
-			g.dispose();
-			g = bs.getDrawGraphics();
-			g.drawImage(image, 0, 0, width * scale, height * scale, null);
-			break;
-		case "MENUPAUSE":
-			pauseMenu.render(g);
-			g.dispose();
-			g = bs.getDrawGraphics();
-			g.drawImage(image, 0, 0, width * scale, height * scale, null);
-			break;
-		case "MENURUNES":
-			runesMenu.render(g);
-			g.dispose();
-			g = bs.getDrawGraphics();
-			g.drawImage(image, 0, 0, width * scale, height * scale, null);
-			break;
-		}
+		Graphics g = Game.image.getGraphics();
+		gameStateHandler.stateRender.accept(g);
+		g.dispose();
+		g = bs.getDrawGraphics();
+		g.drawImage(image, 0, 0, width * scale, height * scale, null);
+		if(gameStateHandler == gameState.NORMAL) ui.render(g);
 		bs.show();
+	}
+
+	private static void tick() {
+		player.moveX = player.moveY = 0;
+		for(int i = 0; i < entities.size(); i++) {
+			entities.get(i).tick();
+		}
+		for(int i = 0; i < shots.size(); i++) {
+			shots.get(i).tick();
+		}
+		for(int i = 0; i < enemies.size(); i++) {
+			enemies.get(i).tick();
+		}
+		for(int i = 0; i < eShots.size(); i++) {
+			eShots.get(i).tick();
+		}
+		spawnEnemies();
+	}
+
+	private static void render(Graphics g) {
+		g.setColor(new Color(0, 0, 0));
+		g.fillRect(0, 0, width, height);
+		world.render(g);
+		Collections.sort(entities, Entity.entityDepth);
+		Collections.sort(enemies, Entity.entityDepth);
+		for(Entity e : entities) {
+			e.render(g);
+		}
+		for(Enemy e : enemies) {
+			e.render(g);
+		}
+		for(Shot e : shots) {
+			e.render(g);
+		}
+		for(Enemy_Shot e : eShots) {
+			e.render(g);
+		}
 	}
 	
 	public void run() {
@@ -258,11 +217,11 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			long now = System.currentTimeMillis();
 			delta = (now - lastTime) / 1000.0;
 			if(delta >= framesSec) {
-				tick();
+				gameStateHandler.stateTick.run();
 				lastTime = now;
 			}
-			render();
-			try { //Pq tem q ter try catch nessa merda, deixa o negocio dar erro em paz
+			baseRender();
+			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -281,14 +240,15 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		keyController.add(e.getKeyCode());
 
 		if (keyController.contains(KeyEvent.VK_ESCAPE)) {
-			switch(gameState) {
-				case "NORMAL":
-					gameState = "MENUPAUSE";
+			switch(gameStateHandler) {
+				case NORMAL:
+					gameStateHandler = gameState.MENUPAUSE;
 					break;
-				case "MENUPAUSE":
+				case MENUPAUSE:
 					player.stopMoving();
-					gameState = "NORMAL";
+					gameStateHandler = gameState.NORMAL;
 					break;
+				default: break;
 			}
 		}
 	}
@@ -322,13 +282,12 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		if(gameState == "NORMAL") gameState = "MENUPAUSE";
+		if(gameStateHandler == gameState.NORMAL) gameStateHandler = gameState.MENUPAUSE;
 		keyController.clear();
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		
 		
 	}
 

@@ -6,8 +6,8 @@ import java.awt.Font;
 import entities.Player;
 
 public class Menu_Level {
-	private String[] options;
-	private int cur;
+	private static String[] options;
+	private static int cur;
 	
 	public Menu_Level(int numOP) {
 		options = new String[numOP];
@@ -16,7 +16,7 @@ public class Menu_Level {
 		}
 	}
 	
-	private void sortOptions(int numOP) {
+	private static void sortOptions(int numOP) {
 		int opt = 0, lastOpt = -1;
 		for (int c = 0; c < numOP; c++) {
 			opt = Game.rand.nextInt(Game.player.playerWeapon.listNames.length);
@@ -28,7 +28,7 @@ public class Menu_Level {
 		}
 	}
 	
-	public void tick() {
+	public static void tick() {
 		if (Game.player.levelUp) {
 			sortOptions(3);
 			Game.player.levelUp = false;
@@ -46,7 +46,7 @@ public class Menu_Level {
 		if (Game.keyController.contains(10)) {
 			Game.player.playerWeapon.checkOptions(options[cur]);
 			Game.player.life = Game.player.maxLife;
-			Game.gameState = "NORMAL";
+			Game.gameStateHandler = Game.gameState.NORMAL;
 		}
 		 
 		if (Game.keyController.contains(32)) {
@@ -58,7 +58,7 @@ public class Menu_Level {
 		Game.keyController.clear();
 	}
 	
-	public void render(Graphics g) {
+	public static void render(Graphics g) {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, Game.width * Game.scale, Game.height * Game.scale);
 		

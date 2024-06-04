@@ -6,10 +6,10 @@ import java.awt.Font;
 import entities.Player;
 
 public class Menu_Pause {
-    private String[] options = {"Resume", "Initial Menu"};
-	private int cur;
+    private static String[] options = {"Resume", "Initial Menu"};
+	private static int cur;
 	
-    public void tick() {
+    public static void tick() {
 		if (Game.keyController.contains(83) || Game.keyController.contains(40)) {//S DOWN
 			cur++;
 			if (cur > options.length - 1) {
@@ -25,7 +25,7 @@ public class Menu_Pause {
 		if (Game.keyController.contains(10)) {
 			if (options[cur] == "Resume") {
 				Game.player.stopMoving();
-				Game.gameState = "NORMAL";
+				Game.gameStateHandler = Game.gameState.NORMAL;
 			}
 			else if (options[cur] == "Initial Menu") {
 				cur = 0;
@@ -35,7 +35,7 @@ public class Menu_Pause {
 		Game.keyController.clear();
 	}
 
-    public void render(Graphics g) {
+    public static void render(Graphics g) {
         g.setColor(Color.black); 
 		g.fillRect(0, 0, Game.width, Game.height);
         g.setColor(Color.white);

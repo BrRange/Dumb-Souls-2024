@@ -18,7 +18,7 @@ public class Barrier_Enemy extends Enemy{
 		super(x, y, width, height, sprite);
 		if (specialRare){
 			specialMult = 2;
-			hue = 0xBBC6CC;
+			hue = 0xFFFFFF;
 		}
 		this.getAnimation(144, 80, 48, 32, 2);
 		this.expValue = 30 * specialMult;

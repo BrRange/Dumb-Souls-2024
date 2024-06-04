@@ -15,7 +15,7 @@ public class Mouth_Enemy extends Enemy {
 		super(x, y, width, height, sprite);
 		if (specialRare){
 			this.specialMult = 2;
-			hue = 0xF00000;
+			hue = 0xFFFFFF;
 		}
 		this.getAnimation(96, 80, 16, 16, 3);
 		this.expValue = 20 * specialMult;

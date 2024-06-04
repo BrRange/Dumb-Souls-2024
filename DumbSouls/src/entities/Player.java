@@ -104,7 +104,7 @@ public class Player extends Entity{
 		Game.startMenu = new Menu_Init();
 		Game.playerMenu = new Menu_Player();
 		Game.levelUpMenu = new Menu_Level(3);
-		Game.gameState = "MENUINIT";
+		Game.gameStateHandler = Game.gameState.MENUINIT;
 		try {
 			Save_Game.save();
 		} catch (IOException e) {
@@ -119,7 +119,7 @@ public class Player extends Entity{
 			exp -= maxExp;
 			moveX = moveY = 0;
 			maxExp *= 1.2;
-			Game.gameState = "LEVELUP";
+			Game.gameStateHandler = Game.gameState.MENULEVEL;
 		}
 	}
 	
@@ -204,8 +204,8 @@ public class Player extends Entity{
 		
 		isAttacking();
 		checkExp();
-		if (Game.keyController.contains(49)) playerWeapon.Ablt2();
-		if (Game.keyController.contains(50)) playerWeapon.Ablt3();
+		if (Game.keyController.contains(49) || playerWeapon.md2) playerWeapon.Ablt2();
+		if (Game.keyController.contains(50) || playerWeapon.md3) playerWeapon.Ablt3();
 		shotDamage();
 		runeTick();
 		

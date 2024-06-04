@@ -16,7 +16,7 @@ public class Debri_Enemy extends Enemy{
 		this.specialRare = specialRare;
 		if (specialRare){
 			specialMult = 3;
-			hue = 0xDAA520;
+			hue = 0xFFFFFF;
 		}
 		this.getAnimation(48, 144, 16, 16, 3);
         this.expValue = expValue;

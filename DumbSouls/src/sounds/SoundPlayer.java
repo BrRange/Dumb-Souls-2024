@@ -19,7 +19,7 @@ public class SoundPlayer{
 				
 			}
 			else {
-				System.out.println("!!!This sound file does not exists: " + sound);
+				System.out.println("!!!This sound file does not exist: " + sound);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
