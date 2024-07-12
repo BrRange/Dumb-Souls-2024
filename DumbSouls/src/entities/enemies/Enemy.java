@@ -23,7 +23,7 @@ public class Enemy extends Entity{
 	}
 
 	void isSpecial(){
-		if (Game.rand.nextInt(2) == 0)
+		if (Game.rand.nextInt(256) == 0)
 			this.specialRare = true;
 	}
 	
