@@ -132,15 +132,12 @@ public class Poison_Weapon extends Weapon{
     public void Dash() {
 		int manaCost = 30;
 		
-		if (this.dashAva && Game.player.mana >= manaCost) {
-			if (!md1) {
-				md1 = true;
-				Game.player.mana -= manaCost;
-			}
+		if (this.dashAva && Game.player.mana >= manaCost && !md1) {
+			md1 = true;
+			Game.player.mana -= manaCost;
 		}
 		if (md1) {
 			Game.entities.add(new AE_PoisonDs(Game.player.getX() - dsW / 2 + 8, Game.player.getY() - dsH / 2 + 8, dsW, dsH, null, dsT, dsD));
-			Game.player.dash = false;
 			md1 = false;
         }
     }
@@ -148,15 +145,12 @@ public class Poison_Weapon extends Weapon{
     public void Ablt2() {
 		int manaCost = 36;
 		
-		if (ablt2Ava && Game.player.mana >= manaCost) {
-			if (!md2) {
-				md2 = true;
-				Game.player.mana -= manaCost;
-			}
+		if (ablt2Ava && Game.player.mana >= manaCost && !md2) {
+			md2 = true;
+			Game.player.mana -= manaCost;
 		}
 		if (md2) {
 			Game.entities.add(new AE_PoisonPool(Game.player.getX() - ablt2W / 2 + 8, Game.player.getY() - ablt2H / 2 + 8, ablt2W, ablt2H, null, 150, ablt2D));
-			Game.player.ablt2 = false;
 			md2 = false;
         }
 		
@@ -190,7 +184,6 @@ public class Poison_Weapon extends Weapon{
 			}
 			if (tspw == maxTspw) {
 				tspw = 0;
-				Game.player.ablt3 = false;
 				md3 = false;
 			}
 		}

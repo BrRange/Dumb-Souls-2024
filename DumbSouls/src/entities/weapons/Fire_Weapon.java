@@ -126,46 +126,40 @@ public class Fire_Weapon extends Weapon {
 	public void Dash() {
 		int manaCost = 12;
 		
-		if (this.dashAva && Game.player.mana >= manaCost) {
-			if (!md1) {
-				md1 = true;
-				Game.player.mana -= manaCost;
-				sound3.PlaySound();
+		if (this.dashAva && Game.player.mana >= manaCost && !md1) {
+			md1 = true;
+			Game.player.mana -= manaCost;
+			sound3.PlaySound();
+		}
+		if (md1) {
+			Game.player.moveCos -= Math.signum(Game.player.moveX) * 2.5;
+			Game.player.moveSin += Math.signum(Game.player.moveY) * 2.5;
+			
+			di += 1;
+			if (tspw > 2) {
+				tspw = 0;
 			}
-			if (md1) {
-				Game.player.moveCos -= Math.signum(Game.player.moveX) * 2.5;
-				Game.player.moveSin += Math.signum(Game.player.moveY) * 2.5;
-				
-				di += 2.5;
-				if (tspw > 2) {
-					tspw = 0;
-				}
-				tspw ++;
-				if (tspw == 2) {
-					Game.entities.add(new AE_Fire(Game.player.getX(), Game.player.getY(), 16, 16, null, 125));
-					tspw = 0;
-				}
-				if (di >= dashDistance) {
-					Game.player.dash = false;
-					md1 = false;
-					di = 0;
-					Game.player.speed = Game.player.maxSpeed;
-				}
+			tspw ++;
+			if (tspw == 2) {
+				Game.entities.add(new AE_Fire(Game.player.getX(), Game.player.getY(), 16, 16, null, 125));
+				tspw = 0;
+			}
+			if (di >= dashDistance) {
+				md1 = false;
+				di = 0;
+				Game.player.speed = Game.player.maxSpeed;
 			}
 		}
 	}
 	
 	public void Ablt2() {
 		int manaCost = 34;
-		if (ablt2Ava && Game.player.mana >= manaCost) {
-			if (!md2) {
-				sound2.PlaySound();
-				md2 = true;
-				Game.player.mana -= manaCost;
-			}
+		if (ablt2Ava && Game.player.mana >= manaCost && !md2) {
+			sound2.PlaySound();
+			md2 = true;
+			Game.player.mana -= manaCost;
 		}
 		if (md2) {
-			
 			tspw2++;
 			double ang = Math.atan2(Game.my / Game.scale - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale - (Game.player.getX() + 8 - Camera.x));
 			double dx = Math.cos(ang);
@@ -175,7 +169,6 @@ public class Fire_Weapon extends Weapon {
 			}
 			if (tspw2 == maxtspw2) {
 				tspw2 = 0;
-				Game.player.ablt2 = false;
 				md2 = false;
 				sound2.StopSound();
 			}
@@ -185,19 +178,17 @@ public class Fire_Weapon extends Weapon {
 	public void Ablt3() {
 		int manaCost = 68;
 		
-		if (ablt3Ava && Game.player.mana >= manaCost) {
-			if (!md3) {
-				sound3.PlaySound();
-				md3 = true;
-				Game.player.mana -= manaCost;
-			}
-			
+		if (ablt3Ava && Game.player.mana >= manaCost && !md3) {
+			sound3.PlaySound();
+			md3 = true;
+			Game.player.mana -= manaCost;
+		}
+		if(md3){
 			double ang = Math.atan2(Game.my / Game.scale - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale - (Game.player.getX() + 8 - Camera.x));
 			double dx = Math.cos(ang);
 			double dy =  Math.sin(ang);
 			Game.entities.add(new AE_HellFlame(Game.player.getX(), Game.player.getY() - 32, 32, 32, ablt3Spd, dx, dy, ablt3Dmg, null, 80));
-			Game.player.ablt3 = false;
 			md3 = false;
-		}
+		}	
 	}
 }

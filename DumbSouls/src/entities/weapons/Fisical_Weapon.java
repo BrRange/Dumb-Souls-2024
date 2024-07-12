@@ -149,33 +149,27 @@ public class Fisical_Weapon extends Weapon {
 			if(di >= dashDistance) {
 				di = 0;
 				md1 = false;
-				Game.player.dash = false;
 			}
 		}
 	}
 	
 	public void Ablt2() {
 		int manaCost = 30;	
-		if (this.ablt2Ava && Game.player.mana >= manaCost) {
-			if (!md2) {
-				md2 = true;
-				Game.player.mana -= manaCost;
-			}
+		if (this.ablt2Ava && Game.player.mana >= manaCost && !md2) {
+			md2 = true;
+			Game.player.mana -= manaCost;
 		}
 		if (md2) {
 			Game.entities.add(new AE_Rupture(Game.player.getX() - ablt2W / 2 + 8, Game.player.getY() - ablt2H / 2 + 8, ablt2W, ablt2H, null, 80, ablt2Dmg));
-			Game.player.ablt2 = false;
 			md2 = false;
 		}
 	}
 	
 	public void Ablt3() {
 		int manaCost = 50;
-		if (this.ablt3Ava && Game.player.mana >= manaCost) {
-			if (!md3) {
-				md3 = true;
-				Game.player.mana -= manaCost;
-			}
+		if (this.ablt3Ava && Game.player.mana >= manaCost && !md3) {
+			md3 = true;
+			Game.player.mana -= manaCost;
 		}
 		if (md3) {
 			tspw++;
@@ -187,7 +181,6 @@ public class Fisical_Weapon extends Weapon {
 				Game.entities.add(new AE_PunchRain(Game.player.getX(), Game.player.getY(), 16, 16, 3, dx, dy, ablt3Dmg, null, 20));
 			}
 			if (tspw == 40) {
-				Game.player.ablt3 = false;
 				tspw = 0;
 				md3 = false;
 			}

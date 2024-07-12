@@ -2,7 +2,6 @@ package entities;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import graphics.UI;
 import entities.shots.Enemy_Shot;
 import java.awt.Graphics;
@@ -16,8 +15,8 @@ import java.util.ArrayList;
 public class Player extends Entity{
 	
 	private int tickTimer, attackTimer;
-	public boolean moving, attack, levelUp, dash, ablt2, ablt3;
-	public short moveX, moveY;
+	public boolean moving, attack, levelUp;
+	public short moveX, moveY, abltCooldown;
 	public int maxLife = 100, exp = 0, maxExp = 100, maxMana = 100;
 	public static int souls;
 	public int level = 1;
@@ -156,6 +155,28 @@ public class Player extends Entity{
 		if (this.tickTimer >= 60)
 			this.tickTimer = 0;
 	}
+
+	private void castAblt(){
+		if(abltCooldown == 0){
+			if (Game.keyController.contains(32) || playerWeapon.md1){
+				playerWeapon.Dash();
+				abltCooldown = 30;
+			}
+			if (Game.keyController.contains(49) || playerWeapon.md2){
+				playerWeapon.Ablt2();
+				abltCooldown = 30;
+			}
+			if (Game.keyController.contains(50) || playerWeapon.md3){
+				playerWeapon.Ablt3();
+				abltCooldown = 30;
+			}
+		} else {
+			if (playerWeapon.md1) playerWeapon.Dash();
+			if (playerWeapon.md2) playerWeapon.Ablt2();
+			if (playerWeapon.md3) playerWeapon.Ablt3();
+			abltCooldown--;
+		}
+	}
 	
 	public void tick() {
 		if (Game.keyController.contains(87) || Game.keyController.contains(38))//W UP
@@ -179,7 +200,7 @@ public class Player extends Entity{
 			moveSin = Math.sin(tempAngle);
 		}
 
-		if (Game.keyController.contains(32) || playerWeapon.md1) playerWeapon.Dash();
+		castAblt();
 
 		if(moving){
 			this.x += speed * moveCos;
@@ -188,13 +209,13 @@ public class Player extends Entity{
 		}
 		
 		if (mana < maxMana && TickTimer(20))
-			mana = Math.min(maxMana, mana + manaRec);
-
+		mana = Math.min(maxMana, mana + manaRec);
+		
 		if (Game.player.life < Game.player.maxLife && TickTimer(10))
-			Game.player.life = Math.min(Game.player.maxLife, Game.player.life * Game.player.lifeRec);
-
+		Game.player.life = Math.min(Game.player.maxLife, Game.player.life * Game.player.lifeRec);
+		
 		refreshTick();
-
+		
 		if (life <= 0) {
 			die();
 		}
@@ -204,8 +225,6 @@ public class Player extends Entity{
 		
 		isAttacking();
 		checkExp();
-		if (Game.keyController.contains(49) || playerWeapon.md2) playerWeapon.Ablt2();
-		if (Game.keyController.contains(50) || playerWeapon.md3) playerWeapon.Ablt3();
 		shotDamage();
 		runeTick();
 		

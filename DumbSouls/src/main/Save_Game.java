@@ -16,7 +16,7 @@ import entities.runes.*;
 
 public class Save_Game {
 	
-	private static int weaponSum;
+	private static int weaponSum, xorKey = 0x9EFF7DEB;
 
 	private static int bitIntWriter(boolean value, int bitIndex) {
 		return value ? 0 : 1 << bitIndex;
@@ -32,14 +32,13 @@ public class Save_Game {
 		final Path path = Paths.get("SaveDS.txt");
 		
 		 try (final BufferedWriter writer = Files.newBufferedWriter(path,StandardCharsets.UTF_8, StandardOpenOption.CREATE);) {
-			 writer.write("" + Player.souls);
+			 writer.write("" + (Player.souls ^ xorKey));
 			 writer.newLine();
 			 writer.write("" + weaponSum);
 			 writer.newLine();
 			 for (int i = 0; i < Player.runesInventory.size(); i++) {
 				 writer.write(Player.runesInventory.get(i).name + ";");
 			 }
-		     writer.flush();
 		     writer.close();
 		 }
 	}
@@ -52,10 +51,9 @@ public class Save_Game {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("SaveDS.txt"));
 			
-			Player.souls = Integer.parseInt(reader.readLine());
+			Player.souls = Integer.parseInt(reader.readLine()) ^ xorKey;
 			weaponSum = Integer.parseInt(reader.readLine());
 			String[] runes = reader.readLine().split(";");
-			
 			reader.close();
 			
 			Fire_Weapon.block = intBitReader(weaponSum, 1);
@@ -73,9 +71,8 @@ public class Save_Game {
 			e.printStackTrace();
 			try{
 			PrintWriter writer = new PrintWriter("SaveDS.txt", "UTF-8");
-			writer.println("0");
-			writer.println("0");
-			writer.println(";");
+			writer.println(xorKey);
+			writer.println(xorKey);
 			writer.close();
 			loadSave();
 			} catch (IOException ee){

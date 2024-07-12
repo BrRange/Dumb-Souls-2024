@@ -43,7 +43,7 @@ public class Rune_Orb extends Enemy {
 		this.movement();
 
 		if (isColiding(this, Game.player)){
-	        Game.entities.remove(this);
+	        Game.enemies.remove(this);
 	        
 	        switch (runes[indexRunes]) {
 	        	case "Life":

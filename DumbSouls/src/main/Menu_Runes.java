@@ -23,13 +23,13 @@ public class Menu_Runes {
 		}
 		
 		if (options[cur] == "Runes") {
-			if (Game.keyController.contains(68) || Game.keyController.contains(39)) {//A LEFT
+			if (Game.keyController.contains(68) || Game.keyController.contains(39) && !Player.runesInventory.isEmpty()) {//A LEFT
 				clickR = true;
 				clickL = false;
 				curR++;
 				if (curR > Player.runesInventory.size() - 1) curR = 0;
 			}
-			if (Game.keyController.contains(65) || Game.keyController.contains(37)) {//D RIGHT
+			if (Game.keyController.contains(65) || Game.keyController.contains(37) && !Player.runesInventory.isEmpty()) {//D RIGHT
 				clickR = false;
 				clickL = true;
 				curR--;
@@ -38,7 +38,7 @@ public class Menu_Runes {
 		}
 		
 		if(options[cur] == "Equip") {
-			if (enter) {
+			if (enter && !Player.runesInventory.isEmpty()) {
 				if (Game.player.runesEquipped.size() < Player.runeLimit ) {
 					if (!Player.runesInventory.get(curR).equipped) {
 						Game.player.runesEquipped.add(Player.runesInventory.get(curR));
@@ -49,15 +49,15 @@ public class Menu_Runes {
 		}
 		
 		if(options[cur] == "Unequip") {
-			if (enter) {
+			if (enter && !Player.runesInventory.isEmpty()) {
 				Game.player.runesEquipped.remove(Player.runesInventory.get(curR));
 				Player.runesInventory.get(curR).equipped = false;
 			}	
 		}
 		
 		if (options[cur] == "Delete") {
-			if (enter) {
-				if (Player.runesInventory.size() > 1) {
+			if (enter && !Player.runesInventory.isEmpty()) {
+				if (Player.runesInventory.size() > 0) {
 					Player.runesInventory.remove(Player.runesInventory.get(curR));
 				}
 			}	
@@ -110,7 +110,11 @@ public class Menu_Runes {
 		g.drawString("Player Configuration/ Runes", 90, 20);
 		
 		g.setFont(new Font("arial", Font.BOLD, 9));
-		g.drawString(Player.runesInventory.get(curR).name, 30, 40);
+
+		if(!Player.runesInventory.isEmpty()){
+			g.drawString(Player.runesInventory.get(curR).name, 30, 40);
+			renderSprites(g);
+		}
 		g.drawString("Equip", 30, 60);
 		g.drawString("Unequip", 30, 80);
 		g.drawString("Delete", 30, 100);
@@ -153,7 +157,5 @@ public class Menu_Runes {
 		
 		g.setColor(new Color(74, 52, 160));
 		g.drawString("Souls : " + Player.souls, 255, 150);
-		
-		renderSprites(g);
 	}
 }

@@ -18,7 +18,7 @@ public class Base_Enemy extends Enemy{
 		super(x, y, width, height, sprite);
 		if (specialRare){
 			this.specialMult = 3;
-			hue = 0xFFFFFF;
+			this.hue = 0xFFFFFF;
 		}
 		this.getAnimation(0, 80, 16, 16, 3);
 		this.expValue = 10 * specialMult;

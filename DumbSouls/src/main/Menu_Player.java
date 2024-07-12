@@ -53,7 +53,7 @@ public class Menu_Player {
 		if (options[cur] == "Runes") {
 			clickR = false;
 			clickL = false;
-			if (enter && Player.runesInventory.size() > 1)
+			if (enter)
 				Game.gameStateHandler = Game.gameState.MENURUNES;
 		}
 		

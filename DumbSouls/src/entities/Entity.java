@@ -13,6 +13,8 @@ public class Entity {
 	
 	public double x;
 	public double y;
+	public double life;
+	public double maxLife;
 	public int width;
 	public int height;
 	protected int mx, my, mw, mh;

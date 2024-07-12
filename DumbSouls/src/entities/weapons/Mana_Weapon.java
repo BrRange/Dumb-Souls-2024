@@ -115,11 +115,9 @@ public class Mana_Weapon extends Weapon {
 	
 	public void Dash() {
 		int manaCost = 40;
-		if (this.dashAva && Game.player.mana >= manaCost) {
-			if (!md1) {
-				md1 = true;
-				Game.player.mana -= manaCost;
-			}
+		if (this.dashAva && Game.player.mana >= manaCost && !md1) {
+			md1 = true;
+			Game.player.mana -= manaCost;
 		}
 		if (md1) {
 			if (timeDash == 0) {
@@ -134,41 +132,34 @@ public class Mana_Weapon extends Weapon {
 				Game.entities.add(new AE_Animation(Game.player.getX() + 8, Game.player.getY() + 6, 16, 16, null, 20, 0, 1, 192, 128, 16, 16, "goToUp_2", null));
 			}
 			timeDash++;
-			if (timeDash == maxTimeD) {
+			if (timeDash >= maxTimeD) {
 				timeDash = 0;
 				md1 = false;
-				Game.player.dash = false;
 			}
 		}
 	}
 	
 	public void Ablt2() {
 		int manaCost = 68;
-		if (this.ablt2Ava && Game.player.mana >= manaCost) {
-			if (!md2) {
-				md2 = true;
-				Game.player.mana -= manaCost;
-			}
+		if (this.ablt2Ava && Game.player.mana >= manaCost && !md2) {
+			md2 = true;
+			Game.player.mana -= manaCost;
 		}
 		if (md2) {
 			qntSpcShots += spcShotsGain;
 			md2 = false;
-			Game.player.ablt2 = false;
 		}
 	}
 	
 	public void Ablt3() {
 		int manaCost = 35;
-		if (this.ablt3Ava && Game.player.mana >= manaCost) {
-			if (!md3) {
-				md3 = true;
-				Game.player.mana -= manaCost;
-			}
+		if (this.ablt3Ava && Game.player.mana >= manaCost && !md3) {
+			md3 = true;
+			Game.player.mana -= manaCost;
 		}
 		if (md3) {
 			Game.entities.add(new AE_ManaRay(Game.player.getX(), Game.player.getY(), 16, 16, null, timeAblt3, ablt3Dmg));
 			md3 = false;
-			Game.player.ablt3 = false;
 		}
 	}
 	

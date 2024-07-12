@@ -13,7 +13,7 @@ public class Wind_Weapon extends Weapon {
 	public static BufferedImage sprite = Game.sheet.getSprite(64, 32, 16, 16);
 	private int shotDamage = 3, shotSpeed = 6, hrcDamage = 1, ablt3Dmg = 6;
 	private double hrcSpeed = 0.8, ablt3Spd = 5.0;
-	private double di, dashDistance = 40;
+	private short di, dashDistance = 30;
 	public static int soulCost = 100;
 	public static boolean block = true;
 	private SoundPlayer sound1, sound2;
@@ -127,15 +127,13 @@ public class Wind_Weapon extends Weapon {
 	
 	public void Dash() {
 		int manaCost = 20;
-		if (this.dashAva && Game.player.mana >= manaCost) {
-			if (!md1) {
-				md1 = true;
-				Game.player.mana -= manaCost;
-			}
+		if (this.dashAva && Game.player.mana >= manaCost && !md1) {
+			md1 = true;
+			Game.player.mana -= manaCost;
 		}
 		if(md1) {
 			Game.entities.add(new AE_WindDS(Game.player.getX(), Game.player.getY(), 16, 16, null, (int)(dashDistance / 4)));
-			di += 4.0;
+			di += 1;
 			if (di < dashDistance) {
 				Game.player.moveCos -= Math.signum(Game.player.moveX) * 4;
 				Game.player.moveSin += Math.signum(Game.player.moveY) * 4;
@@ -143,21 +141,17 @@ public class Wind_Weapon extends Weapon {
 			else {
 				di = 0;
 				md1 = false;
-				Game.player.dash = false;
 			}
 		}
 	}
 	
 	public void Ablt2() {
 		int manaCost = 64;
-		if (ablt2Ava && Game.player.mana >= manaCost) {
-			if (!md2) {
-				md2 = true;
-				Game.player.mana -= manaCost;
-			}
+		if (ablt2Ava && Game.player.mana >= manaCost && !md2) {
+			md2 = true;
+			Game.player.mana -= manaCost;
 		}
 		if (md2) {
-			Game.player.ablt2 = false;
 			md2 = false;
 			Game.entities.add(new AE_Hurricane(Game.player.getX() - 16, Game.player.getY() - 16, 32, 32, null, 240, hrcSpeed, hrcDamage));
 		}
@@ -165,19 +159,16 @@ public class Wind_Weapon extends Weapon {
 	
 	public void Ablt3() {
 		int manaCost = 36;
-		if (ablt3Ava && Game.player.mana >= manaCost) {
-			if (!md3) {
-				sound2.PlaySound();
-				md3 = true;
-				Game.player.mana -= manaCost;
-			}
+		if (ablt3Ava && Game.player.mana >= manaCost && !md3) {
+			sound2.PlaySound();
+			md3 = true;
+			Game.player.mana -= manaCost;
 		}
 		if (md3) {
 			double ang = Math.atan2(Game.my / Game.scale - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale - (Game.player.getX() + 8 - Camera.x));
 			double dx = Math.cos(ang);
 			double dy =  Math.sin(ang);
 			Game.entities.add(new AE_WindBarrage(Game.player.getX(), Game.player.getY(), 32, 32, ablt3Spd, dx, dy, ablt3Dmg, null, 30));
-			Game.player.ablt3 = false;
 			md3 = false;
 		}
 	}
