@@ -1,6 +1,5 @@
 package entities.orbs;
 
-import java.awt.Graphics;
 import entities.enemies.Enemy;
 import main.Game;
 import world.Camera;
@@ -65,7 +64,7 @@ public class Rune_Orb extends Enemy {
 	    }
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(this.sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
+	public void render() {
+		Game.gameGraphics.drawImage(this.sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 }

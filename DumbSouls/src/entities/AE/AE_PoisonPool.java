@@ -1,7 +1,6 @@
 package entities.AE;
 
 import java.awt.image.BufferedImage;
-import java.awt.Graphics;
 import world.Camera;
 import entities.*;
 import entities.enemies.Enemy;
@@ -48,7 +47,7 @@ public class AE_PoisonPool extends Attack_Entity {
 		}
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, this.width, this.height, null);
+	public void render() {
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, this.width, this.height, null);
 	}
 }

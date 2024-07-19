@@ -1,7 +1,6 @@
 package entities.enemies;
 
 import java.awt.image.BufferedImage;
-import java.awt.Graphics;
 import main.Game;
 import world.Camera;
 import entities.*;
@@ -98,7 +97,7 @@ public class Boss_Hive extends Enemy{
 		}
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+	public void render() {
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 }

@@ -3,7 +3,6 @@ package entities.AE;
 import java.awt.image.BufferedImage;
 import main.Game;
 import entities.enemies.Enemy;
-import java.awt.Graphics;
 import world.Camera;
 
 public class AE_Fire extends Attack_Entity {
@@ -45,7 +44,7 @@ public class AE_Fire extends Attack_Entity {
 		}
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+	public void render() {
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 }

@@ -1,5 +1,4 @@
 package main;
-import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -12,21 +11,21 @@ public class Menu_Help {
 		}
 	}
 	
-	public static void render(Graphics g) {
-		g.setColor(Color.black);
-		g.fillRect(0, 0, Game.width, Game.height);
+	public static void render() {
+		Game.gameGraphics.setColor(Color.black);
+		Game.gameGraphics.fillRect(0, 0, Game.width, Game.height);
 		
-		g.setColor(Color.white);
-		g.setFont(new Font("arial", Font.BOLD, 20));
-		g.drawString("Controls", 120, 20);
+		Game.gameGraphics.setColor(Color.white);
+		Game.gameGraphics.setFont(new Font("arial", Font.BOLD, 20));
+		Game.gameGraphics.drawString("Controls", 120, 20);
 		
-		g.setFont(new Font("arial", Font.BOLD, 10));
-		g.drawString("Movement Controls: WASD (Menus also)", 40, 36);
-		g.drawString("Dash : space", 40, 51);
-		g.drawString("Basic Attack : Any mouse button", 40, 66);
-		g.drawString("Skills : 1, 2", 40, 81);
-		g.drawString("Select : Enter", 40, 96);
-		g.drawString("Pause : Escape", 40, 111);
-		g.drawString("> Back", 10, 140);
+		Game.gameGraphics.setFont(new Font("arial", Font.BOLD, 10));
+		Game.gameGraphics.drawString("Movement Controls: WASD (Menus also)", 40, 36);
+		Game.gameGraphics.drawString("Dash : space", 40, 51);
+		Game.gameGraphics.drawString("Basic Attack : Any mouse button", 40, 66);
+		Game.gameGraphics.drawString("Skills : 1, 2", 40, 81);
+		Game.gameGraphics.drawString("Select : Enter", 40, 96);
+		Game.gameGraphics.drawString("Pause : Escape", 40, 111);
+		Game.gameGraphics.drawString("> Back", 10, 140);
 	}
 }

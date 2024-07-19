@@ -6,6 +6,7 @@ public class Rune {
 	
 	public BufferedImage sprite;
 	public boolean equipped;
+	public short index = 0;
 	public String name, description;
 	
 	public Rune(BufferedImage sprite) {

@@ -1,7 +1,6 @@
 package entities.enemies;
 
 import java.awt.image.BufferedImage;
-import java.awt.Graphics;
 import main.Game;
 import world.World;
 import entities.*;
@@ -92,12 +91,12 @@ public class Trapper_Enemy extends Enemy{
 		}
 	}
 	
-	public void render(Graphics g) {
+	public void render() {
 		if (stage2) {
-			g.drawImage(animation[index], this.getX() - Camera.x, this.getY() - Camera.y, 16, 32, null);
+			Game.gameGraphics.drawImage(animation[index], this.getX() - Camera.x, this.getY() - Camera.y, 16, 32, null);
 		}
 		else {
-			g.drawImage(animation[0], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			Game.gameGraphics.drawImage(animation[0], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 	}
 }

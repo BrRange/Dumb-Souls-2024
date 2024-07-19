@@ -8,8 +8,6 @@ import main.*;
 import entities.*;
 import entities.orbs.*;
 
-import java.awt.Graphics;
-
 public class Base_Enemy extends Enemy{
 	
 	private int index, maxIndex = 3, frames, maxFrames = 10, timer = 0;
@@ -80,7 +78,7 @@ public class Base_Enemy extends Enemy{
 		}
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+	public void render() {
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 }

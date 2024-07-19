@@ -1,7 +1,6 @@
 package entities.enemies;
 
 import java.awt.image.BufferedImage;
-import java.awt.Graphics;
 import main.Game;
 import world.Camera;
 import entities.*;
@@ -153,10 +152,10 @@ public class Boss_Sucubus extends Enemy {
 		}
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+	public void render() {
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		if (showAura) {
-			g.drawImage(aura, this.getX() - Camera.x,  this.getY() - Camera.y, 32, 32, null);
+			Game.gameGraphics.drawImage(aura, this.getX() - Camera.x,  this.getY() - Camera.y, 32, 32, null);
 		}
 	}
 }

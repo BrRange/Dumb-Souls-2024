@@ -1,6 +1,5 @@
 package main;
 
-import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -31,26 +30,26 @@ public class Menu_Init {
 		Game.keyController.clear();
 	}
 	
-	public static void render(Graphics g) {
-		g.setColor(Color.black); 
-		g.fillRect(0, 0, Game.width, Game.height);
-		g.setColor(Color.white);
-		g.setFont(new Font("arial", Font.BOLD, 30));
-		g.drawString("Dumb Souls", 70, 30);
-		g.setFont(new Font("arial",  Font.BOLD, 10));
+	public static void render() {
+		Game.gameGraphics.setColor(Color.black); 
+		Game.gameGraphics.fillRect(0, 0, Game.width, Game.height);
+		Game.gameGraphics.setColor(Color.white);
+		Game.gameGraphics.setFont(new Font("arial", Font.BOLD, 30));
+		Game.gameGraphics.drawString("Dumb Souls", 70, 30);
+		Game.gameGraphics.setFont(new Font("arial",  Font.BOLD, 10));
 		
-		g.drawString(options[0], 120, 60);
-		g.drawString(options[1], 120, 85);
-		g.drawString(options[2], 120, 110);
+		Game.gameGraphics.drawString(options[0], 120, 60);
+		Game.gameGraphics.drawString(options[1], 120, 85);
+		Game.gameGraphics.drawString(options[2], 120, 110);
 		
 		if (cur == 0) {
-			g.drawString(">", 90, 60);
+			Game.gameGraphics.drawString(">", 90, 60);
 		}
 		else if (cur == 1) {
-			g.drawString(">", 90, 85);
+			Game.gameGraphics.drawString(">", 90, 85);
 		}
 		else if (cur == 2) {
-			g.drawString(">", 90, 110);
+			Game.gameGraphics.drawString(">", 90, 110);
 		}
 	}
 }

@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 
 import graphics.Shader;
 
-import java.awt.Graphics;
 import entities.*;
 import entities.weapons.*;
 import main.Game;
@@ -34,8 +33,8 @@ public class Shot extends Entity{
 		this.setMask(4, 5, width, height);
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
+	public void render() {
+		Game.gameGraphics.drawImage(sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 	
 	public void die() {

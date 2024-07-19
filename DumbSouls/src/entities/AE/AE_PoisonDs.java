@@ -1,6 +1,5 @@
 package entities.AE;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import main.Game;
 import entities.*;
@@ -56,7 +55,7 @@ public class AE_PoisonDs extends Attack_Entity{
 		}
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, this.width, this.height, null);
+	public void render() {
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, this.width, this.height, null);
 	}
 }

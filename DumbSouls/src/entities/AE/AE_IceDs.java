@@ -1,6 +1,5 @@
 package entities.AE;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import entities.enemies.Enemy;
 import main.Game;
@@ -36,7 +35,7 @@ public class AE_IceDs extends Attack_Entity {
 		}
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(this.animation[0], this.getX() - Camera.x, this.getY() - Camera.y, null);
+	public void render() {
+		Game.gameGraphics.drawImage(this.animation[0], this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 }

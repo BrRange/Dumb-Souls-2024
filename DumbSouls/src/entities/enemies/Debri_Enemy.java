@@ -6,7 +6,6 @@ import entities.orbs.EXP_Orb;
 import world.Camera;
 import world.World;
 import main.*;
-import java.awt.Graphics;
 
 public class Debri_Enemy extends Enemy{
     private int index, maxIndex = 3, frames, maxFrames = 6, timer = 0;
@@ -76,7 +75,7 @@ public class Debri_Enemy extends Enemy{
 		}
 	}
 
-    public void render(Graphics g) {
-		g.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+    public void render() {
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 }

@@ -1,6 +1,5 @@
 package entities.enemies;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import entities.Entity;
 import main.Game;
@@ -66,7 +65,7 @@ public class Enemy_Animation extends Enemy {
 		
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(animation[index], this.getX() - Camera.x, this.getY() - Camera.y, this.getWidth(), this.getHeight(), null);
+	public void render() {
+		Game.gameGraphics.drawImage(animation[index], this.getX() - Camera.x, this.getY() - Camera.y, this.getWidth(), this.getHeight(), null);
 	}
 }

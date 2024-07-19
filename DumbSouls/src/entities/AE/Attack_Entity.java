@@ -4,8 +4,6 @@ import java.awt.image.BufferedImage;
 import entities.*;
 import main.Game;
 
-import java.awt.Graphics;
-
 public class Attack_Entity extends Entity {
 	
 	protected int timeLife, tickTimer;
@@ -49,7 +47,7 @@ public class Attack_Entity extends Entity {
 		}
 	}
 	
-	public void render(Graphics g) {
+	public void render() {
 		
 	}
 }

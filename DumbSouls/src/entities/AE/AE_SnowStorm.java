@@ -1,6 +1,5 @@
 package entities.AE;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import entities.*;
 import entities.enemies.Enemy;
@@ -64,8 +63,8 @@ public class AE_SnowStorm extends Attack_Entity {
 		}
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, 64, 64, null);
+	public void render() {
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, 64, 64, null);
 	}
 	
 }

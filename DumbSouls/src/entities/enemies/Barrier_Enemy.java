@@ -8,8 +8,6 @@ import main.*;
 import entities.*;
 import entities.orbs.EXP_Orb;
 
-import java.awt.Graphics;
-
 public class Barrier_Enemy extends Enemy{
 	
 	private int index, maxIndex = 2, frames, maxFrames = 20, timer = 0;
@@ -84,7 +82,7 @@ public class Barrier_Enemy extends Enemy{
 		}
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+	public void render() {
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 }

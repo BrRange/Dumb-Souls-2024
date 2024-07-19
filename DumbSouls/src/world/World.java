@@ -1,7 +1,6 @@
 package world;
 
 import java.awt.image.BufferedImage;
-import java.awt.Graphics;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -65,15 +64,15 @@ public class World {
 	
 	public void spawnBoss() {
 		while (true) {
-			int pe = Game.rand.nextInt(100);
+			int pe = Game.rand.nextInt(3);
 			int ex = Game.rand.nextInt(WIDTH - 2);
 			int ey = Game.rand.nextInt(HEIGHT - 2);
 			if (tiles[ex + (ey * WIDTH)] instanceof Floor_Tile) {
-				if (pe < 33) {
+				if (pe == 0) {
 					Game.enemies.add(new Boss_Sucubus(ex * 16, ey * 16, 32, 32, Game.sheet.getSprite(105, 192, 12, 10)));
 					bossName = "Sucubus";
 				}
-				else if (pe < 66) {
+				else if (pe == 1) {
 					Game.enemies.add(new Boss_Duality(ex * 16, ey * 16, 32, 32, Game.sheet.getSprite(11, 195, 10, 10)));
 					bossName = "Duality";
 				}
@@ -147,7 +146,7 @@ public class World {
 		
 	}
 	
-	public void render(Graphics g) {
+	public void render() {
 		int xstart = Camera.x >> 4;
 		int ystart = Camera.y >> 4;
 		
@@ -161,7 +160,7 @@ public class World {
 				}
 				
 				Tile tile = tiles[xx + (yy * WIDTH)];
-				tile.render(g);
+				tile.render();
 			}
 		}
 	}

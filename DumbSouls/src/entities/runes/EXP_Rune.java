@@ -11,6 +11,7 @@ public class EXP_Rune extends Rune {
 	public EXP_Rune() {
 		super(sprite);
 		this.name = "Rune of Experience";
+		index = 4;
 		this.description = "Passive EXP +10, scales per level";
 	}
 	

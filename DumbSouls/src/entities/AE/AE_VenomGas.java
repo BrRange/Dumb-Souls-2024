@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import main.Game;
 import entities.*;
 import entities.enemies.Enemy;
-import java.awt.Graphics;
 import world.Camera;
 
 public class AE_VenomGas extends Attack_Entity {
@@ -44,7 +43,7 @@ public class AE_VenomGas extends Attack_Entity {
 		}
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(animation[0], this.getX() - Camera.x, this.getY() - Camera.y, null);
+	public void render() {
+		Game.gameGraphics.drawImage(animation[0], this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 }

@@ -2,7 +2,6 @@ package entities.AE;
 
 import java.awt.image.BufferedImage;
 import world.Camera;
-import java.awt.Graphics;
 import main.Game;
 import entities.*;
 import entities.enemies.Enemy;
@@ -38,8 +37,8 @@ public class AE_IceSpike extends Attack_Entity {
 		}
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(this.animation[0], this.getX() - Camera.x, this.getY() - Camera.y, null);
+	public void render() {
+		Game.gameGraphics.drawImage(this.animation[0], this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 	
 }

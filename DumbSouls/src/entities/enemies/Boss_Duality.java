@@ -9,8 +9,6 @@ import entities.shots.*;
 import entities.AE.BAE_Spike;
 import entities.orbs.Rune_Orb;
 
-import java.awt.Graphics;
-
 public class Boss_Duality extends Enemy{
 	
 	private int frames, maxFrames = 40, index, maxIndex = 3, timeAtk, shieldLife;
@@ -144,12 +142,12 @@ public class Boss_Duality extends Enemy{
 		
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(aura, this.getX() - Camera.x - 32, this.getY() - Camera.y - 32, 98, 98,null);
-		g.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+	public void render() {
+		Game.gameGraphics.drawImage(aura, this.getX() - Camera.x - 32, this.getY() - Camera.y - 32, 98, 98,null);
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		
 		if (shieldActive) {
-			g.drawImage(shield, this.getX() - Camera.x - 32, this.getY() - Camera.y - 48, 98, 80, null);
+			Game.gameGraphics.drawImage(shield, this.getX() - Camera.x - 32, this.getY() - Camera.y - 48, 98, 80, null);
 		}
 	}
 }

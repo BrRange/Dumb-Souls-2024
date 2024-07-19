@@ -14,7 +14,6 @@ import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Consumer;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -30,12 +29,12 @@ import sounds.SoundPlayer;
 import world.World;
 
 public class Game extends Canvas implements Runnable, KeyListener, MouseListener, MouseMotionListener{
-	
 	private static final long serialVersionUID = 1L;
-	private Thread thread;
-	private boolean isRuning = false;
+	private static Thread thread;
+	private static boolean isRuning = false;
 	
-	public static HashSet<Integer> keyController = new HashSet<Integer>();
+	public static HashSet<Integer> keyController = new HashSet<Integer>(); 
+	public static HashSet<Integer> clickController = new HashSet<Integer>(); 
 	public static JFrame frame;
 	public static final int width = 320;
 	public static final int height = 160;
@@ -44,18 +43,17 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	
 	private static BufferedImage image;
 	public static Spritesheet sheet;
-	public enum gameState{
-		NORMAL(() -> Game.tick(), g -> render(g)),
-		MENULEVEL(() -> Menu_Level.tick(), g -> Menu_Level.render(g)),
-    	MENUINIT(() -> Menu_Init.tick(), g -> Menu_Init.render(g)),
-		MENUPLAYER(() -> Menu_Player.tick(), g -> Menu_Player.render(g)),
-		MENUHELP(() -> Menu_Help.tick(), g -> Menu_Help.render(g)),
-		MENUPAUSE(() -> Menu_Pause.tick(), g -> Menu_Pause.render(g)),
-		MENURUNES(() -> Menu_Runes.tick(), g -> Menu_Runes.render(g));
+	public static enum gameState{
+		NORMAL(() -> tick(), () -> render()),
+		MENULEVEL(() -> Menu_Level.tick(), () -> Menu_Level.render()),
+    	MENUINIT(() -> Menu_Init.tick(), () -> Menu_Init.render()),
+		MENUPLAYER(() -> Menu_Player.tick(), () -> Menu_Player.render()),
+		MENUHELP(() -> Menu_Help.tick(), () -> Menu_Help.render()),
+		MENUPAUSE(() -> Menu_Pause.tick(), () -> {render(); Menu_Pause.render();}),
+		MENURUNES(() -> Menu_Runes.tick(), () -> Menu_Runes.render());
 
-		private Runnable stateTick;
-		private Consumer<Graphics> stateRender;
-		gameState(Runnable stateTick, Consumer<Graphics> stateRender){
+		private Runnable stateTick, stateRender;
+		gameState(Runnable stateTick, Runnable stateRender){
 			this.stateTick = stateTick;
 			this.stateRender = stateRender;
 		}
@@ -77,6 +75,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	public static List<Enemy> enemies;
 	public static List<Shot> shots;
 	public static List<Enemy_Shot> eShots;
+	public static Graphics gameGraphics;
 
 	public Game() {
 		addKeyListener(this);
@@ -90,6 +89,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		eShots = new ArrayList<Enemy_Shot>();
 		rand = new Random();
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		gameGraphics = image.getGraphics();
 		sheet = new Spritesheet("spritesheet.png");
 		player = new Player(0, 0, 16, 16, sheet.getSprite(0, 16, 16, 16));
 		entities.add(player);
@@ -140,6 +140,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	
 	private static void spawnEnemies() {
 		if (enemies.size() == 0) {
+			enemies.add(new Barrier_Enemy(60, 60, 48, 32, null));
 			if (World.wave % 10 != 0) {
 				world.raiseMaxEnemies();
 				World.wave++;
@@ -160,12 +161,12 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			this.createBufferStrategy(3);
 			return;
 		}
-		Graphics g = Game.image.getGraphics();
-		gameStateHandler.stateRender.accept(g);
-		g.dispose();
-		g = bs.getDrawGraphics();
-		g.drawImage(image, 0, 0, width * scale, height * scale, null);
-		if(gameStateHandler == gameState.NORMAL) ui.render(g);
+		gameGraphics = Game.image.getGraphics();
+		gameStateHandler.stateRender.run();
+		gameGraphics.dispose();
+		gameGraphics = bs.getDrawGraphics();
+		gameGraphics.drawImage(image, 0, 0, width * scale, height * scale, null);
+		if(gameStateHandler == gameState.NORMAL) ui.render();
 		bs.show();
 	}
 
@@ -186,23 +187,23 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		spawnEnemies();
 	}
 
-	private static void render(Graphics g) {
-		g.setColor(new Color(0, 0, 0));
-		g.fillRect(0, 0, width, height);
-		world.render(g);
+	private static void render() {
+		gameGraphics.setColor(new Color(0, 0, 0));
+		gameGraphics.fillRect(0, 0, width, height);
+		world.render();
 		Collections.sort(entities, Entity.entityDepth);
 		Collections.sort(enemies, Entity.entityDepth);
 		for(Entity e : entities) {
-			e.render(g);
+			e.render();
 		}
 		for(Enemy e : enemies) {
-			e.render(g);
+			e.render();
 		}
 		for(Shot e : shots) {
-			e.render(g);
+			e.render();
 		}
 		for(Enemy_Shot e : eShots) {
-			e.render(g);
+			e.render();
 		}
 	}
 	
@@ -265,14 +266,14 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		player.attack = true;
+		clickController.add(e.getButton());
 		player.playerWeapon.mx = e.getX() / scale;
 		player.playerWeapon.my = e.getY() / scale;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		player.attack = false;
+		clickController.remove(e.getButton());
 	}
 
 	@Override
@@ -282,8 +283,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		if(gameStateHandler == gameState.NORMAL) gameStateHandler = gameState.MENUPAUSE;
+		clickController.clear();
 		keyController.clear();
+		if(gameStateHandler == gameState.NORMAL) gameStateHandler = gameState.MENUPAUSE;
 	}
 
 	@Override

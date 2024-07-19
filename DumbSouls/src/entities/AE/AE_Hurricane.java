@@ -1,7 +1,6 @@
 package entities.AE;
 
 import java.awt.image.BufferedImage;
-import java.awt.Graphics;
 import world.Camera;
 import entities.enemies.Enemy;
 import main.Game;
@@ -64,8 +63,8 @@ public class AE_Hurricane extends Attack_Entity{
 		}
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, 64, 32, null);
+	public void render() {
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, 64, 32, null);
 	}
 	
 }

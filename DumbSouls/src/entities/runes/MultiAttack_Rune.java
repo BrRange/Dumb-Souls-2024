@@ -9,11 +9,12 @@ public class MultiAttack_Rune extends Rune{
 	public MultiAttack_Rune() {
 		super(sprite);
 		this.name = "Double Attack Rune";
+		index = 5;
 		this.description = "Adds 1 aditional normal attack.";
 	}
 	
 	public void tick() {
-		if (Game.player.attack) {
+		if (Game.player.playerWeapon.attackTimer == 0) {
 			Game.player.playerWeapon.AttackRandom();
 		}
 	}

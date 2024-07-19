@@ -7,7 +7,6 @@ import world.World;
 import main.*;
 import entities.enemies.*;
 import entities.*;
-import java.awt.Graphics;
 
 public class EXP_Orb extends Enemy{
     private int index, maxIndex = 3, frames, maxFrames = 6;
@@ -49,7 +48,7 @@ public class EXP_Orb extends Enemy{
         }
 	}
 
-    public void render(Graphics g) {
-		g.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+    public void render() {
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 }

@@ -10,9 +10,9 @@ public class Spritesheet {
 	
 	private BufferedImage spritesheet;
 	
-	public Spritesheet(String patch) {
+	public Spritesheet(String path) {
 		try {
-			spritesheet = ImageIO.read(new FileInputStream("res/" + patch));
+			spritesheet = ImageIO.read(new FileInputStream("res/" + path));
 		} catch(IOException e) {
 			e.printStackTrace();
 		}

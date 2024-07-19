@@ -1,6 +1,5 @@
 package main;
 
-import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Font;
 import entities.Player;
@@ -50,37 +49,36 @@ public class Menu_Level {
 		}
 		 
 		if (Game.keyController.contains(32)) {
-			if (Player.souls >= 100) {
-				Player.souls -= 100;
+			if (Player.souls >= 20) {
+				Player.souls -= 20;
 				sortOptions(3);
 			}
 		}
 		Game.keyController.clear();
 	}
 	
-	public static void render(Graphics g) {
-		g.setColor(Color.black);
-		g.fillRect(0, 0, Game.width * Game.scale, Game.height * Game.scale);
+	public static void render() {
+		Game.gameGraphics.setColor(Color.black);
+		Game.gameGraphics.fillRect(0, 0, Game.width * Game.scale, Game.height * Game.scale);
 		
-		g.setColor(Color.white);
-		g.setFont(new Font("arial", Font.BOLD, 10));
+		Game.gameGraphics.setColor(Color.white);
+		Game.gameGraphics.setFont(new Font("arial", Font.BOLD, 10));
 			
-		g.drawString(options[0], 120, 60);
-		g.drawString(options[1], 120, 90);
-		g.drawString(options[2], 120, 120);
+		Game.gameGraphics.drawString(options[0], 120, 60);
+		Game.gameGraphics.drawString(options[1], 120, 90);
+		Game.gameGraphics.drawString(options[2], 120, 120);
 		
 		if (cur == 0) {
-			g.drawString(">", 100, 60);
+			Game.gameGraphics.drawString(">", 100, 60);
 		}
 		else if (cur == 1) {
-			g.drawString(">", 100, 90);
+			Game.gameGraphics.drawString(">", 100, 90);
 		}
 		else if (cur == 2) {
-			g.drawString(">", 100, 120);
+			Game.gameGraphics.drawString(">", 100, 120);
 		}
-		
-		g.setColor(new Color(74, 52, 160));
-		g.drawString("Souls : " + Player.souls, 255, 20);
-		g.drawString("[space] Refresh -100 souls", 180, 150);
+		Game.gameGraphics.setColor(new Color(74, 52, 160));
+		Game.gameGraphics.drawString("Souls : " + Player.souls, 255, 20);
+		Game.gameGraphics.drawString("[space] Refresh -20 souls", 180, 150);
 	}
 }

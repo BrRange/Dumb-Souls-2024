@@ -1,6 +1,5 @@
 package entities.shots;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import graphics.Shader;
 import main.Game;
@@ -30,8 +29,8 @@ public class Enemy_Shot extends Entity{
 		this.typeMovement = type;
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(this.sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
+	public void render() {
+		Game.gameGraphics.drawImage(this.sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 	
 	private void movement() {

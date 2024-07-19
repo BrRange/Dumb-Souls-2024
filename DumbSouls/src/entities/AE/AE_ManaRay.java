@@ -2,7 +2,6 @@ package entities.AE;
 
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
-import java.awt.Graphics;
 import java.awt.Color;
 import main.Game;
 import entities.*;
@@ -58,8 +57,8 @@ public class AE_ManaRay extends Attack_Entity {
 		}
 	}
 	
-	public void render(Graphics g) {
-		g.setColor(new Color(47, 141, 224, 150));
-		g.drawLine(Game.player.getX() - Camera.x + 8, Game.player.getY() - Camera.y + 8, smallest.getX() - Camera.x + smallest.getWidth()/2, smallest.getY()- Camera.y + smallest.getHeight()/2);
+	public void render() {
+		Game.gameGraphics.setColor(new Color(47, 141, 224, 150));
+		Game.gameGraphics.drawLine(Game.player.getX() - Camera.x + 8, Game.player.getY() - Camera.y + 8, smallest.getX() - Camera.x + smallest.getWidth()/2, smallest.getY()- Camera.y + smallest.getHeight()/2);
 	}
 }

@@ -3,7 +3,6 @@ package main;
 import entities.Player;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 
 public class Menu_Runes {
 	
@@ -81,81 +80,81 @@ public class Menu_Runes {
 		Game.keyController.clear();
 	}
 	
-	private static void renderSprites(Graphics g) {
-		g.setColor(new Color(50, 50, 50));
-		g.fillRect(200, 54, 32, 32);
+	private static void renderSprites() {
+		Game.gameGraphics.setColor(new Color(50, 50, 50));
+		Game.gameGraphics.fillRect(200, 54, 32, 32);
 		
-		g.drawImage(Player.runesInventory.get(curR).sprite, 200, 54, 32, 32, null);
+		Game.gameGraphics.drawImage(Player.runesInventory.get(curR).sprite, 200, 54, 32, 32, null);
 		
 		if (Player.runesInventory.get(curR).equipped) {
-			g.setColor(new Color(0, 127, 14));
-			g.drawString("Equipped", 193, 100);
+			Game.gameGraphics.setColor(new Color(0, 127, 14));
+			Game.gameGraphics.drawString("Equipped", 193, 100);
 		}
 		else {
-			g.setColor(new Color(127, 0, 0));
-			g.drawString("Unequipped", 193, 100);
+			Game.gameGraphics.setColor(new Color(127, 0, 0));
+			Game.gameGraphics.drawString("Unequipped", 193, 100);
 		}
 		
-		g.setColor(Color.white);
-		g.setFont(new Font("arial", Font.BOLD, 9));
-		g.drawString(Player.runesInventory.get(curR).description, 145, 113);
+		Game.gameGraphics.setColor(Color.white);
+		Game.gameGraphics.setFont(new Font("arial", Font.BOLD, 9));
+		Game.gameGraphics.drawString(Player.runesInventory.get(curR).description, 145, 113);
 	}
 	
-	public static void render(Graphics g) {
-		g.setColor(Color.black);
-		g.fillRect(0, 0, Game.width, Game.height);
+	public static void render() {
+		Game.gameGraphics.setColor(Color.black);
+		Game.gameGraphics.fillRect(0, 0, Game.width, Game.height);
 		
-		g.setColor(Color.white);
-		g.setFont(new Font("arial", Font.BOLD, 15));
-		g.drawString("Player Configuration/ Runes", 90, 20);
+		Game.gameGraphics.setColor(Color.white);
+		Game.gameGraphics.setFont(new Font("arial", Font.BOLD, 15));
+		Game.gameGraphics.drawString("Player Configuration/ Runes", 90, 20);
 		
-		g.setFont(new Font("arial", Font.BOLD, 9));
+		Game.gameGraphics.setFont(new Font("arial", Font.BOLD, 9));
 
 		if(!Player.runesInventory.isEmpty()){
-			g.drawString(Player.runesInventory.get(curR).name, 30, 40);
-			renderSprites(g);
+			Game.gameGraphics.drawString(Player.runesInventory.get(curR).name, 30, 40);
+			renderSprites();
 		}
-		g.drawString("Equip", 30, 60);
-		g.drawString("Unequip", 30, 80);
-		g.drawString("Delete", 30, 100);
-		g.drawString("+Limit", 30, 120);
-		g.drawString("Back", 30, 140);
+		Game.gameGraphics.drawString("Equip", 30, 60);
+		Game.gameGraphics.drawString("Unequip", 30, 80);
+		Game.gameGraphics.drawString("Delete", 30, 100);
+		Game.gameGraphics.drawString("+Limit", 30, 120);
+		Game.gameGraphics.drawString("Back", 30, 140);
 		
 		if (cur == 0) {
-			g.drawString("<", 20, 40);
-			g.drawString(">", 100, 40);
+			Game.gameGraphics.drawString("<", 20, 40);
+			Game.gameGraphics.drawString(">", 100, 40);
 			if (clickR) {
-				g.setColor(Color.red);
-				g.drawString(">", 100, 40);
+				Game.gameGraphics.setColor(Color.red);
+				Game.gameGraphics.drawString(">", 100, 40);
 			}
 			if (clickL) {
-				g.setColor(Color.red);
-				g.drawString("<", 20, 40);
+				Game.gameGraphics.setColor(Color.red);
+				Game.gameGraphics.drawString("<", 20, 40);
 			}
 		}
 		else if (cur == 1) {
-			g.drawString(">", 20, 60);
+			Game.gameGraphics.drawString(">", 20, 60);
 		}
 		else if (cur == 2) {
-			g.drawString(">", 20, 80);
+			Game.gameGraphics.drawString(">", 20, 80);
 		}
 		else if (cur == 3) {
-			g.drawString(">", 20, 100);
+			Game.gameGraphics.drawString(">", 20, 100);
 		}
 		else if (cur == 4) {
-			g.drawString(">", 20, 120);
-			g.setColor(new Color(74, 52, 160));
-			g.drawString("-5000 souls", 60, 120);
+			Game.gameGraphics.drawString(">", 20, 120);
+			Game.gameGraphics.setColor(new Color(74, 52, 160));
+			Game.gameGraphics.drawString("-5000 souls", 60, 120);
 		}
 		else if (cur == 5) {
-			g.drawString(">", 20, 140);
+			Game.gameGraphics.drawString(">", 20, 140);
 		}
 		
-		g.setColor(new Color(0, 127, 0));
-		g.setFont(new Font("arial", Font.BOLD, 9));
-		g.drawString("Rune Limit: " + Game.player.runesEquipped.size() + "/" + Player.runeLimit, 20, 150);
+		Game.gameGraphics.setColor(new Color(0, 127, 0));
+		Game.gameGraphics.setFont(new Font("arial", Font.BOLD, 9));
+		Game.gameGraphics.drawString("Rune Limit: " + Game.player.runesEquipped.size() + "/" + Player.runeLimit, 20, 150);
 		
-		g.setColor(new Color(74, 52, 160));
-		g.drawString("Souls : " + Player.souls, 255, 150);
+		Game.gameGraphics.setColor(new Color(74, 52, 160));
+		Game.gameGraphics.drawString("Souls : " + Player.souls, 255, 150);
 	}
 }

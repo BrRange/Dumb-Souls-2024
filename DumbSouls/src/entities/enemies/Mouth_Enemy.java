@@ -1,7 +1,6 @@
 package entities.enemies;
 
 import java.awt.image.BufferedImage;
-import java.awt.Graphics;
 import world.Camera;
 import world.World;
 import entities.*;
@@ -76,7 +75,7 @@ public class Mouth_Enemy extends Enemy {
 		}
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+	public void render() {
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 }

@@ -5,7 +5,6 @@ import java.util.Comparator;
 
 import main.Game;
 
-import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 
@@ -78,8 +77,8 @@ public class Entity {
 		
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(sprite, this.getX(), this.getY(), null);
+	public void render() {
+		Game.gameGraphics.drawImage(sprite, this.getX(), this.getY(), null);
 	}
 
 	protected int[] getMask(){

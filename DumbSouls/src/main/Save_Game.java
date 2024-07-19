@@ -1,98 +1,100 @@
 package main;
 
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import entities.Player;
 import entities.weapons.*;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+
 import entities.runes.*;
 
-public class Save_Game {
-	
-	private static int weaponSum, xorKey = 0x9EFF7DEB;
+public class Save_Game{
 
 	private static int bitIntWriter(boolean value, int bitIndex) {
-		return value ? 0 : 1 << bitIndex;
+		return value ? 0 : bitIndex;
 	}
 	
-	public static void save() throws IOException{
-		weaponSum = bitIntWriter(Fire_Weapon.block, 0);
-		weaponSum += bitIntWriter(Wind_Weapon.block, 1);
-		weaponSum += bitIntWriter(Ice_Weapon.block, 2);
-		weaponSum += bitIntWriter(Fisical_Weapon.block, 3);
-		weaponSum += bitIntWriter(Poison_Weapon.block, 4);
-		
-		final Path path = Paths.get("SaveDS.txt");
-		
-		 try (final BufferedWriter writer = Files.newBufferedWriter(path,StandardCharsets.UTF_8, StandardOpenOption.CREATE);) {
-			 writer.write("" + (Player.souls ^ xorKey));
-			 writer.newLine();
-			 writer.write("" + weaponSum);
-			 writer.newLine();
-			 for (int i = 0; i < Player.runesInventory.size(); i++) {
-				 writer.write(Player.runesInventory.get(i).name + ";");
-			 }
-		     writer.close();
-		 }
+	public static void save() throws Exception{
+		int weaponSum = bitIntWriter(Fire_Weapon.block, 1);
+		weaponSum += bitIntWriter(Wind_Weapon.block, 2);
+		weaponSum += bitIntWriter(Ice_Weapon.block, 4);
+		weaponSum += bitIntWriter(Fisical_Weapon.block, 8);
+		weaponSum += bitIntWriter(Poison_Weapon.block, 16);
+		try (final PrintWriter writer = new PrintWriter("SaveDS.txt")) {
+			writer.write((char)(Player.souls & -16777216));
+			writer.write((char)(Player.souls & 16711680));
+			writer.write((char)(Player.souls & 65280));
+			writer.write((char)(Player.souls & 255));
+			writer.write((char)weaponSum);
+			if(!Player.runesInventory.isEmpty()){
+				for(Rune r : Player.runesInventory){
+					writer.write(r.index);
+				}
+			}
+			writer.close();
+		} catch(Exception e){}
 	}
 
 	private static boolean intBitReader(int value, int bitIndex){
 		return (value & bitIndex) == 0;
 	}
 	
-	public static void loadSave() {
+	public static void loadSave(){
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader("SaveDS.txt"));
+			BufferedInputStream reader = new BufferedInputStream(new FileInputStream("SaveDS.txt"));
 			
-			Player.souls = Integer.parseInt(reader.readLine()) ^ xorKey;
-			weaponSum = Integer.parseInt(reader.readLine());
-			String[] runes = reader.readLine().split(";");
+			int souls[] = new int[4], weapons[] = new int[1], runes[] = new int[5];
+			for(int i = 0; i < souls.length; i++){
+				souls[i] = reader.read();
+				if(souls[i] < 0){
+					souls[i] = 0;
+				}
+			}
+			weapons[0] = reader.read();
+			if(weapons[0] < 0){
+				weapons[0] = 0;
+			}
+			for(int i = 0; i < runes.length; i++){
+				runes[i] = reader.read();
+			}
 			reader.close();
-			
-			Fire_Weapon.block = intBitReader(weaponSum, 1);
-			Wind_Weapon.block = intBitReader(weaponSum, 2);
-			Ice_Weapon.block = intBitReader(weaponSum, 4);
-			Fisical_Weapon.block = intBitReader(weaponSum, 8);
-			Poison_Weapon.block = intBitReader(weaponSum, 16);
-			if (runes.length > 0) {
-				for (int i = 0; i < runes.length; i++) {
+			Player.souls = souls[0] << 24 | souls[1] << 16 | souls[2] << 8 | souls[3];
+			Fire_Weapon.block = intBitReader(weapons[0], 1);
+			Wind_Weapon.block = intBitReader(weapons[0], 2);
+			Ice_Weapon.block = intBitReader(weapons[0], 4);
+			Fisical_Weapon.block = intBitReader(weapons[0], 8);
+			Poison_Weapon.block = intBitReader(weapons[0], 16);
+			for(int i = 0; i < runes.length; i++){
+				if(runes[i] > 0){
 					Player.runesInventory.add(InventoryMaker(runes[i]));
 				}
 			}
 		}
-		catch (IOException e) {
+		catch (Exception e) {
 			e.printStackTrace();
 			try{
-			PrintWriter writer = new PrintWriter("SaveDS.txt", "UTF-8");
-			writer.println(xorKey);
-			writer.println(xorKey);
-			writer.close();
-			loadSave();
-			} catch (IOException ee){
-				ee.printStackTrace();
-			}
+				new File("SaveDS.txt").createNewFile();
+				PrintWriter pWriter = new PrintWriter("SaveDS.txt");
+				pWriter.print("\0\0\0\0\0");
+				pWriter.close();
+			} catch(Exception err){}
 		}
 	}
 	
-	private static Rune InventoryMaker(String name) {
-		switch(name) {
-		case "Rune of Life":
+	private static Rune InventoryMaker(int index) {
+		switch(index) {
+		case 1:
 			return new Life_Rune();
-		case "Rune of Mana":
+		case 2:
 			return new Mana_Rune();
-		case "Rune of Speed":
+		case 3:
 			return new Speed_Rune();
-		case "Double Attack Rune":
-			return new MultiAttack_Rune();
-		case "Rune of Expirience":
+		case 4:
 			return new EXP_Rune();
+		case 5:
+			return new MultiAttack_Rune();
 		default:
 			return null;
 		}

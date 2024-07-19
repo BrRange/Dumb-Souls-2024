@@ -1,6 +1,5 @@
 package main;
 
-import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Font;
 import entities.*;
@@ -141,82 +140,82 @@ public class Menu_Player {
 		}
 	}
 	
-	private static void imgWeapon(Graphics g) {
+	private static void imgWeapon() {
 		switch(curW){
 		case 0: 
-			g.drawImage(Mana_Weapon.sprite, 200, 54, 32, 32, null);
+			Game.gameGraphics.drawImage(Mana_Weapon.sprite, 200, 54, 32, 32, null);
 			break;
 		case 1:
-			g.drawImage(Fire_Weapon.sprite, 200, 54, 32, 32, null);
+			Game.gameGraphics.drawImage(Fire_Weapon.sprite, 200, 54, 32, 32, null);
 			break;
 		case 2:
-			g.drawImage(Wind_Weapon.sprite, 200, 54, 32, 32, null);
+			Game.gameGraphics.drawImage(Wind_Weapon.sprite, 200, 54, 32, 32, null);
 			break;
 		case 3:
-			g.drawImage(Ice_Weapon.sprite, 200, 54, 32, 32, null);
+			Game.gameGraphics.drawImage(Ice_Weapon.sprite, 200, 54, 32, 32, null);
 			break;
 		case 4:
-			g.drawImage(Fisical_Weapon.sprite, 200, 54, 32, 32, null);
+			Game.gameGraphics.drawImage(Fisical_Weapon.sprite, 200, 54, 32, 32, null);
 			break;
 		case 5:
-			g.drawImage(Poison_Weapon.sprite, 200, 54, 32, 32, null);
+			Game.gameGraphics.drawImage(Poison_Weapon.sprite, 200, 54, 32, 32, null);
 			break;
 		}
 	}
 	
-	public static void render(Graphics g) {
-		g.setColor(Color.black);
-		g.fillRect(0, 0, Game.width, Game.height);
+	public static void render() {
+		Game.gameGraphics.setColor(Color.black);
+		Game.gameGraphics.fillRect(0, 0, Game.width, Game.height);
 		
-		g.setColor(Color.white);
-		g.setFont(new Font("arial", Font.BOLD, 15));
-		g.drawString("Player Configuration", 90, 20);
+		Game.gameGraphics.setColor(Color.white);
+		Game.gameGraphics.setFont(new Font("arial", Font.BOLD, 15));
+		Game.gameGraphics.drawString("Player Configuration", 90, 20);
 		
-		g.setFont(new Font("arial", Font.BOLD, 9));
-		g.drawString(weapons[curW], 30, 70);
-		g.drawString("Start", 30, 90);
-		g.drawString("Runes", 30, 110);
-		g.drawString("Back", 30, 130);
+		Game.gameGraphics.setFont(new Font("arial", Font.BOLD, 9));
+		Game.gameGraphics.drawString(weapons[curW], 30, 70);
+		Game.gameGraphics.drawString("Start", 30, 90);
+		Game.gameGraphics.drawString("Runes", 30, 110);
+		Game.gameGraphics.drawString("Back", 30, 130);
 		
 		if (cur == 0) {
-			g.drawString("<", 20, 70);
-			g.drawString(">", 105, 70);
+			Game.gameGraphics.drawString("<", 20, 70);
+			Game.gameGraphics.drawString(">", 105, 70);
 			if (clickR) {
-				g.setColor(Color.red);
-				g.drawString(">", 105, 70);
+				Game.gameGraphics.setColor(Color.red);
+				Game.gameGraphics.drawString(">", 105, 70);
 			}
 			if (clickL) {
-				g.setColor(Color.red);
-				g.drawString("<", 20, 70);
+				Game.gameGraphics.setColor(Color.red);
+				Game.gameGraphics.drawString("<", 20, 70);
 			}
 		}
 		else {
-			g.drawString(">", 20, 70 + 20 * cur);
+			Game.gameGraphics.drawString(">", 20, 70 + 20 * cur);
 		}
 		
 		if (costPossible()) {
-			g.setColor(new Color(0, 127, 14));
+			Game.gameGraphics.setColor(new Color(0, 127, 14));
 		}
 		else {
-			g.setColor(new Color(127, 0, 0));
+			Game.gameGraphics.setColor(new Color(127, 0, 0));
 		}
 		
 		if (isWeaponBlock()) {
-			g.setColor(new Color(0, 127, 14));
-			g.drawString("Unlocked", 194, 100);
+			Game.gameGraphics.setColor(new Color(0, 127, 14));
+			Game.gameGraphics.drawString("Unlocked", 194, 100);
 		}
 		else {
-			g.setColor(new Color(127, 0, 0));
-			g.drawString("Locked", 183, 110);
-			g.drawString("Soul Cost: " + weaponCost, 183, 100);
+			Game.gameGraphics.setColor(new Color(127, 0, 0));
+			Game.gameGraphics.drawString("Locked", 183, 110);
+			Game.gameGraphics.drawString("Soul Cost: " + weaponCost, 183, 100);
 		}
 		
-		g.setColor(new Color(74, 52, 160));
-		g.drawString("Souls : " + Player.souls, 255, 150);
+		Game.gameGraphics.setColor(new Color(74, 52, 160));
+		Game.gameGraphics.drawString("Souls : " + Player.souls, 255, 150);
 		
-		g.setColor(new Color(50, 50, 50));
-		g.fillRect(200, 54, 32, 32);
+		Game.gameGraphics.setColor(new Color(50, 50, 50));
+		Game.gameGraphics.fillRect(200, 54, 32, 32);
 		
-		imgWeapon(g);
+		imgWeapon();
 	}
 }

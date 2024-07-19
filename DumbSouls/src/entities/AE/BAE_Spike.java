@@ -1,7 +1,6 @@
 package entities.AE;
 
 import java.awt.image.BufferedImage;
-import java.awt.Graphics;
 import world.Camera;
 import main.Game;
 import entities.*;
@@ -38,7 +37,7 @@ public class BAE_Spike extends Attack_Entity{
 		Game.player.life -= damage;
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+	public void render() {
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 }

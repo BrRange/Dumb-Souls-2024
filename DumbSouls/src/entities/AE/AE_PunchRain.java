@@ -1,6 +1,5 @@
 package entities.AE;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import entities.*;
 import entities.enemies.Enemy;
@@ -47,7 +46,7 @@ public class AE_PunchRain extends Attack_Entity {
 		}
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(animation[0], this.getX() - Camera.x, this.getY() - Camera.y, null);
+	public void render() {
+		Game.gameGraphics.drawImage(animation[0], this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 }

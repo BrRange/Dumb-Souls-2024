@@ -4,17 +4,15 @@ import java.awt.image.BufferedImage;
 import main.Game;
 import world.Camera;
 
-import java.awt.Graphics;
-
 public class Weapon {
 	
-	public BufferedImage sprite;
+	public BufferedImage sprite, dashImg, ablt2Img, ablt3Img;
 	protected BufferedImage[] animation;
 	private int frames, maxFrames = 10, index, maxIndex = 3;
 	public int mx, my, attackTimer;
 	public String[] listNames;
 	public boolean md1, md2, md3;
-	protected boolean dashAva, ablt2Ava, ablt3Ava;
+	public boolean dashAva, ablt2Ava, ablt3Ava;
 	
 	public Weapon(BufferedImage sprite) {
 		this.sprite = sprite;
@@ -73,8 +71,8 @@ public class Weapon {
 		}
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(this.animation[index], (Game.player.getX() - Camera.x) - 12, (Game.player.getY() - Camera.y) - 8, null);
+	public void render() {
+		Game.gameGraphics.drawImage(this.animation[index], (Game.player.getX() - Camera.x) - 12, (Game.player.getY() - Camera.y) - 8, null);
 	}
 	
 	public void Attack() {

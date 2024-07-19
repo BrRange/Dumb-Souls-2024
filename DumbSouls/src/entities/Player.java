@@ -1,10 +1,8 @@
 package entities;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import graphics.UI;
 import entities.shots.Enemy_Shot;
-import java.awt.Graphics;
 import entities.weapons.*;
 import main.*;
 import world.*;
@@ -15,7 +13,7 @@ import java.util.ArrayList;
 public class Player extends Entity{
 	
 	private int tickTimer, attackTimer;
-	public boolean moving, attack, levelUp;
+	public boolean moving, levelUp;
 	public short moveX, moveY, abltCooldown;
 	public int maxLife = 100, exp = 0, maxExp = 100, maxMana = 100;
 	public static int souls;
@@ -62,12 +60,10 @@ public class Player extends Entity{
 	}
 	
 	private void isAttacking() {
-		if (attackTimer == playerWeapon.attackTimer) {
-			if (attack) {
-			attack = false;
+		if (attackTimer == playerWeapon.attackTimer && !Game.clickController.isEmpty()) {
 			attackTimer = 0;
 			playerWeapon.Attack();
-			}
+			Game.clickController.clear();
 		}
 		if (attackTimer < playerWeapon.attackTimer){
 			attackTimer++;
@@ -88,6 +84,11 @@ public class Player extends Entity{
 
 	
 	public static void die() {
+		try {
+			Save_Game.save();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		Game.entities.clear();
 		Game.shots.clear();
 		Game.enemies.clear();
@@ -104,11 +105,6 @@ public class Player extends Entity{
 		Game.playerMenu = new Menu_Player();
 		Game.levelUpMenu = new Menu_Level(3);
 		Game.gameStateHandler = Game.gameState.MENUINIT;
-		try {
-			Save_Game.save();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	private void checkExp() {
@@ -238,21 +234,21 @@ public class Player extends Entity{
 		moveX = moveY = 0;
 	}
 	
-	public void render(Graphics g) {
+	public void render() {
 		switch(direct){
 		case 0:
-			g.drawImage(playerRight[moving ? frames / 10 : 0], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			Game.gameGraphics.drawImage(playerRight[moving ? frames / 10 : 0], this.getX() - Camera.x, this.getY() - Camera.y, null);
 			break;
 		case 1:
-			g.drawImage(playerLeft[moving ? frames / 10 : 0], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			Game.gameGraphics.drawImage(playerLeft[moving ? frames / 10 : 0], this.getX() - Camera.x, this.getY() - Camera.y, null);
 			break;
 		case 2:
-			g.drawImage(playerDown[moving ? frames / 10 : 0], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			Game.gameGraphics.drawImage(playerDown[moving ? frames / 10 : 0], this.getX() - Camera.x, this.getY() - Camera.y, null);
 			break;
 		case 3:
-			g.drawImage(playerUp[moving ? frames / 10 : 0], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			Game.gameGraphics.drawImage(playerUp[moving ? frames / 10 : 0], this.getX() - Camera.x, this.getY() - Camera.y, null);
 			break;
 		}
-		playerWeapon.render(g);
+		playerWeapon.render();
 	}
 }

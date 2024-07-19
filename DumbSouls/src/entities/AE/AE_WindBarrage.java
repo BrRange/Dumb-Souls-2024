@@ -1,6 +1,5 @@
 package entities.AE;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import entities.*;
 import entities.enemies.Enemy;
@@ -19,7 +18,7 @@ public class AE_WindBarrage extends Attack_Entity{
 		this.dx = dx;
 		this.dy = dy;
 		this.damage = dmg;
-		this.push = 10;
+		this.push = -10;
 		this.depth = 2;
 		this.getAnimation(128, 112, 16, 16, 1);
 		this.setMask(0, 0, 32, 32);
@@ -49,7 +48,7 @@ public class AE_WindBarrage extends Attack_Entity{
 		}
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(animation[0], this.getX() - Camera.x, this.getY() - Camera.y, 32, 32, null);
+	public void render() {
+		Game.gameGraphics.drawImage(animation[0], this.getX() - Camera.x, this.getY() - Camera.y, 32, 32, null);
 	}
 }

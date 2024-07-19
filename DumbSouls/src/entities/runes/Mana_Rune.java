@@ -12,6 +12,7 @@ public class Mana_Rune extends Rune{
 	public Mana_Rune() {
 		super(sprite);
 		this.name = "Rune of Mana";
+		index = 2;
 		this.description = "Max Mana +50, Mana Regen +2";
 	}
 	

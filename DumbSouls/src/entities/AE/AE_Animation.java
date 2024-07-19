@@ -2,7 +2,8 @@ package entities.AE;
 
 import java.awt.image.BufferedImage;
 import entities.*;
-import java.awt.Graphics;
+import main.Game;
+
 import world.Camera;
 
 public class AE_Animation extends Attack_Entity {
@@ -63,7 +64,7 @@ public class AE_Animation extends Attack_Entity {
 		
 	}
 	
-	public void render(Graphics g) {
-		g.drawImage(animation[index], this.getX() - Camera.x, this.getY() - Camera.y, this.getWidth(), this.getHeight(), null);
+	public void render() {
+		Game.gameGraphics.drawImage(animation[index], this.getX() - Camera.x, this.getY() - Camera.y, this.getWidth(), this.getHeight(), null);
 	}
 }
