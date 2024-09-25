@@ -57,28 +57,30 @@ public class Enemy extends Entity{
 	}
 
 	protected void movement() {
-		int xP = Game.player.getX();
-		int yP = Game.player.getY();
-		double angle = getAngle(yP, this.y, xP, this.x);
+		double deltaX = Game.player.getX() - x;
+		double deltaY = Game.player.getY() - y;
+		double normalize = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-		this.x += Math.cos(angle) * this.speed;
-		this.y += Math.sin(angle) * this.speed;
+		this.x += deltaX * this.speed / normalize;
+		this.y += deltaY * this.speed / normalize;
 	}
 
 	protected void reverseMovement() {
-		int xP = Game.player.getX();
-		int yP = Game.player.getY();
-		double angle = getAngle(yP, this.y, xP, this.x);
+		double deltaX = Game.player.getX() - x;
+		double deltaY = Game.player.getY() - y;
+		double normalize = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-		this.x -= Math.cos(angle) * this.speed;
-		this.y -= Math.sin(angle) * this.speed;
+		this.x += deltaX * -speed / normalize;
+		this.y += deltaY * -speed / normalize;
 	}
 	
 	protected void objectiveMovement(int xObjct, int yObjct) {
-		double angle = getAngle(yObjct, this.y, xObjct, this.x);
-		
-		this.x += Math.cos(angle) * this.speed;
-		this.y += Math.sin(angle) * this.speed;
+		double deltaX = xObjct - x;
+		double deltaY = yObjct - y;
+		double normalize = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+		this.x += deltaX * this.speed / normalize;
+		this.y += deltaY * this.speed / normalize;
 	}
 	
 	int[] redoMask = {};

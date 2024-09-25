@@ -3,31 +3,26 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 
+import graphics.TextObject;
+
 public class Menu_Init {
 	private static int cur = 0;
-	private static String[] options = {"New Game", "Help", "Exit"};
+	private static TextObject
+	newGame = new TextObject("arial", Font.BOLD, 10, "New Game", 120, 60, Color.white),
+	help = new TextObject("arial", Font.BOLD, 10, "Help", 120, 85, Color.white),
+	exit = new TextObject("arial", Font.BOLD, 10, "Exit", 120, 110, Color.white);
 	
 	public static void tick() {
 		if (Game.keyController.contains(83) || Game.keyController.contains(40)) {//S DOWN
 			cur++;
-			if (cur > options.length - 1) cur = 0;
+			if (cur > 2) cur = 0;
 		}
 		if (Game.keyController.contains(87) || Game.keyController.contains(38)) {//W UP
 			cur--;
-			if (cur < 0) cur = options.length - 1;
-		}
-		if (Game.keyController.contains(10)) {
-			if (options[cur] == "New Game") {
-				Game.gameStateHandler = Game.gameState.MENUPLAYER;
-			}
-			else if (options[cur] == "Help") {
-				Game.gameStateHandler = Game.gameState.MENUHELP;
-			}
-			else if (options[cur] == "Exit") {
-				System.exit(1);
-			}
+			if (cur < 0) cur = 2;
 		}
 		Game.keyController.clear();
+		Game.clickController.clear();
 	}
 	
 	public static void render() {
@@ -36,20 +31,49 @@ public class Menu_Init {
 		Game.gameGraphics.setColor(Color.white);
 		Game.gameGraphics.setFont(new Font("arial", Font.BOLD, 30));
 		Game.gameGraphics.drawString("Dumb Souls", 70, 30);
-		Game.gameGraphics.setFont(new Font("arial",  Font.BOLD, 10));
 		
-		Game.gameGraphics.drawString(options[0], 120, 60);
-		Game.gameGraphics.drawString(options[1], 120, 85);
-		Game.gameGraphics.drawString(options[2], 120, 110);
+		newGame.render();
+		help.render();
+		exit.render();
 		
+		if(newGame.isColliding(Game.mx, Game.my)){
+			cur = 0;
+			if(Game.clickController.contains(1)){
+				Game.gameStateHandler = Game.gameState.MENUPLAYER;
+			}
+		}
+		if(help.isColliding(Game.mx, Game.my)){
+			cur = 1;
+			if(Game.clickController.contains(1)){
+				Game.gameStateHandler = Game.gameState.MENUHELP;
+			}
+		}
+		if(exit.isColliding(Game.mx, Game.my)){
+			cur = 2;
+			if(Game.clickController.contains(1)){
+				System.exit(1);
+			}
+		}
+
 		if (cur == 0) {
 			Game.gameGraphics.drawString(">", 90, 60);
+			if (Game.keyController.contains(10)){
+				Game.keyController.clear();
+				Game.gameStateHandler = Game.gameState.MENUPLAYER;
+			}
 		}
 		else if (cur == 1) {
 			Game.gameGraphics.drawString(">", 90, 85);
+			if (Game.keyController.contains(10)){
+				Game.keyController.clear();
+				Game.gameStateHandler = Game.gameState.MENUHELP;
+			}
 		}
 		else if (cur == 2) {
 			Game.gameGraphics.drawString(">", 90, 110);
+			if (Game.keyController.contains(10)){
+				System.exit(1);
+			}
 		}
 	}
 }

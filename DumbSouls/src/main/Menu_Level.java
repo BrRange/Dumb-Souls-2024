@@ -3,15 +3,16 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import entities.Player;
+import graphics.TextObject;
 
 public class Menu_Level {
-	private static String[] options;
+	private static TextObject[] options;
 	private static int cur;
-	
+
 	public Menu_Level(int numOP) {
-		options = new String[numOP];
+		options = new TextObject[numOP];
 		for (int c = 0; c < numOP; c++) {
-			options[c] = "";
+			options[c] = new TextObject("arial", Font.BOLD, 10, "Blank", 120, 60 + 90 / numOP * c, Color.white);
 		}
 	}
 	
@@ -22,7 +23,7 @@ public class Menu_Level {
 			while (opt == lastOpt) {
 				opt = Game.rand.nextInt(Game.player.playerWeapon.listNames.length);
 			}
-			options[c] = Game.player.playerWeapon.checkOptionName(opt);
+			options[c].updateText(Game.player.playerWeapon.checkOptionName(opt));
 			lastOpt = opt;
 		}
 	}
@@ -31,6 +32,9 @@ public class Menu_Level {
 		if (Game.player.levelUp) {
 			sortOptions(3);
 			Game.player.levelUp = false;
+		}
+		for(int i = 0; i < options.length; i++){
+			if(options[i].isColliding(Game.mx, Game.my)) cur = i;
 		}
 		if (Game.keyController.contains(87) || Game.keyController.contains(38)) {//W UP
 			cur --;
@@ -42,8 +46,8 @@ public class Menu_Level {
 			if (cur > options.length - 1)
 				cur = 0;
 		}
-		if (Game.keyController.contains(10)) {
-			Game.player.playerWeapon.checkOptions(options[cur]);
+		if (Game.keyController.contains(10) || (options[cur].isColliding(Game.mx, Game.my) && Game.clickController.contains(1))) {
+			Game.player.playerWeapon.checkOptions(options[cur].txt);
 			Game.player.life = Game.player.maxLife;
 			Game.gameStateHandler = Game.gameState.NORMAL;
 		}
@@ -55,18 +59,16 @@ public class Menu_Level {
 			}
 		}
 		Game.keyController.clear();
+		Game.clickController.clear();
 	}
 	
 	public static void render() {
 		Game.gameGraphics.setColor(Color.black);
 		Game.gameGraphics.fillRect(0, 0, Game.width * Game.scale, Game.height * Game.scale);
-		
-		Game.gameGraphics.setColor(Color.white);
-		Game.gameGraphics.setFont(new Font("arial", Font.BOLD, 10));
 			
-		Game.gameGraphics.drawString(options[0], 120, 60);
-		Game.gameGraphics.drawString(options[1], 120, 90);
-		Game.gameGraphics.drawString(options[2], 120, 120);
+		for(TextObject opt : options){
+			opt.render();
+		}
 		
 		if (cur == 0) {
 			Game.gameGraphics.drawString(">", 100, 60);

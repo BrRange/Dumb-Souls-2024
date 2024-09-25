@@ -89,7 +89,7 @@ public class Fisical_Weapon extends Weapon {
 	public void Attack() {
 		combo += 1;
 		int ruptureScale = shotDamage * 7;
-		double ang = Math.atan2(my - (Game.player.getY() + 8 - Camera.y) , mx - (Game.player.getX() + 8 - Camera.x));
+		double ang = Math.atan2(Game.my / Game.scale  - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale  - (Game.player.getX() + 8 - Camera.x));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		switch (combo) {
@@ -127,7 +127,7 @@ public class Fisical_Weapon extends Weapon {
 			yoff *= -1;
 		}
 		
-		double ang = Math.atan2(my + yoff - (Game.player.getY() + 8 - Camera.y) , mx + xoff - (Game.player.getX() + 8 - Camera.x));
+		double ang = Math.atan2(Game.my / Game.scale + yoff - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale  + xoff - (Game.player.getX() + 8 - Camera.x));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		

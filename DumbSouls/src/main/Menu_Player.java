@@ -4,31 +4,43 @@ import java.awt.Color;
 import java.awt.Font;
 import entities.*;
 import entities.weapons.*;
+import graphics.TextObject;
 
 public class Menu_Player {
 	private static int cur, curW, weaponCost;
-	private static String[] weapons = {"Mana Weapon", "Fire Weapon", "Wind Weapon", "Ice Weapon", "Fisical Weapon", "Poison Weapon"}, options = {"Books", "Start", "Runes", "Back"};
+	private static String[] weapons = {"Mana Weapon", "Fire Weapon", "Wind Weapon", "Ice Weapon", "Fisical Weapon", "Poison Weapon"};
 	private static boolean clickR, clickL, weaponBlock;
+	private static TextObject
+	book = new TextObject("arial", Font.BOLD, 9, weapons[0], 30, 70, Color.white),
+	start = new TextObject("arial", Font.BOLD, 9, "Start", 30, 90, Color.white),
+	runes = new TextObject("arial", Font.BOLD, 9, "Runes", 30, 110, Color.white),
+	back = new TextObject("arial", Font.BOLD, 9, "Back", 30, 130, Color.white);
 	
 	public static void tick() {
 		boolean enter = Game.keyController.contains(10);
+
+		if(book.isColliding(Game.mx, Game.my)) cur = 0;
+		if(start.isColliding(Game.mx, Game.my)) cur = 1;
+		if(runes.isColliding(Game.mx, Game.my)) cur = 2;
+		if(back.isColliding(Game.mx, Game.my)) cur = 3;
+
 		if (Game.keyController.contains(87) || Game.keyController.contains(38)) {//W UP
 			cur --;
-			if (cur < 0) cur = options.length - 1;
+			if (cur < 0) cur = 3;
 		}
 		if (Game.keyController.contains(83) || Game.keyController.contains(40)) {//S DOWN
 			cur ++;
-			if (cur > options.length - 1) cur = 0;
+			if (cur > 3) cur = 0;
 		}
 		
-		if (options[cur] == "Books") {
-			if (Game.keyController.contains(68) || Game.keyController.contains(39)) {//D RIGHT
+		if (cur == 0) {
+			if (Game.keyController.contains(68) || Game.keyController.contains(39) || Game.scrollNum > 0) {//D RIGHT
 				clickR = true;
 				clickL = false;
 				curW++;
 				if (curW > weapons.length - 1) curW = 0;
 			}
-			if (Game.keyController.contains(65) || Game.keyController.contains(37)) {//A LEFT
+			if (Game.keyController.contains(65) || Game.keyController.contains(37) || Game.scrollNum < 0) {//A LEFT
 				clickR = false;
 				clickL = true;
 				curW--;
@@ -36,11 +48,12 @@ public class Menu_Player {
 			}
 			costWeapon();
 		}
+		Game.scrollNum = 0;
 		
-		if (options[cur] == "Start") {
+		if (cur == 1) {
 			clickR = false;
 			clickL = false;
-			if (enter) {
+			if (enter || (start.isColliding(Game.mx, Game.my) && Game.clickController.contains(1))) {
 				if (costPossible() || isWeaponBlock()) {
 					if (!isWeaponBlock()) Player.souls -= weaponCost;
 					Game.gameStateHandler = Game.gameState.NORMAL;
@@ -49,19 +62,20 @@ public class Menu_Player {
 			}
 		}
 		
-		if (options[cur] == "Runes") {
+		if (cur == 2) {
 			clickR = false;
 			clickL = false;
-			if (enter)
+			if (enter || (runes.isColliding(Game.mx, Game.my) && Game.clickController.contains(1)))
 				Game.gameStateHandler = Game.gameState.MENURUNES;
 		}
 		
-		if (options[cur] == "Back") {
-			if (enter) {
+		if (cur == 3) {
+			if (enter || (back.isColliding(Game.mx, Game.my) && Game.clickController.contains(1))) {
 				Game.gameStateHandler = Game.gameState.MENUINIT;
 			}	
 		}
 		Game.keyController.clear();
+		Game.clickController.clear();
 	}
 	
 	private static boolean isWeaponBlock() {
@@ -83,28 +97,28 @@ public class Menu_Player {
 	}
 	
 	private static void weaponVerification() {
-		switch(weapons[curW]){
-			case "Mana Weapon": 
+		switch(curW){
+			case 0: 
 				Game.player.playerWeapon = new Mana_Weapon();
 				Mana_Weapon.block = false;
 				break;
-			case "Fire Weapon":
+			case 1:
 				Game.player.playerWeapon = new Fire_Weapon();
 				Fire_Weapon.block = false;
 				break;
-			case "Wind Weapon":
+			case 2:
 				Game.player.playerWeapon = new Wind_Weapon();
 				Wind_Weapon.block = false;
 				break;
-			case "Ice Weapon":
+			case 3:
 				Game.player.playerWeapon = new Ice_Weapon();
 				Ice_Weapon.block = false;
 				break;
-			case "Fisical Weapon":
+			case 4:
 				Game.player.playerWeapon = new Fisical_Weapon();
 				Fisical_Weapon.block = false;
 				break;
-			case "Poison Weapon":
+			case 5:
 				Game.player.playerWeapon = new Poison_Weapon();
 				Poison_Weapon.block = false;
 				break;
@@ -171,33 +185,30 @@ public class Menu_Player {
 		Game.gameGraphics.setFont(new Font("arial", Font.BOLD, 15));
 		Game.gameGraphics.drawString("Player Configuration", 90, 20);
 		
-		Game.gameGraphics.setFont(new Font("arial", Font.BOLD, 9));
-		Game.gameGraphics.drawString(weapons[curW], 30, 70);
-		Game.gameGraphics.drawString("Start", 30, 90);
-		Game.gameGraphics.drawString("Runes", 30, 110);
-		Game.gameGraphics.drawString("Back", 30, 130);
+		book.render();
+		start.render();
+		runes.render();
+		back.render();
 		
 		if (cur == 0) {
-			Game.gameGraphics.drawString("<", 20, 70);
-			Game.gameGraphics.drawString(">", 105, 70);
+			book.updateText(weapons[curW]);
 			if (clickR) {
+				Game.gameGraphics.drawString("<", 20, 70);
 				Game.gameGraphics.setColor(Color.red);
 				Game.gameGraphics.drawString(">", 105, 70);
 			}
-			if (clickL) {
+			else if (clickL) {
+				Game.gameGraphics.drawString(">", 105, 70);
 				Game.gameGraphics.setColor(Color.red);
 				Game.gameGraphics.drawString("<", 20, 70);
+			}
+			else{
+				Game.gameGraphics.drawString("<", 20, 70);
+				Game.gameGraphics.drawString(">", 105, 70);
 			}
 		}
 		else {
 			Game.gameGraphics.drawString(">", 20, 70 + 20 * cur);
-		}
-		
-		if (costPossible()) {
-			Game.gameGraphics.setColor(new Color(0, 127, 14));
-		}
-		else {
-			Game.gameGraphics.setColor(new Color(127, 0, 0));
 		}
 		
 		if (isWeaponBlock()) {
@@ -205,7 +216,12 @@ public class Menu_Player {
 			Game.gameGraphics.drawString("Unlocked", 194, 100);
 		}
 		else {
-			Game.gameGraphics.setColor(new Color(127, 0, 0));
+			if (costPossible()) {
+				Game.gameGraphics.setColor(new Color(0, 127, 14));
+			}
+			else {
+				Game.gameGraphics.setColor(new Color(127, 0, 0));
+			}
 			Game.gameGraphics.drawString("Locked", 183, 110);
 			Game.gameGraphics.drawString("Soul Cost: " + weaponCost, 183, 100);
 		}

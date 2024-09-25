@@ -23,9 +23,10 @@ public class Entity {
 	
 	public BufferedImage sprite;
 	
-	public static BufferedImage player_sprite = Game.sheet.getSprite(0, 16, 16, 16);
+	public static BufferedImage player_sprite;
 	
 	public Entity(int x, int y, int width, int height, BufferedImage sprite) {
+		player_sprite = Game.sheet.getSprite(0, 16, 16, 16);
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -113,7 +114,6 @@ public class Entity {
 
 	protected void knockBack(Entity e, Entity taker){
 		double angle = getAngle(taker.getY() + taker.getHeight() / 2, e.getY() + e.getHeight() / 2, taker.getX() + taker.getWidth() / 2, e.getX() + e.getWidth() / 2);
-
 		taker.x += Math.cos(angle) * e.push;
 		taker.y += Math.sin(angle) * e.push;
 	}

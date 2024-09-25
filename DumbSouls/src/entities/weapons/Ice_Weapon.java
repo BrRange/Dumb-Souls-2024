@@ -93,7 +93,7 @@ public class Ice_Weapon extends Weapon{
 	}
 	
 	public void Attack() {
-		double ang = Math.atan2(my - (Game.player.getY() + 8 - Camera.y) , mx - (Game.player.getX() + 8 - Camera.x));
+		double ang = Math.atan2(Game.my / Game.scale  - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale  - (Game.player.getX() + 8 - Camera.x));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
@@ -116,7 +116,7 @@ public class Ice_Weapon extends Weapon{
 			yoff *= -1;
 		}
 		
-		double ang = Math.atan2(my + yoff - (Game.player.getY() + 8 - Camera.y) , mx + xoff - (Game.player.getX() + 8 - Camera.x));
+		double ang = Math.atan2(Game.my / Game.scale  + yoff - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale  + xoff - (Game.player.getX() + 8 - Camera.x));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
@@ -137,7 +137,7 @@ public class Ice_Weapon extends Weapon{
 		}
 		if (md1) {
 			dt += 1;
-			double dashSpeed = Game.player.speed + 1;
+			double dashSpeed = Game.player.speed / 3;
 			if (dt < dashTime) {
 				Game.player.moveX += Math.signum(Game.player.moveX) * dashSpeed;
 				Game.player.moveY += Math.signum(Game.player.moveY) * dashSpeed;

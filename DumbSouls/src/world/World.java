@@ -18,7 +18,7 @@ public class World {
 	
 	public World(String path) {
 		try {
-			BufferedImage map = ImageIO.read(new FileInputStream("res/" + path));
+			BufferedImage map = ImageIO.read(new FileInputStream(path));
 			int[] pixels = new int[map.getWidth() * map.getHeight()];
 			tiles = new Tile[map.getWidth() * map.getHeight()];
 			WIDTH = map.getWidth();

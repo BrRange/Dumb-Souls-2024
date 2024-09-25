@@ -14,13 +14,13 @@ public class Player extends Entity{
 	
 	private int tickTimer, attackTimer;
 	public boolean moving, levelUp;
-	public short moveX, moveY, abltCooldown;
+	public short abltCooldown;
 	public int maxLife = 100, exp = 0, maxExp = 100, maxMana = 100;
 	public static int souls;
 	public int level = 1;
 	private int frames, maxFrames = 40;
 	public int direct = 2;
-	public double maxSpeed = 1.5, speed = maxSpeed, mana = 100, manaRec = 2, life = 100, lifeRec=1.001, moveCos, moveSin;
+	public double moveX, moveY, maxSpeed = 1.5, speed = maxSpeed, mana = 100, manaRec = 2, life = 100, lifeRec=1.001, moveCos, moveSin;
 	public Weapon playerWeapon;
 	public static List<Rune> runesInventory;
 	public List<Rune> runesEquipped;
@@ -39,7 +39,7 @@ public class Player extends Entity{
 		playerLeft = new BufferedImage[4];
 		playerUp = new BufferedImage[4];
 		
-		runesInventory = new ArrayList<Rune>();
+		runesInventory = runesInventory == null ? new ArrayList<Rune>() : runesInventory;
 		runesEquipped = new ArrayList<Rune>();
 		
 		for (int xsp = 0; xsp < 4; xsp++) {
@@ -99,7 +99,7 @@ public class Player extends Entity{
 		World.wave = 1;
 		World.bossName = "";
 		World.bossTime = false;
-		Game.world = new World("/map00.png");
+		Game.world = new World("res/map00.png");
 		Game.ui = new UI();
 		Game.startMenu = new Menu_Init();
 		Game.playerMenu = new Menu_Player();
@@ -119,6 +119,7 @@ public class Player extends Entity{
 	}
 	
 	private void isMoving() {
+		if(!moving) return;
 		frames++;
 		if (frames == maxFrames) frames = 0;
 	}
@@ -180,29 +181,30 @@ public class Player extends Entity{
 		if (Game.keyController.contains(83) || Game.keyController.contains(40))//S DOWN
 			moveY++;
 		if (Game.keyController.contains(68) || Game.keyController.contains(39))//A LEFT
-			moveX--;
-		if (Game.keyController.contains(65) || Game.keyController.contains(37))//D RIGHT
 			moveX++;
-		
-		moving = moveX != 0 || moveY != 0;
-		if (moveX < 0) direct = 0;
-		else if (moveX > 0) direct = 1;
+		if (Game.keyController.contains(65) || Game.keyController.contains(37))//D RIGHT
+			moveX--;
+		{
+			moving = true;
+			double normalize = Math.sqrt(moveX * moveX + moveY * moveY);
+			if(normalize == 0){
+				normalize = 1;
+				moving = false;
+			}
+			moveX /= normalize;
+			moveY /= normalize;
+		}
+
+		if (moveX > 0) direct = 0;
+		else if (moveX < 0) direct = 1;
 		else if (moveY > 0) direct = 2;
 		else if (moveY < 0) direct = 3;
 
-		{
-			double tempAngle = Math.atan2(moveY, -moveX);
-			moveCos = Math.cos(tempAngle);
-			moveSin = Math.sin(tempAngle);
-		}
-
 		castAblt();
 
-		if(moving){
-			this.x += speed * moveCos;
-			this.y += speed * moveSin;
-			isMoving();
-		}
+		this.x += speed * moveX;
+		this.y += speed * moveY;
+		isMoving();
 		
 		if (mana < maxMana && TickTimer(20))
 		mana = Math.min(maxMana, mana + manaRec);
@@ -225,11 +227,11 @@ public class Player extends Entity{
 		runeTick();
 		
 		if (playerWeapon instanceof Mana_Weapon) {
-			Mana_Weapon.graficEffect();
+			Mana_Weapon.grafficEffect();
 		}
 
-		Camera.x = Camera.Clamp(this.getX() - (Game.width / 2), 0, World.WIDTH * 16 - Game.width);
-		Camera.y = Camera.Clamp(this.getY() - (Game.height / 2), 0, World.HEIGHT * 16 - Game.height);
+		Camera.x = Camera.Clamp(getX() - Game.width / 2 + getWidth() / 2, 0, World.WIDTH * 16 - Game.width);
+		Camera.y = Camera.Clamp(getY() - Game.height / 2 + getHeight() / 2, 0, World.HEIGHT * 16 - Game.height);
 
 		moveX = moveY = 0;
 	}

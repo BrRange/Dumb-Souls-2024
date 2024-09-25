@@ -107,12 +107,12 @@ public class Mana_Weapon extends Weapon {
 		}
 	}
 	
-	 public static void manaEffect(Shot atck) {
-		 if (qntSpcShots > 0) {
-			 qntSpcShots--;
-			 Game.entities.add(new AE_Explosion(atck.getX() - 16, atck.getY() - 16, 32, 32, null, 10, ablt2Dmg, ablt2Knck, 5, 2, 160, 128, 16, 16)); 
-		 } 
-	  }
+	public static void manaEffect(Shot atck) {
+		if (qntSpcShots > 0) {
+			qntSpcShots--;
+			Game.entities.add(new AE_Explosion(atck.getX() - 16, atck.getY() - 16, 32, 32, null, 10, ablt2Dmg, ablt2Knck, 5, 2, 160, 128, 16, 16)); 
+		} 
+	}
 
 	
 	public void Dash() {
@@ -164,7 +164,7 @@ public class Mana_Weapon extends Weapon {
 	}
 	
 	public void Attack() {
-		double ang = Math.atan2(my - (Game.player.getY() + 8 - Camera.y) , mx - (Game.player.getX() + 8 - Camera.x));
+		double ang = Math.atan2(Game.my / Game.scale - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale - (Game.player.getX() + 8 - Camera.x));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
@@ -186,14 +186,14 @@ public class Mana_Weapon extends Weapon {
 			yoff *= -1;
 		}
 		
-		double ang = Math.atan2(my + yoff - (Game.player.getY() + 8 - Camera.y) , mx + xoff - (Game.player.getX() + 8 - Camera.x));
+		double ang = Math.atan2(Game.my / Game.scale + yoff - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale + xoff - (Game.player.getX() + 8 - Camera.x));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
 		Game.shots.add(new Shot(Game.player.getX(), Game.player.getY(), 3, 3, shotFace, dx, dy, ang, shotDamage, shotSpeed, 35));
 	}
 	
-	public static void graficEffect() {
+	public static void grafficEffect() {
 		if (qntSpcShots > 0) {
 			if (grafEfcCont == 10) {
 				grafEfcCont = 0;

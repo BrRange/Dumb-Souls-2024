@@ -9,6 +9,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
@@ -28,18 +30,18 @@ import graphics.UI;
 import sounds.SoundPlayer;
 import world.World;
 
-public class Game extends Canvas implements Runnable, KeyListener, MouseListener, MouseMotionListener{
+public class Game extends Canvas implements Runnable, KeyListener, MouseListener, MouseMotionListener, MouseWheelListener{
 	private static final long serialVersionUID = 1L;
 	private static Thread thread;
 	private static boolean isRuning = false;
 	
-	public static HashSet<Integer> keyController = new HashSet<Integer>(); 
-	public static HashSet<Integer> clickController = new HashSet<Integer>(); 
+	public static HashSet<Integer> keyController = new HashSet<Integer>();
+	public static HashSet<Integer> clickController = new HashSet<Integer>();
 	public static JFrame frame;
 	public static final int width = 320;
 	public static final int height = 160;
 	public static final int scale = 3;
-	public static int mx, my, amountTicks;
+	public static int mx, my, amountTicks, scrollNum;
 	
 	private static BufferedImage image;
 	public static Spritesheet sheet;
@@ -81,6 +83,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		addKeyListener(this);
 		addMouseListener(this);
 		addMouseMotionListener(this);
+		addMouseWheelListener(this);
 		setPreferredSize(new Dimension(width * scale, height * scale));
 		initFrame();
 		entities = new ArrayList<Entity>();
@@ -90,12 +93,12 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		rand = new Random();
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		gameGraphics = image.getGraphics();
-		sheet = new Spritesheet("spritesheet.png");
+		sheet = new Spritesheet("res/spritesheet.png");
 		player = new Player(0, 0, 16, 16, sheet.getSprite(0, 16, 16, 16));
 		entities.add(player);
-		world = new World("map00.png");
+		world = new World("res/map00.png");
 		ui = new UI();
-		soundtrack = new SoundPlayer("sndTrack.wav");
+		soundtrack = new SoundPlayer("res/sounds/sndTrack.wav");
 		startMenu = new Menu_Init();
 		playerMenu = new Menu_Player();
 		pauseMenu = new Menu_Pause();
@@ -140,7 +143,6 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	
 	private static void spawnEnemies() {
 		if (enemies.size() == 0) {
-			enemies.add(new Barrier_Enemy(60, 60, 48, 32, null));
 			if (World.wave % 10 != 0) {
 				world.raiseMaxEnemies();
 				World.wave++;
@@ -267,8 +269,6 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	@Override
 	public void mousePressed(MouseEvent e) {
 		clickController.add(e.getButton());
-		player.playerWeapon.mx = e.getX() / scale;
-		player.playerWeapon.my = e.getY() / scale;
 	}
 
 	@Override
@@ -297,5 +297,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	public void mouseMoved(MouseEvent e) {
 		mx = e.getX();
 		my = e.getY();
+	}
+
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent e){
+		scrollNum = e.getWheelRotation();
 	}
 }

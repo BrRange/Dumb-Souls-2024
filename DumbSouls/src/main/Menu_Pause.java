@@ -37,15 +37,14 @@ public class Menu_Pause {
 		}
 		if(resume.isColliding(Game.mx, Game.my) && Game.clickController.contains(1)){
 			Game.player.stopMoving();
-			Game.clickController.clear();
 			Game.gameStateHandler = Game.gameState.NORMAL;
 		}
 		if(initialMenu.isColliding(Game.mx, Game.my) && Game.clickController.contains(1)){
 			cur = 0;
-			Game.clickController.clear();
 			Player.die();
 		}
 		Game.keyController.clear();
+		Game.clickController.clear();
 	}
 	
     public static void render() {

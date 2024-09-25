@@ -2,13 +2,19 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 
+import graphics.TextObject;
+
 public class Menu_Help {
 	
+	private static TextObject
+	back = new TextObject("arial", Font.BOLD, 10, "> Back", 10, 140, Color.white);
+
 	public static void tick() {
-		if (Game.keyController.contains(10)){
-			Game.keyController.clear();
+		if (Game.keyController.contains(10) || (back.isColliding(Game.mx, Game.my) && Game.clickController.contains(1))){
 			Game.gameStateHandler = Game.gameState.MENUINIT;
 		}
+		Game.keyController.clear();
+		Game.clickController.clear();
 	}
 	
 	public static void render() {
@@ -26,6 +32,6 @@ public class Menu_Help {
 		Game.gameGraphics.drawString("Skills : 1, 2", 40, 81);
 		Game.gameGraphics.drawString("Select : Enter", 40, 96);
 		Game.gameGraphics.drawString("Pause : Escape", 40, 111);
-		Game.gameGraphics.drawString("> Back", 10, 140);
+		back.render();
 	}
 }

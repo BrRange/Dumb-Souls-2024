@@ -9,7 +9,7 @@ public class Weapon {
 	public BufferedImage sprite, dashImg, ablt2Img, ablt3Img;
 	protected BufferedImage[] animation;
 	private int frames, maxFrames = 10, index, maxIndex = 3;
-	public int mx, my, attackTimer;
+	public int attackTimer;
 	public String[] listNames;
 	public boolean md1, md2, md3;
 	public boolean dashAva, ablt2Ava, ablt3Ava;

@@ -23,8 +23,8 @@ public class Wind_Weapon extends Weapon {
 		shotFace = Game.sheet.getSprite(128, 32, 16, 16);
 		super.setAttackTimer(2);
 		Game.player.push = 5;
-		sound1 = new SoundPlayer("wind_atk.wav");
-		sound2 = new SoundPlayer("wind_ablt2.wav");
+		sound1 = new SoundPlayer("res/sounds/wind_atk.wav");
+		sound2 = new SoundPlayer("res/sounds/wind_ablt2.wav");
 		setOptionsNames(9);
 		this.getAnimation(80, 32, 16, 16, 3);
 	}
@@ -96,7 +96,7 @@ public class Wind_Weapon extends Weapon {
 	
 	public void Attack() {
 		sound1.PlaySound();
-		double ang = Math.atan2(my - (Game.player.getY() + 8 - Camera.y) , mx - (Game.player.getX() + 8 - Camera.x));
+		double ang = Math.atan2(Game.my / Game.scale  - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale  - (Game.player.getX() + 8 - Camera.x));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
@@ -118,7 +118,7 @@ public class Wind_Weapon extends Weapon {
 			yoff *= -1;
 		}
 		
-		double ang = Math.atan2(my + yoff - (Game.player.getY() + 8 - Camera.y) , mx + xoff - (Game.player.getX() + 8 - Camera.x));
+		double ang = Math.atan2(Game.my / Game.scale  + yoff - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale  + xoff - (Game.player.getX() + 8 - Camera.x));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
