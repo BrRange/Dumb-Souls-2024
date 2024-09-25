@@ -13,6 +13,12 @@ public class Menu_Pause {
 	initialMenu = new TextObject("arial", Font.BOLD, 10, "Initial Menu", 120, 90, Color.white);
 	
     public static void tick() {
+		if(resume.isColliding(Game.mx, Game.my)){
+			cur = 0;
+		}
+		if(initialMenu.isColliding(Game.mx, Game.my)){
+			cur = 1;
+		}
 		if (Game.keyController.contains(83) || Game.keyController.contains(40)) {//S DOWN
 			cur++;
 			if (cur > 1) {

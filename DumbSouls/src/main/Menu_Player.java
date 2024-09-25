@@ -58,6 +58,7 @@ public class Menu_Player {
 					if (!isWeaponBlock()) Player.souls -= weaponCost;
 					Game.gameStateHandler = Game.gameState.NORMAL;
 					weaponVerification();
+					cur = 0;
 				}
 			}
 		}
@@ -65,13 +66,16 @@ public class Menu_Player {
 		if (cur == 2) {
 			clickR = false;
 			clickL = false;
-			if (enter || (runes.isColliding(Game.mx, Game.my) && Game.clickController.contains(1)))
+			if (enter || (runes.isColliding(Game.mx, Game.my) && Game.clickController.contains(1))){
 				Game.gameStateHandler = Game.gameState.MENURUNES;
+				cur = 0;
+			}
 		}
 		
 		if (cur == 3) {
 			if (enter || (back.isColliding(Game.mx, Game.my) && Game.clickController.contains(1))) {
 				Game.gameStateHandler = Game.gameState.MENUINIT;
+				cur = 0;
 			}	
 		}
 		Game.keyController.clear();

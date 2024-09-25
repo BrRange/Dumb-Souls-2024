@@ -13,6 +13,25 @@ public class Menu_Init {
 	exit = new TextObject("arial", Font.BOLD, 10, "Exit", 120, 110, Color.white);
 	
 	public static void tick() {
+		if(newGame.isColliding(Game.mx, Game.my)){
+			cur = 0;
+			if(Game.clickController.contains(1)){
+				Game.gameStateHandler = Game.gameState.MENUPLAYER;
+			}
+		}
+		if(help.isColliding(Game.mx, Game.my)){
+			cur = 1;
+			if(Game.clickController.contains(1)){
+				Game.gameStateHandler = Game.gameState.MENUHELP;
+				cur = 0;
+			}
+		}
+		if(exit.isColliding(Game.mx, Game.my)){
+			cur = 2;
+			if(Game.clickController.contains(1)){
+				System.exit(1);
+			}
+		}
 		if (Game.keyController.contains(83) || Game.keyController.contains(40)) {//S DOWN
 			cur++;
 			if (cur > 2) cur = 0;
@@ -35,25 +54,6 @@ public class Menu_Init {
 		newGame.render();
 		help.render();
 		exit.render();
-		
-		if(newGame.isColliding(Game.mx, Game.my)){
-			cur = 0;
-			if(Game.clickController.contains(1)){
-				Game.gameStateHandler = Game.gameState.MENUPLAYER;
-			}
-		}
-		if(help.isColliding(Game.mx, Game.my)){
-			cur = 1;
-			if(Game.clickController.contains(1)){
-				Game.gameStateHandler = Game.gameState.MENUHELP;
-			}
-		}
-		if(exit.isColliding(Game.mx, Game.my)){
-			cur = 2;
-			if(Game.clickController.contains(1)){
-				System.exit(1);
-			}
-		}
 
 		if (cur == 0) {
 			Game.gameGraphics.drawString(">", 90, 60);

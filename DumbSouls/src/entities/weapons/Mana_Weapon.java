@@ -141,13 +141,9 @@ public class Mana_Weapon extends Weapon {
 	
 	public void Ablt2() {
 		int manaCost = 68;
-		if (this.ablt2Ava && Game.player.mana >= manaCost && !md2) {
-			md2 = true;
+		if (this.ablt2Ava && Game.player.mana >= manaCost && qntSpcShots == 0) {
 			Game.player.mana -= manaCost;
-		}
-		if (md2) {
 			qntSpcShots += spcShotsGain;
-			md2 = false;
 		}
 	}
 	
