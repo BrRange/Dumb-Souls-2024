@@ -30,7 +30,7 @@ public class Enemy_Shot extends Entity{
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(this.sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
+		Game.gameGraphics.drawImage(this.sprite, this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
 	}
 	
 	private void movement() {

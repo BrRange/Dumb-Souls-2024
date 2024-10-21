@@ -49,6 +49,6 @@ public class AE_Rupture extends Attack_Entity {
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, width, height, null);
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.getX(), this.getY() - Camera.getY(), width, height, null);
 	}
 }

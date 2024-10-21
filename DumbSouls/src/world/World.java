@@ -147,8 +147,8 @@ public class World {
 	}
 	
 	public void render() {
-		int xstart = Camera.x >> 4;
-		int ystart = Camera.y >> 4;
+		int xstart = Camera.getX() >> 4;
+		int ystart = Camera.getY() >> 4;
 		
 		int xend = xstart + (Game.width >> 4);
 		int yend = ystart + (Game.height >> 4);
@@ -158,7 +158,6 @@ public class World {
 				if (xx < 0 || yy < 0 || xx >= WIDTH || yy >= HEIGHT) {
 					continue;
 				}
-				
 				Tile tile = tiles[xx + (yy * WIDTH)];
 				tile.render();
 			}

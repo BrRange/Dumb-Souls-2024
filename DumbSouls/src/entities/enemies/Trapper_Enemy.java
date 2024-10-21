@@ -93,10 +93,10 @@ public class Trapper_Enemy extends Enemy{
 	
 	public void render() {
 		if (stage2) {
-			Game.gameGraphics.drawImage(animation[index], this.getX() - Camera.x, this.getY() - Camera.y, 16, 32, null);
+			Game.gameGraphics.drawImage(animation[index], this.getX() - Camera.getX(), this.getY() - Camera.getY(), 16, 32, null);
 		}
 		else {
-			Game.gameGraphics.drawImage(animation[0], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			Game.gameGraphics.drawImage(animation[0], this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
 		}
 	}
 }

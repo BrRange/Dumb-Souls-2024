@@ -142,19 +142,16 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	}
 	
 	private static void spawnEnemies() {
-		if (enemies.size() == 0) {
-			if (World.wave % 10 != 0) {
-				world.raiseMaxEnemies();
-				World.wave++;
-				for (int c = 0; c <= World.maxEnemies; c++) {
-					world.spawnEnemy();
-				}
+		if (enemies.size() > 0) return;
+		World.wave++;
+		if (World.wave % 10 != 0) {
+			world.raiseMaxEnemies();
+			for (int c = 0; c <= World.maxEnemies; c++) {
+				world.spawnEnemy();
 			}
-			else {
-				world.spawnBoss();
-				World.wave++;
-			}
+			return;
 		}
+		world.spawnBoss();
 	}
 
 	private void baseRender(){
@@ -212,14 +209,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	public void run() {
 		requestFocus();
 		long lastTime = System.currentTimeMillis();
-		int amountTicks = 60;
-		float framesSec = 1f / amountTicks;
-		double delta;
 		
 		while(isRuning) {
 			long now = System.currentTimeMillis();
-			delta = (now - lastTime) / 1000.0;
-			if(delta >= framesSec) {
+			if((now - lastTime) / 1000.0 >= 1f / 60) {
 				gameStateHandler.stateTick.run();
 				lastTime = now;
 			}
@@ -244,14 +237,14 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		if (keyController.contains(KeyEvent.VK_ESCAPE)) {
 			switch(gameStateHandler) {
-				case NORMAL:
-					gameStateHandler = gameState.MENUPAUSE;
-					break;
-				case MENUPAUSE:
-					player.stopMoving();
-					gameStateHandler = gameState.NORMAL;
-					break;
-				default: break;
+			case NORMAL:
+				gameStateHandler = gameState.MENUPAUSE;
+				break;
+			case MENUPAUSE:
+				player.stopMoving();
+				gameStateHandler = gameState.NORMAL;
+				break;
+			default: break;
 			}
 		}
 	}

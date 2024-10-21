@@ -22,7 +22,7 @@ public class Save_Game{
 		weaponSum += bitIntWriter(Ice_Weapon.block, 4);
 		weaponSum += bitIntWriter(Fisical_Weapon.block, 8);
 		weaponSum += bitIntWriter(Poison_Weapon.block, 16);
-		try (final PrintWriter writer = new PrintWriter("SaveDS.txt")) {
+		try (final PrintWriter writer = new PrintWriter("SaveDS.save")) {
 			writer.write((char)(Player.souls & -16777216));
 			writer.write((char)(Player.souls & 16711680));
 			writer.write((char)(Player.souls & 65280));
@@ -43,7 +43,7 @@ public class Save_Game{
 	
 	public static void loadSave(){
 		try {
-			BufferedInputStream reader = new BufferedInputStream(new FileInputStream("SaveDS.txt"));
+			BufferedInputStream reader = new BufferedInputStream(new FileInputStream("SaveDS.save"));
 			
 			int souls[] = new int[4], weapons[] = new int[1], runes[] = new int[5];
 			for(int i = 0; i < souls.length; i++){
@@ -75,8 +75,8 @@ public class Save_Game{
 		catch (Exception e) {
 			e.printStackTrace();
 			try{
-				new File("SaveDS.txt").createNewFile();
-				PrintWriter pWriter = new PrintWriter("SaveDS.txt");
+				new File("SaveDS.save").createNewFile();
+				PrintWriter pWriter = new PrintWriter("SaveDS.save");
 				pWriter.print("\0\0\0\0\0");
 				pWriter.close();
 			} catch(Exception err){}

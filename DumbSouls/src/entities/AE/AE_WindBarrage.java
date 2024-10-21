@@ -49,6 +49,6 @@ public class AE_WindBarrage extends Attack_Entity{
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(animation[0], this.getX() - Camera.x, this.getY() - Camera.y, 32, 32, null);
+		Game.gameGraphics.drawImage(animation[0], this.getX() - Camera.getX(), this.getY() - Camera.getY(), 32, 32, null);
 	}
 }

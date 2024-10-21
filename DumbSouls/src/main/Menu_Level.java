@@ -52,11 +52,9 @@ public class Menu_Level {
 			Game.gameStateHandler = Game.gameState.NORMAL;
 		}
 		 
-		if (Game.keyController.contains(32)) {
-			if (Player.souls >= 20) {
-				Player.souls -= 20;
-				sortOptions(3);
-			}
+		if (Game.keyController.contains(32) && Player.souls >= 20) {
+			Player.souls -= 20;
+			sortOptions(3);
 		}
 		Game.keyController.clear();
 		Game.clickController.clear();

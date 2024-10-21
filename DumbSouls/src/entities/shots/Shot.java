@@ -34,7 +34,7 @@ public class Shot extends Entity{
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
+		Game.gameGraphics.drawImage(sprite, this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
 	}
 	
 	public void die() {

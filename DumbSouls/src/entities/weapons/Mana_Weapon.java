@@ -160,7 +160,7 @@ public class Mana_Weapon extends Weapon {
 	}
 	
 	public void Attack() {
-		double ang = Math.atan2(Game.my / Game.scale - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale - (Game.player.getX() + 8 - Camera.x));
+		double ang = Math.atan2(Game.my / Game.scale - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale - (Game.player.getX() + 8 - Camera.getX()));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
@@ -182,7 +182,7 @@ public class Mana_Weapon extends Weapon {
 			yoff *= -1;
 		}
 		
-		double ang = Math.atan2(Game.my / Game.scale + yoff - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale + xoff - (Game.player.getX() + 8 - Camera.x));
+		double ang = Math.atan2(Game.my / Game.scale + yoff - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale + xoff - (Game.player.getX() + 8 - Camera.getX()));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		

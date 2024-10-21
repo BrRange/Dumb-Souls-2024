@@ -96,7 +96,7 @@ public class Wind_Weapon extends Weapon {
 	
 	public void Attack() {
 		sound1.PlaySound();
-		double ang = Math.atan2(Game.my / Game.scale  - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale  - (Game.player.getX() + 8 - Camera.x));
+		double ang = Math.atan2(Game.my / Game.scale - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale  - (Game.player.getX() + 8 - Camera.getX()));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
@@ -118,7 +118,7 @@ public class Wind_Weapon extends Weapon {
 			yoff *= -1;
 		}
 		
-		double ang = Math.atan2(Game.my / Game.scale  + yoff - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale  + xoff - (Game.player.getX() + 8 - Camera.x));
+		double ang = Math.atan2(Game.my / Game.scale  + yoff - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale  + xoff - (Game.player.getX() + 8 - Camera.getX()));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
@@ -165,7 +165,7 @@ public class Wind_Weapon extends Weapon {
 			Game.player.mana -= manaCost;
 		}
 		if (md3) {
-			double ang = Math.atan2(Game.my / Game.scale - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale - (Game.player.getX() + 8 - Camera.x));
+			double ang = Math.atan2(Game.my / Game.scale - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale - (Game.player.getX() + 8 - Camera.getX()));
 			double dx = Math.cos(ang);
 			double dy =  Math.sin(ang);
 			Game.entities.add(new AE_WindBarrage(Game.player.getX(), Game.player.getY(), 32, 32, ablt3Spd, dx, dy, ablt3Dmg, null, 30));

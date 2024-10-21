@@ -72,7 +72,7 @@ public class Weapon {
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(this.animation[index], (Game.player.getX() - Camera.x) - 12, (Game.player.getY() - Camera.y) - 8, null);
+		Game.gameGraphics.drawImage(this.animation[index], (Game.player.getX() - Camera.getX()) - 12, (Game.player.getY() - Camera.getY()) - 8, null);
 	}
 	
 	public void Attack() {

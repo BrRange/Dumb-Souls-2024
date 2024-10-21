@@ -55,7 +55,7 @@ public class Eye_Enemy extends Enemy{
 	private void attack() {
 		timeAtk++;
 		if (timeAtk == 60) {
-			double ang = Math.atan2((Game.player.getY() - Camera.y) - (this.getY() - Camera.y) ,(Game.player.getX() - Camera.x) - (this.getX() - Camera.x));
+			double ang = Math.atan2((Game.player.getY() - Camera.getY()) - (this.getY() - Camera.getY()) ,(Game.player.getX() - Camera.getX()) - (this.getX() - Camera.getX()));
 			double dx = Math.cos(ang);
 			double dy =  Math.sin(ang);
 			
@@ -89,6 +89,6 @@ public class Eye_Enemy extends Enemy{
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		Game.gameGraphics.drawImage(animation[index], this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
 	}
 }

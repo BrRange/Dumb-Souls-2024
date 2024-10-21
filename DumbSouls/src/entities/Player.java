@@ -75,10 +75,9 @@ public class Player extends Entity{
 	}
 	
 	private void runeTick() {
-		if (runesEquipped.size() > 0) {
-			for(int i = 0; i < runesEquipped.size(); i++) {
-				runesEquipped.get(i).tick();
-			}
+		if (runesEquipped.size() == 0) return;
+		for(int i = 0; i < runesEquipped.size(); i++) {
+			runesEquipped.get(i).tick();
 		}
 	}
 
@@ -139,12 +138,9 @@ public class Player extends Entity{
 	}
 
 	private boolean TickTimer(int frames) {
-		if (this.tickTimer % frames == 0) {
+		if (this.tickTimer % frames == 0)
 			return true;
-		}
-		else{
-			return false;
-		}
+		return false;
 	}
 
 	private void refreshTick(){
@@ -184,13 +180,13 @@ public class Player extends Entity{
 			moveX++;
 		if (Game.keyController.contains(65) || Game.keyController.contains(37))//D RIGHT
 			moveX--;
-		{
-			moving = true;
-			double normalize = Math.sqrt(moveX * moveX + moveY * moveY);
-			if(normalize == 0){
-				normalize = 1;
-				moving = false;
-			}
+		moving = true;
+		double normalize = Math.sqrt(moveX * moveX + moveY * moveY);
+		if(normalize == 0){
+			normalize = 1;
+			moving = false;
+
+		} else {
 			moveX /= normalize;
 			moveY /= normalize;
 		}
@@ -214,9 +210,8 @@ public class Player extends Entity{
 		
 		refreshTick();
 		
-		if (life <= 0) {
+		if (life <= 0)
 			die();
-		}
 		
 		playerWeapon.tick();
 		playerWeapon.Effect();
@@ -230,8 +225,7 @@ public class Player extends Entity{
 			Mana_Weapon.grafficEffect();
 		}
 
-		Camera.x = Camera.Clamp(getX() - Game.width / 2 + getWidth() / 2, 0, World.WIDTH * 16 - Game.width);
-		Camera.y = Camera.Clamp(getY() - Game.height / 2 + getHeight() / 2, 0, World.HEIGHT * 16 - Game.height);
+		Camera.Clamp(getX() - Game.width / 2 + width / 2, getY() - Game.height / 2 + height / 2);
 
 		moveX = moveY = 0;
 	}
@@ -239,16 +233,16 @@ public class Player extends Entity{
 	public void render() {
 		switch(direct){
 		case 0:
-			Game.gameGraphics.drawImage(playerRight[moving ? frames / 10 : 0], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			Game.gameGraphics.drawImage(playerRight[moving ? frames / 10 : 0], this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
 			break;
 		case 1:
-			Game.gameGraphics.drawImage(playerLeft[moving ? frames / 10 : 0], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			Game.gameGraphics.drawImage(playerLeft[moving ? frames / 10 : 0], this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
 			break;
 		case 2:
-			Game.gameGraphics.drawImage(playerDown[moving ? frames / 10 : 0], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			Game.gameGraphics.drawImage(playerDown[moving ? frames / 10 : 0], this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
 			break;
 		case 3:
-			Game.gameGraphics.drawImage(playerUp[moving ? frames / 10 : 0], this.getX() - Camera.x, this.getY() - Camera.y, null);
+			Game.gameGraphics.drawImage(playerUp[moving ? frames / 10 : 0], this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
 			break;
 		}
 		playerWeapon.render();

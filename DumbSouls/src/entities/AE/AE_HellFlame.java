@@ -63,6 +63,6 @@ public class AE_HellFlame extends Attack_Entity {
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, 48, 48, null);
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.getX(), this.getY() - Camera.getY(), 48, 48, null);
 	}
 }

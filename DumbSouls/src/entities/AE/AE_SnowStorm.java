@@ -27,8 +27,8 @@ public class AE_SnowStorm extends Attack_Entity {
 		
 		double destX = Game.mx / Game.scale;
 		double destY = Game.my / Game.scale;
-		double startX = this.x + 26 - Camera.x;
-		double startY = this.y + 16 - Camera.y;
+		double startX = this.x + 26 - Camera.getX();
+		double startY = this.y + 16 - Camera.getY();
 
 		double ang = getAngle(destY, startY, destX, startX);
 
@@ -64,7 +64,7 @@ public class AE_SnowStorm extends Attack_Entity {
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, 64, 64, null);
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.getX(), this.getY() - Camera.getY(), 64, 64, null);
 	}
 	
 }

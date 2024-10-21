@@ -89,7 +89,7 @@ public class Fisical_Weapon extends Weapon {
 	public void Attack() {
 		combo += 1;
 		int ruptureScale = shotDamage * 7;
-		double ang = Math.atan2(Game.my / Game.scale  - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale  - (Game.player.getX() + 8 - Camera.x));
+		double ang = Math.atan2(Game.my / Game.scale  - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale  - (Game.player.getX() + 8 - Camera.getX()));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		switch (combo) {
@@ -127,7 +127,7 @@ public class Fisical_Weapon extends Weapon {
 			yoff *= -1;
 		}
 		
-		double ang = Math.atan2(Game.my / Game.scale + yoff - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale  + xoff - (Game.player.getX() + 8 - Camera.x));
+		double ang = Math.atan2(Game.my / Game.scale + yoff - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale  + xoff - (Game.player.getX() + 8 - Camera.getX()));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
@@ -174,7 +174,7 @@ public class Fisical_Weapon extends Weapon {
 		if (md3) {
 			tspw++;
 			double off = Game.rand.nextInt(20);
-			double ang = Math.atan2(Game.my / Game.scale + off - (Game.player.getY() + 8 - Camera.y) , Game.mx / Game.scale - (Game.player.getX() + 8 - Camera.x));
+			double ang = Math.atan2(Game.my / Game.scale + off - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale - (Game.player.getX() + 8 - Camera.getX()));
 			double dx = Math.cos(ang);
 			double dy =  Math.sin(ang);
 			if (tspw % 2 == 0) {

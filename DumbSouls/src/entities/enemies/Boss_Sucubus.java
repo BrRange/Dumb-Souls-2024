@@ -56,7 +56,7 @@ public class Boss_Sucubus extends Enemy {
 	}
 	
 	private void attack1() {
-		double ang = Math.atan2((Game.player.getY() - Camera.y) - (this.getY() - Camera.y) ,(Game.player.getX() - Camera.x) - (this.getX() - Camera.x));
+		double ang = Math.atan2((Game.player.getY() - Camera.getY()) - (this.getY() - Camera.getY()) ,(Game.player.getX() - Camera.getX()) - (this.getX() - Camera.getX()));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 
@@ -83,7 +83,7 @@ public class Boss_Sucubus extends Enemy {
 		
 		int distance = 100 * prob, distance2 = 80 * prob2 ;
 		
-		double ang = Math.atan2((Game.player.getY() - Camera.y) - (Game.player.getY() - Camera.y + distance2) ,(Game.player.getX() - Camera.x) - (Game.player.getX() - Camera.x  + distance));
+		double ang = Math.atan2((Game.player.getY() - Camera.getY()) - (Game.player.getY() - Camera.getY() + distance2) ,(Game.player.getX() - Camera.getX()) - (Game.player.getX() - Camera.getX()  + distance));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
@@ -153,9 +153,9 @@ public class Boss_Sucubus extends Enemy {
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
 		if (showAura) {
-			Game.gameGraphics.drawImage(aura, this.getX() - Camera.x,  this.getY() - Camera.y, 32, 32, null);
+			Game.gameGraphics.drawImage(aura, this.getX() - Camera.getX(),  this.getY() - Camera.getY(), 32, 32, null);
 		}
 	}
 }

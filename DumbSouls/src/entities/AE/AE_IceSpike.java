@@ -38,7 +38,7 @@ public class AE_IceSpike extends Attack_Entity {
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(this.animation[0], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		Game.gameGraphics.drawImage(this.animation[0], this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
 	}
 	
 }

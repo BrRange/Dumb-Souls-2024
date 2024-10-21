@@ -59,6 +59,6 @@ public class AE_ManaRay extends Attack_Entity {
 	
 	public void render() {
 		Game.gameGraphics.setColor(new Color(47, 141, 224, 150));
-		Game.gameGraphics.drawLine(Game.player.getX() - Camera.x + 8, Game.player.getY() - Camera.y + 8, smallest.getX() - Camera.x + smallest.getWidth()/2, smallest.getY()- Camera.y + smallest.getHeight()/2);
+		Game.gameGraphics.drawLine(Game.player.getX() - Camera.getX() + 8, Game.player.getY() - Camera.getY() + 8, smallest.getX() - Camera.getX() + smallest.getWidth()/2, smallest.getY()- Camera.getY() + smallest.getHeight()/2);
 	}
 }

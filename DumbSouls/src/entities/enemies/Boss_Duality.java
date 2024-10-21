@@ -59,7 +59,7 @@ public class Boss_Duality extends Enemy{
 	
 	private void closeAtk() {
 		if (Entity.calculateDistance(Game.player.getX(), Game.player.getY(), this.getX() + 16, this.getY() + 16) <= 60) {
-			double ang = Math.atan2((Game.player.getY() - Camera.y) - (this.getY() - Camera.y) ,(Game.player.getX() - Camera.x) - (this.getX() - Camera.x));
+			double ang = Math.atan2((Game.player.getY() - Camera.getY()) - (this.getY() - Camera.getY()) ,(Game.player.getX() - Camera.getX()) - (this.getX() - Camera.getX()));
 			double dx = Math.cos(ang);
 			double dy =  Math.sin(ang);
 
@@ -99,7 +99,7 @@ public class Boss_Duality extends Enemy{
 			Game.entities.add(new BAE_Spike(Game.player.getX(), Game.player.getY(), 16, 16, null, 60, 60));
 		}
 		if (timeAtk % 60 == 0) {
-			double ang = Math.atan2((Game.player.getY() - Camera.y) - (this.getY() - Camera.y) ,(Game.player.getX() - Camera.x) - (this.getX() - Camera.x));
+			double ang = Math.atan2((Game.player.getY() - Camera.getY()) - (this.getY() - Camera.getY()) ,(Game.player.getX() - Camera.getX()) - (this.getX() - Camera.getX()));
 			double dx = Math.cos(ang);
 			double dy =  Math.sin(ang);
 
@@ -143,11 +143,11 @@ public class Boss_Duality extends Enemy{
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(aura, this.getX() - Camera.x - 32, this.getY() - Camera.y - 32, 98, 98,null);
-		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		Game.gameGraphics.drawImage(aura, this.getX() - Camera.getX() - 32, this.getY() - Camera.getY() - 32, 98, 98,null);
+		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
 		
 		if (shieldActive) {
-			Game.gameGraphics.drawImage(shield, this.getX() - Camera.x - 32, this.getY() - Camera.y - 48, 98, 80, null);
+			Game.gameGraphics.drawImage(shield, this.getX() - Camera.getX() - 32, this.getY() - Camera.getY() - 48, 98, 80, null);
 		}
 	}
 }
