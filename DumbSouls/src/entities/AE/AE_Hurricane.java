@@ -55,10 +55,10 @@ public class AE_Hurricane extends Attack_Entity{
 	
 	public void enemyCollision() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy e = Game.enemies.get(i);
-			if (isColiding(this, e)) {
-				e.life -= this.damage;
-				knockBack(this, e);
+			Enemy ene = Game.enemies.get(i);
+			if (isColiding(this, ene)) {
+				ene.life -= this.damage;
+				ene.receiveKnockback(this);
 			}
 		}
 	}

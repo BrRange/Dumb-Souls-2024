@@ -3,21 +3,14 @@ package entities.shots;
 import java.awt.image.BufferedImage;
 import graphics.Shader;
 import main.Game;
-import entities.*;
 import world.Camera;
 
-public class Enemy_Shot extends Entity{
-	
-	private double dirx, diry;
-	private double speed;
-	public int damage;
+public class Enemy_Shot extends Shot{
+
 	private String typeMovement;
-	private int life;
-	private int curlife = 0;
-	private BufferedImage sprite;
-	
+
 	public Enemy_Shot(int x, int y, int width, int height, BufferedImage sprite, double dx, double dy, int dmg, int speed, int life, String type) {
-		super(x, y, width, height, sprite);
+		super(x, y, width, height, sprite, dx, dy, 0, dmg, speed, life);
 		this.dirx = dx;
 		this.diry = dy;
 		this.damage = dmg;

@@ -11,13 +11,11 @@ import world.Camera;
 
 public class Shot extends Entity{
 	
-	private double dirx, diry;
-	private double speed;
-	public int damage;
-	
-	private int life;
-	private int curlife = 0;
-	private BufferedImage sprite;
+	protected double dirx, diry;
+	protected double speed;
+	protected int life;
+	protected int curlife = 0;
+	protected BufferedImage sprite;
 	
 	public Shot(int x, int y, int width, int height, BufferedImage sprite, double dx, double dy, double ang, int dmg, double speed, int life) {
 		super(x, y, width, height, sprite);

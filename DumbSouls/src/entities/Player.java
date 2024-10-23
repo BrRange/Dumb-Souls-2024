@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Player extends Entity{
 	
-	private int tickTimer, attackTimer;
+	private int tickTimer, attackTimer, camXOffset, camYOffset;
 	public boolean moving, levelUp;
 	public short abltCooldown;
 	public int maxLife = 100, exp = 0, maxExp = 100, maxMana = 100;
@@ -56,7 +56,9 @@ public class Player extends Entity{
 		}
 		
 		setMask(4, 1, 8, 15);
-		this.depth = 1;
+		depth = 1;
+		camXOffset = (width - Game.width) >> 1;
+		camYOffset = (height - Game.height) >> 1;
 	}
 	
 	private void isAttacking() {
@@ -85,8 +87,8 @@ public class Player extends Entity{
 	public static void die() {
 		try {
 			Save_Game.save();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception exc) {
+			exc.printStackTrace();
 		}
 		Game.entities.clear();
 		Game.shots.clear();
@@ -125,10 +127,10 @@ public class Player extends Entity{
 	
 	private void shotDamage() {
 		for (int i = 0;  i < Game.eShots.size(); i++) {
-			Enemy_Shot e = Game.eShots.get(i);
-			if (isColiding(this, e)) {
-				life -= e.damage;
-				Game.eShots.remove(e);
+			Enemy_Shot eSh = Game.eShots.get(i);
+			if (isColiding(this, eSh)) {
+				life -= eSh.damage;
+				Game.eShots.remove(eSh);
 			}
 		}
 	}
@@ -181,14 +183,14 @@ public class Player extends Entity{
 		if (Game.keyController.contains(65) || Game.keyController.contains(37))//D RIGHT
 			moveX--;
 		moving = true;
-		double normalize = Math.sqrt(moveX * moveX + moveY * moveY);
-		if(normalize == 0){
-			normalize = 1;
+		double magnitude = Math.sqrt(moveX * moveX + moveY * moveY);
+		if(magnitude == 0){
+			magnitude = 1;
 			moving = false;
 
 		} else {
-			moveX /= normalize;
-			moveY /= normalize;
+			moveX /= magnitude;
+			moveY /= magnitude;
 		}
 
 		if (moveX > 0) direct = 0;
@@ -224,8 +226,8 @@ public class Player extends Entity{
 		if (playerWeapon instanceof Mana_Weapon) {
 			Mana_Weapon.grafficEffect();
 		}
-
-		Camera.Clamp(getX() - Game.width / 2 + width / 2, getY() - Game.height / 2 + height / 2);
+		final int med = 2; //Mouse-Efectiveness-Denominator
+		Camera.Clamp(getX() + camXOffset + (Game.mx / Game.scale - Game.width / 2) / med, getY() + camYOffset + (Game.my / Game.scale - Game.height / 2) / med);
 
 		moveX = moveY = 0;
 	}

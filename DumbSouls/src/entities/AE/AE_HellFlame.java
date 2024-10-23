@@ -55,9 +55,9 @@ public class AE_HellFlame extends Attack_Entity {
 	
 	private void colidingEnemy() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy e = Game.enemies.get(i);
-			if(isColiding(this, e) && TickTimer(15)) {
-				e.life -= damage;
+			Enemy ene = Game.enemies.get(i);
+			if(isColiding(this, ene) && TickTimer(15)) {
+				ene.life -= damage;
 			}
 		}
 	}

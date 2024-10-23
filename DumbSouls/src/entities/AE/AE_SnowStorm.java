@@ -55,10 +55,10 @@ public class AE_SnowStorm extends Attack_Entity {
 	
 	public void enemyCollision() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy e = Game.enemies.get(i);
-			if (Entity.isColiding(this, e) && TickTimer(20)) {
-				e.life -= this.damage;
-				e.frost += 2;
+			Enemy ene = Game.enemies.get(i);
+			if (Entity.isColiding(this, ene) && TickTimer(20)) {
+				ene.life -= this.damage;
+				ene.frost += 2;
 			}
 		}
 	}

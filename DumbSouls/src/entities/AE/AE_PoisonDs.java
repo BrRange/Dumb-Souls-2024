@@ -39,18 +39,18 @@ public class AE_PoisonDs extends Attack_Entity{
 	
 	private void Collision() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy e = Game.enemies.get(i);
-			if(Entity.isColiding(e, this)) {
+			Enemy ene = Game.enemies.get(i);
+			if(Entity.isColiding(ene, this)) {
 				if (time % 5 == 0) {
-					e.frost = Math.max(e.frost, dmg);
-					e.life -= dmg;
+					ene.frost = Math.max(ene.frost, dmg);
+					ene.life -= dmg;
 				}
 			}
 		}
 		for (int i = 0; i < Game.eShots.size(); i++) {
-			Enemy_Shot e = Game.eShots.get(i);
-			if(Entity.isColiding(e, this)) {
-				Game.eShots.remove(e);
+			Enemy_Shot eSh = Game.eShots.get(i);
+			if(Entity.isColiding(eSh, this)) {
+				Game.eShots.remove(eSh);
 			}
 		}
 	}

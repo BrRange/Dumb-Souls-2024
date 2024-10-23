@@ -81,6 +81,10 @@ public class Barrier_Enemy extends Enemy{
 			this.spawnAnimation(timeSpawn / 3);
 		}
 	}
+
+	public void receiveKnockback(Entity source){
+		return;
+	}
 	
 	public void render() {
 		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);

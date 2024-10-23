@@ -53,8 +53,8 @@ public class World {
 					}
 				}
 			}
-		}catch(IOException e) {
-			e.printStackTrace();
+		}catch(IOException exc) {
+			exc.printStackTrace();
 		}	
 	}
 	

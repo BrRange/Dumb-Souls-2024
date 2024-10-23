@@ -13,8 +13,8 @@ public class Spritesheet {
 	public Spritesheet(String path) {
 		try {
 			spritesheet = ImageIO.read(new FileInputStream(path));
-		} catch(IOException e) {
-			e.printStackTrace();
+		} catch(IOException exc) {
+			exc.printStackTrace();
 		}
 	}
 	

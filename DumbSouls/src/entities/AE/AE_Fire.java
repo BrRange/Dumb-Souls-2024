@@ -35,10 +35,10 @@ public class AE_Fire extends Attack_Entity {
 	
 	private void Collision() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy e = Game.enemies.get(i);
+			Enemy ene = Game.enemies.get(i);
 			if(TickTimer(15)) {
-				if (isColiding(e, this)){
-					e.life -= 2;
+				if (isColiding(ene, this)){
+					ene.life -= 2;
 				}
 			}
 		}

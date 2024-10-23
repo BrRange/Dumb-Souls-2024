@@ -44,13 +44,13 @@ public class Enemy extends Entity{
 	
 	protected void shotDamage() {
 		for (int i = 0;  i < Game.shots.size(); i++) {
-			Shot e = Game.shots.get(i);
-			if (isColiding(this, e)) {
-				this.life -= e.damage;
-				knockBack(Game.player, this);
-				e.die();
+			Shot sh = Game.shots.get(i);
+			if (isColiding(this, sh)) {
+				this.life -= sh.damage;
+				receiveKnockback(Game.player);
+				sh.die();
 				if (Game.player.playerWeapon instanceof Ice_Weapon) {
-					Ice_Weapon.IceAffect(this, e);
+					Ice_Weapon.IceEffect(this, sh);
 				}
 			}
 		}
@@ -59,28 +59,28 @@ public class Enemy extends Entity{
 	protected void movement() {
 		double deltaX = Game.player.getX() - x;
 		double deltaY = Game.player.getY() - y;
-		double normalize = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		double magnitude = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-		this.x += deltaX * this.speed / normalize;
-		this.y += deltaY * this.speed / normalize;
+		this.x += deltaX * this.speed / magnitude;
+		this.y += deltaY * this.speed / magnitude;
 	}
 
 	protected void reverseMovement() {
 		double deltaX = Game.player.getX() - x;
 		double deltaY = Game.player.getY() - y;
-		double normalize = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		double magnitude = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-		this.x += deltaX * -speed / normalize;
-		this.y += deltaY * -speed / normalize;
+		this.x += deltaX * -speed / magnitude;
+		this.y += deltaY * -speed / magnitude;
 	}
 	
 	protected void objectiveMovement(int xObjct, int yObjct) {
 		double deltaX = xObjct - x;
 		double deltaY = yObjct - y;
-		double normalize = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		double magnitude = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-		this.x += deltaX * this.speed / normalize;
-		this.y += deltaY * this.speed / normalize;
+		this.x += deltaX * this.speed / magnitude;
+		this.y += deltaY * this.speed / magnitude;
 	}
 	
 	int[] redoMask = {};

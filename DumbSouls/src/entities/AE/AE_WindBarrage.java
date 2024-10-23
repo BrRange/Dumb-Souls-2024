@@ -38,11 +38,11 @@ public class AE_WindBarrage extends Attack_Entity{
 	
 	private void colidingEnemy() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy e = Game.enemies.get(i);
-			if(Entity.isColiding(this, e)) {
+			Enemy ene = Game.enemies.get(i);
+			if(Entity.isColiding(this, ene)) {
 				if (TickTimer(5)){
-				e.life -= damage;
-				knockBack(this, e);
+				ene.life -= damage;
+				ene.receiveKnockback(this);
 				}
 			}
 		}

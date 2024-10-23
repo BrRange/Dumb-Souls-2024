@@ -34,7 +34,7 @@ public class Save_Game{
 				}
 			}
 			writer.close();
-		} catch(Exception e){}
+		} catch(Exception exc){}
 	}
 
 	private static boolean intBitReader(int value, int bitIndex){
@@ -72,8 +72,8 @@ public class Save_Game{
 				}
 			}
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exc) {
+			exc.printStackTrace();
 			try{
 				new File("SaveDS.save").createNewFile();
 				PrintWriter pWriter = new PrintWriter("SaveDS.save");

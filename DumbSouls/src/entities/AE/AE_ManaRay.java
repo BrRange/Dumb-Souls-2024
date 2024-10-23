@@ -22,11 +22,11 @@ public class AE_ManaRay extends Attack_Entity {
 	
 	private void findSmallest() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy e = Game.enemies.get(i);
-			double distE = Entity.calculateDistance(Game.player.getX(), Game.player.getY(), e.getX(), e.getY());
+			Enemy ene = Game.enemies.get(i);
+			double distE = Entity.calculateDistance(Game.player.getX(), Game.player.getY(), ene.getX(), ene.getY());
 			double distS = Entity.calculateDistance(Game.player.getX(), Game.player.getY(), smallest.getX(), smallest.getY());
 			if(distE < distS) {
-				smallest = e;
+				smallest = ene;
 			}
 		}
 	}

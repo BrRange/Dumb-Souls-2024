@@ -30,10 +30,10 @@ public class AE_WindDS extends Attack_Entity {
 	
 	private void Collision() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy e = Game.enemies.get(i);
-			if(Entity.isColiding(e, this)) {
-				e.life -= 0.2;
-				knockBack(this, e);
+			Enemy ene = Game.enemies.get(i);
+			if(Entity.isColiding(ene, this)) {
+				ene.life -= 0.2;
+				ene.receiveKnockback(this);
 			}
 		}
 	}

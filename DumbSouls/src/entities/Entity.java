@@ -14,6 +14,7 @@ public class Entity {
 	public double y;
 	public double life;
 	public double maxLife;
+	public double damage;
 	public int width;
 	public int height;
 	protected int mx, my, mw, mh;
@@ -105,15 +106,21 @@ public class Entity {
 		return e1.mask.intersects(e2.mask);
 	}
 	
-	public static boolean lineCollision(Line2D line, Entity e) {
-		e.mask = new Rectangle(e.getX() + e.mx, e.getY() + e.my, e.mw, e.mh);
-		return line.intersects(e.mask);
+	public static boolean lineCollision(Line2D line, Entity ent) {
+		ent.mask = new Rectangle(ent.getX() + ent.mx, ent.getY() + ent.my, ent.mw, ent.mh);
+		return line.intersects(ent.mask);
 	}
 
-	protected void knockBack(Entity e, Entity taker){
-		double angle = getAngle(taker.getY() + taker.getHeight() / 2, e.getY() + e.getHeight() / 2, taker.getX() + taker.getWidth() / 2, e.getX() + e.getWidth() / 2);
-		taker.x += Math.cos(angle) * e.push;
-		taker.y += Math.sin(angle) * e.push;
+	public void receiveKnockback(Entity source){
+		double angle = getAngle(
+			getY() + getHeight() / 2, source.getY() + source.getHeight() / 2,
+			getX() + getWidth() / 2, source.getX() + source.getWidth() / 2
+		);
+		x += Math.cos(angle) * source.push;
+		y += Math.sin(angle) * source.push;
 	}
 	
+	public void receiveDamage(Entity source){
+		this.life -= source.damage;
+	}
 }

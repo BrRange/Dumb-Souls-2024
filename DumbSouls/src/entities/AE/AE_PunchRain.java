@@ -37,10 +37,10 @@ public class AE_PunchRain extends Attack_Entity {
 	
 	private void colidingEnemy() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy e = Game.enemies.get(i);
-			if(Entity.isColiding(this, e)) {
-				e.life -= damage;
-				knockBack(this, e);
+			Enemy ene = Game.enemies.get(i);
+			if(Entity.isColiding(this, ene)) {
+				ene.life -= damage;
+				ene.receiveKnockback(this);
 				this.die();
 			}
 		}

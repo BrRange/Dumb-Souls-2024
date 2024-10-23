@@ -70,9 +70,9 @@ public class Boss_Duality extends Enemy{
 	
 	private void shieldColision() {
 		for (int i = 0;  i < Game.shots.size(); i++) {
-			Shot e = Game.shots.get(i);
-			if (isColiding(this, e)) {
-				e.die();
+			Shot sh = Game.shots.get(i);
+			if (isColiding(this, sh)) {
+				sh.die();
 			}
 		}
 		

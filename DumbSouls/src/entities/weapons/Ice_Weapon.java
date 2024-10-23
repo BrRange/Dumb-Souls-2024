@@ -97,8 +97,8 @@ public class Ice_Weapon extends Weapon{
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
-		Shot e = new Shot(Game.player.getX(), Game.player.getY(), 3, 3, shotFace, dx, dy, 0, shotDamage, shotSpeed, 35);
-		Game.shots.add(e);
+		Shot sh = new Shot(Game.player.getX(), Game.player.getY(), 3, 3, shotFace, dx, dy, 0, shotDamage, shotSpeed, 35);
+		Game.shots.add(sh);
 	}
 	
 	public void AttackRandom() {
@@ -123,7 +123,7 @@ public class Ice_Weapon extends Weapon{
 		Game.shots.add(new Shot(Game.player.getX(), Game.player.getY(), 3, 3, shotFace, dx, dy, ang, shotDamage, shotSpeed, 35));
 	}
 
-	public static void IceAffect(Enemy e1, Shot e2) {
+	public static void IceEffect(Enemy e1, Shot e2) {
 		if (Entity.isColiding(e1, e2)) {
 			e1.frost = Math.max(frost, e1.frost);
 		}

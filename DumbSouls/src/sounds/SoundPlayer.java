@@ -21,8 +21,8 @@ public class SoundPlayer{
 			else {
 				System.out.println("!!!This sound file does not exist: " + sound);
 			}
-		} catch(Exception e) {
-			e.printStackTrace();
+		} catch(Exception exc) {
+			exc.printStackTrace();
 		}
 	}
 	

@@ -124,8 +124,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		isRuning = false;
 		try {
 			thread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		} catch (InterruptedException exc) {
+			exc.printStackTrace();
 		}
 		
 	}
@@ -192,17 +192,17 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		world.render();
 		Collections.sort(entities, Entity.entityDepth);
 		Collections.sort(enemies, Entity.entityDepth);
-		for(Entity e : entities) {
-			e.render();
+		for(Entity ent : entities) {
+			ent.render();
 		}
-		for(Enemy e : enemies) {
-			e.render();
+		for(Enemy ene : enemies) {
+			ene.render();
 		}
-		for(Shot e : shots) {
-			e.render();
+		for(Shot sh : shots) {
+			sh.render();
 		}
-		for(Enemy_Shot e : eShots) {
-			e.render();
+		for(Enemy_Shot eSh : eShots) {
+			eSh.render();
 		}
 	}
 	
@@ -219,21 +219,21 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			baseRender();
 			try {
 				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			} catch (InterruptedException exc) {
+				exc.printStackTrace();
 			}
 		}
 		end();
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
+	public void keyTyped(KeyEvent eve) {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e) {
-		keyController.add(e.getKeyCode());
+	public void keyPressed(KeyEvent eve) {
+		keyController.add(eve.getKeyCode());
 
 		if (keyController.contains(KeyEvent.VK_ESCAPE)) {
 			switch(gameStateHandler) {
@@ -250,50 +250,50 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		keyController.remove(e.getKeyCode());
+	public void keyReleased(KeyEvent eve) {
+		keyController.remove(eve.getKeyCode());
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
+	public void mouseClicked(MouseEvent eve) {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		clickController.add(e.getButton());
+	public void mousePressed(MouseEvent eve) {
+		clickController.add(eve.getButton());
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		clickController.remove(e.getButton());
+	public void mouseReleased(MouseEvent eve) {
+		clickController.remove(eve.getButton());
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
+	public void mouseEntered(MouseEvent eve) {
 		
 	}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
+	public void mouseExited(MouseEvent eve) {
 		clickController.clear();
 		keyController.clear();
 		if(gameStateHandler == gameState.NORMAL) gameStateHandler = gameState.MENUPAUSE;
 	}
 
 	@Override
-	public void mouseDragged(MouseEvent e) {
+	public void mouseDragged(MouseEvent eve) {
 		
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {
-		mx = e.getX();
-		my = e.getY();
+	public void mouseMoved(MouseEvent eve) {
+		mx = eve.getX();
+		my = eve.getY();
 	}
 
 	@Override
-	public void mouseWheelMoved(MouseWheelEvent e){
-		scrollNum = e.getWheelRotation();
+	public void mouseWheelMoved(MouseWheelEvent eve){
+		scrollNum = eve.getWheelRotation();
 	}
 }

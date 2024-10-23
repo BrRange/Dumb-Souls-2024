@@ -35,10 +35,10 @@ public class AE_VenomGas extends Attack_Entity {
 	
 	private void Collision() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy e = Game.enemies.get(i);
-			if(Entity.isColiding(this, e)) {
-				e.frost = Math.max(e.frost, 3);
-				e.life -= damage;
+			Enemy ene = Game.enemies.get(i);
+			if(Entity.isColiding(this, ene)) {
+				ene.frost = Math.max(ene.frost, 3);
+				ene.life -= damage;
 			}
 		}
 	}

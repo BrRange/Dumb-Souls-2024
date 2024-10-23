@@ -10,14 +10,14 @@ public class AE_Explosion extends Attack_Entity{
 	
 	private int damage, maxFrames, maxIndex, frames, index, time;
 	
-	public AE_Explosion(int x, int y, int width, int height, BufferedImage sprite, int time, int dmg, int knockback,
+	public AE_Explosion(int x, int y, int width, int height, BufferedImage sprite, int time, int dmg, int receiveKnockback,
 			int maxFrames, int maxIndex, int xSprite,int ySprite, int wSprite, int hSprite) {
 		
 		super(x, y, width, height, sprite, time);
 		this.getAnimation(xSprite, ySprite, wSprite, hSprite, maxIndex);
 		this.setMask(0, 0, width, height);
 		this.damage = dmg;
-		this.push = knockback;
+		this.push = receiveKnockback;
 		this.maxFrames = maxFrames;
 		this.maxIndex = maxIndex;
 	}
@@ -34,10 +34,10 @@ public class AE_Explosion extends Attack_Entity{
 	
 	private void Collision() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy e = Game.enemies.get(i);
-			if(Entity.isColiding(e, this)) {
-				e.life -= damage;
-				knockBack(this, e);
+			Enemy ene = Game.enemies.get(i);
+			if(Entity.isColiding(ene, this)) {
+				ene.life -= damage;
+				ene.receiveKnockback(this);
 			}
 		}	
 	}

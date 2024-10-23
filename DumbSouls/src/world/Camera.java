@@ -16,7 +16,7 @@ public class Camera {
 			targetY = 0;
 		} 
 		else if (targetY > World.HEIGHT * 16 - Game.height) {
-			targetX = World.HEIGHT * 16 - Game.height;
+			targetY = World.HEIGHT * 16 - Game.height;
 		}
 		final int deltaX = targetX - x, deltaY = targetY - y;
 		double magnitude = Math.sqrt(deltaX * deltaX + deltaY * deltaY);

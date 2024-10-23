@@ -29,10 +29,10 @@ public class AE_IceSpike extends Attack_Entity {
 	
 	public void Collision() {
 		for(int i = 0; i < Game.enemies.size(); i++ ) {
-			Enemy e = Game.enemies.get(i);
-			if (Entity.isColiding(this, e) && TickTimer(5)) {
-				e.life -= damage;
-				e.frost = Math.max(e.frost, damage);
+			Enemy ene = Game.enemies.get(i);
+			if (Entity.isColiding(this, ene) && TickTimer(5)) {
+				ene.life -= damage;
+				ene.frost = Math.max(ene.frost, damage);
 			}
 		}
 	}
