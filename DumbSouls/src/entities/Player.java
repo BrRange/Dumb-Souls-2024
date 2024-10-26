@@ -20,7 +20,7 @@ public class Player extends Entity{
 	public int level = 1;
 	private int frames, maxFrames = 40;
 	public int direct = 2;
-	public double moveX, moveY, maxSpeed = 1.5, speed = maxSpeed, mana = 100, manaRec = 2, life = 100, lifeRec=1.001, moveCos, moveSin;
+	public double moveX, moveY, maxSpeed = 1.5, speed = maxSpeed, speedBoost = 1, mana = 100, manaRec = 2, life = 100, lifeRec=1.001;
 	public Weapon playerWeapon;
 	public static List<Rune> runesInventory;
 	public List<Rune> runesEquipped;
@@ -185,9 +185,7 @@ public class Player extends Entity{
 		moving = true;
 		double magnitude = Math.sqrt(moveX * moveX + moveY * moveY);
 		if(magnitude == 0){
-			magnitude = 1;
 			moving = false;
-
 		} else {
 			moveX /= magnitude;
 			moveY /= magnitude;
@@ -200,9 +198,6 @@ public class Player extends Entity{
 
 		castAblt();
 
-		this.x += speed * moveX;
-		this.y += speed * moveY;
-		isMoving();
 		
 		if (mana < maxMana && TickTimer(20))
 		mana = Math.min(maxMana, mana + manaRec);
@@ -213,23 +208,27 @@ public class Player extends Entity{
 		refreshTick();
 		
 		if (life <= 0)
-			die();
+		die();
 		
 		playerWeapon.tick();
 		playerWeapon.Effect();
+		runeTick();
+
+		x += speed * speedBoost * moveX;
+		y += speed * speedBoost * moveY;
+		isMoving();
+		speedBoost = 1;
+		moveX = moveY = 0;
 		
 		isAttacking();
 		checkExp();
 		shotDamage();
-		runeTick();
 		
 		if (playerWeapon instanceof Mana_Weapon) {
 			Mana_Weapon.grafficEffect();
 		}
-		final int med = 2; //Mouse-Efectiveness-Denominator
-		Camera.Clamp(getX() + camXOffset + (Game.mx / Game.scale - Game.width / 2) / med, getY() + camYOffset + (Game.my / Game.scale - Game.height / 2) / med);
-
-		moveX = moveY = 0;
+		final int MED = 2; //Mouse-Efectiveness-Denominator
+		Camera.Clamp(getX() + camXOffset + (Game.mx / Game.scale - Game.width / 2) / MED, getY() + camYOffset + (Game.my / Game.scale - Game.height / 2) / MED);
 	}
 	
 	public void render() {

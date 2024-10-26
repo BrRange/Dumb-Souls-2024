@@ -63,6 +63,10 @@ public class Enemy extends Entity{
 
 		this.x += deltaX * this.speed / magnitude;
 		this.y += deltaY * this.speed / magnitude;
+
+		for(Entity e : Game.enemies){
+			if(e != this && isColiding(this, e)) receiveKnockback(e, 1);
+		}
 	}
 
 	protected void reverseMovement() {

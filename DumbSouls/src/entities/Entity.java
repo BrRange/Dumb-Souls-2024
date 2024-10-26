@@ -119,6 +119,14 @@ public class Entity {
 		x += Math.cos(angle) * source.push;
 		y += Math.sin(angle) * source.push;
 	}
+	public void receiveKnockback(Entity source, int amount){
+		double angle = getAngle(
+			getY() + getHeight() / 2, source.getY() + source.getHeight() / 2,
+			getX() + getWidth() / 2, source.getX() + source.getWidth() / 2
+		);
+		x += Math.cos(angle) * amount;
+		y += Math.sin(angle) * amount;
+	}
 	
 	public void receiveDamage(Entity source){
 		this.life -= source.damage;

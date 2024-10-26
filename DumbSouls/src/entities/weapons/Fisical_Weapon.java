@@ -144,8 +144,7 @@ public class Fisical_Weapon extends Weapon {
 		if (md1) {
 			di += 5;
 			Game.entities.add(new AE_Animation(Game.player.getX() + Game.rand.nextInt(17) - 8, Game.player.getY() + Game.rand.nextInt(17) - 8, 16, 16, null, 20, 0, 1, 192, 128, 16, 16, "goToUp_1", null));
-			Game.player.moveCos -= Math.signum(Game.player.moveX) * 1.2;
-			Game.player.moveSin += Math.signum(Game.player.moveY) * 1.2;
+			Game.player.speedBoost *= 1.2;
 			if(di >= dashDistance) {
 				di = 0;
 				md1 = false;

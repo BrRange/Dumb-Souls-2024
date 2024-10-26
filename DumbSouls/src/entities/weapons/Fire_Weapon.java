@@ -132,8 +132,7 @@ public class Fire_Weapon extends Weapon {
 			sound3.PlaySound();
 		}
 		if (md1) {
-			Game.player.moveCos -= Math.signum(Game.player.moveX) * 2.5;
-			Game.player.moveSin += Math.signum(Game.player.moveY) * 2.5;
+			Game.player.speedBoost *= 2.5;
 			
 			di += 1;
 			if (tspw > 2) {

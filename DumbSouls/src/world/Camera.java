@@ -3,7 +3,7 @@ package world;
 import main.Game;
 
 public class Camera {
-	private static int x = World.WIDTH / 2, y = World.HEIGHT / 2;
+	private static int x = World.WIDTH, y = World.HEIGHT;
 	
 	public static void Clamp(int targetX, int targetY) { 
 		if (targetX < 0) {
