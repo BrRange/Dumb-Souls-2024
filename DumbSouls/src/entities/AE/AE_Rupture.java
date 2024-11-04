@@ -1,7 +1,6 @@
 package entities.AE;
 
 import java.awt.image.BufferedImage;
-import entities.*;
 import entities.enemies.Enemy;
 import main.Game;
 import world.Camera;
@@ -40,7 +39,7 @@ public class AE_Rupture extends Attack_Entity {
 		if (time <= 6 && time % 2 == 0) {
 			for (int i = 0; i < Game.enemies.size(); i++) {
 				Enemy ene = Game.enemies.get(i);
-				if(Entity.isColiding(ene, this)) {
+				if(isColiding(ene)) {
 					ene.life -= dmg;
 					ene.receiveKnockback(Game.player);
 				}

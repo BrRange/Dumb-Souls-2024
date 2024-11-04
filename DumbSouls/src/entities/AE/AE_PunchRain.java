@@ -1,7 +1,6 @@
 package entities.AE;
 
 import java.awt.image.BufferedImage;
-import entities.*;
 import entities.enemies.Enemy;
 import main.Game;
 import world.Camera;
@@ -38,7 +37,7 @@ public class AE_PunchRain extends Attack_Entity {
 	private void colidingEnemy() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
 			Enemy ene = Game.enemies.get(i);
-			if(Entity.isColiding(this, ene)) {
+			if(isColiding(ene)) {
 				ene.life -= damage;
 				ene.receiveKnockback(this);
 				this.die();

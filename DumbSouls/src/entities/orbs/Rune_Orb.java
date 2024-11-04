@@ -41,7 +41,7 @@ public class Rune_Orb extends Enemy {
 	public void tick() {
 		this.movement();
 
-		if (isColiding(this, Game.player)){
+		if (isColiding(Game.player)){
 	        Game.enemies.remove(this);
 	        
 	        switch (runes[indexRunes]) {

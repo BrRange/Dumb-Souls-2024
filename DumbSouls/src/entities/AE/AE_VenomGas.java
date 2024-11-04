@@ -2,7 +2,6 @@ package entities.AE;
 
 import java.awt.image.BufferedImage;
 import main.Game;
-import entities.*;
 import entities.enemies.Enemy;
 import world.Camera;
 
@@ -36,7 +35,7 @@ public class AE_VenomGas extends Attack_Entity {
 	private void Collision() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
 			Enemy ene = Game.enemies.get(i);
-			if(Entity.isColiding(this, ene)) {
+			if(isColiding(ene)) {
 				ene.frost = Math.max(ene.frost, 3);
 				ene.life -= damage;
 			}

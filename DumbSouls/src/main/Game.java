@@ -178,7 +178,15 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			shots.get(i).tick();
 		}
 		for(int i = 0; i < enemies.size(); i++) {
-			enemies.get(i).tick();
+			Enemy ene = enemies.get(i);
+			ene.tick();
+			for(int j = i + 1; j < enemies.size(); j++){
+				Enemy other = enemies.get(j);
+				if(ene.isColiding(other)){
+					ene.receiveKnockback(other, 1);
+					other.receiveKnockback(ene, 1);
+				}
+			}
 		}
 		for(int i = 0; i < eShots.size(); i++) {
 			eShots.get(i).tick();

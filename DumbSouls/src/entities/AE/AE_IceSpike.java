@@ -3,7 +3,6 @@ package entities.AE;
 import java.awt.image.BufferedImage;
 import world.Camera;
 import main.Game;
-import entities.*;
 import entities.enemies.Enemy;
 
 public class AE_IceSpike extends Attack_Entity {
@@ -30,7 +29,7 @@ public class AE_IceSpike extends Attack_Entity {
 	public void Collision() {
 		for(int i = 0; i < Game.enemies.size(); i++ ) {
 			Enemy ene = Game.enemies.get(i);
-			if (Entity.isColiding(this, ene) && TickTimer(5)) {
+			if (isColiding(ene) && TickTimer(5)) {
 				ene.life -= damage;
 				ene.frost = Math.max(ene.frost, damage);
 			}

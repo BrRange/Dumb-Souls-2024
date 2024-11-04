@@ -35,7 +35,7 @@ public class Enemy_Shot extends Shot{
 			case "focused":
 				int xP = Game.player.getX();
 				int yP = Game.player.getY();
-				double angle = getAngle(yP, this.y, xP, this.x);
+				double angle = Math.atan2(yP - this.y, xP - this.x);
 
 				this.x += Math.cos(angle) * this.speed;
 				this.y += Math.sin(angle) * this.speed;

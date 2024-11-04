@@ -94,29 +94,7 @@ public class Fire_Weapon extends Weapon {
 	public void Attack() {
 		if(!sound1.clip.isActive())
 			sound1.PlaySound();
-		double ang = Math.atan2(Game.my / Game.scale  - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale  - (Game.player.getX() + 8 - Camera.getX()));
-		double dx = Math.cos(ang);
-		double dy =  Math.sin(ang);
-		
-		Game.shots.add(new Shot(Game.player.getX(), Game.player.getY(), 3, 3, shotFace, dx, dy, ang, shotDamage, shotSpeed, 35));
-	}
-	
-	public void AttackRandom() {
-		int xdir = Game.rand.nextInt(1);
-		int ydir = Game.rand.nextInt(1);
-		
-		int xoff = Game.rand.nextInt(20);
-		int yoff = Game.rand.nextInt(20);
-		
-		if (xdir == 1) {
-			xoff *= -1;
-		}
-		
-		if (ydir == 1) {
-			yoff *= -1;
-		}
-		
-		double ang = Math.atan2(Game.my / Game.scale + yoff - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale + xoff - (Game.player.getX() + 8 - Camera.getX()));
+		double ang = Math.atan2(Game.my / Game.scale  - Game.player.getY() + 8 - Camera.getY(), Game.mx / Game.scale - Game.player.getX() + 8 - Camera.getX());
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
@@ -160,11 +138,11 @@ public class Fire_Weapon extends Weapon {
 		}
 		if (md2) {
 			tspw2++;
-			double ang = Math.atan2(Game.my / Game.scale - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale - (Game.player.getX() + 8 - Camera.getX()));
-			double dx = Math.cos(ang);
-			double dy =  Math.sin(ang);
+			double deltaX = Game.mx / Game.scale - Game.player.getX() + 8 - Camera.getX();
+			double deltaY = Game.my / Game.scale - Game.player.getY() + 8 - Camera.getY();
+			double mag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 			if (tspw2 % 4 == 0) {
-				Game.entities.add(new AE_Fire2(Game.player.getX(), Game.player.getY(), 16, 16, 2, dx, dy, ablt2Dmg, null, 60));
+				Game.entities.add(new AE_Fire2(Game.player.getX(), Game.player.getY(), 16, 16, 2, deltaX / mag, deltaY / mag, ablt2Dmg, null, 60));
 			}
 			if (tspw2 == maxtspw2) {
 				tspw2 = 0;
@@ -183,10 +161,10 @@ public class Fire_Weapon extends Weapon {
 			Game.player.mana -= manaCost;
 		}
 		if(md3){
-			double ang = Math.atan2(Game.my / Game.scale - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale - (Game.player.getX() + 8 - Camera.getX()));
-			double dx = Math.cos(ang);
-			double dy =  Math.sin(ang);
-			Game.entities.add(new AE_HellFlame(Game.player.getX(), Game.player.getY() - 32, 32, 32, ablt3Spd, dx, dy, ablt3Dmg, null, 80));
+			double deltaX = Game.mx / Game.scale - Game.player.getX() + 8 - Camera.getX();
+			double deltaY = Game.my / Game.scale - Game.player.getY() + 8 - Camera.getY();
+			double mag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+			Game.entities.add(new AE_HellFlame(Game.player.getX(), Game.player.getY() - 32, 32, 32, ablt3Spd, deltaX / mag, deltaY / mag, ablt3Dmg, null, 80));
 			md3 = false;
 		}	
 	}

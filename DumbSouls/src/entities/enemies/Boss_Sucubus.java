@@ -56,11 +56,12 @@ public class Boss_Sucubus extends Enemy {
 	}
 	
 	private void attack1() {
-		double ang = Math.atan2((Game.player.getY() - Camera.getY()) - (this.getY() - Camera.getY()) ,(Game.player.getX() - Camera.getX()) - (this.getX() - Camera.getX()));
-		double dx = Math.cos(ang);
-		double dy =  Math.sin(ang);
+		double deltaX = Game.player.getX() - getX();
+		double deltaY = Game.player.getY() - getY();
+		double mag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		if(mag == 0) mag = 1;
 
-		Game.eShots.add(new Enemy_Shot(this.getX() + 6, this.getY() + 11, 6, 3, spriteAtk, dx, dy, 36, 5, 30, "straight"));
+		Game.eShots.add(new Enemy_Shot(this.getX() + 6, this.getY() + 11, 6, 3, spriteAtk, deltaX / mag, deltaY / mag, 36, 5, 30, "straight"));
 	}
 	
 	private void attack2() {
@@ -83,11 +84,12 @@ public class Boss_Sucubus extends Enemy {
 		
 		int distance = 100 * prob, distance2 = 80 * prob2 ;
 		
-		double ang = Math.atan2((Game.player.getY() - Camera.getY()) - (Game.player.getY() - Camera.getY() + distance2) ,(Game.player.getX() - Camera.getX()) - (Game.player.getX() - Camera.getX()  + distance));
-		double dx = Math.cos(ang);
-		double dy =  Math.sin(ang);
+		double deltaX = Game.player.getX() - getX();
+		double deltaY = Game.player.getY() - getY();
+		double mag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		if(mag == 0) mag = 1;
 		
-		Game.eShots.add(new Enemy_Shot(Game.player.getX() + distance, Game.player.getY() + distance2, 6, 3, spriteAtk2, dx, dy, 10, 7, 50, "straight"));
+		Game.eShots.add(new Enemy_Shot(Game.player.getX() + distance, Game.player.getY() + distance2, 6, 3, spriteAtk2, deltaX / mag, deltaY / mag, 10, 7, 50, "straight"));
 	}
 	
 	private void renderAura() {

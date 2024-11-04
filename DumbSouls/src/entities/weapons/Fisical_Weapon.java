@@ -112,28 +112,6 @@ public class Fisical_Weapon extends Weapon {
 		}
 	}
 	
-	public void AttackRandom() {
-		int xdir = Game.rand.nextInt(1);
-		int ydir = Game.rand.nextInt(1);
-		
-		int xoff = Game.rand.nextInt(20);
-		int yoff = Game.rand.nextInt(20);
-		
-		if (xdir == 1) {
-			xoff *= -1;
-		}
-		
-		if (ydir == 1) {
-			yoff *= -1;
-		}
-		
-		double ang = Math.atan2(Game.my / Game.scale + yoff - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale  + xoff - (Game.player.getX() + 8 - Camera.getX()));
-		double dx = Math.cos(ang);
-		double dy =  Math.sin(ang);
-		
-		Game.shots.add(new Shot(Game.player.getX(), Game.player.getY(), 3, 3, shotFace, dx, dy, ang, shotDamage, 2.5, 35));
-	}
-	
 	public void Dash() {
 		int manaCost = 4;
 		
@@ -173,11 +151,11 @@ public class Fisical_Weapon extends Weapon {
 		if (md3) {
 			tspw++;
 			double off = Game.rand.nextInt(20);
-			double ang = Math.atan2(Game.my / Game.scale + off - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale - (Game.player.getX() + 8 - Camera.getX()));
-			double dx = Math.cos(ang);
-			double dy =  Math.sin(ang);
+			double deltaX = Game.mx / Game.scale + off - Game.player.getX() + 8 - Camera.getX();
+			double deltaY = Game.my / Game.scale + off - Game.player.getY() + 8 - Camera.getY();
+			double mag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 			if (tspw % 2 == 0) {
-				Game.entities.add(new AE_PunchRain(Game.player.getX(), Game.player.getY(), 16, 16, 3, dx, dy, ablt3Dmg, null, 20));
+				Game.entities.add(new AE_PunchRain(Game.player.getX(), Game.player.getY(), 16, 16, 3, deltaX / mag, deltaY / mag, ablt3Dmg, null, 20));
 			}
 			if (tspw == 40) {
 				tspw = 0;

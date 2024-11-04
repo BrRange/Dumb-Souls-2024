@@ -37,7 +37,7 @@ public class AE_Fire extends Attack_Entity {
 		for (int i = 0; i < Game.enemies.size(); i++) {
 			Enemy ene = Game.enemies.get(i);
 			if(TickTimer(15)) {
-				if (isColiding(ene, this)){
+				if (isColiding(ene)){
 					ene.life -= 2;
 				}
 			}

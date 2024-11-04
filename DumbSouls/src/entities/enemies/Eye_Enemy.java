@@ -55,16 +55,14 @@ public class Eye_Enemy extends Enemy{
 	private void attack() {
 		timeAtk++;
 		if (timeAtk == 60) {
-			double ang = Math.atan2((Game.player.getY() - Camera.getY()) - (this.getY() - Camera.getY()) ,(Game.player.getX() - Camera.getX()) - (this.getX() - Camera.getX()));
-			double dx = Math.cos(ang);
-			double dy =  Math.sin(ang);
-			
-			atk = new Enemy_Shot(this.getX(), this.getY(), 6, 3, spriteAtk, dx, dy, 15 * specialMult + (int)(0.15 * World.wave), 3, (int)(this.range / 2), "straight");
+			double deltaX = Game.player.getX() - this.getX(), deltaY = Game.player.getY() - this.getY();
+			double mag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+			if(mag == 0) mag = 1;
+			atk = new Enemy_Shot(this.getX(), this.getY(), 6, 3, spriteAtk, deltaX / mag, deltaY / mag, 15 * specialMult + (int)(0.15 * World.wave), 3, (int)(this.range / 2), "straight");
 			Game.eShots.add(atk);
 			timeAtk = 0;
 		}
 	}
-	
 	
 	public void tick() {
 		animate();

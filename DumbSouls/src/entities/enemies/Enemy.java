@@ -45,7 +45,7 @@ public class Enemy extends Entity{
 	protected void shotDamage() {
 		for (int i = 0;  i < Game.shots.size(); i++) {
 			Shot sh = Game.shots.get(i);
-			if (isColiding(this, sh)) {
+			if (isColiding(sh)) {
 				this.life -= sh.damage;
 				receiveKnockback(Game.player);
 				sh.die();
@@ -63,10 +63,6 @@ public class Enemy extends Entity{
 
 		this.x += deltaX * this.speed / magnitude;
 		this.y += deltaY * this.speed / magnitude;
-
-		for(Entity e : Game.enemies){
-			if(e != this && isColiding(this, e)) receiveKnockback(e, 1);
-		}
 	}
 
 	protected void reverseMovement() {

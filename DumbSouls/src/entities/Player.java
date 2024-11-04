@@ -128,7 +128,7 @@ public class Player extends Entity{
 	private void shotDamage() {
 		for (int i = 0;  i < Game.eShots.size(); i++) {
 			Enemy_Shot eSh = Game.eShots.get(i);
-			if (isColiding(this, eSh)) {
+			if (isColiding(eSh)) {
 				life -= eSh.damage;
 				Game.eShots.remove(eSh);
 			}
@@ -218,7 +218,7 @@ public class Player extends Entity{
 		y += speed * speedBoost * moveY;
 		isMoving();
 		speedBoost = 1;
-		moveX = moveY = 0;
+
 		
 		isAttacking();
 		checkExp();

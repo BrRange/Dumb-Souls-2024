@@ -2,7 +2,6 @@ package entities.AE;
 
 import java.awt.image.BufferedImage;
 import main.Game;
-import entities.*;
 import entities.enemies.Enemy;
 import entities.shots.Enemy_Shot;
 import world.Camera;
@@ -40,7 +39,7 @@ public class AE_PoisonDs extends Attack_Entity{
 	private void Collision() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
 			Enemy ene = Game.enemies.get(i);
-			if(Entity.isColiding(ene, this)) {
+			if(isColiding(ene)) {
 				if (time % 5 == 0) {
 					ene.frost = Math.max(ene.frost, dmg);
 					ene.life -= dmg;
@@ -49,7 +48,7 @@ public class AE_PoisonDs extends Attack_Entity{
 		}
 		for (int i = 0; i < Game.eShots.size(); i++) {
 			Enemy_Shot eSh = Game.eShots.get(i);
-			if(Entity.isColiding(eSh, this)) {
+			if(isColiding(eSh)) {
 				Game.eShots.remove(eSh);
 			}
 		}

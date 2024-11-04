@@ -3,8 +3,6 @@ package entities.AE;
 import java.awt.image.BufferedImage;
 import world.Camera;
 import main.Game;
-import entities.*;
-
 
 public class BAE_Spike extends Attack_Entity{
 	
@@ -22,7 +20,7 @@ public class BAE_Spike extends Attack_Entity{
 		life++;
 		if (life > 30) {
 			index = 2;
-			if (Entity.isColiding(Game.player, this) && timer % 60 == 0) {
+			if (isColiding(Game.player) && timer % 60 == 0) {
 				attack();
 				timer++;
 			}

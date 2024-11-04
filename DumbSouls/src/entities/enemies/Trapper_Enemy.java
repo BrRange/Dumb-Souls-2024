@@ -55,7 +55,7 @@ public class Trapper_Enemy extends Enemy{
 		this.setMask(2, 0, 14, 32);
 		animate();
 		cont++;
-		if (isColiding(this, Game.player)) {
+		if (isColiding(Game.player)) {
 			if (timer % 30 == 0) {
 				attack();
 			}
@@ -71,7 +71,7 @@ public class Trapper_Enemy extends Enemy{
 	
 	public void tick() {
 		if (!spawning) {
-			if (this.getX() != xP && this.getY() != yP && !Entity.isColiding(this, Game.player)) {
+			if (this.getX() != xP && this.getY() != yP && !isColiding(Game.player)) {
 				objectiveMovement(xP, yP);
 				this.setMask(0, 0, 0, 0);
 			}

@@ -29,7 +29,7 @@ public class AE_IceDs extends Attack_Entity {
 	private void Collision() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
 			Enemy ene = Game.enemies.get(i);
-			if(isColiding(ene, this) && TickTimer(5)) {
+			if(isColiding(ene) && TickTimer(5)) {
 				ene.frost = Math.max(ene.frost, 4);
 			}
 		}

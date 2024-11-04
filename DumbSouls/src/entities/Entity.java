@@ -69,9 +69,6 @@ public class Entity {
 	public int getHeight() {
 		return this.height;
 	}
-	public double getAngle(double destY, double startY, double destX, double startX){
-		return Math.atan2(destY - startY,destX - startX); 
-	}
 	
 	public void tick() {
 		
@@ -100,10 +97,10 @@ public class Entity {
 		this.mh = mask[3];
 	}
 	
-	public static boolean isColiding(Entity e1, Entity e2) {
-		e1.mask = new Rectangle(e1.getX() + e1.mx, e1.getY() + e1.my, e1.mw, e1.mh);
-		e2.mask = new Rectangle(e2.getX() + e2.mx, e2.getY() + e2.my, e2.mw, e2.mh);
-		return e1.mask.intersects(e2.mask);
+	public boolean isColiding(Entity other) {
+		mask = new Rectangle(getX() + mx, getY() + my, mw, mh);
+		other.mask = new Rectangle(other.getX() + other.mx, other.getY() + other.my, other.mw, other.mh);
+		return mask.intersects(other.mask);
 	}
 	
 	public static boolean lineCollision(Line2D line, Entity ent) {
@@ -112,20 +109,20 @@ public class Entity {
 	}
 
 	public void receiveKnockback(Entity source){
-		double angle = getAngle(
-			getY() + getHeight() / 2, source.getY() + source.getHeight() / 2,
-			getX() + getWidth() / 2, source.getX() + source.getWidth() / 2
-		);
-		x += Math.cos(angle) * source.push;
-		y += Math.sin(angle) * source.push;
+		double deltaX = getX() - source.getX();
+		double deltaY = getY() - source.getY();
+		double mag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		if(mag == 0) mag = 1;
+		x += deltaX / mag * source.push;
+		y += deltaY / mag * source.push;
 	}
 	public void receiveKnockback(Entity source, int amount){
-		double angle = getAngle(
-			getY() + getHeight() / 2, source.getY() + source.getHeight() / 2,
-			getX() + getWidth() / 2, source.getX() + source.getWidth() / 2
-		);
-		x += Math.cos(angle) * amount;
-		y += Math.sin(angle) * amount;
+		double deltaX = getX() - source.getX();
+		double deltaY = getY() - source.getY();
+		double mag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		if(mag == 0) mag = 1;
+		x += deltaX / mag * amount;
+		y += deltaY / mag * amount;
 	}
 	
 	public void receiveDamage(Entity source){

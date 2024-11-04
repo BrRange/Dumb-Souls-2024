@@ -56,7 +56,7 @@ public class Debri_Enemy extends Enemy{
             this.maxSpeed = 1.5;
         }
 
-        if (!isColiding(this, Game.player)) {
+        if (!isColiding(Game.player)) {
 			this.movement();
 		}
 

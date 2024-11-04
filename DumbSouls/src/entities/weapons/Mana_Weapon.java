@@ -166,28 +166,6 @@ public class Mana_Weapon extends Weapon {
 		Game.shots.add(new Shot(Game.player.getX(), Game.player.getY(), 3, 6, shotFace, dx, dy, ang, shotDamage, shotSpeed, 35));
 	}
 	
-	public void AttackRandom() {
-		int xdir = Game.rand.nextInt(1);
-		int ydir = Game.rand.nextInt(1);
-		
-		int xoff = Game.rand.nextInt(20);
-		int yoff = Game.rand.nextInt(20);
-		
-		if (xdir == 1) {
-			xoff *= -1;
-		}
-		
-		if (ydir == 1) {
-			yoff *= -1;
-		}
-		
-		double ang = Math.atan2(Game.my / Game.scale + yoff - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale + xoff - (Game.player.getX() + 8 - Camera.getX()));
-		double dx = Math.cos(ang);
-		double dy =  Math.sin(ang);
-		
-		Game.shots.add(new Shot(Game.player.getX(), Game.player.getY(), 3, 3, shotFace, dx, dy, ang, shotDamage, shotSpeed, 35));
-	}
-	
 	public static void grafficEffect() {
 		if (qntSpcShots > 0) {
 			if (grafEfcCont == 10) {

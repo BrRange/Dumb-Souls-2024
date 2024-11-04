@@ -2,7 +2,6 @@ package entities.AE;
 
 import java.awt.image.BufferedImage;
 import world.Camera;
-import entities.*;
 import entities.enemies.Enemy;
 import main.Game;
 
@@ -39,7 +38,7 @@ public class AE_PoisonPool extends Attack_Entity {
 		if (time % 12 == 0) {
 			for (int i = 0; i < Game.enemies.size(); i++) {
 				Enemy ene = Game.enemies.get(i);
-				if(Entity.isColiding(ene, this)) {
+				if(isColiding(ene)) {
 					ene.frost = Math.max(ene.frost, 5);
 					ene.life -= dmg;
 				}

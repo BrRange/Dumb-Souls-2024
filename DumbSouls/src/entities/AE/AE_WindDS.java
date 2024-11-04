@@ -2,7 +2,6 @@ package entities.AE;
 
 import java.awt.image.BufferedImage;
 import main.Game;
-import entities.*;
 import entities.enemies.Enemy;
 import world.Camera;
 
@@ -31,7 +30,7 @@ public class AE_WindDS extends Attack_Entity {
 	private void Collision() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
 			Enemy ene = Game.enemies.get(i);
-			if(Entity.isColiding(ene, this)) {
+			if(isColiding(ene)) {
 				ene.life -= 0.2;
 				ene.receiveKnockback(this);
 			}

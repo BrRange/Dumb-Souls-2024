@@ -56,7 +56,7 @@ public class Base_Enemy extends Enemy{
 	public void tick() {
 		animate();
 		if (spawning == false) {
-			if (!isColiding(this, Game.player)) {
+			if (!isColiding(Game.player)) {
 				this.movement();
 			}
 			else {

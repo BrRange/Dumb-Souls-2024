@@ -14,8 +14,6 @@ public class MultiAttack_Rune extends Rune{
 	}
 	
 	public void tick() {
-		if (Game.player.playerWeapon.attackTimer == 0) {
-			Game.player.playerWeapon.AttackRandom();
-		}
+		
 	}
 }

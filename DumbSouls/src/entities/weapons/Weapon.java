@@ -79,10 +79,6 @@ public class Weapon {
 		
 	}
 	
-	public void AttackRandom() {
-		
-	}
-	
 	public void Dash() {
 		
 	}

@@ -42,7 +42,7 @@ public class EXP_Orb extends Enemy{
 			this.movement();
 		}
 
-		if (isColiding(this, Game.player)){
+		if (isColiding(Game.player)){
             Game.entities.remove(this);
 			Game.player.exp +=  this.expValue;
         }

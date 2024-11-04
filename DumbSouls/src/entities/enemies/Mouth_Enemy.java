@@ -56,7 +56,7 @@ public class Mouth_Enemy extends Enemy {
 		if (!spawning) {
 			movement();
 			
-			if (Entity.isColiding(this, Game.player)) {
+			if (isColiding(Game.player)) {
 				if (timer % 30 == 0) {
 					attack();
 				}

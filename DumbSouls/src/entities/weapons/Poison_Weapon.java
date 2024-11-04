@@ -107,28 +107,6 @@ public class Poison_Weapon extends Weapon{
 		Game.shots.add(new Shot(Game.player.getX(), Game.player.getY(), 3, 3, shotFace, dx, dy, ang, 0, 3, 35));
 	}
     
-    public void AttackRandom() {
-		int xdir = Game.rand.nextInt(1);
-		int ydir = Game.rand.nextInt(1);
-		
-		int xoff = Game.rand.nextInt(20);
-		int yoff = Game.rand.nextInt(20);
-		
-		if (xdir == 1) {
-			xoff *= -1;
-		}
-		
-		if (ydir == 1) {
-			yoff *= -1;
-		}
-		
-		double ang = Math.atan2(Game.my / Game.scale  + yoff - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale  + xoff - (Game.player.getX() + 8 - Camera.getX()));
-		double dx = Math.cos(ang);
-		double dy =  Math.sin(ang);
-		
-		Game.shots.add(new Shot(Game.player.getX(), Game.player.getY(), 3, 3, shotFace, dx, dy, ang, 0, 3, 35));
-	}
-
     public void Dash() {
 		int manaCost = 30;
 		
@@ -175,12 +153,11 @@ public class Poison_Weapon extends Weapon{
 			}
 		
 			
-			double ang = Math.atan2(Game.my / Game.scale + off - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale - (Game.player.getX() + 8 - Camera.getX()));
-			double dx = Math.cos(ang);
-			double dy =  Math.sin(ang);
-			
 			if (tspw % 2 == 0) {
-				Game.entities.add(new AE_VenomGas(Game.player.getX(), Game.player.getY() + 6, 32, 32, 1.3, dx, dy, ablt3D , null, 80));
+				double deltaX = Game.mx / Game.scale + off - Game.player.getX() + 8 - Camera.getX();
+				double deltaY = Game.my / Game.scale + off - Game.player.getY() + 8 - Camera.getY();
+				double mag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+				Game.entities.add(new AE_VenomGas(Game.player.getX(), Game.player.getY() + 6, 32, 32, 1.3, deltaX / mag, deltaY / mag, ablt3D , null, 80));
 			}
 			if (tspw == maxTspw) {
 				tspw = 0;

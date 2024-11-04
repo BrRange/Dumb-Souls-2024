@@ -3,7 +3,6 @@ package entities.AE;
 import java.awt.image.BufferedImage;
 import world.Camera;
 import main.Game;
-import entities.*;
 import entities.enemies.Enemy;
 
 public class AE_Explosion extends Attack_Entity{
@@ -35,7 +34,7 @@ public class AE_Explosion extends Attack_Entity{
 	private void Collision() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
 			Enemy ene = Game.enemies.get(i);
-			if(Entity.isColiding(ene, this)) {
+			if(isColiding(ene)) {
 				ene.life -= damage;
 				ene.receiveKnockback(this);
 			}

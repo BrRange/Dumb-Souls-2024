@@ -6,7 +6,6 @@ import world.Camera;
 import entities.shots.Shot;
 import entities.AE.*;
 import entities.enemies.*;
-import entities.*;
 
 public class Ice_Weapon extends Weapon{
 	
@@ -93,39 +92,17 @@ public class Ice_Weapon extends Weapon{
 	}
 	
 	public void Attack() {
-		double ang = Math.atan2(Game.my / Game.scale  - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale  - (Game.player.getX() + 8 - Camera.getX()));
-		double dx = Math.cos(ang);
-		double dy =  Math.sin(ang);
+		double deltaX = Game.mx / Game.scale - Game.player.getX() + 8 - Camera.getX();
+		double deltaY = Game.my / Game.scale - Game.player.getY() + 8 - Camera.getY();
+		double mag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 		
-		Shot sh = new Shot(Game.player.getX(), Game.player.getY(), 3, 3, shotFace, dx, dy, 0, shotDamage, shotSpeed, 35);
+		Shot sh = new Shot(Game.player.getX(), Game.player.getY(), 3, 3, shotFace, deltaX / mag, deltaY / mag, 0, shotDamage, shotSpeed, 35);
 		Game.shots.add(sh);
 	}
-	
-	public void AttackRandom() {
-		int xdir = Game.rand.nextInt(1);
-		int ydir = Game.rand.nextInt(1);
-		
-		int xoff = Game.rand.nextInt(20);
-		int yoff = Game.rand.nextInt(20);
-		
-		if (xdir == 1) {
-			xoff *= -1;
-		}
-		
-		if (ydir == 1) {
-			yoff *= -1;
-		}
-		
-		double ang = Math.atan2(Game.my / Game.scale  + yoff - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale  + xoff - (Game.player.getX() + 8 - Camera.getX()));
-		double dx = Math.cos(ang);
-		double dy =  Math.sin(ang);
-		
-		Game.shots.add(new Shot(Game.player.getX(), Game.player.getY(), 3, 3, shotFace, dx, dy, ang, shotDamage, shotSpeed, 35));
-	}
 
-	public static void IceEffect(Enemy e1, Shot e2) {
-		if (Entity.isColiding(e1, e2)) {
-			e1.frost = Math.max(frost, e1.frost);
+	public static void IceEffect(Enemy ene, Shot sh) {
+		if (ene.isColiding(sh)) {
+			ene.frost = Math.max(frost, ene.frost);
 		}
 	}
 	

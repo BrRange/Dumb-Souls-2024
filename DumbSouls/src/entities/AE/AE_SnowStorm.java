@@ -1,7 +1,6 @@
 package entities.AE;
 
 import java.awt.image.BufferedImage;
-import entities.*;
 import entities.enemies.Enemy;
 import main.Game;
 import world.Camera;
@@ -30,11 +29,13 @@ public class AE_SnowStorm extends Attack_Entity {
 		double startX = this.x + 26 - Camera.getX();
 		double startY = this.y + 16 - Camera.getY();
 
-		double ang = getAngle(destY, startY, destX, startX);
-
 		if (calculateDistance((int)destX, (int)destY, (int)startX, (int)startY) > 1){
-			this.x += Math.cos(ang) * this.speed;
-			this.y += Math.sin(ang) * this.speed;
+			double deltaX = destX - startX;
+			double deltaY = destY - startY;
+			double mag = Math.sqrt(deltaX * deltaX + deltaY * deltaY) + 10;
+			if(mag == 0) mag = 1;
+			this.x += deltaX / mag * (speed + mag / 50);
+			this.y += deltaY / mag * (speed + mag / 50);
 		}
 		
 		if (frames == maxFrames) {
@@ -56,7 +57,7 @@ public class AE_SnowStorm extends Attack_Entity {
 	public void enemyCollision() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
 			Enemy ene = Game.enemies.get(i);
-			if (Entity.isColiding(this, ene) && TickTimer(20)) {
+			if (isColiding(ene) && TickTimer(20)) {
 				ene.life -= this.damage;
 				ene.frost += 2;
 			}

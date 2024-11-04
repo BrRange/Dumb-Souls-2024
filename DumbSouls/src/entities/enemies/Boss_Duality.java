@@ -59,11 +59,12 @@ public class Boss_Duality extends Enemy{
 	
 	private void closeAtk() {
 		if (Entity.calculateDistance(Game.player.getX(), Game.player.getY(), this.getX() + 16, this.getY() + 16) <= 60) {
-			double ang = Math.atan2((Game.player.getY() - Camera.getY()) - (this.getY() - Camera.getY()) ,(Game.player.getX() - Camera.getX()) - (this.getX() - Camera.getX()));
-			double dx = Math.cos(ang);
-			double dy =  Math.sin(ang);
+			double deltaX = Game.player.getX() - getX();
+			double deltaY = Game.player.getY() - getY();
+			double mag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+			if(mag == 0) mag = 1;
 
-			Game.eShots.add(new Enemy_Shot(this.getX() + 3, this.getY() + 11, 6, 3, spriteAtk, dx, dy, 15, 2, 30, "straight"));
+			Game.eShots.add(new Enemy_Shot(this.getX() + 3, this.getY() + 11, 6, 3, spriteAtk, deltaX / mag, deltaY / mag, 15, 2, 30, "straight"));
 			Game.player.mana *= 0.75;
 		}
 	}
@@ -71,7 +72,7 @@ public class Boss_Duality extends Enemy{
 	private void shieldColision() {
 		for (int i = 0;  i < Game.shots.size(); i++) {
 			Shot sh = Game.shots.get(i);
-			if (isColiding(this, sh)) {
+			if (isColiding(sh)) {
 				sh.die();
 			}
 		}
@@ -99,11 +100,12 @@ public class Boss_Duality extends Enemy{
 			Game.entities.add(new BAE_Spike(Game.player.getX(), Game.player.getY(), 16, 16, null, 60, 60));
 		}
 		if (timeAtk % 60 == 0) {
-			double ang = Math.atan2((Game.player.getY() - Camera.getY()) - (this.getY() - Camera.getY()) ,(Game.player.getX() - Camera.getX()) - (this.getX() - Camera.getX()));
-			double dx = Math.cos(ang);
-			double dy =  Math.sin(ang);
+			double deltaX = Game.player.getX() - getX();
+			double deltaY = Game.player.getY() - getY();
+			double mag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+			if(mag == 0) mag = 1;
 
-			Game.eShots.add(new Enemy_Shot(this.getX() + 3, this.getY() + 11, 6, 3, spriteAtk, dx, dy, 40, 5, 35, "straight"));
+			Game.eShots.add(new Enemy_Shot(this.getX() + 3, this.getY() + 11, 6, 3, spriteAtk, deltaX / mag, deltaY / mag, 40, 5, 35, "straight"));
 		}
 		if (timeAtk % 80 == 0) {
 			Game.eShots.add(new Enemy_Shot(this.getX() + 16, this.getY() + 11, 16, 5, spriteAtk2, 0, 0, 32, 3, 50, "focused"));
