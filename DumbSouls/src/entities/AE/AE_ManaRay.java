@@ -16,8 +16,8 @@ public class AE_ManaRay extends Attack_Entity {
 	public AE_ManaRay(int x, int y, int width, int height, BufferedImage sprite, int time, int damage) {
 		super(x, y, width, height, sprite, time);
 		this.damage = damage;
-		this.depth = 2;
-		this.getAnimation(208, 112, 12, 12, 1);
+		depth = 2;
+		getAnimation(208, 112, 12, 12, 1);
 	}
 	
 	private void findSmallest() {
@@ -48,12 +48,12 @@ public class AE_ManaRay extends Attack_Entity {
 	public void tick() {
 		time++;
 		Collision();
-		this.width = (int)Entity.calculateDistance(Game.player.getX() - 8, Game.player.getY() - 8, smallest.getX() - smallest.getWidth()/2, smallest.getY() - smallest.getHeight()/2);
-		this.x = Game.player.getX() + Game.player.getWidth()/2;
-		this.y = Game.player.getY() + Game.player.getHeight()/2;
+		width = (int)Entity.calculateDistance(Game.player.getX() - 8, Game.player.getY() - 8, smallest.getX() - smallest.getWidth()/2, smallest.getY() - smallest.getHeight()/2);
+		x = Game.player.getX() + Game.player.getWidth()/2;
+		y = Game.player.getY() + Game.player.getHeight()/2;
 		
-		if (time == this.timeLife) {
-			this.die();
+		if (time == life) {
+			die();
 		}
 	}
 	

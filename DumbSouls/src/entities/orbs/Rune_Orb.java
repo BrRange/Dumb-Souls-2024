@@ -2,7 +2,6 @@ package entities.orbs;
 
 import entities.enemies.Enemy;
 import main.Game;
-import world.Camera;
 import entities.Player;
 import entities.runes.*;
 
@@ -14,32 +13,32 @@ public class Rune_Orb extends Enemy {
 	public Rune_Orb(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
 		
-		this.indexRunes = Game.rand.nextInt(runes.length - 1);
+		indexRunes = Game.rand.nextInt(runes.length - 1);
 		
 		switch (runes[indexRunes]) {
 			case "Life":
-				this.sprite = Life_Rune.sprite;
+				sprite = Life_Rune.sprite;
 			break;
 			case "Mana":
-				this.sprite = Mana_Rune.sprite;
+				sprite = Mana_Rune.sprite;
 			break;
 			case "Speed":
-				this.sprite = Speed_Rune.sprite;
+				sprite = Speed_Rune.sprite;
 			break;
 			case "Double Attack":
-				this.sprite = MultiAttack_Rune.sprite;
+				sprite = MultiAttack_Rune.sprite;
 			break;
 			case "EXP":
-				this.sprite = EXP_Rune.sprite;
+				sprite = EXP_Rune.sprite;
 			break;
 		}
-		this.speed = Game.player.maxSpeed * 1.1;
-		this.setMask(0, 0, 16, 16);
-		this.depth = 1;
+		speed = Game.player.maxSpeed * 1.1;
+		setMask(0, 0, 16, 16);
+		depth = 1;
 	}
 	
 	public void tick() {
-		this.movement();
+		movement();
 
 		if (isColiding(Game.player)){
 	        Game.enemies.remove(this);
@@ -62,9 +61,5 @@ public class Rune_Orb extends Enemy {
 	        	break;	
 	        }
 	    }
-	}
-	
-	public void render() {
-		Game.gameGraphics.drawImage(this.sprite, this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
 	}
 }

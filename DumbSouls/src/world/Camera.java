@@ -3,7 +3,7 @@ package world;
 import main.Game;
 
 public class Camera {
-	private static int x = World.WIDTH, y = World.HEIGHT;
+	protected static int x = World.WIDTH, y = World.HEIGHT;
 	
 	public static void Clamp(int targetX, int targetY) { 
 		if (targetX < 0) {
@@ -19,7 +19,7 @@ public class Camera {
 			targetY = World.HEIGHT * 16 - Game.height;
 		}
 		final int deltaX = targetX - x, deltaY = targetY - y;
-		double magnitude = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		double magnitude = Math.hypot(deltaX, deltaY);
 		if(magnitude == 0.0) magnitude = 1.0;
 
 		x += deltaX / magnitude * Math.ceil(magnitude / 10);
@@ -32,5 +32,10 @@ public class Camera {
 
 	public static int getY(){
 		return y;
+	}
+
+	public static void centerPlayer(){
+		x = Game.player.getX();
+		y = Game.player.getY();
 	}
 }

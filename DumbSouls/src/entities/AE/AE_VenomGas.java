@@ -3,7 +3,6 @@ package entities.AE;
 import java.awt.image.BufferedImage;
 import main.Game;
 import entities.enemies.Enemy;
-import world.Camera;
 
 public class AE_VenomGas extends Attack_Entity {
 	
@@ -13,21 +12,21 @@ public class AE_VenomGas extends Attack_Entity {
 	
 	public AE_VenomGas(int x, int y, int height, int width, double spd, double dirx, double diry, double dmg, BufferedImage sprite, int time) {
 		super(x, y, height, width, sprite, time);
-		this.speed = spd;
-		this.dx = dirx;
-		this.dy = diry;
-		this.damage = dmg;
-		this.getAnimation(192, 112, 16, 16, 1);
-		this.setMask(2, 2, 4, 8);
-		this.depth = 2;
+		speed = spd;
+		dx = dirx;
+		dy = diry;
+		damage = dmg;
+		getAnimation(192, 112, 16, 16, 1);
+		setMask(2, 2, 4, 8);
+		depth = 2;
 	}
 	
 	public void tick() {
 		x += dx * speed;
 		y += dy * speed;
 		time++;
-		if (time == this.timeLife) {
-			this.die();
+		if (time == life) {
+			die();
 		}
 		Collision();
 	}
@@ -36,13 +35,9 @@ public class AE_VenomGas extends Attack_Entity {
 		for (int i = 0; i < Game.enemies.size(); i++) {
 			Enemy ene = Game.enemies.get(i);
 			if(isColiding(ene)) {
-				ene.frost = Math.max(ene.frost, 3);
+				ene.slowness = Math.max(ene.slowness, 3);
 				ene.life -= damage;
 			}
 		}
-	}
-	
-	public void render() {
-		Game.gameGraphics.drawImage(animation[0], this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
 	}
 }

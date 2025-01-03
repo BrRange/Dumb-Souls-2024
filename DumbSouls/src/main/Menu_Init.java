@@ -8,29 +8,29 @@ import graphics.TextObject;
 public class Menu_Init {
 	private static int cur = 0;
 	private static TextObject
-	newGame = new TextObject("arial", Font.BOLD, 10, "New Game", 120, 60, Color.white),
-	help = new TextObject("arial", Font.BOLD, 10, "Help", 120, 85, Color.white),
-	exit = new TextObject("arial", Font.BOLD, 10, "Exit", 120, 110, Color.white);
+	newGameBox = new TextObject("arial", Font.BOLD, 10, "New Game", 120, 60, Color.white),
+	helpBox = new TextObject("arial", Font.BOLD, 10, "Help", 120, 85, Color.white),
+	exitBox = new TextObject("arial", Font.BOLD, 10, "Exit", 120, 110, Color.white);
 	
 	public static void tick() {
-		if(newGame.isColliding(Game.mx, Game.my)){
+		if(newGameBox.hover()){
 			cur = 0;
-			if(Game.clickController.contains(1)){
-				Game.gameStateHandler = Game.gameState.MENUPLAYER;
-			}
 		}
-		if(help.isColliding(Game.mx, Game.my)){
+		if(newGameBox.click()){
+			Game.gameStateHandler = Game.gameState.MENUPLAYER;
+		}
+		if(helpBox.hover()){
 			cur = 1;
-			if(Game.clickController.contains(1)){
-				Game.gameStateHandler = Game.gameState.MENUHELP;
-				cur = 0;
-			}
 		}
-		if(exit.isColliding(Game.mx, Game.my)){
+		if(helpBox.click()){
+			Game.gameStateHandler = Game.gameState.MENUHELP;
+			cur = 0;
+		}
+		if(exitBox.hover()){
 			cur = 2;
-			if(Game.clickController.contains(1)){
-				System.exit(1);
-			}
+		}
+		if(exitBox.click()){
+			System.exit(1);
 		}
 		if (Game.keyController.contains(83) || Game.keyController.contains(40)) {//S DOWN
 			cur++;
@@ -51,9 +51,9 @@ public class Menu_Init {
 		Game.gameGraphics.setFont(new Font("arial", Font.BOLD, 30));
 		Game.gameGraphics.drawString("Dumb Souls", 70, 30);
 		
-		newGame.render();
-		help.render();
-		exit.render();
+		newGameBox.render();
+		helpBox.render();
+		exitBox.render();
 
 		if (cur == 0) {
 			Game.gameGraphics.drawString(">", 90, 60);

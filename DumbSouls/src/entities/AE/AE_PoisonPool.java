@@ -7,19 +7,19 @@ import main.Game;
 
 public class AE_PoisonPool extends Attack_Entity {
 	
-	public int time, frames, index, maxFrames = 20, maxIndex = 2;
+	public int frames, index, maxFrames = 20, maxIndex = 2;
 	public double dmg;
 	
 	public AE_PoisonPool(int x, int y, int width, int height, BufferedImage sprite, int time, int dmg) {
 		super(x, y, width, height, sprite, time);
-		this.setMask(0, 0, width, height);
-		this.getAnimation(128, 128, 16, 16, 2);
+		setMask(0, 0, width, height);
+		getAnimation(128, 128, 16, 16, 2);
 		this.dmg = dmg;
 	}
 	
 	public void tick() {
 		Collision();
-		time ++;
+		life--;
 		frames++;
 		if (frames == maxFrames) {
 			index++;
@@ -29,17 +29,17 @@ public class AE_PoisonPool extends Attack_Entity {
 			}
 		}
 		
-		if (time == this.timeLife) {
-			this.die();
+		if (life == 0) {
+			die();
 		}
 	}
 	
 	public void Collision() {
-		if (time % 12 == 0) {
+		if (life % 12 == 0) {
 			for (int i = 0; i < Game.enemies.size(); i++) {
 				Enemy ene = Game.enemies.get(i);
 				if(isColiding(ene)) {
-					ene.frost = Math.max(ene.frost, 5);
+					ene.slowness = Math.max(ene.slowness, 5);
 					ene.life -= dmg;
 				}
 			}	
@@ -47,6 +47,6 @@ public class AE_PoisonPool extends Attack_Entity {
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.getX(), this.getY() - Camera.getY(), this.width, this.height, null);
+		Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), width, height, null);
 	}
 }

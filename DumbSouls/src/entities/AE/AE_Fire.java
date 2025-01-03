@@ -11,9 +11,9 @@ public class AE_Fire extends Attack_Entity {
 	
 	public AE_Fire(int x, int y, int width, int height, BufferedImage sprite, int time) {
 		super(x, y, width, height, sprite, time);
-		this.setMask(0, 8, 16, 8);
-		this.getAnimation(0, 112, 16, 16, maxIndex);
-		this.depth = 2;
+		setMask(0, 8, 16, 8);
+		getAnimation(0, 112, 16, 16, maxIndex);
+		depth = 2;
 	}
 	
 	public void tick() {
@@ -26,8 +26,8 @@ public class AE_Fire extends Attack_Entity {
 				index = 0;
 			}
 		}
-		if (time == this.timeLife) {
-			this.die();
+		if (time == life) {
+			die();
 		}
 		Collision();
 		refreshTick();
@@ -45,6 +45,6 @@ public class AE_Fire extends Attack_Entity {
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
+		Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), null);
 	}
 }

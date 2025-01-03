@@ -13,22 +13,22 @@ public class AE_WindBarrage extends Attack_Entity{
 	
 	public AE_WindBarrage(int x, int y, int width, int height, double spd, double dx, double dy, double dmg, BufferedImage sprite, int time) {
 		super(x, y, width, height, sprite, time);
-		this.speed = spd;
+		speed = spd;
 		this.dx = dx;
 		this.dy = dy;
-		this.damage = dmg;
-		this.push = -10;
-		this.depth = 2;
-		this.getAnimation(128, 112, 16, 16, 1);
-		this.setMask(0, 0, 32, 32);
+		damage = dmg;
+		push = -10;
+		depth = 2;
+		getAnimation(128, 112, 16, 16, 1);
+		setMask(0, 0, 32, 32);
 	}
 	
 	public void tick() {
 		x += dx * speed;
 		y += dy * speed;
 		time++;
-		if (time == this.timeLife) {
-			this.die();
+		if (time == life) {
+			die();
 		}
 		
 		colidingEnemy();
@@ -48,6 +48,6 @@ public class AE_WindBarrage extends Attack_Entity{
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(animation[0], this.getX() - Camera.getX(), this.getY() - Camera.getY(), 32, 32, null);
+		Game.gameGraphics.drawImage(animation[0], getX() - Camera.getX(), getY() - Camera.getY(), 32, 32, null);
 	}
 }

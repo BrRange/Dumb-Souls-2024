@@ -11,8 +11,8 @@ public class Rune {
 	
 	public Rune(BufferedImage sprite) {
 		this.sprite = sprite;
-		this.name = "Default";
-		this.description = "Default desc.";
+		name = "Default";
+		description = "Default desc.";
 	}
 	
 	public void tick() {

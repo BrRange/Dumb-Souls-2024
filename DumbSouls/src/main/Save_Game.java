@@ -17,11 +17,11 @@ public class Save_Game{
 	}
 	
 	public static void save() throws Exception{
-		int weaponSum = bitIntWriter(Fire_Weapon.block, 1);
-		weaponSum += bitIntWriter(Wind_Weapon.block, 2);
-		weaponSum += bitIntWriter(Ice_Weapon.block, 4);
-		weaponSum += bitIntWriter(Fisical_Weapon.block, 8);
-		weaponSum += bitIntWriter(Poison_Weapon.block, 16);
+		int weaponSum = bitIntWriter(Weapon_Fire.block, 1);
+		weaponSum += bitIntWriter(Weapon_Wind.block, 2);
+		weaponSum += bitIntWriter(Weapon_Ice.block, 4);
+		weaponSum += bitIntWriter(Weapon_Fisical.block, 8);
+		weaponSum += bitIntWriter(Weapon_Poison.block, 16);
 		try (final PrintWriter writer = new PrintWriter("SaveDS.save")) {
 			writer.write((char)(Player.souls & -16777216));
 			writer.write((char)(Player.souls & 16711680));
@@ -61,11 +61,11 @@ public class Save_Game{
 			}
 			reader.close();
 			Player.souls = souls[0] << 24 | souls[1] << 16 | souls[2] << 8 | souls[3];
-			Fire_Weapon.block = intBitReader(weapons[0], 1);
-			Wind_Weapon.block = intBitReader(weapons[0], 2);
-			Ice_Weapon.block = intBitReader(weapons[0], 4);
-			Fisical_Weapon.block = intBitReader(weapons[0], 8);
-			Poison_Weapon.block = intBitReader(weapons[0], 16);
+			Weapon_Fire.block = intBitReader(weapons[0], 1);
+			Weapon_Wind.block = intBitReader(weapons[0], 2);
+			Weapon_Ice.block = intBitReader(weapons[0], 4);
+			Weapon_Fisical.block = intBitReader(weapons[0], 8);
+			Weapon_Poison.block = intBitReader(weapons[0], 16);
 			for(int i = 0; i < runes.length; i++){
 				if(runes[i] > 0){
 					Player.runesInventory.add(InventoryMaker(runes[i]));

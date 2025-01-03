@@ -3,19 +3,20 @@ package entities.AE;
 import java.awt.image.BufferedImage;
 import entities.*;
 import main.Game;
+import world.Camera;
 
 public class Attack_Entity extends Entity {
 	
-	protected int timeLife, tickTimer;
+	protected int tickTimer;
 	protected BufferedImage[] animation;
 	
-	public Attack_Entity(int x, int y, int width, int height, BufferedImage sprite, int timeLife) {
+	public Attack_Entity(int x, int y, int width, int height, BufferedImage sprite, int life) {
 		super(x, y, width, height, sprite);
-		this.timeLife = timeLife;
+		this.life = life;
 	}
 	
 	protected void getAnimation(int x, int y, int width, int height, int frames) {
-		this.animation = new BufferedImage[frames];
+		animation = new BufferedImage[frames];
 		
 		for(int i = 0; i < animation.length; i++ ) {
 			animation[i] = Game.sheet.getSprite(x , y, width, height);
@@ -32,7 +33,7 @@ public class Attack_Entity extends Entity {
 	}
 
 	protected boolean TickTimer(int frames){
-		if (this.tickTimer % frames == 0){
+		if (tickTimer % frames == 0){
 			return true;
 		}
 		else{
@@ -41,13 +42,13 @@ public class Attack_Entity extends Entity {
 	}
 
 	protected void refreshTick(){
-		this.tickTimer++;
-		if (this.tickTimer >= 60){
-			this.tickTimer = 0;
+		tickTimer++;
+		if (tickTimer >= 60){
+			tickTimer = 0;
 		}
 	}
 	
 	public void render() {
-		
+		Game.gameGraphics.drawImage(animation[0], getX() - Camera.getX(), getY() - Camera.getY(), null);
 	}
 }

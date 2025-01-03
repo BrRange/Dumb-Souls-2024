@@ -2,11 +2,12 @@ package entities;
 
 import java.awt.image.BufferedImage;
 import graphics.UI;
-import entities.shots.Enemy_Shot;
 import entities.weapons.*;
 import main.*;
 import world.*;
 import entities.runes.Rune;
+import entities.shots.Shot;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -31,8 +32,8 @@ public class Player extends Entity{
 	private BufferedImage[] playerLeft;
 	private BufferedImage[] playerUp;
 	
-	public Player(int x, int y, int width, int height, BufferedImage sprite) {
-		super(x, y, width, height, sprite);
+	public Player(int x, int y) {
+		super(x, y, 16, 16, Game.sheet.getSprite(0, 16, 16, 16));
 		
 		playerDown = new BufferedImage[4];
 		playerRight = new BufferedImage[4];
@@ -94,7 +95,7 @@ public class Player extends Entity{
 		Game.shots.clear();
 		Game.enemies.clear();
 		Game.eShots.clear();
-		Game.player = new Player(0, 0, 16, 16, Game.sheet.getSprite(0, 16, 16, 16));
+		Game.player = new Player(0, 0);
 		Game.entities.add(Game.player);
 		World.maxEnemies = 5;
 		World.wave = 1;
@@ -127,7 +128,7 @@ public class Player extends Entity{
 	
 	private void shotDamage() {
 		for (int i = 0;  i < Game.eShots.size(); i++) {
-			Enemy_Shot eSh = Game.eShots.get(i);
+			Shot eSh = Game.eShots.get(i);
 			if (isColiding(eSh)) {
 				life -= eSh.damage;
 				Game.eShots.remove(eSh);
@@ -140,35 +141,35 @@ public class Player extends Entity{
 	}
 
 	private boolean TickTimer(int frames) {
-		if (this.tickTimer % frames == 0)
+		if (tickTimer % frames == 0)
 			return true;
 		return false;
 	}
 
 	private void refreshTick(){
-		this.tickTimer++;
-		if (this.tickTimer >= 60)
-			this.tickTimer = 0;
+		tickTimer++;
+		if (tickTimer >= 60)
+			tickTimer = 0;
 	}
 
 	private void castAblt(){
+		if (playerWeapon.md1) playerWeapon.Dash();
+		if (playerWeapon.md2) playerWeapon.Ablt2();
+		if (playerWeapon.md3) playerWeapon.Ablt3();
 		if(abltCooldown == 0){
-			if (Game.keyController.contains(32) || playerWeapon.md1){
+			if (Game.keyController.contains(32)){
 				playerWeapon.Dash();
 				abltCooldown = 30;
 			}
-			if (Game.keyController.contains(49) || playerWeapon.md2){
+			if (Game.keyController.contains(16)){
 				playerWeapon.Ablt2();
 				abltCooldown = 30;
 			}
-			if (Game.keyController.contains(50) || playerWeapon.md3){
+			if (Game.keyController.contains(17)){
 				playerWeapon.Ablt3();
 				abltCooldown = 30;
 			}
 		} else {
-			if (playerWeapon.md1) playerWeapon.Dash();
-			if (playerWeapon.md2) playerWeapon.Ablt2();
-			if (playerWeapon.md3) playerWeapon.Ablt3();
 			abltCooldown--;
 		}
 	}
@@ -183,7 +184,7 @@ public class Player extends Entity{
 		if (Game.keyController.contains(65) || Game.keyController.contains(37))//D RIGHT
 			moveX--;
 		moving = true;
-		double magnitude = Math.sqrt(moveX * moveX + moveY * moveY);
+		double magnitude = Math.hypot(moveX, moveY);
 		if(magnitude == 0){
 			moving = false;
 		} else {
@@ -216,6 +217,7 @@ public class Player extends Entity{
 
 		x += speed * speedBoost * moveX;
 		y += speed * speedBoost * moveY;
+		clampBounds(outOfBounds());
 		isMoving();
 		speedBoost = 1;
 
@@ -224,9 +226,10 @@ public class Player extends Entity{
 		checkExp();
 		shotDamage();
 		
-		if (playerWeapon instanceof Mana_Weapon) {
-			Mana_Weapon.grafficEffect();
+		if (playerWeapon instanceof Weapon_Mana) {
+			Weapon_Mana.grafficEffect();
 		}
+
 		final int MED = 2; //Mouse-Efectiveness-Denominator
 		Camera.Clamp(getX() + camXOffset + (Game.mx / Game.scale - Game.width / 2) / MED, getY() + camYOffset + (Game.my / Game.scale - Game.height / 2) / MED);
 	}
@@ -234,16 +237,16 @@ public class Player extends Entity{
 	public void render() {
 		switch(direct){
 		case 0:
-			Game.gameGraphics.drawImage(playerRight[moving ? frames / 10 : 0], this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
+			Game.gameGraphics.drawImage(playerRight[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
 			break;
 		case 1:
-			Game.gameGraphics.drawImage(playerLeft[moving ? frames / 10 : 0], this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
+			Game.gameGraphics.drawImage(playerLeft[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
 			break;
 		case 2:
-			Game.gameGraphics.drawImage(playerDown[moving ? frames / 10 : 0], this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
+			Game.gameGraphics.drawImage(playerDown[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
 			break;
 		case 3:
-			Game.gameGraphics.drawImage(playerUp[moving ? frames / 10 : 0], this.getX() - Camera.getX(), this.getY() - Camera.getY(), null);
+			Game.gameGraphics.drawImage(playerUp[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
 			break;
 		}
 		playerWeapon.render();

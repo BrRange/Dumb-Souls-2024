@@ -14,7 +14,7 @@ public class SoundPlayer{
 			File file = new File(sound);
 			if (file.exists()) {
 				AudioInputStream audioInp = AudioSystem.getAudioInputStream(file.toURI().toURL());
-				this.clip = AudioSystem.getClip();
+				clip = AudioSystem.getClip();
 				clip.open(audioInp);
 				
 			}

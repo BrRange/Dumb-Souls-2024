@@ -2,11 +2,18 @@ package graphics;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.image.BufferedImage;
+
 import main.*;
 import world.World;
 
 public class UI {
 	
+	private Spritesheet keyIcons = new Spritesheet("res/keyIcons.png");
+	private BufferedImage spaceIcon = keyIcons.getSprite(0, 0, 16, 16),
+	shiftIcon = keyIcons.getSprite(32, 0, 16, 16),
+	controlIcon = keyIcons.getSprite(16, 0, 16, 16);
+
 	private void lifeBar() {
 		Game.gameGraphics.setColor(new Color(10, 10, 10));
 		Game.gameGraphics.fillRect(5, 5, 200 + 4, 14);
@@ -76,6 +83,7 @@ public class UI {
 			Game.gameGraphics.setColor(Color.black);
 			Game.gameGraphics.fillRect(25, 325, 50, 50);
 			Game.gameGraphics.drawImage(Game.player.playerWeapon.ablt2Img, 25, 325, 50, 50, null);
+			Game.gameGraphics.drawImage(spaceIcon, 56, 356, 48, 48, null);
 		}
 		if(Game.player.playerWeapon.ablt2Ava){
 			Game.gameGraphics.setColor(new Color(50, 50, 50));
@@ -83,6 +91,7 @@ public class UI {
 			Game.gameGraphics.setColor(Color.black);
 			Game.gameGraphics.fillRect(25, 405, 50, 50);
 			Game.gameGraphics.drawImage(Game.player.playerWeapon.ablt2Img, 25, 405, 50, 50, null);
+			Game.gameGraphics.drawImage(shiftIcon, 56, 436, 48, 48, null);
 		}
 		if(Game.player.playerWeapon.ablt3Ava){
 			Game.gameGraphics.setColor(new Color(50, 50, 50));
@@ -90,6 +99,7 @@ public class UI {
 			Game.gameGraphics.setColor(new Color(15, 15, 15));
 			Game.gameGraphics.fillRect(105, 405, 50, 50);
 			Game.gameGraphics.drawImage(Game.player.playerWeapon.ablt3Img, 105, 405, 50, 50, null);
+			Game.gameGraphics.drawImage(controlIcon, 136, 436, 48, 48, null);
 		}
 	}
 	

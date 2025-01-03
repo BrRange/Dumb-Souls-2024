@@ -7,10 +7,11 @@ import graphics.TextObject;
 public class Menu_Help {
 	
 	private static TextObject
-	back = new TextObject("arial", Font.BOLD, 10, "> Back", 10, 140, Color.white);
+	backBox = new TextObject("arial", Font.BOLD, 10, "> Back", 10, 140, Color.white);
 
 	public static void tick() {
-		if (Game.keyController.contains(10) || (back.isColliding(Game.mx, Game.my) && Game.clickController.contains(1))){
+		backBox.hover();
+		if (Game.keyController.contains(10) || backBox.click()){
 			Game.gameStateHandler = Game.gameState.MENUINIT;
 		}
 		Game.keyController.clear();
@@ -29,9 +30,9 @@ public class Menu_Help {
 		Game.gameGraphics.drawString("Movement Controls: WASD (Menus also)", 40, 36);
 		Game.gameGraphics.drawString("Dash : space", 40, 51);
 		Game.gameGraphics.drawString("Basic Attack : Any mouse button", 40, 66);
-		Game.gameGraphics.drawString("Skills : 1, 2", 40, 81);
+		Game.gameGraphics.drawString("Skills : shift, control", 40, 81);
 		Game.gameGraphics.drawString("Select : Enter", 40, 96);
 		Game.gameGraphics.drawString("Pause : Escape", 40, 111);
-		back.render();
+		backBox.render();
 	}
 }

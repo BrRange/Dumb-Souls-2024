@@ -10,9 +10,9 @@ public class Speed_Rune extends Rune {
 	
 	public Speed_Rune() {
 		super(sprite);
-		this.name = "Rune of Speed";
+		name = "Rune of Speed";
 		index = 3;
-		this.description = "Speed +0.5";
+		description = "Speed +0.5";
 	}
 	
 	public void tick() {

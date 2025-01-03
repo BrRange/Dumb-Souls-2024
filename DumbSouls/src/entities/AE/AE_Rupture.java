@@ -12,10 +12,10 @@ public class AE_Rupture extends Attack_Entity {
 	
 	public AE_Rupture(int x, int y, int width, int height, BufferedImage sprite, int time, int dmg) {
 		super(x, y, width, height, sprite, time);
-		this.setMask(0, 0, width, height);
-		this.getAnimation(80, 128, 16, 16, 3);
+		setMask(0, 0, width, height);
+		getAnimation(80, 128, 16, 16, 3);
 		this.dmg = dmg;
-		this.depth = 0;
+		depth = 0;
 	}
 	
 	public void tick() {
@@ -29,8 +29,8 @@ public class AE_Rupture extends Attack_Entity {
 		else {
 			index = 2;
 		}
-		if (time == this.timeLife) {
-			this.die();
+		if (time == life) {
+			die();
 		}
 		Collision();
 	}
@@ -48,6 +48,6 @@ public class AE_Rupture extends Attack_Entity {
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.getX(), this.getY() - Camera.getY(), width, height, null);
+		Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), width, height, null);
 	}
 }

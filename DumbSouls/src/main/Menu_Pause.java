@@ -9,14 +9,14 @@ import graphics.TextObject;
 public class Menu_Pause {
 	private static int cur;
 	private static TextObject
-	resume = new TextObject("arial", Font.BOLD, 10, "Resume", 120, 60, Color.white),
-	initialMenu = new TextObject("arial", Font.BOLD, 10, "Initial Menu", 120, 90, Color.white);
+	resumeBox = new TextObject("arial", Font.BOLD, 10, "Resume", 120, 60, Color.white),
+	initialMenuBox = new TextObject("arial", Font.BOLD, 10, "Initial Menu", 120, 90, Color.white);
 	
     public static void tick() {
-		if(resume.isColliding(Game.mx, Game.my)){
+		if(resumeBox.hover()){
 			cur = 0;
 		}
-		if(initialMenu.isColliding(Game.mx, Game.my)){
+		if(initialMenuBox.hover()){
 			cur = 1;
 		}
 		if (Game.keyController.contains(83) || Game.keyController.contains(40)) {//S DOWN
@@ -41,11 +41,11 @@ public class Menu_Pause {
 				Player.die();
 			}
 		}
-		if(resume.isColliding(Game.mx, Game.my) && Game.clickController.contains(1)){
+		if(resumeBox.click()){
 			Game.player.stopMoving();
 			Game.gameStateHandler = Game.gameState.NORMAL;
 		}
-		if(initialMenu.isColliding(Game.mx, Game.my) && Game.clickController.contains(1)){
+		if(initialMenuBox.click()){
 			cur = 0;
 			Player.die();
 		}
@@ -61,8 +61,8 @@ public class Menu_Pause {
 		Game.gameGraphics.drawString("Pause", 120, 30);
 		Game.gameGraphics.setFont(new Font("arial",  Font.BOLD, 10));
 		
-		resume.render();
-		initialMenu.render();
+		resumeBox.render();
+		initialMenuBox.render();
 
 		Game.gameGraphics.drawString("Life : " + (int)Game.player.life + "/" + Game.player.maxLife, 10, Game.height - 15);
 		Game.gameGraphics.drawString("Mana : " + (int)Game.player.mana + "/" + Game.player.maxMana, 10, Game.height - 5);

@@ -6,13 +6,13 @@ import entities.Player;
 import graphics.TextObject;
 
 public class Menu_Level {
-	private static TextObject[] options;
+	private static TextObject[] optionsBox;
 	private static int cur;
 
 	public Menu_Level(int numOP) {
-		options = new TextObject[numOP];
+		optionsBox = new TextObject[numOP];
 		for (int c = 0; c < numOP; c++) {
-			options[c] = new TextObject("arial", Font.BOLD, 10, "Blank", 120, 60 + 90 / numOP * c, Color.white);
+			optionsBox[c] = new TextObject("arial", Font.BOLD, 10, "Blank", 120, 60 + 90 / numOP * c, Color.white);
 		}
 	}
 	
@@ -23,7 +23,7 @@ public class Menu_Level {
 			while (opt == lastOpt) {
 				opt = Game.rand.nextInt(Game.player.playerWeapon.listNames.length);
 			}
-			options[c].updateText(Game.player.playerWeapon.checkOptionName(opt));
+			optionsBox[c].updateText(Game.player.playerWeapon.checkOptionName(opt));
 			lastOpt = opt;
 		}
 	}
@@ -33,21 +33,21 @@ public class Menu_Level {
 			sortOptions(3);
 			Game.player.levelUp = false;
 		}
-		for(int i = 0; i < options.length; i++){
-			if(options[i].isColliding(Game.mx, Game.my)) cur = i;
+		for(int i = 0; i < optionsBox.length; i++){
+			if(optionsBox[i].hover()) cur = i;
 		}
 		if (Game.keyController.contains(87) || Game.keyController.contains(38)) {//W UP
 			cur --;
 			if (cur < 0) 
-				cur = options.length - 1;
+				cur = optionsBox.length - 1;
 		}
 		if (Game.keyController.contains(83) || Game.keyController.contains(40)) {//S DOWN
 			cur ++;
-			if (cur > options.length - 1)
+			if (cur > optionsBox.length - 1)
 				cur = 0;
 		}
-		if (Game.keyController.contains(10) || (options[cur].isColliding(Game.mx, Game.my) && Game.clickController.contains(1))) {
-			Game.player.playerWeapon.checkOptions(options[cur].txt);
+		if (Game.keyController.contains(10) || optionsBox[cur].click()) {
+			Game.player.playerWeapon.checkOptions(optionsBox[cur].txt);
 			Game.player.life = Game.player.maxLife;
 			Game.gameStateHandler = Game.gameState.NORMAL;
 		}
@@ -64,7 +64,7 @@ public class Menu_Level {
 		Game.gameGraphics.setColor(Color.black);
 		Game.gameGraphics.fillRect(0, 0, Game.width * Game.scale, Game.height * Game.scale);
 			
-		for(TextObject opt : options){
+		for(TextObject opt : optionsBox){
 			opt.render();
 		}
 		

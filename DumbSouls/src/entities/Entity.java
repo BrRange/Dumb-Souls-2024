@@ -4,42 +4,54 @@ import java.awt.image.BufferedImage;
 import java.util.Comparator;
 
 import main.Game;
+import world.Camera;
 
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 
 public class Entity {
 	
-	public double x;
-	public double y;
-	public double life;
-	public double maxLife;
-	public double damage;
-	public int width;
-	public int height;
+	public double x, y, life, maxLife, damage, push, speed, maxSpeed, slowness;
+	public int width, height, depth;
 	protected int mx, my, mw, mh;
 	protected Rectangle mask;
-	public double push;
-	public int depth;
 	
 	public BufferedImage sprite;
 	
-	public static BufferedImage player_sprite;
-	
 	public Entity(int x, int y, int width, int height, BufferedImage sprite) {
-		player_sprite = Game.sheet.getSprite(0, 16, 16, 16);
-		this.x = x;
-		this.y = y;
+		this.x = x - width / 2;
+		this.y = y - height / 2;
 		this.width = width;
 		this.height = height;
 		this.sprite = sprite;
 	}
 	
 	public static double calculateDistance(int x1, int y1, int x2, int y2) {
-		return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+		return Math.hypot(x1 - x2, y1 - y2);
 	}
 	
-	
+	public int outOfBounds(){
+		return (x > 1264 - width ? 1 : 0) + (y > 1264 - height ? 2 : 0) - (x < 16 ? 1 : 0) - (y < 16 ? 2 : 0);
+	}
+
+	public void clampBounds(int sign){
+		switch(sign){
+		case -1:
+			x = 16; break;
+		case -2:
+			y = 16; break;
+		case -3:
+			x = y = 16; break;
+		case 1:
+			x = 1264 - width; break;
+		case 2:
+			y = 1264 - height; break;
+		case 3:
+			x = 1264 - width;
+			y = 1264 - height; break;
+		}
+	}
+
 	public static Comparator<Entity> entityDepth = new Comparator<Entity>() {
 		public int compare(Entity n0, Entity n1) {
 			if (n1.depth < n0.depth)
@@ -51,35 +63,41 @@ public class Entity {
 	};
 	
 	public void setX(int newX) {
-		this.x = newX;
+		x = newX;
 	}
 	public void setY(int newY) {
-		this.y = newY;
+		y = newY;
 	}
 	
 	public int getX() {
-		return (int)this.x;
+		return (int)x;
 	}
 	public int getY() {
-		return (int)this.y;
+		return (int)y;
 	}
 	public int getWidth() {
-		return this.width;
+		return width;
 	}
 	public int getHeight() {
-		return this.height;
+		return height;
 	}
-	
+	public int centerX(){
+		return (int)x + width / 2;
+	}
+	public int centerY(){
+		return (int)y + height / 2;
+	}
+
 	public void tick() {
 		
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(sprite, this.getX(), this.getY(), null);
+		Game.gameGraphics.drawImage(sprite, getX() - Camera.getX(), getY() - Camera.getY(), null);
 	}
 
 	protected int[] getMask(){
-		int[] temp = {this.mx, this.my, this.mw, this.mh};
+		int[] temp = {mx, my, mw, mh};
 		return temp;
 	}
 	
@@ -91,10 +109,10 @@ public class Entity {
 	}
 
 	protected void setMask(int[] mask) {
-		this.mx = mask[0];
-		this.my = mask[1];
-		this.mw = mask[2];
-		this.mh = mask[3];
+		mx = mask[0];
+		my = mask[1];
+		mw = mask[2];
+		mh = mask[3];
 	}
 	
 	public boolean isColiding(Entity other) {
@@ -109,23 +127,23 @@ public class Entity {
 	}
 
 	public void receiveKnockback(Entity source){
-		double deltaX = getX() - source.getX();
-		double deltaY = getY() - source.getY();
-		double mag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		double deltaX = centerX() - source.centerX();
+		double deltaY = centerY() - source.centerY();
+		double mag = Math.hypot(deltaX, deltaY);
 		if(mag == 0) mag = 1;
 		x += deltaX / mag * source.push;
 		y += deltaY / mag * source.push;
 	}
 	public void receiveKnockback(Entity source, int amount){
-		double deltaX = getX() - source.getX();
-		double deltaY = getY() - source.getY();
-		double mag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		double deltaX = centerX() - source.centerX();
+		double deltaY = centerY() - source.centerY();
+		double mag = Math.hypot(deltaX, deltaY);
 		if(mag == 0) mag = 1;
 		x += deltaX / mag * amount;
 		y += deltaY / mag * amount;
 	}
 	
 	public void receiveDamage(Entity source){
-		this.life -= source.damage;
+		life -= source.damage;
 	}
 }

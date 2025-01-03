@@ -15,11 +15,11 @@ public class AE_Animation extends Attack_Entity {
 	public AE_Animation(int x, int y, int width, int height, BufferedImage sprite, int time, 
 			int maxFrames, int maxIndex, int xSprite,int ySprite, int wSprite, int hSprite, String style, Entity entity) {
 		super(x, y, width, height, sprite, time);
-		this.getAnimation(xSprite, ySprite, wSprite, hSprite, maxIndex);
+		getAnimation(xSprite, ySprite, wSprite, hSprite, maxIndex);
 		this.maxFrames = maxFrames;
 		this.maxIndex = maxIndex;
 		this.style = style;
-		this.followEntity = entity;
+		followEntity = entity;
 	}
 	
 	private void animate() {
@@ -36,17 +36,17 @@ public class AE_Animation extends Attack_Entity {
 	private void styleReader() {
 		switch (style){
 			case "goToUp_1": 
-				this.depth = 0;
-				this.y -= 0.3;
+				depth = 0;
+				y -= 0.3;
 			break;
 			case "goToUp_2": 
-				this.depth = 2;
-				this.y -= 0.1;
+				depth = 2;
+				y -= 0.1;
 			break;
 			case "goToUp_Objt_1": 
-				this.depth = 2;
-				this.y -= 0.4;
-				this.x = followEntity.getX();
+				depth = 2;
+				y -= 0.4;
+				x = followEntity.getX();
 			break;
 			case "frames_1":
 				animate();
@@ -58,13 +58,13 @@ public class AE_Animation extends Attack_Entity {
 		time++;
 		styleReader();
 		
-		if (time == this.timeLife) {
-			this.die();
+		if (time == life) {
+			die();
 		}
 		
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(animation[index], this.getX() - Camera.getX(), this.getY() - Camera.getY(), this.getWidth(), this.getHeight(), null);
+		Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), getWidth(), getHeight(), null);
 	}
 }

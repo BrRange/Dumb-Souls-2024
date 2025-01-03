@@ -8,9 +8,9 @@ public class MultiAttack_Rune extends Rune{
 	
 	public MultiAttack_Rune() {
 		super(sprite);
-		this.name = "Double Attack Rune";
+		name = "Double Attack Rune";
 		index = 5;
-		this.description = "Adds 1 aditional normal attack.";
+		description = "Adds 1 aditional normal attack.";
 	}
 	
 	public void tick() {

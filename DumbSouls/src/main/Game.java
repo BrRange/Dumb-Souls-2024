@@ -75,8 +75,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	
 	public static List<Entity> entities;
 	public static List<Enemy> enemies;
-	public static List<Shot> shots;
-	public static List<Enemy_Shot> eShots;
+	public static List<Shot> shots, eShots;
 	public static Graphics gameGraphics;
 
 	public Game() {
@@ -89,12 +88,12 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		entities = new ArrayList<Entity>();
 		shots = new ArrayList<Shot>();
 		enemies = new ArrayList<Enemy>();
-		eShots = new ArrayList<Enemy_Shot>();
+		eShots = new ArrayList<Shot>();
 		rand = new Random();
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		gameGraphics = image.getGraphics();
 		sheet = new Spritesheet("res/spritesheet.png");
-		player = new Player(0, 0, 16, 16, sheet.getSprite(0, 16, 16, 16));
+		player = new Player(0, 0);
 		entities.add(player);
 		world = new World("res/map00.png");
 		ui = new UI();
@@ -155,9 +154,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	}
 
 	private void baseRender(){
-		BufferStrategy bs = this.getBufferStrategy();
+		BufferStrategy bs = getBufferStrategy();
 		if (bs == null) {
-			this.createBufferStrategy(3);
+			createBufferStrategy(3);
 			return;
 		}
 		gameGraphics = Game.image.getGraphics();
@@ -209,7 +208,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		for(Shot sh : shots) {
 			sh.render();
 		}
-		for(Enemy_Shot eSh : eShots) {
+		for(Shot eSh : eShots) {
 			eSh.render();
 		}
 	}

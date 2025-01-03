@@ -7,16 +7,16 @@ import entities.enemies.Enemy;
 
 public class AE_Explosion extends Attack_Entity{
 	
-	private int damage, maxFrames, maxIndex, frames, index, time;
+	private int maxFrames, maxIndex, frames, index, time;
 	
-	public AE_Explosion(int x, int y, int width, int height, BufferedImage sprite, int time, int dmg, int receiveKnockback,
+	public AE_Explosion(int x, int y, int width, int height, BufferedImage sprite, int time, double dmg, int receiveKnockback,
 			int maxFrames, int maxIndex, int xSprite,int ySprite, int wSprite, int hSprite) {
 		
 		super(x, y, width, height, sprite, time);
-		this.getAnimation(xSprite, ySprite, wSprite, hSprite, maxIndex);
-		this.setMask(0, 0, width, height);
-		this.damage = dmg;
-		this.push = receiveKnockback;
+		getAnimation(xSprite, ySprite, wSprite, hSprite, maxIndex);
+		setMask(0, 0, width, height);
+		damage = dmg;
+		push = receiveKnockback;
 		this.maxFrames = maxFrames;
 		this.maxIndex = maxIndex;
 	}
@@ -49,12 +49,12 @@ public class AE_Explosion extends Attack_Entity{
 			Collision();
 		}
 		
-		if (time == this.timeLife) {
-			this.die();
+		if (time == life) {
+			die();
 		}
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(this.animation[index], this.getX() - Camera.getX(), this.getY() - Camera.getY(), this.width, this.height, null);
+		Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), width, height, null);
 	}
 }

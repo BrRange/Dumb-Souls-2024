@@ -3,19 +3,16 @@ package entities.enemies;
 import java.awt.image.BufferedImage;
 import entities.*;
 import entities.shots.*;
-import entities.weapons.*;
 import main.*;
+import world.Camera;
 import graphics.Shader;
 
 public class Enemy extends Entity{
 	
 	protected BufferedImage[] animation;
-	public static BufferedImage baseSprite = Game.sheet.getSprite(0, 80, 16, 16);
-	public int maxLife, expValue, soulValue;
-	public double speed, maxSpeed, frost, life;
-	protected boolean spawning, specialRare;
-	protected int timeSpawn, contTS, specialMult = 1;
-	protected int hue = 0;
+	public int expValue, soulValue;
+	protected boolean spawning = true, specialRare;
+	protected int attackTimer = 0, timeSpawn = 0, contTS, specialMult = 1, hue = 0, frames, maxFrames = 10, index, maxIndex = 3;
 	
 	public Enemy(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -24,7 +21,7 @@ public class Enemy extends Entity{
 
 	void isSpecial(){
 		if (Game.rand.nextInt(256) == 0)
-			this.specialRare = true;
+			specialRare = true;
 	}
 	
 	protected void getAnimation(int x, int y, int width, int height, int frames) {
@@ -37,63 +34,78 @@ public class Enemy extends Entity{
 		}
 	}
 
-	protected void frostEffect(double thaw) {
-		speed = maxSpeed / (1 + frost);
-		frost = frost < 0.01 ? 0 : frost * thaw;
+	protected void animate() {
+		frames++;
+		if (frames == maxFrames) {
+			frames = 0;
+			index++;
+			if (index == maxIndex) {
+				index = 0;
+			}
+		}
+	}
+
+	protected void slownessEffect(double thaw) {
+		speed = maxSpeed / (1 + slowness);
+		slowness = slowness < 0.01 ? 0 : slowness * thaw;
 	}
 	
 	protected void shotDamage() {
 		for (int i = 0;  i < Game.shots.size(); i++) {
 			Shot sh = Game.shots.get(i);
 			if (isColiding(sh)) {
-				this.life -= sh.damage;
+				life -= sh.damage;
 				receiveKnockback(Game.player);
-				sh.die();
-				if (Game.player.playerWeapon instanceof Ice_Weapon) {
-					Ice_Weapon.IceEffect(this, sh);
-				}
+				sh.die(this);
 			}
 		}
 	}
 
 	protected void movement() {
-		double deltaX = Game.player.getX() - x;
-		double deltaY = Game.player.getY() - y;
-		double magnitude = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		double deltaX = Game.player.centerX() - centerX();
+		double deltaY = Game.player.centerY() - centerY();
+		double mag = Math.hypot(deltaX, deltaY);
+		if(mag == 0) mag = 1;
 
-		this.x += deltaX * this.speed / magnitude;
-		this.y += deltaY * this.speed / magnitude;
+		x += deltaX * speed / mag;
+		y += deltaY * speed / mag;
 	}
 
 	protected void reverseMovement() {
-		double deltaX = Game.player.getX() - x;
-		double deltaY = Game.player.getY() - y;
-		double magnitude = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		double deltaX = Game.player.centerX() - centerX();
+		double deltaY = Game.player.centerY() - centerY();
+		double mag = Math.hypot(deltaX, deltaY);
+		if(mag == 0) mag = 1;
 
-		this.x += deltaX * -speed / magnitude;
-		this.y += deltaY * -speed / magnitude;
+		x += deltaX * -speed / mag;
+		y += deltaY * -speed / mag;
 	}
 	
 	protected void objectiveMovement(int xObjct, int yObjct) {
-		double deltaX = xObjct - x;
-		double deltaY = yObjct - y;
-		double magnitude = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		double deltaX = xObjct - centerX();
+		double deltaY = yObjct - centerY();
+		double mag = Math.hypot(deltaX, deltaY);
+		if(mag == 0) mag = 1;
 
-		this.x += deltaX * this.speed / magnitude;
-		this.y += deltaY * this.speed / magnitude;
+		x += deltaX * speed / mag;
+		y += deltaY * speed / mag;
 	}
 	
 	int[] redoMask = {};
 	protected void spawnAnimation(int frames) {
 		if (contTS == 0) {
-			redoMask = this.getMask();
-			Game.enemies.add(new Enemy_Animation(this.getX() - this.width/2, this.getY() - this.height, this.width*2, this.height*2, null, timeSpawn, frames, 3, 112, 144, 32, 32, "frames_1", null, specialRare));
+			redoMask = getMask();
+			Game.enemies.add(new Enemy_Animation(centerX(), centerY(), width * 2, height * 2, null, timeSpawn, frames, 3, 112, 144, 32, 32, "frames_1", null, specialRare));
 		}
-		this.setMask(0, 0, 0, 0);
-		this.contTS++;
-		if (this.contTS == this.timeSpawn) {
-			this.setMask(redoMask);
+		setMask(0, 0, 0, 0);
+		contTS++;
+		if (contTS >= timeSpawn) {
+			setMask(redoMask);
 			spawning = false;
 		}
+	}
+
+	public void render() {
+		Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), getWidth(), getHeight(), null);
 	}
 }

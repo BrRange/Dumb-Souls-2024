@@ -10,9 +10,9 @@ public class Life_Rune extends Rune {
 	
 	public Life_Rune() {
 		super(sprite);
-		this.name = "Rune of Life";
+		name = "Rune of Life";
 		index = 1;
-		this.description = "Health +50, Regen +0.1%";
+		description = "Health +50, Regen +0.1%";
 	}
 	
 	public void tick() {
