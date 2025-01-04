@@ -33,7 +33,7 @@ public class AE_ManaRay extends Attack_Entity {
 	
 	private void Collision() {
 		findSmallest();
-		Line2D line = new Line2D.Double(Game.player.getX() + 8, Game.player.getY() + 8, smallest.getX() + smallest.getWidth()/2, smallest.getY() + smallest.getHeight()/2);
+		Line2D line = new Line2D.Double(Game.player.centerX(), Game.player.centerY(), smallest.getX() + smallest.getWidth()/2, smallest.getY() + smallest.getHeight()/2);
 		
 		if(Entity.lineCollision(line, smallest)) {
 			if (time % 10 == 0) {

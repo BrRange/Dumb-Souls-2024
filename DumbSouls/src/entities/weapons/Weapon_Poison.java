@@ -94,7 +94,7 @@ public class Weapon_Poison extends Weapon{
     }
 
     public void Attack() {
-		double ang = Math.atan2(Game.my / Game.scale  - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale  - (Game.player.getX() + 8 - Camera.getX()));
+		double ang = Math.atan2(Game.my / Game.scale  - (Game.player.centerY() - Camera.getY()) , Game.mx / Game.scale  - Game.player.centerX() + Camera.getX());
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
@@ -147,8 +147,8 @@ public class Weapon_Poison extends Weapon{
 		
 			
 			if (tspw % 2 == 0) {
-				double deltaX = Game.mx / Game.scale + off - Game.player.centerX() - Camera.getX();
-				double deltaY = Game.my / Game.scale + off - Game.player.centerY() - Camera.getY();
+				double deltaX = Game.mx / Game.scale + off - Game.player.centerX() + Camera.getX();
+				double deltaY = Game.my / Game.scale + off - Game.player.centerY() + Camera.getY();
 				double mag = Math.hypot(deltaX, deltaY);
 				Game.entities.add(new AE_VenomGas(Game.player.centerX(), Game.player.centerY() + 6, 32, 32, 1.3, deltaX / mag, deltaY / mag, ablt3D , null, 80));
 			}

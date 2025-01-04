@@ -89,7 +89,7 @@ public class Weapon_Fisical extends Weapon {
 	public void Attack() {
 		combo += 1;
 		int ruptureScale = shotDamage * 7;
-		double ang = Math.atan2(Game.my / Game.scale  - (Game.player.centerY() - Camera.getY()) , Game.mx / Game.scale  - (Game.player.centerX() - Camera.getX()));
+		double ang = Math.atan2(Game.my / Game.scale  - (Game.player.centerY() - Camera.getY()) , Game.mx / Game.scale  - Game.player.centerX() + Camera.getX());
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		switch (combo) {
@@ -151,8 +151,8 @@ public class Weapon_Fisical extends Weapon {
 		if (md3) {
 			tspw++;
 			double off = Game.rand.nextInt(20);
-			double deltaX = Game.mx / Game.scale + off - Game.player.centerX() - Camera.getX();
-			double deltaY = Game.my / Game.scale + off - Game.player.centerY() - Camera.getY();
+			double deltaX = Game.mx / Game.scale + off - Game.player.centerX() + Camera.getX();
+			double deltaY = Game.my / Game.scale + off - Game.player.centerY() + Camera.getY();
 			double mag = Math.hypot(deltaX, deltaY);
 			if (tspw % 2 == 0) {
 				Game.entities.add(new AE_PunchRain(Game.player.centerX(), Game.player.centerY(), 16, 16, 3, deltaX / mag, deltaY / mag, ablt3Dmg, null, 20));

@@ -96,11 +96,11 @@ public class Weapon_Wind extends Weapon {
 	
 	public void Attack() {
 		sound1.PlaySound();
-		double ang = Math.atan2(Game.my / Game.scale - (Game.player.getY() + 8 - Camera.getY()) , Game.mx / Game.scale  - (Game.player.getX() + 8 - Camera.getX()));
+		double ang = Math.atan2(Game.my / Game.scale - Game.player.centerY() + Camera.getY(), Game.mx / Game.scale  - Game.player.centerX() + Camera.getX());
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
-		Game.shots.add(new Shot(Game.player.getX(), Game.player.getY(), 6, 6, dx, dy, ang, shotSpeed, shotDamage, 35, shotFace));
+		Game.shots.add(new Shot(Game.player.getX(), Game.player.getY(), 12, 12, dx, dy, ang, shotSpeed, shotDamage, 35, shotFace));
 	}
 	
 	public void Dash() {
@@ -142,10 +142,11 @@ public class Weapon_Wind extends Weapon {
 			Game.player.mana -= manaCost;
 		}
 		if (md3) {
-			double deltaX = Game.mx / Game.scale - Game.player.getX() + 8 - Camera.getX();
-			double deltaY = Game.my / Game.scale - Game.player.getY() + 8 - Camera.getY();
+			double deltaX = Game.mx / Game.scale - Game.player.centerX() + Camera.getX();
+			double deltaY = Game.my / Game.scale - Game.player.centerY() + Camera.getY();
 			double mag = Math.hypot(deltaX, deltaY);
-			Game.entities.add(new AE_WindBarrage(Game.player.getX(), Game.player.getY(), 32, 32, ablt3Spd, deltaX / mag, deltaY / mag, ablt3Dmg, null, 30));
+			if(mag == 0) mag = 1;
+			Game.entities.add(new AE_WindBarrage(Game.player.centerX(), Game.player.centerY(), 32, 32, ablt3Spd, deltaX / mag, deltaY / mag, ablt3Dmg, null, 30));
 			md3 = false;
 		}
 	}

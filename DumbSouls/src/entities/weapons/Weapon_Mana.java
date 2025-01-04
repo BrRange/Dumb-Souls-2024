@@ -150,7 +150,7 @@ public class Weapon_Mana extends Weapon {
 	}
 	
 	public void Attack() {
-		double ang = Math.atan2(Game.my / Game.scale - (Game.player.centerY() - Camera.getY()) , Game.mx / Game.scale - (Game.player.centerX() - Camera.getX()));
+		double ang = Math.atan2(Game.my / Game.scale - (Game.player.centerY() - Camera.getY()) , Game.mx / Game.scale - Game.player.centerX() + Camera.getX());
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		if(qntSpcShots > 0){

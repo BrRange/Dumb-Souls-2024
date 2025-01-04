@@ -94,7 +94,7 @@ public class Weapon_Fire extends Weapon {
 	public void Attack() {
 		if(!sound1.clip.isActive())
 			sound1.PlaySound();
-		double ang = Math.atan2(Game.my / Game.scale - (Game.player.centerY() - Camera.getY()) , Game.mx / Game.scale  - (Game.player.centerX() - Camera.getX()));
+		double ang = Math.atan2(Game.my / Game.scale - Game.player.centerY() + Camera.getY(), Game.mx / Game.scale  - Game.player.centerX() + Camera.getX());
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		Game.shots.add(new Shot(Game.player.centerX(), Game.player.centerY(), 3, 3, dx, dy, ang, shotSpeed, shotDamage, 35, shotFace));
@@ -137,8 +137,8 @@ public class Weapon_Fire extends Weapon {
 		}
 		if (md2) {
 			tspw2++;
-			double deltaX = Game.mx / Game.scale - Game.player.centerX() - Camera.getX();
-			double deltaY = Game.my / Game.scale - Game.player.centerY() - Camera.getY();
+			double deltaX = Game.mx / Game.scale - Game.player.centerX() + Camera.getX();
+			double deltaY = Game.my / Game.scale - Game.player.centerY() + Camera.getY();
 			double mag = Math.hypot(deltaX, deltaY);
 			if (tspw2 % 4 == 0) {
 				Game.entities.add(new AE_Fire2(Game.player.getX(), Game.player.getY(), 16, 16, 2, deltaX / mag, deltaY / mag, ablt2Dmg, null, 60));
@@ -160,8 +160,8 @@ public class Weapon_Fire extends Weapon {
 			Game.player.mana -= manaCost;
 		}
 		if(md3){
-			double deltaX = Game.mx / Game.scale - Game.player.centerX() - Camera.getX();
-			double deltaY = Game.my / Game.scale - Game.player.centerY() - Camera.getY();
+			double deltaX = Game.mx / Game.scale - Game.player.centerX() + Camera.getX();
+			double deltaY = Game.my / Game.scale - Game.player.centerY() + Camera.getY();
 			double mag = Math.hypot(deltaX, deltaY);
 			Game.entities.add(new AE_HellFlame(Game.player.centerX(), Game.player.centerY(), 32, 32, ablt3Spd, deltaX / mag, deltaY / mag, ablt3Dmg, null, 80));
 			md3 = false;
