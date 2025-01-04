@@ -9,10 +9,9 @@ import main.Game;
 public class Shot extends Entity{
 	
 	protected double dirx, diry;
-	protected BufferedImage sprite;
 	
-	public Shot(int x, int y, int w, int h, double dx, double dy, double ang, double spd, double dmg, int life, BufferedImage sprite) {
-		super(x, y, w, h, sprite);
+	public Shot(int x, int y, int w, int h, double dx, double dy, double ang, double spd, double dmg, int life, BufferedImage sprt) {
+		super(x, y, w, h, sprt);
 		dirx = dx;
 		diry = dy;
 		mw = w;

@@ -18,10 +18,10 @@ public class Enemy_Mouth extends Enemy {
 		maxLife = 12 * specialMult + (int)(0.12 * World.wave);
 		life = maxLife;
 		damage = 26 * specialMult + 0.26 * World.wave;
-		maxSpeed = 1 + (specialMult - 1) / 3;
+		maxSpeed = 1.5 + (specialMult - 1) / 3;
 		speed = maxSpeed;
 		timeSpawn = 240;
-		setMask(0, 2, 16, 14);
+		setMask(2, 3, 15, 13);
 	}
 	
 	private void die() {

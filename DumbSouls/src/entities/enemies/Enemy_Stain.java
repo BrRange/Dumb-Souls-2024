@@ -20,7 +20,7 @@ public class Enemy_Stain extends Enemy{
 		damage = 8 * specialMult + 0.08 * World.wave;
 		maxSpeed = 1 + (specialMult - 1) / 3;
 		speed = maxSpeed;
-		setMask(3, 2, 8, 14);
+		setMask(2, 2, 12, 13);
 		timeSpawn = 150;
 	}
 	

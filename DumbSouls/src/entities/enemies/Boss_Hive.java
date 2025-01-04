@@ -47,7 +47,7 @@ public class Boss_Hive extends Enemy{
 		}
 	}
 	
-	private void balanceStatus() {
+	private void balanceStats() {
 		maxLife =  800 * World.wave / 10;
 		expValue = 1500 * World.wave / 10;
 		soulValue = 20 * World.wave / 10; 
@@ -66,7 +66,7 @@ public class Boss_Hive extends Enemy{
 	
 	public void tick() {
 		if (!balance) {
-			balanceStatus();
+			balanceStats();
 		}
 		animate();
 		attack();

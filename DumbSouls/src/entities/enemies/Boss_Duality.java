@@ -15,8 +15,7 @@ public class Boss_Duality extends Enemy{
 	private boolean balance, shieldActive;
 	private BufferedImage aura = Game.sheet.getSprite(16, 160, 16, 16);
 	private BufferedImage shield = Game.sheet.getSprite(16, 176, 16, 16);
-	private BufferedImage spriteAtk = Game.sheet.getSprite(32, 160, 16, 16);
-	private BufferedImage spriteAtk2 = Game.sheet.getSprite(32, 176, 16, 16);
+	private BufferedImage spriteAtk = Game.sheet.getSprite(32, 176, 16, 16);
 	
 	public Boss_Duality(int x, int y){
 		super(x, y, 32, 32, Game.sheet.getSprite(11, 195, 10, 10));
@@ -30,7 +29,7 @@ public class Boss_Duality extends Enemy{
 		setMask(11, 6, 12, 20);
 	}
 	
-	private void balanceStatus() {
+	private void balanceStats() {
 		maxLife =  800 * World.wave / 10;
 		expValue = 1500 * World.wave / 10;
 		soulValue = 20 * World.wave / 10; 
@@ -53,8 +52,7 @@ public class Boss_Duality extends Enemy{
 			double deltaY = Game.player.centerY() - centerY();
 			double mag = Math.hypot(deltaX, deltaY);
 			if(mag == 0) mag = 1;
-
-			Game.eShots.add(new Shot_DualityBlackHand(centerX() + 3, centerY() + 11, 6, 3, spriteAtk, deltaX / mag, deltaY / mag, 15, 2, 30, "straight"));
+			Game.eShots.add(new Shot_DualityBlackHand(centerX(), centerY(), deltaX / mag, deltaY / mag, this));
 			Game.player.mana *= 0.75;
 		}
 	}
@@ -63,7 +61,7 @@ public class Boss_Duality extends Enemy{
 		for (int i = 0;  i < Game.shots.size(); i++) {
 			Shot sh = Game.shots.get(i);
 			if (isColiding(sh)) {
-				sh.die();
+				sh.die(null);
 			}
 		}
 		
@@ -94,11 +92,14 @@ public class Boss_Duality extends Enemy{
 			double deltaY = Game.player.centerY() - centerY();
 			double mag = Math.hypot(deltaX, deltaY);
 			if(mag == 0) mag = 1;
-
-			Game.eShots.add(new Shot_DualityBlackHand(centerX() + 3, centerY() + 11, 6, 3, spriteAtk, deltaX / mag, deltaY / mag, 40, 5, 35, "straight"));
+			Game.eShots.add(new Shot_DualityBlackHand(centerX(), centerY(), deltaX / mag, deltaY / mag, this));
 		}
 		if (attackTimer % 80 == 0) {
-			Game.eShots.add(new Shot_DualityBlackBlade(centerX() + 16, centerY() + 11, 16, 5, spriteAtk2, 0, 0, 32, 3, 50, "focused"));
+			double deltaX = Game.player.centerX() - centerX();
+			double deltaY = Game.player.centerY() - centerY();
+			double mag = Math.hypot(deltaX, deltaY);
+			if(mag == 0) mag = 1;
+			Game.eShots.add(new Shot(centerX(), centerY(), 5, 5, deltaX / mag, deltaY / mag, Math.atan2(deltaY, deltaX), 3, 32, 50, spriteAtk));
 		}
 		if (attackTimer % 160 == 0) {
 			addShield();
@@ -108,7 +109,7 @@ public class Boss_Duality extends Enemy{
 	
 	public void tick() {
 		if (!balance) {
-			balanceStatus();
+			balanceStats();
 		}
 		
 		if (Entity.calculateDistance(Game.player.getX(), Game.player.getY(), getX(), getY()) > 40) {

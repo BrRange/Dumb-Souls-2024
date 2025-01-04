@@ -88,7 +88,7 @@ public class World {
 			int ey = Game.rand.nextInt(HEIGHT);
 			if (tiles[ex + (ey * WIDTH)] instanceof Floor_Tile) {
 				if (wave <= 5) {
-					Game.enemies.add(new Enemy_Eye(ex * 16, ey * 16));
+					Game.enemies.add(new Enemy_Stain(ex * 16, ey * 16));
 				}
 				else if (wave <= 10){
 					if (pe <= 70) {

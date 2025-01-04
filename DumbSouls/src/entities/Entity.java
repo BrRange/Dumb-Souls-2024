@@ -18,12 +18,12 @@ public class Entity {
 	
 	public BufferedImage sprite;
 	
-	public Entity(int x, int y, int width, int height, BufferedImage sprite) {
-		this.x = x - width / 2;
-		this.y = y - height / 2;
-		this.width = width;
-		this.height = height;
-		this.sprite = sprite;
+	public Entity(int x, int y, int w, int h, BufferedImage sprt) {
+		this.x = x - w / 2;
+		this.y = y - h / 2;
+		width = w;
+		height = h;
+		sprite = sprt;
 	}
 	
 	public static double calculateDistance(int x1, int y1, int x2, int y2) {

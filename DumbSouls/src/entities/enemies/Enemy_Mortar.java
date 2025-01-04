@@ -76,7 +76,7 @@ public class Enemy_Mortar extends Enemy{
 		double deltaX = dx - centerX(), deltaY = dy - centerY();
 		double mag = Math.hypot(deltaX, deltaY);
 		if(mag == 0) mag = 1;
-		Game.eShots.add(new Shot_MortarShell(centerX(), centerY(), deltaX / mag, deltaY / mag, mag / 90, damage, 90));
+		Game.eShots.add(new Shot_MortarShell(centerX(), centerY(), deltaX / mag, deltaY / mag, mag / 90, damage));
 	}
 
 	public void tick() {

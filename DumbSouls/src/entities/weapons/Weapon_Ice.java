@@ -20,7 +20,6 @@ public class Weapon_Ice extends Weapon{
 	public Weapon_Ice() {
 		super(sprite);
 		super.setAttackTimer(6);
-
 		setOptionsNames(9);
 		getAnimation(80, 48, 16, 16, 3);
 	}
@@ -128,29 +127,10 @@ public class Weapon_Ice extends Weapon{
 			Game.player.mana -= manaCost;
 		}
 		if (md2) {
-			for (int c = 1; c <= ablt2Quant; c++) {
-				Game.entities.add(new AE_IceSpike(Game.player.centerX() + (13 * c), Game.player.centerY(), 6, 16, null, 60, ablt2Dmg));
-			}
-			for (int c = 1; c <= ablt2Quant; c++) {
-				Game.entities.add(new AE_IceSpike(Game.player.centerX(), Game.player.centerY() + (13 * c), 6, 16, null, 60, ablt2Dmg));
-			}
-			for (int c = 1; c <= ablt2Quant; c++) {
-				Game.entities.add(new AE_IceSpike(Game.player.centerX() - (13 * c), Game.player.centerY(), 6, 16, null, 60, ablt2Dmg));
-			}
-			for (int c = 1; c <= ablt2Quant; c++) {
-				Game.entities.add(new AE_IceSpike(Game.player.centerX(), Game.player.centerY() - (13 * c), 6, 16, null, 60, ablt2Dmg));
-			}
-			for (int c = 1; c <= ablt2Quant; c++) {
-				Game.entities.add(new AE_IceSpike(Game.player.centerX() + (8 * c), Game.player.centerY(), 6, 16, null, 60, ablt2Dmg));
-			}
-			for (int c = 1; c <= ablt2Quant; c++) {
-				Game.entities.add(new AE_IceSpike(Game.player.centerX() - (8 * c), Game.player.centerY(), 6, 16, null, 60, ablt2Dmg));
-			}
-			for (int c = 1; c <= ablt2Quant; c++) {
-				Game.entities.add(new AE_IceSpike(Game.player.centerX() + (8 * c), Game.player.centerY() - (8 * c), 6, 16, null, 60, ablt2Dmg));
-			}
-			for (int c = 1; c <= ablt2Quant; c++) {
-				Game.entities.add(new AE_IceSpike(Game.player.centerX() - (8 * c), Game.player.centerY() + (8 * c), 6, 16, null, 60, ablt2Dmg));
+			for (int c = 0; c < 8; c++) {
+				for (int i = 1; i <= ablt2Quant; i++) {
+					Game.entities.add(new AE_IceSpike((int)(Game.player.centerX() + i * 14 * Math.cos(c * Math.PI / 4)), (int)(Game.player.centerY() + i * 14 * Math.sin(c * Math.PI / 4)), 6, 16, null, 60, ablt2Dmg));
+				}
 			}
 			md2 = false;
 		}

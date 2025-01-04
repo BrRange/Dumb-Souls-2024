@@ -25,7 +25,7 @@ public class Enemy_Eye extends Enemy{
 		damage = 15 * specialMult + 0.15 * World.wave;
 		maxSpeed = 0.8 + (specialMult - 1)/3;
 		speed = maxSpeed;
-		setMask(3, 3, 12, 11);
+		setMask(2, 3, 12, 11);
 		timeSpawn = 180;
 		maxFrames = 15;
 	}

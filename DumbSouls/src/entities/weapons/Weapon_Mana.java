@@ -2,13 +2,13 @@ package entities.weapons;
 
 import java.awt.image.BufferedImage;
 import main.Game;
-import entities.shots.Shot;
-import entities.AE.*;
+import entities.AE.AE_Animation;
+import entities.AE.AE_ManaRay;
+import entities.shots.Shot_PlayerMana;
 import world.Camera;
 
 public class Weapon_Mana extends Weapon {
 	
-	public static BufferedImage shotFace;
 	public static BufferedImage sprite = Game.sheet.getSprite(64, 64, 16, 16);
 	private int shotDamage = 5, shotSpeed = 4, contUpgrades, spcShotsGain = 5, timeDash, maxTimeD = 900, timeAblt3 = 100, ablt3Dmg = 4;
 	private float dashPercent = 1.5f;
@@ -19,7 +19,6 @@ public class Weapon_Mana extends Weapon {
 	
 	public Weapon_Mana() {
 		super(sprite);
-		shotFace = Game.sheet.getSprite(131, 67, 10, 10);
 		ablt2Img = Game.sheet.getSprite(176, 128, 16, 16);
 		ablt3Img = Game.sheet.getSprite(0, 224, 16, 16);
 		qntSpcShots = 0;
@@ -106,14 +105,7 @@ public class Weapon_Mana extends Weapon {
 				break;
 		}
 	}
-	
-	public static void manaEffect(Shot sh) {
-		if (qntSpcShots == 0) return;
-		qntSpcShots--;
-		Game.entities.add(new AE_Explosion(sh.centerX(), sh.centerY(), 32, 32, null, 10, ablt2Dmg, ablt2Knck, 5, 2, 160, 128, 16, 16));
-	}
 
-	
 	public void Dash() {
 		int manaCost = 40;
 		if (dashAva && Game.player.mana >= manaCost && !md1) {
@@ -161,8 +153,12 @@ public class Weapon_Mana extends Weapon {
 		double ang = Math.atan2(Game.my / Game.scale - (Game.player.centerY() - Camera.getY()) , Game.mx / Game.scale - (Game.player.centerX() - Camera.getX()));
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
-		
-		Game.shots.add(new Shot(Game.player.centerX(), Game.player.centerY(),10, 10, dx, dy, ang, shotSpeed, shotDamage, 35, shotFace));
+		if(qntSpcShots > 0){
+			Game.shots.add(new Shot_PlayerMana(Game.player.centerX(), Game.player.centerY(), dx, dy, ang, shotSpeed, shotDamage, ablt2Dmg, ablt2Knck));
+			qntSpcShots--;
+		} else{
+			Game.shots.add(new Shot_PlayerMana(Game.player.centerX(), Game.player.centerY(), dx, dy, ang, shotSpeed, shotDamage, 0, 0));
+		}
 	}
 	
 	public static void grafficEffect() {

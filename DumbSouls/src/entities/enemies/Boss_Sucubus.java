@@ -11,7 +11,6 @@ import world.World;
 public class Boss_Sucubus extends Enemy {
 	private boolean balance, showAura;
 	private BufferedImage spriteAtk = Game.sheet.getSprite(64, 160, 16, 16);
-	private BufferedImage spriteAtk2 = Game.sheet.getSprite(96, 160, 16, 16);
 	private BufferedImage aura = Game.sheet.getSprite(80, 160, 16, 16);
 	
 	public Boss_Sucubus(int x, int y) {
@@ -29,7 +28,7 @@ public class Boss_Sucubus extends Enemy {
 		setMask(2, 0, 30, 32);
 	}
 	
-	private void balanceStatus() {
+	private void balanceStats() {
 		maxLife =  300 * World.wave / 10;
 		expValue = 1500 * World.wave / 10;
 		soulValue = 20 * World.wave / 10; 
@@ -52,35 +51,16 @@ public class Boss_Sucubus extends Enemy {
 		double mag = Math.hypot(deltaX, deltaY);
 		if(mag == 0) mag = 1;
 
-		Game.eShots.add(new Shot_SuccubusBat(centerX(), centerY(), 6, 3, spriteAtk, deltaX / mag, deltaY / mag, damage, 5, 30, "straight"));
+		Game.eShots.add(new Shot(centerX(), centerY(), 6, 3, deltaX / mag, deltaY / mag, 0, 5, damage, 30, spriteAtk));
 	}
 	
 	private void attack2() {
-		int prob;
-		int prob2;
-		
-		if (Game.rand.nextInt(2) == 1) {
-			prob = -1;
-		}
-		else {
-			prob = 1;
-		}
-		
-		if (Game.rand.nextInt(2) == 1) {
-			prob2 = -1;
-		}
-		else  {
-			prob2 = 1;
-		}
-		
-		int distance = 100 * prob, distance2 = 80 * prob2 ;
-		
 		double deltaX = Game.player.centerX() - centerX();
 		double deltaY = Game.player.centerY() - centerY();
 		double mag = Math.hypot(deltaX, deltaY);
 		if(mag == 0) mag = 1;
 		
-		Game.eShots.add(new Shot_SuccubusVampireBat(Game.player.centerX() + distance, Game.player.centerY() + distance2, 6, 3, spriteAtk2, deltaX / mag, deltaY / mag, damage / 3, 7, 50, "straight"));
+		Game.eShots.add(new Shot_SuccubusVampireBat(Game.player.centerX(), Game.player.centerY(), deltaX / mag, deltaY / mag, damage / 3, this));
 	}
 	
 	private void renderAura() {
@@ -92,7 +72,7 @@ public class Boss_Sucubus extends Enemy {
 		}
 	}
 	
-	private void cure() {
+	private void heal() {
 		if (attackTimer % 200 == 0 && life < ((maxLife / 100) * 20)) {
 			life += (maxLife / 100) * 8;
 		}
@@ -117,12 +97,12 @@ public class Boss_Sucubus extends Enemy {
 	
 	public void tick() {
 		if (!balance) {
-			balanceStatus();
+			balanceStats();
 		}
 		attackTimer++;
 		tp();
 		renderAura();
-		cure();
+		heal();
 		if (Entity.calculateDistance(Game.player.centerX(), Game.player.centerY(), centerX(), centerY()) <= 140) {
 			if (attackTimer % 20 == 0) {
 				attack1();
