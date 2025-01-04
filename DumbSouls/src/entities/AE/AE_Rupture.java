@@ -5,7 +5,7 @@ import entities.enemies.Enemy;
 import main.Game;
 import world.Camera;
 
-public class AE_Rupture extends Attack_Entity {
+public class AE_Rupture extends AE_Attack_Entity {
 	
 	public int time, frames, index, maxFrames = 10, maxIndex = 3;
 	public double dmg;

@@ -118,8 +118,8 @@ public class Weapon_Mana extends Weapon {
 				Game.entities.add(new AE_Animation(Game.player.centerX(), Game.player.centerY(), 16, 16, null, 20, 0, 1, 192, 128, 16, 16, "goToUp_1", null));
 			}
 			if (timeDash % 15 == 0) {
-				Game.entities.add(new AE_Animation(Game.player.centerX(), Game.player.centerY() + 6, 16, 16, null, 20, 0, 1, 192, 128, 16, 16, "goToUp_2", null));
-				Game.entities.add(new AE_Animation(Game.player.centerX() + 8, Game.player.centerY() + 6, 16, 16, null, 20, 0, 1, 192, 128, 16, 16, "goToUp_2", null));
+				Game.entities.add(new AE_Animation(Game.player.centerX() - 4, Game.player.centerY() + 6, 16, 16, null, 20, 0, 1, 192, 128, 16, 16, "goToUp_2", null));
+				Game.entities.add(new AE_Animation(Game.player.centerX() + 4, Game.player.centerY() + 6, 16, 16, null, 20, 0, 1, 192, 128, 16, 16, "goToUp_2", null));
 			}
 			timeDash++;
 			if (timeDash >= maxTimeD) {

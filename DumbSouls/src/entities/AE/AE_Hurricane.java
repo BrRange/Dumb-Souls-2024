@@ -5,7 +5,7 @@ import world.Camera;
 import entities.enemies.Enemy;
 import main.Game;
 
-public class AE_Hurricane extends Attack_Entity{
+public class AE_Hurricane extends AE_Attack_Entity{
 	
 	private double speed, damage;
 	private int frames, maxFrames = 10, index, maxIndex = 2, time;

@@ -5,7 +5,7 @@ import main.Game;
 import entities.enemies.Enemy;
 import world.Camera;
 
-public class AE_Fire extends Attack_Entity {
+public class AE_Fire extends AE_Attack_Entity {
 	
 	private int maxFrames = 20, frames = 0, index, maxIndex = 2, time;
 	

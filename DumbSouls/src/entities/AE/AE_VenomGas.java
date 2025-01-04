@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import main.Game;
 import entities.enemies.Enemy;
 
-public class AE_VenomGas extends Attack_Entity {
+public class AE_VenomGas extends AE_Attack_Entity {
 	
 	private double speed;
 	private double dx, dy, damage;

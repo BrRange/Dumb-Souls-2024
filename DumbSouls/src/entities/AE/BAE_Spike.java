@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import world.Camera;
 import main.Game;
 
-public class BAE_Spike extends Attack_Entity{
+public class BAE_Spike extends AE_Attack_Entity{
 	
 	private int index, timer;
 	

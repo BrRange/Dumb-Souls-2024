@@ -3,7 +3,7 @@ package entities.AE;
 import main.Game;
 import world.Camera;
 
-public class EAE_MortarShock extends Attack_Entity {
+public class EAE_MortarShock extends AE_Attack_Entity {
     private int index = 0;
     public EAE_MortarShock(int x, int y, double dmg){
         super(x, y, 32, 32, null, 30);

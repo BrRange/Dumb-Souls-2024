@@ -5,7 +5,7 @@ import world.Camera;
 import entities.enemies.Enemy;
 import main.Game;
 
-public class AE_PoisonPool extends Attack_Entity {
+public class AE_PoisonPool extends AE_Attack_Entity {
 	
 	public int frames, index, maxFrames = 20, maxIndex = 2;
 	public double dmg;

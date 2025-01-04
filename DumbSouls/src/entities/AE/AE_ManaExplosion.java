@@ -4,7 +4,7 @@ import world.Camera;
 import main.Game;
 import entities.enemies.Enemy;
 
-public class AE_ManaExplosion extends Attack_Entity{
+public class AE_ManaExplosion extends AE_Attack_Entity{
 	
 	private int maxFrames, maxIndex, frames, index, time;
 	

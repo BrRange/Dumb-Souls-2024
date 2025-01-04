@@ -5,7 +5,7 @@ import main.Game;
 import world.Camera;
 import entities.enemies.Enemy;
 
-public class AE_HellFlame extends Attack_Entity {
+public class AE_HellFlame extends AE_Attack_Entity {
 	
 	private double speed;
 	private double dx, dy, damage;

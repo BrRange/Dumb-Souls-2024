@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import main.Game;
 import entities.enemies.Enemy;
 
-public class AE_IceSpike extends Attack_Entity {
+public class AE_IceSpike extends AE_Attack_Entity {
 	private int time;
 	
 	public AE_IceSpike(int x, int y, int width, int height, BufferedImage sprite, int time, int damage) {

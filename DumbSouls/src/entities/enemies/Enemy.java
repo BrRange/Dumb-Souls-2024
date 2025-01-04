@@ -95,7 +95,7 @@ public class Enemy extends Entity{
 	protected void spawnAnimation(int frames) {
 		if (contTS == 0) {
 			redoMask = getMask();
-			Game.enemies.add(new Enemy_SpawnPod(centerX(), centerY(), width * 2, height * 2, timeSpawn, specialRare));
+			Game.enemies.add(new Enemy_SpawnPod(centerX(), centerY(), (int)(width * 1.5), (int)(height * 1.5), timeSpawn, specialRare));
 		}
 		setMask(0, 0, 0, 0);
 		contTS++;

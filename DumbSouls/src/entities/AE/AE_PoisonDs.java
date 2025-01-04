@@ -6,7 +6,7 @@ import entities.enemies.Enemy;
 import entities.shots.Shot;
 import world.Camera;
 
-public class AE_PoisonDs extends Attack_Entity{
+public class AE_PoisonDs extends AE_Attack_Entity{
 	
 	private int time, frames, maxFrames = 10, index, maxIndex = 2, dmg;
 	
@@ -28,8 +28,8 @@ public class AE_PoisonDs extends Attack_Entity{
 				index = 0;
 			}
 		}
-		x = Game.player.getX() - width / 2 + 8;
-		y = Game.player.getY() - height / 2 + 8;
+		x = Game.player.centerX();
+		y = Game.player.centerY();
 		if (time == life) {
 			die();
 		}

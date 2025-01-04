@@ -43,7 +43,7 @@ public class Boss_Hive extends Enemy{
 		if (attackTimer % 320 == 0) {
 			Game.enemies.add(new Enemy_Stain(Game.player.centerX() + 80, Game.player.centerY() + 40));
 			Game.enemies.add(new Enemy_Stain(Game.player.centerX() - 80, Game.player.centerY() + 40));
-			Game.enemies.add(new Enemy_Stain(Game.player.centerX() + 8, Game.player.centerY() - 40));
+			Game.enemies.add(new Enemy_Stain(Game.player.centerX(), Game.player.centerY() - 40));
 		}
 	}
 	

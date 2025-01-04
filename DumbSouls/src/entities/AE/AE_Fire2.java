@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import entities.enemies.Enemy;
 import main.Game;
 
-public class AE_Fire2 extends Attack_Entity{
+public class AE_Fire2 extends AE_Attack_Entity{
 	
 	private double speed;
 	private double dx, dy, damage;

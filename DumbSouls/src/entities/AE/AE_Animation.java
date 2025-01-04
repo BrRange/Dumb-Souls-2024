@@ -6,7 +6,7 @@ import main.Game;
 
 import world.Camera;
 
-public class AE_Animation extends Attack_Entity {
+public class AE_Animation extends AE_Attack_Entity {
 	
 	private int maxFrames, maxIndex, frames, index, time;
 	private String style;
