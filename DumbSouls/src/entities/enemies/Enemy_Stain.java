@@ -1,9 +1,9 @@
 package entities.enemies;
 
-import world.World;
-import main.*;
 import entities.*;
 import entities.orbs.*;
+import main.*;
+import world.World;
 
 public class Enemy_Stain extends Enemy{
 	public Enemy_Stain(int x, int y) {
@@ -24,11 +24,6 @@ public class Enemy_Stain extends Enemy{
 		timeSpawn = 150;
 	}
 	
-	private void attack() {
-		Game.player.life -= damage;
-		attackTimer = 0;
-	}
-	
 	private void die() {
 		Game.enemies.remove(this);
 		Game.entities.add(new EXP_Orb(centerX(), centerY(), expValue, hue));
@@ -42,15 +37,13 @@ public class Enemy_Stain extends Enemy{
 				movement();
 			}
 			else {
-				if (attackTimer % 15 == 0) {
-					attack();
-				}
-				attackTimer += 1;
+				this.giveCollisionDamage(Game.player, 15, 1);
 			}
 
 			slownessEffect(0.99);
 			
 			shotDamage();
+			
 			if (life <= 0) {
 				die();
 			}

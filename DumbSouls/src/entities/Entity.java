@@ -134,6 +134,7 @@ public class Entity {
 		x += deltaX / mag * source.push;
 		y += deltaY / mag * source.push;
 	}
+
 	public void receiveKnockback(Entity source, int amount){
 		double deltaX = centerX() - source.centerX();
 		double deltaY = centerY() - source.centerY();

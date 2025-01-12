@@ -1,9 +1,10 @@
 package entities.AE;
 
+import entities.enemies.Enemy;
 import java.awt.image.BufferedImage;
+import java.util.function.Function;
 import main.Game;
 import world.Camera;
-import entities.enemies.Enemy;
 
 public class AE_HellFlame extends AE_Attack_Entity {
 	
@@ -39,10 +40,15 @@ public class AE_HellFlame extends AE_Attack_Entity {
 			die();
 		}
 		
-		colidingEnemy();
+		collisionEnemy(true, 15, attackCollision);
 		refreshTick();
 		spawnFire();
 	}
+
+	Function<Enemy, Void> attackCollision = (target) -> { 
+		target.life -= damage;
+        return null;
+	};
 	
 	private void spawnFire() {
 		spawntime++;
@@ -50,15 +56,6 @@ public class AE_HellFlame extends AE_Attack_Entity {
 			spawntime = 0;
 			Game.entities.add(new AE_Fire(getX(), getY() + 32, 16, 16, null, 40));
 			Game.entities.add(new AE_Fire(getX() + 32, getY() + 32, 16, 16, null, 40));
-		}
-	}
-	
-	private void colidingEnemy() {
-		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy ene = Game.enemies.get(i);
-			if(isColiding(ene) && TickTimer(15)) {
-				ene.life -= damage;
-			}
 		}
 	}
 	

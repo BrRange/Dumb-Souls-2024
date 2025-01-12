@@ -1,7 +1,8 @@
 package entities.AE;
 
-import java.awt.image.BufferedImage;
 import entities.enemies.Enemy;
+import java.awt.image.BufferedImage;
+import java.util.function.Function;
 import main.Game;
 import world.Camera;
 
@@ -29,23 +30,19 @@ public class AE_Rupture extends AE_Attack_Entity {
 		else {
 			index = 2;
 		}
+		if (time <= 6 && time % 2 == 0) {
+			collisionEnemy(false, 0, attackCollision);
+		}
 		if (time == life) {
 			die();
 		}
-		Collision();
 	}
-	
-	private void Collision() {
-		if (time <= 6 && time % 2 == 0) {
-			for (int i = 0; i < Game.enemies.size(); i++) {
-				Enemy ene = Game.enemies.get(i);
-				if(isColiding(ene)) {
-					ene.life -= dmg;
-					ene.receiveKnockback(Game.player);
-				}
-			}	
-		}
-	}
+
+	Function<Enemy, Void> attackCollision = (target) -> { 
+		target.life -= dmg;
+		target.receiveKnockback(Game.player);
+		return null;
+	};
 	
 	public void render() {
 		Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), width, height, null);

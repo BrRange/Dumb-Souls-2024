@@ -1,11 +1,11 @@
 package entities.enemies;
 
-import java.awt.image.BufferedImage;
 import entities.*;
 import entities.shots.*;
+import graphics.Shader;
+import java.awt.image.BufferedImage;
 import main.*;
 import world.Camera;
-import graphics.Shader;
 
 public class Enemy extends Entity{
 	
@@ -107,5 +107,13 @@ public class Enemy extends Entity{
 
 	public void render() {
 		Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), getWidth(), getHeight(), null);
+	}
+
+	protected void giveCollisionDamage(Entity target, int attackTimerLimit, int attackTimerIncrease) {
+		if (this.attackTimer % attackTimerLimit == 0) {
+			target.life -= this.damage;
+			this.attackTimer = 0;
+		}
+		this.attackTimer += attackTimerIncrease;
 	}
 }

@@ -1,10 +1,10 @@
 package entities.enemies;
 
-import main.Game;
-import world.World;
 import entities.*;
 import entities.orbs.*;
+import main.Game;
 import world.Camera;
+import world.World;
 
 public class Enemy_Trapper extends Enemy{
 	private int xP, yP, cont = 120;
@@ -29,11 +29,6 @@ public class Enemy_Trapper extends Enemy{
 		maxFrames = 10;
 	}
 	
-	private void attack() {
-		Game.player.life -= damage;
-		attackTimer = 0;
-	}
-	
 	private void die() {
 		Game.enemies.remove(this);
 		Game.entities.add(new EXP_Orb(centerX(), centerY(), expValue, hue));
@@ -45,10 +40,7 @@ public class Enemy_Trapper extends Enemy{
 		animate();
 		cont++;
 		if (isColiding(Game.player)) {
-			if (attackTimer % 30 == 0) {
-				attack();
-			}
-			attackTimer += 1;
+			giveCollisionDamage(Game.player, 30, 1);
 		}
 		if (cont >= 120) {
 			stage2 = false;

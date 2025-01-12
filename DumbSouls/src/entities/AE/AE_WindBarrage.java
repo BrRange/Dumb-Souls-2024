@@ -1,7 +1,8 @@
 package entities.AE;
 
-import java.awt.image.BufferedImage;
 import entities.enemies.Enemy;
+import java.awt.image.BufferedImage;
+import java.util.function.Function;
 import main.Game;
 import world.Camera; 
 
@@ -31,21 +32,15 @@ public class AE_WindBarrage extends AE_Attack_Entity{
 			die();
 		}
 		
-		colidingEnemy();
+		collisionEnemy(true, 5, attackCollision);
 		refreshTick();
 	}
-	
-	private void colidingEnemy() {
-		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy ene = Game.enemies.get(i);
-			if(isColiding(ene)) {
-				if (TickTimer(5)){
-				ene.life -= damage;
-				ene.receiveKnockback(this);
-				}
-			}
-		}
-	}
+
+	Function<Enemy, Void> attackCollision = (target) -> { 
+		target.life -= damage;
+		target.receiveKnockback(this);
+		return null;
+	};
 	
 	public void render() {
 		Game.gameGraphics.drawImage(animation[0], getX() - Camera.getX(), getY() - Camera.getY(), 32, 32, null);

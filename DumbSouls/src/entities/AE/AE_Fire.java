@@ -1,8 +1,9 @@
 package entities.AE;
 
-import java.awt.image.BufferedImage;
-import main.Game;
 import entities.enemies.Enemy;
+import java.awt.image.BufferedImage;
+import java.util.function.Function;
+import main.Game;
 import world.Camera;
 
 public class AE_Fire extends AE_Attack_Entity {
@@ -15,6 +16,11 @@ public class AE_Fire extends AE_Attack_Entity {
 		getAnimation(0, 112, 16, 16, maxIndex);
 		depth = 2;
 	}
+
+	Function<Enemy, Void> attackCollision = (target) -> { 
+		target.life -= 2;
+        return null;
+	};
 	
 	public void tick() {
 		frames ++;
@@ -29,19 +35,8 @@ public class AE_Fire extends AE_Attack_Entity {
 		if (time == life) {
 			die();
 		}
-		Collision();
+		collisionEnemy(true, 15, attackCollision);
 		refreshTick();
-	}
-	
-	private void Collision() {
-		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy ene = Game.enemies.get(i);
-			if(TickTimer(15)) {
-				if (isColiding(ene)){
-					ene.life -= 2;
-				}
-			}
-		}
 	}
 	
 	public void render() {

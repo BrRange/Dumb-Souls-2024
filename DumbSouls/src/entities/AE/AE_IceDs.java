@@ -1,8 +1,8 @@
 package entities.AE;
 
-import java.awt.image.BufferedImage;
 import entities.enemies.Enemy;
-import main.Game;
+import java.awt.image.BufferedImage;
+import java.util.function.Function;
 
 public class AE_IceDs extends AE_Attack_Entity {
 	
@@ -15,22 +15,18 @@ public class AE_IceDs extends AE_Attack_Entity {
 		getAnimation(32, 112, 16, 16, 1);
 		depth = 0;
 	}
+
+	Function<Enemy, Void> attackCollision = (target) -> { 
+		target.slowness = Math.max(target.slowness, 4);
+		return null;
+	};
 	
 	public void tick() {
 		time ++;
 		if (time == life) {
 			die();
 		}
-		Collision();
+		collisionEnemy(true, 5, attackCollision);
 		refreshTick();
-	}
-	
-	private void Collision() {
-		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy ene = Game.enemies.get(i);
-			if(isColiding(ene) && TickTimer(5)) {
-				ene.slowness = Math.max(ene.slowness, 4);
-			}
-		}
 	}
 }

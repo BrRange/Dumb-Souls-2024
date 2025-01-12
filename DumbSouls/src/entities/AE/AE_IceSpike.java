@@ -1,8 +1,8 @@
 package entities.AE;
 
-import java.awt.image.BufferedImage;
-import main.Game;
 import entities.enemies.Enemy;
+import java.awt.image.BufferedImage;
+import java.util.function.Function;
 
 public class AE_IceSpike extends AE_Attack_Entity {
 	private int time;
@@ -13,23 +13,19 @@ public class AE_IceSpike extends AE_Attack_Entity {
 		getAnimation(48, 128, 16, 16, 1);
 		setMask(2, 4, 12, 12);
 	}
+
+	Function<Enemy, Void> attackCollision = (target) -> { 
+		target.life -= damage;
+		target.slowness = Math.max(target.slowness, damage);
+		return null;
+	};
 	
 	public void tick() {
 		time++;
 		if (time == life) {
 			die();
 		}
-		Collision();
+		collisionEnemy(true, 5, attackCollision);
 		refreshTick();
-	}
-	
-	public void Collision() {
-		for(int i = 0; i < Game.enemies.size(); i++ ) {
-			Enemy ene = Game.enemies.get(i);
-			if (isColiding(ene) && TickTimer(5)) {
-				ene.life -= damage;
-				ene.slowness = Math.max(ene.slowness, damage);
-			}
-		}
 	}
 }

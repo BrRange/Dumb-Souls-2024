@@ -1,8 +1,8 @@
 package entities.AE;
 
-import java.awt.image.BufferedImage;
 import entities.enemies.Enemy;
-import main.Game;
+import java.awt.image.BufferedImage;
+import java.util.function.Function;
 
 public class AE_Fire2 extends AE_Attack_Entity{
 	
@@ -20,6 +20,11 @@ public class AE_Fire2 extends AE_Attack_Entity{
 		setMask(2, 2, 3, 3);
 		depth = 2;
 	}
+
+	Function<Enemy, Void> attackCollision = (target) -> { 
+		target.life -= damage;
+        return null;
+	};
 	
 	public void tick() {
 		x += dx * speed;
@@ -29,15 +34,6 @@ public class AE_Fire2 extends AE_Attack_Entity{
 			die();
 		}
 		
-		colidingEnemy();
-	}
-	
-	private void colidingEnemy() {
-		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy ene = Game.enemies.get(i);
-			if(isColiding(ene)) {
-				ene.life -= damage;
-			}
-		}
+		collisionEnemy(false, 0, attackCollision);
 	}
 }

@@ -1,15 +1,14 @@
 package entities;
 
-import java.awt.image.BufferedImage;
-import graphics.UI;
-import entities.weapons.*;
-import main.*;
-import world.*;
 import entities.runes.Rune;
 import entities.shots.Shot;
-
-import java.util.List;
+import entities.weapons.*;
+import graphics.UI;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
+import main.*;
+import world.*;
 
 public class Player extends Entity{
 	
@@ -21,7 +20,7 @@ public class Player extends Entity{
 	public int level = 1;
 	private int frames, maxFrames = 40;
 	public int direct = 2;
-	public double moveX, moveY, maxSpeed = 1.5, speed = maxSpeed, speedBoost = 1, mana = 100, manaRec = 2, life = 100, lifeRec=1.001;
+	public double moveX, moveY, maxSpeed = 1.5, speed = maxSpeed, speedBoost = 1, mana = 100, manaRec = 2, lifeRec=1.001;
 	public Weapon playerWeapon;
 	public static List<Rune> runesInventory;
 	public List<Rune> runesEquipped;
@@ -35,6 +34,8 @@ public class Player extends Entity{
 	public Player(int x, int y) {
 		super(x, y, 16, 16, Game.sheet.getSprite(0, 16, 16, 16));
 		
+		this.life = 100;
+
 		playerDown = new BufferedImage[4];
 		playerRight = new BufferedImage[4];
 		playerLeft = new BufferedImage[4];

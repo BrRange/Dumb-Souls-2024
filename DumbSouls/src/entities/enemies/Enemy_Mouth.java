@@ -1,9 +1,9 @@
 package entities.enemies;
 
-import world.World;
 import entities.*;
 import entities.orbs.*;
 import main.Game;
+import world.World;
 
 public class Enemy_Mouth extends Enemy {
 	public Enemy_Mouth(int x, int y) {
@@ -30,21 +30,13 @@ public class Enemy_Mouth extends Enemy {
 		Player.souls += soulValue;
 	}
 	
-	private void attack() {
-		Game.player.life -= damage;
-		attackTimer = 0;
-	}
-	
 	public void tick() {
 		animate();
 		if (!spawning) {
 			movement();
 			
 			if (isColiding(Game.player)) {
-				if (attackTimer % 30 == 0) {
-					attack();
-				}
-				attackTimer += 1;
+				this.giveCollisionDamage(Game.player, 30, 1);
 			}
 			
 			slownessEffect(0.85);
