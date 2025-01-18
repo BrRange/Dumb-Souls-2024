@@ -1,11 +1,12 @@
 package entities.enemies;
 
-import java.awt.image.BufferedImage;
-import main.Game;
-import world.Camera;
 import entities.*;
 import entities.orbs.Rune_Orb;
 import entities.shots.*;
+import graphics.Shader;
+import java.awt.image.BufferedImage;
+import main.Game;
+import world.Camera;
 import world.World;
 
 public class Boss_Sucubus extends Enemy {
@@ -118,6 +119,7 @@ public class Boss_Sucubus extends Enemy {
 		else if (Entity.calculateDistance(Game.player.centerX(), Game.player.centerY(), centerX(), centerY()) < 80) {
 			reverseMovement();
 		}
+		damagedAnimation();
 		animate();
 		shotDamage();
 		if (life <= 0) {
@@ -126,7 +128,12 @@ public class Boss_Sucubus extends Enemy {
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), null);
+		if (!damaged) {	
+			Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), null);
+		}
+		else {
+			Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), getX() - Camera.getX(), getY() - Camera.getY(), null);
+		}
 		if (showAura) {
 			Game.gameGraphics.drawImage(aura, getX() - Camera.getX(),  getY() - Camera.getY(), 32, 32, null);
 		}

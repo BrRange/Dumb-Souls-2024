@@ -30,6 +30,7 @@ public class Enemy_Debri extends Enemy{
     }
 
     public void tick() {
+		damagedAnimation();
 		animate();
 
         if (calculateDistance(centerX(), centerY(), Game.player.centerX(), Game.player.centerY()) < 48){

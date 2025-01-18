@@ -36,6 +36,7 @@ public class Enemy_Barrier extends Enemy{
 	}
 	
 	public void tick() {
+		damagedAnimation();
 		animate();
 		if (!spawning) {
 			if (!isColiding(Game.player)) {

@@ -31,6 +31,7 @@ public class Enemy_Mouth extends Enemy {
 	}
 	
 	public void tick() {
+		damagedAnimation();
 		animate();
 		if (!spawning) {
 			movement();

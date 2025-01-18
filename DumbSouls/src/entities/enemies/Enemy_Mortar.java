@@ -1,10 +1,10 @@
 package entities.enemies;
 
-import world.World;
-import main.*;
 import entities.*;
 import entities.orbs.*;
 import entities.shots.Shot_MortarShell;
+import main.*;
+import world.World;
 
 public class Enemy_Mortar extends Enemy{
     private float range;
@@ -80,6 +80,7 @@ public class Enemy_Mortar extends Enemy{
 	}
 
 	public void tick() {
+		damagedAnimation();
 		if (spawning) {
             spawnAnimation(timeSpawn / 3);
             return;

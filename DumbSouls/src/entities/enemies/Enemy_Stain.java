@@ -32,6 +32,7 @@ public class Enemy_Stain extends Enemy{
 	
 	public void tick() {
 		animate();
+		damagedAnimation();
 		if (spawning == false) {
 			if (!isColiding(Game.player)) {
 				movement();

@@ -1,8 +1,8 @@
 package entities.enemies;
 
-import main.Game;
 import entities.*;
 import entities.orbs.Rune_Orb;
+import main.Game;
 import world.World;
 
 public class Boss_Hive extends Enemy{
@@ -68,6 +68,7 @@ public class Boss_Hive extends Enemy{
 		if (!balance) {
 			balanceStats();
 		}
+		damagedAnimation();
 		animate();
 		attack();
 		shotDamage();

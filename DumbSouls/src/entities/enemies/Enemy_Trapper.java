@@ -2,6 +2,7 @@ package entities.enemies;
 
 import entities.*;
 import entities.orbs.*;
+import graphics.Shader;
 import main.Game;
 import world.Camera;
 import world.World;
@@ -51,6 +52,7 @@ public class Enemy_Trapper extends Enemy{
 	}
 	
 	public void tick() {
+		damagedAnimation();
 		if (!spawning) {
 			if (centerX() != xP && centerY() != yP && !isColiding(Game.player)) {
 				objectiveMovement(xP, yP);
@@ -74,7 +76,12 @@ public class Enemy_Trapper extends Enemy{
 	
 	public void render() {
 		if (stage2) {
-			Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), 16, 32, null);
+			if (!damaged) {
+				Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), 16, 32, null);
+			}
+			else {
+				Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), getX() - Camera.getX(), getY() - Camera.getY(), 16, 32, null);
+			}
 		}
 		else {
 			Game.gameGraphics.drawImage(animation[0], getX() - Camera.getX(), getY() - Camera.getY(), null);

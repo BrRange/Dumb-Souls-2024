@@ -41,12 +41,14 @@ public class AE_Attack_Entity extends Entity {
 				if(TickTimer(framesDamage)) {
 					if (isColiding(ene)){
 						attack.apply(ene);
+						ene.damaged = true;
 					}
 				}
 			}
 			else {
 				if (isColiding(ene)){
 					attack.apply(ene);
+					ene.damaged = true;
 				}
 			}
 		}
@@ -59,12 +61,14 @@ public class AE_Attack_Entity extends Entity {
 				if(TickTimer(framesDamage)) {
 					if (isColiding(ene)){
 						enemies.apply(ene);
+						ene.damaged = true;
 					}
 				}
 			}
 			else {
 				if (isColiding(ene)){
 					enemies.apply(ene);
+					ene.damaged = true;
 				}
 			}
 		}

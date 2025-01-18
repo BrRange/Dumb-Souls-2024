@@ -3,6 +3,7 @@ package entities;
 import entities.runes.Rune;
 import entities.shots.Shot;
 import entities.weapons.*;
+import graphics.Shader;
 import graphics.UI;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -84,7 +85,6 @@ public class Player extends Entity{
 			runesEquipped.get(i).tick();
 		}
 	}
-
 	
 	public static void die() {
 		try {
@@ -132,6 +132,7 @@ public class Player extends Entity{
 			Shot eSh = Game.eShots.get(i);
 			if (isColiding(eSh)) {
 				life -= eSh.damage;
+				damaged = true;
 				Game.eShots.remove(eSh);
 			}
 		}
@@ -199,7 +200,6 @@ public class Player extends Entity{
 		else if (moveY < 0) direct = 3;
 
 		castAblt();
-
 		
 		if (mana < maxMana && TickTimer(20))
 		mana = Math.min(maxMana, mana + manaRec);
@@ -222,10 +222,10 @@ public class Player extends Entity{
 		isMoving();
 		speedBoost = 1;
 
-		
 		isAttacking();
 		checkExp();
 		shotDamage();
+		damagedAnimation();
 		
 		if (playerWeapon instanceof Weapon_Mana) {
 			Weapon_Mana.grafficEffect();
@@ -238,16 +238,16 @@ public class Player extends Entity{
 	public void render() {
 		switch(direct){
 		case 0:
-			Game.gameGraphics.drawImage(playerRight[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
+			Game.gameGraphics.drawImage((damaged) ? Shader.reColor(playerRight[moving ? frames / 10 : 0], damagedHue) : playerRight[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
 			break;
 		case 1:
-			Game.gameGraphics.drawImage(playerLeft[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
+			Game.gameGraphics.drawImage((damaged) ? Shader.reColor(playerLeft[moving ? frames / 10 : 0], damagedHue) : playerLeft[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
 			break;
 		case 2:
-			Game.gameGraphics.drawImage(playerDown[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
+			Game.gameGraphics.drawImage((damaged) ? Shader.reColor(playerDown[moving ? frames / 10 : 0], damagedHue) : playerDown[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
 			break;
 		case 3:
-			Game.gameGraphics.drawImage(playerUp[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
+			Game.gameGraphics.drawImage((damaged) ? Shader.reColor(playerUp[moving ? frames / 10 : 0], damagedHue) : playerUp[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
 			break;
 		}
 		playerWeapon.render();
