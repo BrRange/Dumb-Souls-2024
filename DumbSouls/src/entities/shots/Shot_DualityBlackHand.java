@@ -8,7 +8,7 @@ import world.World;
 public class Shot_DualityBlackHand extends Shot {
     private Boss_Duality owner;
     public Shot_DualityBlackHand(int x, int y, double dx, double dy, Boss_Duality own){
-        super(x, y, 13, 14, dx, dy, 0, 5, 40, 35, Game.sheet.getSprite(32, 160, 16, 16));
+        super(x, y, 13, 14, dx, dy, Math.PI, 5, 40, 35, Game.sheet.getSprite(32, 160, 16, 16));
         owner = own;
     }
 

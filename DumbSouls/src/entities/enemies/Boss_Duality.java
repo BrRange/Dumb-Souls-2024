@@ -1,13 +1,14 @@
 package entities.enemies;
 
+import entities.*;
+import entities.AE.BAE_Spike;
+import entities.orbs.Rune_Orb;
+import entities.shots.*;
+import graphics.Shader;
 import java.awt.image.BufferedImage;
 import main.Game;
 import world.Camera;
 import world.World;
-import entities.*;
-import entities.shots.*;
-import entities.AE.BAE_Spike;
-import entities.orbs.Rune_Orb;
 
 public class Boss_Duality extends Enemy{
 	
@@ -85,7 +86,7 @@ public class Boss_Duality extends Enemy{
 	private void rangeAtk() {
 		attackTimer++;
 		if (attackTimer % 40 == 0) {
-			Game.entities.add(new BAE_Spike(Game.player.getX(), Game.player.getY(), 16, 16, null, 60, 60));
+			Game.entities.add(new BAE_Spike(Game.player.centerX(), Game.player.centerY(), 16, 16, null, 60, 60));
 		}
 		if (attackTimer % 60 == 0) {
 			double deltaX = Game.player.centerX() - centerX();
@@ -118,6 +119,7 @@ public class Boss_Duality extends Enemy{
 		if (speed < 0.8) {
 			speed = 0.8;
 		}
+		damagedAnimation();
 		animate();
 		closeAtk();
 		rangeAtk();
@@ -137,7 +139,12 @@ public class Boss_Duality extends Enemy{
 	
 	public void render() {
 		Game.gameGraphics.drawImage(aura, getX() - Camera.getX() - 32, getY() - Camera.getY() - 32, 98, 98,null);
-		Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), null);
+		if(!damaged) {
+			Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), null);
+		}
+		else {
+			Game.gameGraphics.drawImage(Shader.reColor(animation[index],damagedHue), getX() - Camera.getX(), getY() - Camera.getY(), null);
+		}
 		
 		if (shieldActive) {
 			Game.gameGraphics.drawImage(shield, getX() - Camera.getX() - 32, getY() - Camera.getY() - 48, 98, 80, null);

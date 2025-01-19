@@ -97,7 +97,7 @@ public class Weapon_Fire extends Weapon {
 		double ang = Math.atan2(Game.my / Game.scale - Game.player.centerY() + Camera.getY(), Game.mx / Game.scale  - Game.player.centerX() + Camera.getX());
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
-		Game.shots.add(new Shot(Game.player.centerX(), Game.player.centerY(), 3, 3, dx, dy, ang, shotSpeed, shotDamage, 35, shotFace));
+		Game.shots.add(new Shot(Game.player.centerX(), Game.player.centerY(), 12, 12, dx, dy, ang, shotSpeed, shotDamage, 35, shotFace));
 	}
 	
 	public void Dash() {
