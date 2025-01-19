@@ -1,8 +1,8 @@
 package entities.AE;
 
-import java.awt.image.BufferedImage;
-import main.Game;
 import entities.enemies.Enemy;
+import java.awt.image.BufferedImage;
+import java.util.function.Function;
 
 public class AE_VenomGas extends AE_Attack_Entity {
 	
@@ -28,16 +28,12 @@ public class AE_VenomGas extends AE_Attack_Entity {
 		if (time == life) {
 			die();
 		}
-		Collision();
+		collisionEnemy(false, 0, attackCollision);
 	}
-	
-	private void Collision() {
-		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy ene = Game.enemies.get(i);
-			if(isColiding(ene)) {
-				ene.slowness = Math.max(ene.slowness, 3);
-				ene.life -= damage;
-			}
-		}
-	}
+
+	Function<Enemy, Void> attackCollision = (target) -> { 
+		target.slowness = Math.max(target.slowness, 3);
+		target.life -= damage;
+		return null;
+	};
 }

@@ -1,7 +1,8 @@
 package entities.AE;
 
-import java.awt.image.BufferedImage;
 import entities.enemies.Enemy;
+import java.awt.image.BufferedImage;
+import java.util.function.Function;
 import main.Game;
 import world.Camera;
 
@@ -50,19 +51,15 @@ public class AE_SnowStorm extends AE_Attack_Entity {
 			die();
 		}
 		
-		enemyCollision();
+		collisionEnemy(true, 20, attackCollision);
 		refreshTick();
 	}
-	
-	public void enemyCollision() {
-		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy ene = Game.enemies.get(i);
-			if (isColiding(ene) && TickTimer(20)) {
-				ene.life -= damage;
-				ene.slowness += 2;
-			}
-		}
-	}
+
+	Function<Enemy, Void> attackCollision = (target) -> { 
+		target.life -= damage;
+		target.slowness += 2;
+		return null;
+	};
 	
 	public void render() {
 		Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), 64, 64, null);

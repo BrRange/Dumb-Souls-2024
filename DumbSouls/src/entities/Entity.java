@@ -12,7 +12,8 @@ import java.awt.geom.Line2D;
 public class Entity {
 	
 	public double x, y, life, maxLife, damage, push, speed, maxSpeed, slowness;
-	public int width, height, depth;
+	public int width, height, depth, damagedFrames, maxDamagedFrames = 15, damagedHue;
+	public boolean damaged;
 	protected int mx, my, mw, mh;
 	protected Rectangle mask;
 	
@@ -134,6 +135,7 @@ public class Entity {
 		x += deltaX / mag * source.push;
 		y += deltaY / mag * source.push;
 	}
+
 	public void receiveKnockback(Entity source, int amount){
 		double deltaX = centerX() - source.centerX();
 		double deltaY = centerY() - source.centerY();
@@ -145,5 +147,19 @@ public class Entity {
 	
 	public void receiveDamage(Entity source){
 		life -= source.damage;
+		damaged = true;
+	}
+
+	protected void damagedAnimation() {
+		if (damaged) {
+			damagedFrames++;
+			if(damagedFrames % 5 == 0) {
+				damagedHue = (damagedHue == 0x444444) ? 0x400000 : 0x444444;
+			}
+			if(damagedFrames == maxDamagedFrames) {
+				damaged = false;
+				damagedFrames = 0;
+			}
+		}
 	}
 }

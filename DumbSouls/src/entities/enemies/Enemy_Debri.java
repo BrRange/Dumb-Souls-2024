@@ -1,8 +1,8 @@
 package entities.enemies;
 
 import entities.orbs.EXP_Orb;
-import world.World;
 import main.*;
+import world.World;
 
 public class Enemy_Debri extends Enemy{
 	public Enemy_Debri(int x, int y, int expValue, boolean specialRare) {
@@ -24,17 +24,13 @@ public class Enemy_Debri extends Enemy{
 		maxFrames = 6;
 	}
 
-    private void attack() {
-		Game.player.life -= damage;
-		attackTimer = 0;
-	}
-
     public void die(){
         Game.enemies.remove(this);
         Game.entities.add(new EXP_Orb(centerX(), centerY(), expValue, hue));
     }
 
     public void tick() {
+		damagedAnimation();
 		animate();
 
         if (calculateDistance(centerX(), centerY(), Game.player.centerX(), Game.player.centerY()) < 48){
@@ -46,11 +42,7 @@ public class Enemy_Debri extends Enemy{
 		}
 
 		else {
-			if (attackTimer % 15 == 0) {
-				attack();
-				attackTimer = 0;
-			}
-			attackTimer += 1;
+			giveCollisionDamage(Game.player, 15, 1);
 		}
         slownessEffect(0.95);
 

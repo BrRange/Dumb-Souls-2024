@@ -1,8 +1,8 @@
 package entities.AE;
 
-import java.awt.image.BufferedImage;
 import entities.enemies.Enemy;
-import main.Game;
+import java.awt.image.BufferedImage;
+import java.util.function.Function;
 
 public class AE_PunchRain extends AE_Attack_Entity {
 	
@@ -30,17 +30,13 @@ public class AE_PunchRain extends AE_Attack_Entity {
 			die();
 		}
 		
-		colidingEnemy();
+		collisionEnemy(false, 0, attackCollision);
 	}
-	
-	private void colidingEnemy() {
-		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy ene = Game.enemies.get(i);
-			if(isColiding(ene)) {
-				ene.life -= damage;
-				ene.receiveKnockback(this);
-				die();
-			}
-		}
-	}
+
+	Function<Enemy, Void> attackCollision = (target) -> { 
+		target.life -= damage;
+		target.receiveKnockback(this);
+		die();
+		return null;
+	};
 }

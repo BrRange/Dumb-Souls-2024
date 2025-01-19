@@ -1,9 +1,10 @@
 package entities.AE;
 
-import java.awt.image.BufferedImage;
-import world.Camera;
 import entities.enemies.Enemy;
+import java.awt.image.BufferedImage;
+import java.util.function.Function;
 import main.Game;
+import world.Camera;
 
 public class AE_Hurricane extends AE_Attack_Entity{
 	
@@ -20,6 +21,12 @@ public class AE_Hurricane extends AE_Attack_Entity{
 		getAnimation(16, 128, 16, 16, maxIndex);
 		setMask(6, 0, 52, 32);
 	}
+
+	Function<Enemy, Void> attackCollision = (target) -> { 
+		target.life -= damage;
+		target.receiveKnockback(this);
+        return null;
+	};
 	
 	public void tick() {
 		frames ++;
@@ -52,18 +59,8 @@ public class AE_Hurricane extends AE_Attack_Entity{
 			die();
 		}
 		
-		enemyCollision();
+		collisionEnemy(false, 0, attackCollision);
 		refreshTick();
-	}
-	
-	public void enemyCollision() {
-		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy ene = Game.enemies.get(i);
-			if (isColiding(ene)) {
-				ene.life -= damage;
-				ene.receiveKnockback(this);
-			}
-		}
 	}
 	
 	public void render() {

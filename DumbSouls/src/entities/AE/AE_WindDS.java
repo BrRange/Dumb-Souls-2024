@@ -1,8 +1,9 @@
 package entities.AE;
 
-import java.awt.image.BufferedImage;
-import main.Game;
 import entities.enemies.Enemy;
+import java.awt.image.BufferedImage;
+import java.util.function.Function;
+import main.Game;
 
 public class AE_WindDS extends AE_Attack_Entity {
 	
@@ -23,16 +24,12 @@ public class AE_WindDS extends AE_Attack_Entity {
 		if (time == life) {
 			die();
 		}
-		Collision();
+		collisionEnemy(false, 0, attackCollision);
 	}
-	
-	private void Collision() {
-		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy ene = Game.enemies.get(i);
-			if(isColiding(ene)) {
-				ene.life -= 0.2;
-				ene.receiveKnockback(this);
-			}
-		}
-	}
+
+	Function<Enemy, Void> attackCollision = (target) -> { 
+		target.life -= 0.2;
+		target.receiveKnockback(this);
+		return null;
+	};
 }

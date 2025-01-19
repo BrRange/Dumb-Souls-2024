@@ -1,9 +1,10 @@
 package entities.AE;
 
-import java.awt.image.BufferedImage;
-import world.Camera;
 import entities.enemies.Enemy;
+import java.awt.image.BufferedImage;
+import java.util.function.Function;
 import main.Game;
+import world.Camera;
 
 public class AE_PoisonPool extends AE_Attack_Entity {
 	
@@ -18,7 +19,6 @@ public class AE_PoisonPool extends AE_Attack_Entity {
 	}
 	
 	public void tick() {
-		Collision();
 		life--;
 		frames++;
 		if (frames == maxFrames) {
@@ -28,23 +28,21 @@ public class AE_PoisonPool extends AE_Attack_Entity {
 				index = 0;
 			}
 		}
+
+		if (life % 12 == 0) {
+			collisionEnemy(false, 0, attackCollision);
+		}
 		
 		if (life == 0) {
 			die();
 		}
 	}
-	
-	public void Collision() {
-		if (life % 12 == 0) {
-			for (int i = 0; i < Game.enemies.size(); i++) {
-				Enemy ene = Game.enemies.get(i);
-				if(isColiding(ene)) {
-					ene.slowness = Math.max(ene.slowness, 5);
-					ene.life -= dmg;
-				}
-			}	
-		}
-	}
+
+	Function<Enemy, Void> attackCollision = (target) -> { 
+		target.slowness = Math.max(target.slowness, 5);
+		target.life -= dmg;
+		return null;
+	};
 	
 	public void render() {
 		Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), width, height, null);

@@ -1,9 +1,10 @@
 package entities.AE;
 
-import java.awt.image.BufferedImage;
-import main.Game;
 import entities.enemies.Enemy;
 import entities.shots.Shot;
+import java.awt.image.BufferedImage;
+import java.util.function.Function;
+import main.Game;
 import world.Camera;
 
 public class AE_PoisonDs extends AE_Attack_Entity{
@@ -33,26 +34,21 @@ public class AE_PoisonDs extends AE_Attack_Entity{
 		if (time == life) {
 			die();
 		}
-		Collision();
+		collisionEnemiesShots(false, false, 0, enemyCollision, shotCollision);
 	}
-	
-	private void Collision() {
-		for (int i = 0; i < Game.enemies.size(); i++) {
-			Enemy ene = Game.enemies.get(i);
-			if(isColiding(ene)) {
-				if (time % 5 == 0) {
-					ene.slowness = Math.max(ene.slowness, dmg);
-					ene.life -= dmg;
-				}
-			}
+
+	Function<Enemy, Void> enemyCollision = (target) -> { 
+		if (time % 5 == 0) {
+			target.slowness = Math.max(target.slowness, dmg);
+			target.life -= dmg;
 		}
-		for (int i = 0; i < Game.eShots.size(); i++) {
-			Shot eSh = Game.eShots.get(i);
-			if(isColiding(eSh)) {
-				Game.eShots.remove(eSh);
-			}
-		}
-	}
+		return null;
+	};
+
+	Function<Shot, Void> shotCollision = (target) -> { 
+		Game.eShots.remove(target);
+		return null;
+	};
 	
 	public void render() {
 		Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), width, height, null);

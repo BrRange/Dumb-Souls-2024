@@ -1,10 +1,10 @@
 package entities.AE;
 
-import java.awt.image.BufferedImage;
-import java.awt.Color;
-import main.Game;
 import entities.*;
 import entities.enemies.Enemy;
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import main.Game;
 import world.Camera;
 
 public class AE_ManaRay extends AE_Attack_Entity {
@@ -37,6 +37,7 @@ public class AE_ManaRay extends AE_Attack_Entity {
 		findClosest();
 		if (time % 10 == 0 && closest != null) {
 			closest.life -= damage;
+			closest.damaged = true;
 		}
 	}
 	

@@ -17,7 +17,7 @@ public class Enemy_SpawnPod extends Enemy {
 	public void tick() {
 		attackTimer++;
 		animate();
-		
+		damagedAnimation();
 		if (attackTimer == life) {
 			Game.enemies.remove(this);
 		}

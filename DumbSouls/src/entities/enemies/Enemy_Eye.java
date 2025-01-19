@@ -4,8 +4,8 @@ import entities.Entity;
 import entities.Player;
 import entities.orbs.EXP_Orb;
 import entities.shots.Shot;
-import world.World;
 import main.Game;
+import world.World;
 
 public class Enemy_Eye extends Enemy{
 	private float range;
@@ -47,6 +47,7 @@ public class Enemy_Eye extends Enemy{
 	}
 	
 	public void tick() {
+		damagedAnimation();
 		animate();
 		if (spawning) {
 			spawnAnimation(timeSpawn / 3);

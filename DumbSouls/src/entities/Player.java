@@ -1,15 +1,15 @@
 package entities;
 
-import java.awt.image.BufferedImage;
-import graphics.UI;
-import entities.weapons.*;
-import main.*;
-import world.*;
 import entities.runes.Rune;
 import entities.shots.Shot;
-
-import java.util.List;
+import entities.weapons.*;
+import graphics.Shader;
+import graphics.UI;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
+import main.*;
+import world.*;
 
 public class Player extends Entity{
 	
@@ -21,7 +21,7 @@ public class Player extends Entity{
 	public int level = 1;
 	private int frames, maxFrames = 40;
 	public int direct = 2;
-	public double moveX, moveY, maxSpeed = 1.5, speed = maxSpeed, speedBoost = 1, mana = 100, manaRec = 2, life = 100, lifeRec=1.001;
+	public double moveX, moveY, maxSpeed = 1.5, speed = maxSpeed, speedBoost = 1, mana = 100, manaRec = 2, lifeRec=1.001;
 	public Weapon playerWeapon;
 	public static List<Rune> runesInventory;
 	public List<Rune> runesEquipped;
@@ -35,6 +35,8 @@ public class Player extends Entity{
 	public Player(int x, int y) {
 		super(x, y, 16, 16, Game.sheet.getSprite(0, 16, 16, 16));
 		
+		this.life = 100;
+
 		playerDown = new BufferedImage[4];
 		playerRight = new BufferedImage[4];
 		playerLeft = new BufferedImage[4];
@@ -83,7 +85,6 @@ public class Player extends Entity{
 			runesEquipped.get(i).tick();
 		}
 	}
-
 	
 	public static void die() {
 		try {
@@ -131,6 +132,7 @@ public class Player extends Entity{
 			Shot eSh = Game.eShots.get(i);
 			if (isColiding(eSh)) {
 				life -= eSh.damage;
+				damaged = true;
 				Game.eShots.remove(eSh);
 			}
 		}
@@ -198,7 +200,6 @@ public class Player extends Entity{
 		else if (moveY < 0) direct = 3;
 
 		castAblt();
-
 		
 		if (mana < maxMana && TickTimer(20))
 		mana = Math.min(maxMana, mana + manaRec);
@@ -221,10 +222,10 @@ public class Player extends Entity{
 		isMoving();
 		speedBoost = 1;
 
-		
 		isAttacking();
 		checkExp();
 		shotDamage();
+		damagedAnimation();
 		
 		if (playerWeapon instanceof Weapon_Mana) {
 			Weapon_Mana.grafficEffect();
@@ -237,16 +238,16 @@ public class Player extends Entity{
 	public void render() {
 		switch(direct){
 		case 0:
-			Game.gameGraphics.drawImage(playerRight[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
+			Game.gameGraphics.drawImage((damaged) ? Shader.reColor(playerRight[moving ? frames / 10 : 0], damagedHue) : playerRight[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
 			break;
 		case 1:
-			Game.gameGraphics.drawImage(playerLeft[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
+			Game.gameGraphics.drawImage((damaged) ? Shader.reColor(playerLeft[moving ? frames / 10 : 0], damagedHue) : playerLeft[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
 			break;
 		case 2:
-			Game.gameGraphics.drawImage(playerDown[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
+			Game.gameGraphics.drawImage((damaged) ? Shader.reColor(playerDown[moving ? frames / 10 : 0], damagedHue) : playerDown[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
 			break;
 		case 3:
-			Game.gameGraphics.drawImage(playerUp[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
+			Game.gameGraphics.drawImage((damaged) ? Shader.reColor(playerUp[moving ? frames / 10 : 0], damagedHue) : playerUp[moving ? frames / 10 : 0], getX() - Camera.getX(), getY() - Camera.getY(), null);
 			break;
 		}
 		playerWeapon.render();

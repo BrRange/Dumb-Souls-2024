@@ -1,9 +1,9 @@
 package entities.enemies;
 
-import world.World;
-import main.*;
 import entities.*;
 import entities.orbs.EXP_Orb;
+import main.*;
+import world.World;
 
 public class Enemy_Barrier extends Enemy{
 	public Enemy_Barrier(int x, int y) {
@@ -26,11 +26,6 @@ public class Enemy_Barrier extends Enemy{
 		maxFrames = 20;
 	}
 	
-	private void attack() {
-		Game.player.life -= damage;
-		attackTimer = 0;
-	}
-	
 	private void die() {
 		Game.enemies.remove(this);
 		Game.enemies.add(new Enemy_Debri(centerX(), centerY() - 16, expValue, specialRare));
@@ -41,16 +36,14 @@ public class Enemy_Barrier extends Enemy{
 	}
 	
 	public void tick() {
+		damagedAnimation();
 		animate();
 		if (!spawning) {
 			if (!isColiding(Game.player)) {
 				movement();
 			}
 			else {
-				if (attackTimer % 30 == 0) {
-					attack();
-				}
-				attackTimer += 1;
+				giveCollisionDamage(Game.player, 30, 1);
 			}
 
 			slownessEffect(0.92);

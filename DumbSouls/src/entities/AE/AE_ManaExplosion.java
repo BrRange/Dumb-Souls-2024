@@ -1,8 +1,9 @@
 package entities.AE;
 
-import world.Camera;
-import main.Game;
 import entities.enemies.Enemy;
+import java.util.function.Function;
+import main.Game;
+import world.Camera;
 
 public class AE_ManaExplosion extends AE_Attack_Entity{
 	
@@ -37,12 +38,19 @@ public class AE_ManaExplosion extends AE_Attack_Entity{
 			}
 		}	
 	}
+
+	Function<Enemy, Void> attackCollision = (target) -> { 
+		target.life -= damage;
+		target.receiveKnockback(this);
+        return null;
+	};
 	
 	public void tick() {
 		time++;
 		animate();
 		
 		if (index == maxIndex) {
+			collisionEnemy(false, 0, attackCollision);
 			Collision();
 		}
 		
