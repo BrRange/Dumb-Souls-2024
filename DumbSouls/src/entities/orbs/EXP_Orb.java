@@ -1,9 +1,9 @@
 package entities.orbs;
 
+import entities.Entity;
+import entities.enemies.Enemy;
+import main.Game;
 import world.World;
-import main.*;
-import entities.enemies.*;
-import entities.*;
 
 public class EXP_Orb extends Enemy{
 	public EXP_Orb(int x, int y, int exp, int hue) {

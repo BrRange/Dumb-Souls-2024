@@ -1,26 +1,26 @@
 package entities.enemies;
 
-import entities.*;
-import entities.orbs.*;
+import entities.Player;
+import entities.orbs.EXP_Orb;
 import graphics.Shader;
 import main.Game;
 import world.Camera;
 import world.World;
 
-public class Enemy_Trapper extends Enemy{
+public class Enemy_Trapper extends Enemy {
 	private int xP, yP, cont = 120;
 	private boolean stage2 = true;
-	
+
 	public Enemy_Trapper(int x, int y) {
 		super(x, y, 16, 16, Game.sheet.getSprite(240, 80, 16, 16));
-		if(specialRare){
+		if (specialRare) {
 			specialMult = 2;
 			hue = 0xFFFFFF;
 		}
 		getAnimation(240, 80, 16, 16, 3);
 		expValue = 37 * specialMult;
 		soulValue = 5 * specialMult;
-		maxLife = 40 + (int)(0.4 * World.wave);
+		maxLife = 40 + (int) (0.4 * World.wave);
 		life = maxLife;
 		damage = 48 * specialMult + 0.48 * World.wave;
 		maxSpeed = 1 + (specialMult - 1) / 3;
@@ -29,12 +29,13 @@ public class Enemy_Trapper extends Enemy{
 		maxIndex = 3;
 		maxFrames = 10;
 	}
-	
+
 	private void die() {
 		Game.enemies.remove(this);
 		Game.entities.add(new EXP_Orb(centerX(), centerY(), expValue, hue));
 		Player.souls += soulValue;
 	}
+
 	private void stage2() {
 		shotDamage();
 		setMask(2, 0, 14, 32);
@@ -50,40 +51,38 @@ public class Enemy_Trapper extends Enemy{
 			yP = Game.player.centerY();
 		}
 	}
-	
+
 	public void tick() {
 		damagedAnimation();
 		if (!spawning) {
 			if (centerX() != xP && centerY() != yP && !isColiding(Game.player)) {
 				objectiveMovement(xP, yP);
 				setMask(0, 0, 0, 0);
-			}
-			else {
+			} else {
 				stage2 = true;
 				stage2();
 			}
-			
+
 			slownessEffect(0.995);
-			
+
 			if (life <= 0) {
 				die();
 			}
-		}
-		else {
+		} else {
 			spawnAnimation(timeSpawn / 3);
 		}
 	}
-	
+
 	public void render() {
 		if (stage2) {
 			if (!damaged) {
-				Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), 16, 32, null);
+				Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), 16, 32,
+						null);
+			} else {
+				Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), getX() - Camera.getX(),
+						getY() - Camera.getY(), 16, 32, null);
 			}
-			else {
-				Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), getX() - Camera.getX(), getY() - Camera.getY(), 16, 32, null);
-			}
-		}
-		else {
+		} else {
 			Game.gameGraphics.drawImage(animation[0], getX() - Camera.getX(), getY() - Camera.getY(), null);
 		}
 	}

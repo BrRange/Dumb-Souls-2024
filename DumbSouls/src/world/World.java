@@ -5,11 +5,18 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import entities.enemies.*;
+
+import entities.enemies.Boss_Duality;
+import entities.enemies.Boss_Hive;
+import entities.enemies.Boss_Sucubus;
+import entities.enemies.Enemy_Barrier;
+import entities.enemies.Enemy_Eye;
+import entities.enemies.Enemy_Mouth;
+import entities.enemies.Enemy_Stain;
+import entities.enemies.Enemy_Trapper;
 import main.Game;
 
 public class World {
-	
 	public static Tile[] tiles;
 	public static int WIDTH, HEIGHT;
 	public static int maxEnemies = 10, wave = 0;

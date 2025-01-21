@@ -9,7 +9,7 @@ import main.Game;
 import world.Camera;
 
 public class AE_Attack_Entity extends Entity {
-	protected int tickTimer;
+	protected int tickTimer = 0, maxFrames = 20, frames = 0, index = 0, maxIndex = 2;
 	protected BufferedImage[] animation;
 	
 	public AE_Attack_Entity(int x, int y, int width, int height, BufferedImage sprite, int life) {
@@ -95,13 +95,6 @@ public class AE_Attack_Entity extends Entity {
 		}
 		else{
 			return false;
-		}
-	}
-
-	protected void refreshTick(){
-		tickTimer++;
-		if (tickTimer >= 60){
-			tickTimer = 0;
 		}
 	}
 	

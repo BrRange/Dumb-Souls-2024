@@ -2,14 +2,21 @@ package entities;
 
 import entities.runes.Rune;
 import entities.shots.Shot;
-import entities.weapons.*;
+import entities.weapons.Weapon;
+import entities.weapons.Weapon_Mana;
 import graphics.Shader;
 import graphics.UI;
+import main.Game;
+import main.Menu_Init;
+import main.Menu_Level;
+import main.Menu_Player;
+import main.Save_Game;
+import world.Camera;
+import world.World;
+
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import main.*;
-import world.*;
 
 public class Player extends Entity{
 	

@@ -4,16 +4,17 @@ import java.awt.image.BufferedImage;
 import main.Game;
 import world.Camera;
 import sounds.SoundPlayer;
+import entities.AE.AE_Hurricane;
+import entities.AE.AE_WindBarrage;
+import entities.AE.AE_WindDS;
 import entities.shots.Shot;
-import entities.AE.*;
 
 public class Weapon_Wind extends Weapon {
 	
 	public static BufferedImage shotFace;
 	public static BufferedImage sprite = Game.sheet.getSprite(64, 32, 16, 16);
-	private int shotDamage = 3, shotSpeed = 6, hrcDamage = 1, ablt3Dmg = 6;
+	private int hrcDamage = 1, ablt3Dmg = 6;
 	private double hrcSpeed = 0.8, ablt3Spd = 5.0;
-	private short di, dashDistance = 30;
 	public static int soulCost = 100;
 	public static boolean block = true;
 	private SoundPlayer sound1, sound2;
@@ -27,6 +28,9 @@ public class Weapon_Wind extends Weapon {
 		sound2 = new SoundPlayer("res/sounds/wind_ablt2.wav");
 		setOptionsNames(9);
 		getAnimation(80, 32, 16, 16, 3);
+		shotDamage = 3;
+		shotSpeed = 6;
+		dashDuration = 30;
 	}
 	
 	private void setOptionsNames(int opt) {
@@ -70,7 +74,7 @@ public class Weapon_Wind extends Weapon {
 				dashAva = true;
 			}
 			else {
-				dashDistance += 3;
+				dashDuration += 3;
 			}
 			break;
 		case "Hurricane":
@@ -110,13 +114,13 @@ public class Weapon_Wind extends Weapon {
 			Game.player.mana -= manaCost;
 		}
 		if(md1) {
-			Game.entities.add(new AE_WindDS(Game.player.getX(), Game.player.getY(), 16, 16, null, (int)(dashDistance / 4)));
-			di += 1;
-			if (di < dashDistance) {
+			Game.entities.add(new AE_WindDS(Game.player.getX(), Game.player.getY(), 16, 16, null, dashDuration / 4));
+			dashTick ++;
+			if (dashTick < dashDuration) {
 				Game.player.speedBoost *= 4;
 			}
 			else {
-				di = 0;
+				dashTick = 0;
 				md1 = false;
 			}
 		}

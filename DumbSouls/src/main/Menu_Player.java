@@ -2,8 +2,14 @@ package main;
 
 import java.awt.Color;
 import java.awt.Font;
-import entities.*;
-import entities.weapons.*;
+
+import entities.Player;
+import entities.weapons.Weapon_Fire;
+import entities.weapons.Weapon_Fisical;
+import entities.weapons.Weapon_Ice;
+import entities.weapons.Weapon_Mana;
+import entities.weapons.Weapon_Poison;
+import entities.weapons.Weapon_Wind;
 import graphics.TextObject;
 import world.Camera;
 

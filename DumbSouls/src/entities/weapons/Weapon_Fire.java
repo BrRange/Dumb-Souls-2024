@@ -3,16 +3,18 @@ package entities.weapons;
 import java.awt.image.BufferedImage;
 import main.Game;
 import world.Camera;
+import entities.AE.AE_Fire;
+import entities.AE.AE_Fire2;
+import entities.AE.AE_HellFlame;
 import entities.shots.Shot;
-import entities.AE.*;
 import sounds.SoundPlayer;
 
 public class Weapon_Fire extends Weapon {
 	
-	public static BufferedImage shotFace, light;
+	public static BufferedImage shotFace;
 	public static BufferedImage sprite = Game.sheet.getSprite(64, 16, 16, 16);
-	private int shotDamage = 5, shotSpeed = 3, dashDistance = 30, tspw, tspw2, maxtspw2 = 60, ablt2Dmg = 1, ablt3Dmg = 16;
-	private double ablt3Spd = 0.8, di = 0;
+	private int tspw, tspw2, maxtspw2 = 60, ablt2Dmg = 1, ablt3Dmg = 16;
+	private double ablt3Spd = 0.8;
 	public static int soulCost = 100;
 	public static boolean block = true;
 	private SoundPlayer sound1, sound2, sound3;
@@ -26,6 +28,9 @@ public class Weapon_Fire extends Weapon {
 		sound3 = new SoundPlayer("res/sounds/fire_ablt2.wav");
 		setOptionsNames(9);
 		getAnimation(80, 16, 16, 16, 3);
+		dashDuration = 30;
+		shotDamage = 5;
+		shotSpeed = 3;
 	}
 	
 	private void setOptionsNames(int opt) {
@@ -67,7 +72,7 @@ public class Weapon_Fire extends Weapon {
 					dashAva = true;
 				}
 				else {
-					dashDistance += 15;
+					dashDuration += 15;
 				}
 				break;
 			case "Blaze":
@@ -111,18 +116,18 @@ public class Weapon_Fire extends Weapon {
 		if (md1) {
 			Game.player.speedBoost *= 2.5;
 			
-			di += 1;
+			dashTick += 1;
 			if (tspw > 2) {
 				tspw = 0;
 			}
 			tspw ++;
 			if (tspw == 2) {
-				Game.entities.add(new AE_Fire(Game.player.centerX(), Game.player.centerY(), 16, 16, null, 125));
+				Game.entities.add(new AE_Fire(Game.player.centerX(), Game.player.centerY(), 125));
 				tspw = 0;
 			}
-			if (di >= dashDistance) {
+			if (dashTick >= dashDuration) {
 				md1 = false;
-				di = 0;
+				dashTick = 0;
 				Game.player.speed = Game.player.maxSpeed;
 			}
 		}
@@ -139,9 +144,9 @@ public class Weapon_Fire extends Weapon {
 			tspw2++;
 			double deltaX = Game.mx / Game.scale - Game.player.centerX() + Camera.getX();
 			double deltaY = Game.my / Game.scale - Game.player.centerY() + Camera.getY();
-			double mag = Math.hypot(deltaX, deltaY);
+			double mag = getMagnitude(deltaX, deltaY);
 			if (tspw2 % 4 == 0) {
-				Game.entities.add(new AE_Fire2(Game.player.getX(), Game.player.getY(), 16, 16, 2, deltaX / mag, deltaY / mag, ablt2Dmg, null, 60));
+				Game.entities.add(new AE_Fire2(Game.player.centerX(), Game.player.centerY(), deltaX / mag, deltaY / mag, ablt2Dmg));
 			}
 			if (tspw2 == maxtspw2) {
 				tspw2 = 0;

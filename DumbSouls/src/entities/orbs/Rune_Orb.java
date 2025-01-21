@@ -1,9 +1,13 @@
 package entities.orbs;
 
 import entities.enemies.Enemy;
+import entities.runes.EXP_Rune;
+import entities.runes.Life_Rune;
+import entities.runes.Mana_Rune;
+import entities.runes.MultiAttack_Rune;
+import entities.runes.Speed_Rune;
 import main.Game;
 import entities.Player;
-import entities.runes.*;
 import java.awt.image.BufferedImage;
 
 public class Rune_Orb extends Enemy {

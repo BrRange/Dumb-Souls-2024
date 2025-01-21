@@ -3,15 +3,17 @@ package entities.weapons;
 import java.awt.image.BufferedImage;
 import main.Game;
 import world.Camera;
+import entities.AE.AE_PoisonDs;
+import entities.AE.AE_PoisonPool;
+import entities.AE.AE_VenomGas;
 import entities.shots.Shot_PlayerPoison;
-import entities.AE.*;
 
 public class Weapon_Poison extends Weapon{
     
     public static BufferedImage sprite = Game.sheet.getSprite(144, 32, 16, 16);
-    private static int poisonPoolW = 32, poisonPoolH = 32, poisonPoolD = 1;
+    private static int poisonPoolSize = 32, poisonPoolD = 1;
     private int ablt2W = 64, ablt2H = 64, ablt2D = 5;
-    private int dsW = 18, dsH= 18, dsD = 5, dsT = 120;
+    private int dashSize = 18, dashDamage = 5;
     private int tspw, maxTspw = 180;
     private double ablt3D = 0.05;
     public static int soulCost = 700;
@@ -23,6 +25,7 @@ public class Weapon_Poison extends Weapon{
 		
         setOptionsNames(9);
         getAnimation(160, 32, 16, 16, 3);
+		dashDuration = 120;
     }
 	
     private void setOptionsNames(int opt) {
@@ -57,15 +60,13 @@ public class Weapon_Poison extends Weapon{
             		poisonPoolD += 1;
             	break;
             case "Poison Area":
-            		poisonPoolW += 8;
-            		poisonPoolH += 8;
+            		poisonPoolSize += 8;
             	break;
             case "Poison Barrier":
             	if (dashAva) {
-            		dsW += 2;
-            		dsH += 2;
-            		dsD += 2;
-            		dsT += 30;
+            		dashSize += 2;
+            		dashDamage += 2;
+            		dashDuration += 30;
             	}
             	else {
             		dashAva = true;
@@ -98,7 +99,7 @@ public class Weapon_Poison extends Weapon{
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
-		Game.shots.add(new Shot_PlayerPoison(Game.player.centerX(), Game.player.centerY(), dx, dy, ang, poisonPoolD, poisonPoolW, poisonPoolH));
+		Game.shots.add(new Shot_PlayerPoison(Game.player.centerX(), Game.player.centerY(), dx, dy, ang, poisonPoolD, poisonPoolSize, poisonPoolSize));
 	}
     
     public void Dash() {
@@ -109,7 +110,7 @@ public class Weapon_Poison extends Weapon{
 			Game.player.mana -= manaCost;
 		}
 		if (md1) {
-			Game.entities.add(new AE_PoisonDs(Game.player.centerX(), Game.player.centerY(), dsW, dsH, null, dsT, dsD));
+			Game.entities.add(new AE_PoisonDs(Game.player.centerX(), Game.player.centerY(), dashSize, dashSize, null, dashDuration, dashDamage));
 			md1 = false;
         }
     }

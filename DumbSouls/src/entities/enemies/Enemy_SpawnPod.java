@@ -3,7 +3,7 @@ package entities.enemies;
 import main.Game;
 
 public class Enemy_SpawnPod extends Enemy {
-	
+
 	public Enemy_SpawnPod(int x, int y, int w, int h, int time, boolean special) {
 		super(x, y, w, h, null);
 		life = time;
@@ -13,7 +13,7 @@ public class Enemy_SpawnPod extends Enemy {
 		this.maxIndex = 3;
 		depth = 2;
 	}
-	
+
 	public void tick() {
 		attackTimer++;
 		animate();
@@ -21,6 +21,6 @@ public class Enemy_SpawnPod extends Enemy {
 		if (attackTimer == life) {
 			Game.enemies.remove(this);
 		}
-		
+
 	}
 }

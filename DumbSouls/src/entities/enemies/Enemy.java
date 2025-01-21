@@ -1,34 +1,37 @@
 package entities.enemies;
 
-import entities.*;
-import entities.shots.*;
 import graphics.Shader;
+import main.Game;
+
 import java.awt.image.BufferedImage;
-import main.*;
+
+import entities.Entity;
+import entities.shots.Shot;
 import world.Camera;
 
-public class Enemy extends Entity{
-	
+public class Enemy extends Entity {
+
 	protected BufferedImage[] animation;
 	public int expValue, soulValue;
 	protected boolean spawning = true, specialRare;
-	protected int attackTimer = 0, timeSpawn = 0, contTS, specialMult = 1, hue = 0, frames, maxFrames = 10, index, maxIndex = 3;
-	
+	protected int attackTimer = 0, timeSpawn = 0, contTS, specialMult = 1, hue = 0, frames, maxFrames = 10, index,
+			maxIndex = 3;
+
 	public Enemy(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 		isSpecial();
 	}
 
-	void isSpecial(){
+	void isSpecial() {
 		if (Game.rand.nextInt(256) == 0)
 			specialRare = true;
 	}
-	
+
 	protected void getAnimation(int x, int y, int width, int height, int frames) {
 		animation = new BufferedImage[frames];
-		
-		for(int i = 0; i < animation.length; i++ ) {
-			animation[i] = Game.sheet.getSprite(x , y, width, height);
+
+		for (int i = 0; i < animation.length; i++) {
+			animation[i] = Game.sheet.getSprite(x, y, width, height);
 			animation[i] = Shader.reColor(animation[i], hue);
 			x += width;
 		}
@@ -49,9 +52,9 @@ public class Enemy extends Entity{
 		speed = maxSpeed / (1 + slowness);
 		slowness = slowness < 0.01 ? 0 : slowness * thaw;
 	}
-	
+
 	protected void shotDamage() {
-		for (int i = 0;  i < Game.shots.size(); i++) {
+		for (int i = 0; i < Game.shots.size(); i++) {
 			Shot sh = Game.shots.get(i);
 			if (isColiding(sh)) {
 				life -= sh.damage;
@@ -65,9 +68,7 @@ public class Enemy extends Entity{
 	protected void movement() {
 		double deltaX = Game.player.centerX() - centerX();
 		double deltaY = Game.player.centerY() - centerY();
-		double mag = Math.hypot(deltaX, deltaY);
-		if(mag == 0) mag = 1;
-
+		double mag = getMagnitude(deltaX, deltaY);
 		x += deltaX * speed / mag;
 		y += deltaY * speed / mag;
 	}
@@ -75,28 +76,26 @@ public class Enemy extends Entity{
 	protected void reverseMovement() {
 		double deltaX = Game.player.centerX() - centerX();
 		double deltaY = Game.player.centerY() - centerY();
-		double mag = Math.hypot(deltaX, deltaY);
-		if(mag == 0) mag = 1;
-
+		double mag = getMagnitude(deltaX, deltaY);
 		x += deltaX * -speed / mag;
 		y += deltaY * -speed / mag;
 	}
-	
+
 	protected void objectiveMovement(int xObjct, int yObjct) {
 		double deltaX = xObjct - centerX();
 		double deltaY = yObjct - centerY();
-		double mag = Math.hypot(deltaX, deltaY);
-		if(mag == 0) mag = 1;
-
+		double mag = getMagnitude(deltaX, deltaY);
 		x += deltaX * speed / mag;
 		y += deltaY * speed / mag;
 	}
-	
+
 	int[] redoMask = {};
+
 	protected void spawnAnimation(int frames) {
 		if (contTS == 0) {
 			redoMask = getMask();
-			Game.enemies.add(new Enemy_SpawnPod(centerX(), centerY(), (int)(width * 1.5), (int)(height * 1.5), timeSpawn, specialRare));
+			Game.enemies.add(new Enemy_SpawnPod(centerX(), centerY(), (int) (width * 1.5), (int) (height * 1.5),
+					timeSpawn, specialRare));
 		}
 		setMask(0, 0, 0, 0);
 		contTS++;
@@ -108,10 +107,11 @@ public class Enemy extends Entity{
 
 	public void render() {
 		if (!damaged) {
-			Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), getWidth(), getHeight(), null);
-		}
-		else {
-			Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), getX() - Camera.getX(), getY() - Camera.getY(), getWidth(), getHeight(), null);
+			Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), getWidth(),
+					getHeight(), null);
+		} else {
+			Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), getX() - Camera.getX(),
+					getY() - Camera.getY(), getWidth(), getHeight(), null);
 		}
 	}
 

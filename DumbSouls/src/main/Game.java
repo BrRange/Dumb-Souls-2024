@@ -23,8 +23,8 @@ import javax.swing.JFrame;
 
 import entities.Entity;
 import entities.Player;
-import entities.enemies.*;
-import entities.shots.*;
+import entities.enemies.Enemy;
+import entities.shots.Shot;
 import graphics.Spritesheet;
 import graphics.UI;
 import sounds.SoundPlayer;

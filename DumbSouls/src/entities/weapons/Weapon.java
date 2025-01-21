@@ -6,16 +6,17 @@ import world.Camera;
 
 public class Weapon {
 	
-	public BufferedImage sprite, dashImg, ablt2Img, ablt3Img;
+	public BufferedImage displaySprite, dashImg, ablt2Img, ablt3Img;
 	protected BufferedImage[] animation;
 	private int frames, maxFrames = 10, index, maxIndex = 3;
+	protected int dashDuration, dashTick = 0, shotDamage;
+	protected double shotSpeed;
 	public int attackTimer;
 	public String[] listNames;
-	public boolean md1, md2, md3;
-	public boolean dashAva, ablt2Ava, ablt3Ava;
+	public boolean md1, md2, md3, dashAva, ablt2Ava, ablt3Ava;
 	
 	public Weapon(BufferedImage baseSprite) {
-		sprite = baseSprite;
+		displaySprite = baseSprite;
 	}
 	
 	protected void getAnimation(int x, int y, int width, int height, int frames) {
@@ -75,6 +76,11 @@ public class Weapon {
 		Game.gameGraphics.drawImage(animation[index], (Game.player.getX() - Camera.getX()) - 12, (Game.player.getY() - Camera.getY()) - 8, null);
 	}
 	
+	protected static double getMagnitude(double dx, double dy){
+		double mag = Math.hypot(dx, dy);
+		return mag == 0 ? 1 : mag;
+	}
+
 	public void Attack() {
 		
 	}

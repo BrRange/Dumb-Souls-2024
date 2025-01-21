@@ -11,7 +11,7 @@ import entities.AE.AE_SnowStorm;
 public class Weapon_Ice extends Weapon{
 	
 	public static BufferedImage sprite = Game.sheet.getSprite(64, 48, 16, 16);
-	private int shotDamage = 3, shotSpeed = 2, ablt2Dmg = 4, ablt2Quant = 3, ablt3Dmg = 5, dashTime = 300, dt = 0;
+	private int ablt2Dmg = 4, ablt2Quant = 3, ablt3Dmg = 5;
 	private double ablt3Spd = 0.5;
 	private static double frost = 5;
 	public static int soulCost = 400;
@@ -22,6 +22,9 @@ public class Weapon_Ice extends Weapon{
 		super.setAttackTimer(6);
 		setOptionsNames(9);
 		getAnimation(80, 48, 16, 16, 3);
+		dashDuration = 150;
+		shotDamage = 3;
+		shotSpeed = 2;
 	}
 	
 	private void setOptionsNames(int opt) {
@@ -65,7 +68,7 @@ public class Weapon_Ice extends Weapon{
 					dashAva = true;
 				}
 				else {
-					dashTime += 20;
+					dashDuration += 20;
 				}
 				break;
 			case "Ice Spike":
@@ -104,18 +107,18 @@ public class Weapon_Ice extends Weapon{
 			Game.player.mana -= manaCost;
 		}
 		if (md1) {
-			dt += 1;
+			dashTick ++;
 			double dashSpeed = Game.player.speed / 3;
-			if (dt < dashTime) {
+			if (dashTick < dashDuration) {
 				Game.player.moveX += Math.signum(Game.player.moveX) * dashSpeed;
 				Game.player.moveY += Math.signum(Game.player.moveY) * dashSpeed;
-				if(dt % 4 == 0) {
+				if(dashTick % 4 == 0) {
 					Game.entities.add(new AE_IceDs(Game.player.centerX(), Game.player.centerY() + 4, 16, 16, null, 60));
 				}
 			}
 			else {
 				md1 = false;
-				dt = 0;
+				dashTick = 0;
 			}
 		}
 	}

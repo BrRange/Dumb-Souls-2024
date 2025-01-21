@@ -41,7 +41,6 @@ public class AE_HellFlame extends AE_Attack_Entity {
 		}
 		
 		collisionEnemy(true, 15, attackCollision);
-		refreshTick();
 		spawnFire();
 	}
 
@@ -54,8 +53,8 @@ public class AE_HellFlame extends AE_Attack_Entity {
 		spawntime++;
 		if (spawntime == 4) {
 			spawntime = 0;
-			Game.entities.add(new AE_Fire(getX(), getY() + 32, 16, 16, null, 40));
-			Game.entities.add(new AE_Fire(getX() + 32, getY() + 32, 16, 16, null, 40));
+			Game.entities.add(new AE_Fire(centerX() - 16, centerY() + 16, 40));
+			Game.entities.add(new AE_Fire(centerX() + 16, centerY() + 16, 40));
 		}
 	}
 	

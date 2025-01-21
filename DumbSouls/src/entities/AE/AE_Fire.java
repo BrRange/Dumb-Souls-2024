@@ -1,19 +1,16 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
-import java.awt.image.BufferedImage;
 import java.util.function.Function;
 import main.Game;
 import world.Camera;
 
 public class AE_Fire extends AE_Attack_Entity {
 	
-	private int maxFrames = 20, frames = 0, index, maxIndex = 2, time;
-	
-	public AE_Fire(int x, int y, int width, int height, BufferedImage sprite, int time) {
-		super(x, y, width, height, sprite, time);
-		setMask(0, 8, 16, 8);
-		getAnimation(0, 112, 16, 16, maxIndex);
+	public AE_Fire(int x, int y, int life) {
+		super(x + 1, y + 6, 14, 10, null, life);
+		setMask(1, 0, 14, 8);
+		getAnimation(0, 118, 16, 10, maxIndex);
 		depth = 2;
 	}
 
@@ -24,7 +21,7 @@ public class AE_Fire extends AE_Attack_Entity {
 	
 	public void tick() {
 		frames ++;
-		time ++;
+		tickTimer ++;
 		if (frames == maxFrames) {
 			index++;
 			frames = 0;
@@ -32,11 +29,10 @@ public class AE_Fire extends AE_Attack_Entity {
 				index = 0;
 			}
 		}
-		if (time == life) {
+		if (tickTimer >= life) {
 			die();
 		}
 		collisionEnemy(true, 15, attackCollision);
-		refreshTick();
 	}
 	
 	public void render() {

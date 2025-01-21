@@ -1,8 +1,18 @@
 package main;
 
 import entities.Player;
-import entities.runes.*;
-import entities.weapons.*;
+import entities.runes.EXP_Rune;
+import entities.runes.Life_Rune;
+import entities.runes.Mana_Rune;
+import entities.runes.MultiAttack_Rune;
+import entities.runes.Rune;
+import entities.runes.Speed_Rune;
+import entities.weapons.Weapon_Fire;
+import entities.weapons.Weapon_Fisical;
+import entities.weapons.Weapon_Ice;
+import entities.weapons.Weapon_Poison;
+import entities.weapons.Weapon_Wind;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;

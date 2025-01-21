@@ -1,23 +1,20 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
-import java.awt.image.BufferedImage;
 import java.util.function.Function;
 
 public class AE_Fire2 extends AE_Attack_Entity{
 	
-	private double speed;
-	private double dx, dy, damage;
-	private int time;
+	private double dx, dy;
 	
-	public AE_Fire2(int x, int y, int height, int width, double spd, double dirx, double diry, int dmg, BufferedImage sprite, int time) {
-		super(x, y, height, width, sprite, time);
-		speed = spd;
+	public AE_Fire2(int x, int y, double dirx, double diry, int dmg) {
+		super(x + 2, y, 11, 13, null, 60);
+		speed = 2;
 		dx = dirx;
 		dy = diry;
 		damage = dmg;
-		getAnimation(0, 128, 16, 16, 1);
-		setMask(2, 2, 3, 3);
+		getAnimation(2, 130, 11, 13, 1);
+		setMask(2, 0, 11, 13);
 		depth = 2;
 	}
 
@@ -29,8 +26,8 @@ public class AE_Fire2 extends AE_Attack_Entity{
 	public void tick() {
 		x += dx * speed;
 		y += dy * speed;
-		time++;
-		if (time == life) {
+		tickTimer++;
+		if (tickTimer == life) {
 			die();
 		}
 		

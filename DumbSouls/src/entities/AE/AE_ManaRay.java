@@ -1,6 +1,6 @@
 package entities.AE;
 
-import entities.*;
+import entities.Entity;
 import entities.enemies.Enemy;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
