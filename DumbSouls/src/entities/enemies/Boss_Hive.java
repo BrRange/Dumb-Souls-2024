@@ -21,6 +21,7 @@ public class Boss_Hive extends Enemy {
 		life = maxLife;
 		maxFrames = 40;
 		setMask(2, 4, 30, 28);
+		weight = 5;
 	}
 
 	private void attack() {

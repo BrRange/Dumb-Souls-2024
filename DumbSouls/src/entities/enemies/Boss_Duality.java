@@ -30,6 +30,7 @@ public class Boss_Duality extends Enemy {
 		speed = 0.8;
 		maxFrames = 40;
 		setMask(11, 6, 12, 20);
+		weight = 6;
 	}
 
 	private void balanceStats() {

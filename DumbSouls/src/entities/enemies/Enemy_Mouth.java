@@ -22,6 +22,7 @@ public class Enemy_Mouth extends Enemy {
 		speed = maxSpeed;
 		timeSpawn = 240;
 		setMask(2, 3, 15, 13);
+		weight = 0.6f;
 	}
 
 	private void die() {

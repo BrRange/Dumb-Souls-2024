@@ -15,6 +15,7 @@ public class Entity {
 	public int width, height, depth, damagedFrames, maxDamagedFrames = 15, damagedHue;
 	public boolean damaged;
 	protected int mx, my, mw, mh;
+	protected float weight = 1.f;
 	protected Rectangle mask;
 	
 	public BufferedImage sprite;
@@ -139,15 +140,15 @@ public class Entity {
 	public void receiveKnockback(Entity source){
 		double deltaX = centerX() - source.centerX();
 		double deltaY = centerY() - source.centerY();
-		double mag = getMagnitude(deltaX, deltaY);
+		double mag = getMagnitude(deltaX, deltaY) * weight;
 		x += deltaX / mag * source.push;
 		y += deltaY / mag * source.push;
 	}
 
-	public void receiveKnockback(Entity source, int amount){
+	public void receiveKnockback(Entity source, double amount){
 		double deltaX = centerX() - source.centerX();
 		double deltaY = centerY() - source.centerY();
-		double mag = getMagnitude(deltaX, deltaY);
+		double mag = getMagnitude(deltaX, deltaY) * weight;
 		x += deltaX / mag * amount;
 		y += deltaY / mag * amount;
 	}

@@ -7,7 +7,7 @@ import main.Game;
 public class Shot_PlayerPoison extends Shot {
     private int poolSize, poolD;
     public Shot_PlayerPoison(int x, int y, double dx, double dy, double ang, int dmg, int size){
-        super(x, y, 8, 8, dx, dy, ang, 3, 0, 35, Game.sheet.getSprite(208, 32, 16, 16));
+        super(x, y, 10, 10, dx, dy, ang, 3, 0, 35, Game.sheet.getSprite(211, 35, 10, 10));
         poolSize = size;
         poolD = dmg;
     }

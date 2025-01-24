@@ -28,6 +28,7 @@ public class Enemy_Eye extends Enemy {
 		setMask(2, 3, 12, 11);
 		timeSpawn = 180;
 		maxFrames = 15;
+		weight = 3;
 	}
 
 	private void die() {

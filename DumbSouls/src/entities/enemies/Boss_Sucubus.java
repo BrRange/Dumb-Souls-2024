@@ -29,6 +29,7 @@ public class Boss_Sucubus extends Enemy {
 		maxIndex = 2;
 		maxFrames = 40;
 		setMask(2, 0, 30, 32);
+		weight = 2;
 	}
 
 	private void balanceStats() {

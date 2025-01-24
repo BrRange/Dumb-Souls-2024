@@ -42,6 +42,7 @@ public class Enemy_Mortar extends Enemy {
 			this.owner = owner;
 			speed = owner.maxSpeed * 10;
 			setMask(0, 0, 0, 0);
+			weight = 4;
 		}
 
 		public void tick() {

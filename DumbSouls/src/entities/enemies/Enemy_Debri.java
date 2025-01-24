@@ -22,6 +22,7 @@ public class Enemy_Debri extends Enemy {
 		speed = maxSpeed;
 		setMask(1, 1, 14, 14);
 		maxFrames = 6;
+		weight = 3;
 	}
 
 	public void die() {

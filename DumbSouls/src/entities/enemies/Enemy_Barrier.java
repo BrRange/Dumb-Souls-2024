@@ -1,6 +1,5 @@
 package entities.enemies;
 
-import entities.Entity;
 import entities.Player;
 import entities.orbs.EXP_Orb;
 import main.Game;
@@ -25,6 +24,7 @@ public class Enemy_Barrier extends Enemy {
 		timeSpawn = 180;
 		maxIndex = 2;
 		maxFrames = 20;
+		weight = 10;
 	}
 
 	private void die() {
@@ -56,9 +56,5 @@ public class Enemy_Barrier extends Enemy {
 		} else {
 			spawnAnimation(timeSpawn / 3);
 		}
-	}
-
-	public void receiveKnockback(Entity source) {
-		return;
 	}
 }
