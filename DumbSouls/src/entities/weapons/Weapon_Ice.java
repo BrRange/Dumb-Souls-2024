@@ -113,7 +113,7 @@ public class Weapon_Ice extends Weapon{
 				Game.player.moveX += Math.signum(Game.player.moveX) * dashSpeed;
 				Game.player.moveY += Math.signum(Game.player.moveY) * dashSpeed;
 				if(dashTick % 4 == 0) {
-					Game.entities.add(new AE_IceDs(Game.player.centerX(), Game.player.centerY() + 4, 16, 16, null, 60));
+					Game.entities.add(new AE_IceDs(Game.player.centerX(), Game.player.centerY()));
 				}
 			}
 			else {
@@ -132,7 +132,7 @@ public class Weapon_Ice extends Weapon{
 		if (md2) {
 			for (int c = 0; c < 8; c++) {
 				for (int i = 1; i <= ablt2Quant; i++) {
-					Game.entities.add(new AE_IceSpike((int)(Game.player.centerX() + i * 14 * Math.cos(c * Math.PI / 4)), (int)(Game.player.centerY() + i * 14 * Math.sin(c * Math.PI / 4)), 6, 16, null, 60, ablt2Dmg));
+					Game.entities.add(new AE_IceSpike((int)(Game.player.centerX() + i * 14 * Math.cos(c * Math.PI / 4)), (int)(Game.player.centerY() + i * 14 * Math.sin(c * Math.PI / 4)), ablt2Dmg));
 				}
 			}
 			md2 = false;
@@ -146,7 +146,7 @@ public class Weapon_Ice extends Weapon{
 			Game.player.mana -= manaCost;
 		}
 		if (md3) {
-			Game.entities.add(new AE_SnowStorm(Game.player.centerX() - 16, Game.player.centerY() - 16, 32, 32, null, 240, ablt3Spd, ablt3Dmg));
+			Game.entities.add(new AE_SnowStorm(Game.player.centerX(), Game.player.centerY(), ablt3Spd, ablt3Dmg));
 			md3 = false;
 		}
 	}

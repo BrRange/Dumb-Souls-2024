@@ -7,8 +7,6 @@ import world.Camera;
 
 public class AE_ManaExplosion extends AE_Attack_Entity{
 	
-	private int maxFrames, maxIndex, frames, index, time;
-	
 	public AE_ManaExplosion(int x, int y, double dmg, int knockback) {
 		super(x, y, 32, 32, null, 10);
 		getAnimation(160, 128, 16, 16, 2);
@@ -16,7 +14,6 @@ public class AE_ManaExplosion extends AE_Attack_Entity{
 		damage = dmg;
 		push = knockback;
 		maxFrames = 5;
-		maxIndex = 2;
 	}
 	
 	private void animate() {
@@ -46,7 +43,7 @@ public class AE_ManaExplosion extends AE_Attack_Entity{
 	};
 	
 	public void tick() {
-		time++;
+		tickTimer++;
 		animate();
 		
 		if (index == maxIndex) {
@@ -54,7 +51,7 @@ public class AE_ManaExplosion extends AE_Attack_Entity{
 			Collision();
 		}
 		
-		if (time == life) {
+		if (tickTimer == life) {
 			die();
 		}
 	}

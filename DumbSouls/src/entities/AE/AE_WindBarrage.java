@@ -7,16 +7,14 @@ import main.Game;
 import world.Camera; 
 
 public class AE_WindBarrage extends AE_Attack_Entity{
-	
-	private double speed;
-	private double dx, dy, damage;
-	private int time;
+
+	private double dirX, dirY;
 	
 	public AE_WindBarrage(int x, int y, int width, int height, double spd, double dx, double dy, double dmg, BufferedImage sprite, int time) {
 		super(x, y, width, height, sprite, time);
 		speed = spd;
-		this.dx = dx;
-		this.dy = dy;
+		dirX = dx;
+		dirY = dy;
 		damage = dmg;
 		push = -10;
 		depth = 2;
@@ -25,15 +23,14 @@ public class AE_WindBarrage extends AE_Attack_Entity{
 	}
 	
 	public void tick() {
-		x += dx * speed;
-		y += dy * speed;
-		time++;
-		if (time == life) {
+		x += dirX * speed;
+		y += dirY * speed;
+		tickTimer++;
+		if (tickTimer == life) {
 			die();
 		}
 		
 		collisionEnemy(true, 5, attackCollision);
-		refreshTick();
 	}
 
 	Function<Enemy, Void> attackCollision = (target) -> { 

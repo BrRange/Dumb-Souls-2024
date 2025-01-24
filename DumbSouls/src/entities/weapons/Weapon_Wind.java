@@ -74,7 +74,7 @@ public class Weapon_Wind extends Weapon {
 				dashAva = true;
 			}
 			else {
-				dashDuration += 3;
+				dashDuration += 5;
 			}
 			break;
 		case "Hurricane":
@@ -104,7 +104,7 @@ public class Weapon_Wind extends Weapon {
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
-		Game.shots.add(new Shot(Game.player.getX(), Game.player.getY(), 12, 12, dx, dy, ang, shotSpeed, shotDamage, 35, shotFace));
+		Game.shots.add(new Shot(Game.player.centerX(), Game.player.centerY(), 12, 12, dx, dy, ang, shotSpeed, shotDamage, 35, shotFace));
 	}
 	
 	public void Dash() {
@@ -114,7 +114,7 @@ public class Weapon_Wind extends Weapon {
 			Game.player.mana -= manaCost;
 		}
 		if(md1) {
-			Game.entities.add(new AE_WindDS(Game.player.getX(), Game.player.getY(), 16, 16, null, dashDuration / 4));
+			Game.entities.add(new AE_WindDS(Game.player.getX(), Game.player.getY(), dashDuration));
 			dashTick ++;
 			if (dashTick < dashDuration) {
 				Game.player.speedBoost *= 4;
@@ -134,7 +134,7 @@ public class Weapon_Wind extends Weapon {
 		}
 		if (md2) {
 			md2 = false;
-			Game.entities.add(new AE_Hurricane(Game.player.getX() - 16, Game.player.getY() - 16, 32, 32, null, 240, hrcSpeed, hrcDamage));
+			Game.entities.add(new AE_Hurricane(Game.player.centerX(), Game.player.centerY(), hrcSpeed, hrcDamage));
 		}
 	}
 	

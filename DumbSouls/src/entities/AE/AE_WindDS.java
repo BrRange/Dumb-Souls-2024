@@ -1,16 +1,13 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
-import java.awt.image.BufferedImage;
 import java.util.function.Function;
 import main.Game;
 
 public class AE_WindDS extends AE_Attack_Entity {
 	
-	private int time;
-	
-	public AE_WindDS(int x, int y, int width, int height, BufferedImage sprite, int time) {
-		super(x, y, width, height, sprite, time);
+	public AE_WindDS(int x, int y, int time) {
+		super(x, y, 16, 16,null, time);
 		push = 10;
 		setMask(0, 0, 16, 16);
 		getAnimation(48, 112, 16, 16, 1);
@@ -18,10 +15,10 @@ public class AE_WindDS extends AE_Attack_Entity {
 	}
 	
 	public void tick() {
-		time ++;
+		tickTimer ++;
 		x = Game.player.getX();
 		y = Game.player.getY();
-		if (time == life) {
+		if (tickTimer == life) {
 			die();
 		}
 		collisionEnemy(false, 0, attackCollision);

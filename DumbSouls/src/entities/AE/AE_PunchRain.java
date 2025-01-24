@@ -1,18 +1,15 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
-import java.awt.image.BufferedImage;
 import java.util.function.Function;
 
 public class AE_PunchRain extends AE_Attack_Entity {
+
+	private double dx, dy;
 	
-	private double speed;
-	private double dx, dy, damage;
-	private int time;
-	
-	public AE_PunchRain(int x, int y, int height, int width, double spd, double dirx, double diry, int dmg, BufferedImage sprite, int time) {
-		super(x, y, height, width, sprite, time);
-		speed = spd;
+	public AE_PunchRain(int x, int y, double dirx, double diry, int dmg) {
+		super(x, y, 16, 16, null, 20);
+		speed = 3;
 		dx = dirx;
 		dy = diry;
 		damage = dmg;
@@ -25,8 +22,8 @@ public class AE_PunchRain extends AE_Attack_Entity {
 	public void tick() {
 		x += dx * speed;
 		y += dy * speed;
-		time++;
-		if (time == life) {
+		tickTimer++;
+		if (tickTimer == life) {
 			die();
 		}
 		

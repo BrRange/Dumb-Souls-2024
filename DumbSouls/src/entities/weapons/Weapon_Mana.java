@@ -144,7 +144,7 @@ public class Weapon_Mana extends Weapon {
 		}
 		if (md3) {
 			Game.entities.add(
-					new AE_ManaRay(Game.player.centerX(), Game.player.centerY(), 16, 16, null, timeAblt3, ablt3Dmg));
+					new AE_ManaRay(Game.player.centerX(), Game.player.centerY(), timeAblt3, ablt3Dmg));
 			md3 = false;
 		}
 	}

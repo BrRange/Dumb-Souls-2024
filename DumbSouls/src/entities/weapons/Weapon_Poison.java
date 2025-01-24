@@ -12,7 +12,7 @@ public class Weapon_Poison extends Weapon{
     
     public static BufferedImage sprite = Game.sheet.getSprite(144, 32, 16, 16);
     private static int poisonPoolSize = 32, poisonPoolD = 1;
-    private int ablt2W = 64, ablt2H = 64, ablt2D = 5;
+    private int ablt2S = 64, ablt2D = 5;
     private int dashSize = 18, dashDamage = 5;
     private int tspw, maxTspw = 180;
     private double ablt3D = 0.05;
@@ -74,8 +74,7 @@ public class Weapon_Poison extends Weapon{
             	break;
             case "Venom Pool":
             	if (ablt2Ava) {
-            		ablt2W += 16;
-            		ablt2H += 16;
+            		ablt2S += 16;
             		ablt2D += 1;
             	}
             	else {
@@ -99,7 +98,7 @@ public class Weapon_Poison extends Weapon{
 		double dx = Math.cos(ang);
 		double dy =  Math.sin(ang);
 		
-		Game.shots.add(new Shot_PlayerPoison(Game.player.centerX(), Game.player.centerY(), dx, dy, ang, poisonPoolD, poisonPoolSize, poisonPoolSize));
+		Game.shots.add(new Shot_PlayerPoison(Game.player.centerX(), Game.player.centerY(), dx, dy, ang, poisonPoolD, poisonPoolSize));
 	}
     
     public void Dash() {
@@ -110,7 +109,7 @@ public class Weapon_Poison extends Weapon{
 			Game.player.mana -= manaCost;
 		}
 		if (md1) {
-			Game.entities.add(new AE_PoisonDs(Game.player.centerX(), Game.player.centerY(), dashSize, dashSize, null, dashDuration, dashDamage));
+			Game.entities.add(new AE_PoisonDs(Game.player.centerX(), Game.player.centerY(), dashSize, dashDuration, dashDamage));
 			md1 = false;
         }
     }
@@ -123,7 +122,7 @@ public class Weapon_Poison extends Weapon{
 			Game.player.mana -= manaCost;
 		}
 		if (md2) {
-			Game.entities.add(new AE_PoisonPool(Game.player.centerX(), Game.player.centerY(), ablt2W, ablt2H, null, 150, ablt2D));
+			Game.entities.add(new AE_PoisonPool(Game.player.centerX(), Game.player.centerY(), ablt2S, 150, ablt2D));
 			md2 = false;
         }
     }
@@ -151,7 +150,7 @@ public class Weapon_Poison extends Weapon{
 				double deltaX = Game.mx / Game.scale + off - Game.player.centerX() + Camera.getX();
 				double deltaY = Game.my / Game.scale + off - Game.player.centerY() + Camera.getY();
 				double mag = Math.hypot(deltaX, deltaY);
-				Game.entities.add(new AE_VenomGas(Game.player.centerX(), Game.player.centerY() + 6, 32, 32, 1.3, deltaX / mag, deltaY / mag, ablt3D , null, 80));
+				Game.entities.add(new AE_VenomGas(Game.player.centerX(), Game.player.centerY(), deltaX / mag, deltaY / mag, ablt3D));
 			}
 			if (tspw == maxTspw) {
 				tspw = 0;

@@ -6,8 +6,6 @@ import main.Game;
 
 public class BAE_Spike extends AE_Attack_Entity{
 	
-	private int index, timer;
-	
 	public BAE_Spike(int x, int y, int width, int height, BufferedImage sprite, int life, double dmg) {
 		super(x, y, width, height, sprite, life);
 		depth = 0;
@@ -20,9 +18,9 @@ public class BAE_Spike extends AE_Attack_Entity{
 		life--;
 		if (life <= 30) {
 			index = 2;
-			if (isColiding(Game.player) && timer % 60 == 0) {
+			if (isColiding(Game.player) && tickTimer % 60 == 0) {
 				attack();
-				timer++;
+				tickTimer++;
 			}
 		}
 		if (life == 0) {
@@ -31,7 +29,7 @@ public class BAE_Spike extends AE_Attack_Entity{
 	}
 	
 	private void attack() {
-		timer = 0;
+		tickTimer = 0;
 		Game.player.life -= damage;
 	}
 	

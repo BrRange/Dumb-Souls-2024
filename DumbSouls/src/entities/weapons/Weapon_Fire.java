@@ -168,7 +168,7 @@ public class Weapon_Fire extends Weapon {
 			double deltaX = Game.mx / Game.scale - Game.player.centerX() + Camera.getX();
 			double deltaY = Game.my / Game.scale - Game.player.centerY() + Camera.getY();
 			double mag = Math.hypot(deltaX, deltaY);
-			Game.entities.add(new AE_HellFlame(Game.player.centerX(), Game.player.centerY(), 32, 32, ablt3Spd, deltaX / mag, deltaY / mag, ablt3Dmg, null, 80));
+			Game.entities.add(new AE_HellFlame(Game.player.centerX(), Game.player.centerY(), ablt3Spd, deltaX / mag, deltaY / mag, ablt3Dmg));
 			md3 = false;
 		}	
 	}

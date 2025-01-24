@@ -1,18 +1,15 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
-import java.awt.image.BufferedImage;
 import java.util.function.Function;
 
 public class AE_VenomGas extends AE_Attack_Entity {
+
+	private double dx, dy;
 	
-	private double speed;
-	private double dx, dy, damage;
-	private int time;
-	
-	public AE_VenomGas(int x, int y, int height, int width, double spd, double dirx, double diry, double dmg, BufferedImage sprite, int time) {
-		super(x, y, height, width, sprite, time);
-		speed = spd;
+	public AE_VenomGas(int x, int y, double dirx, double diry, double dmg) {
+		super(x, y, 32, 32, null, 80);
+		speed = 1.3;
 		dx = dirx;
 		dy = diry;
 		damage = dmg;
@@ -24,15 +21,15 @@ public class AE_VenomGas extends AE_Attack_Entity {
 	public void tick() {
 		x += dx * speed;
 		y += dy * speed;
-		time++;
-		if (time == life) {
+		tickTimer++;
+		if (tickTimer == life) {
 			die();
 		}
 		collisionEnemy(false, 0, attackCollision);
 	}
 
 	Function<Enemy, Void> attackCollision = (target) -> { 
-		target.slowness = Math.max(target.slowness, 3);
+		target.applySlowness(3);
 		target.life -= damage;
 		return null;
 	};

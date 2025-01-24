@@ -90,7 +90,7 @@ public class Weapon_Fisical extends Weapon {
 
 	public void Attack() {
 		combo += 1;
-		int ruptureScale = shotDamage * 7;
+		int ruptureScale = shotDamage * 8;
 		double ang = Math.atan2(Game.my / Game.scale - Game.player.centerY() + Camera.getY(),
 				Game.mx / Game.scale - Game.player.centerX() + Camera.getX());
 		double dx = Math.cos(ang);
@@ -112,7 +112,7 @@ public class Weapon_Fisical extends Weapon {
 				Game.shots.add(new Shot(Game.player.centerX(), Game.player.centerY(), 10, 10, dx, dy, ang, 4,
 						shotDamage + 4, 20, shotFace));
 				Game.entities.add(new AE_Rupture(Game.player.centerX(),
-						Game.player.centerY(), ruptureScale, ruptureScale, null, 60,
+						Game.player.centerY(), ruptureScale, 60,
 						shotDamage * 2));
 				combo = 0;
 				break;
@@ -134,7 +134,7 @@ public class Weapon_Fisical extends Weapon {
 			dashTick += 1;
 			Game.entities.add(new AE_Animation(Game.player.getX() + Game.rand.nextInt(16),
 					Game.player.getY() + Game.rand.nextInt(16), 16, 16, 20, 192, 128));
-			Game.player.speedBoost *= 1.2;
+			Game.player.speedBoost *= 3;
 			if (dashTick >= dashDuration) {
 				dashTick = 0;
 				md1 = false;
@@ -149,8 +149,7 @@ public class Weapon_Fisical extends Weapon {
 			Game.player.mana -= manaCost;
 		}
 		if (md2) {
-			Game.entities.add(new AE_Rupture(Game.player.centerX(), Game.player.centerY(),
-					ablt2Size, ablt2Size, null, 80, ablt2Dmg));
+			Game.entities.add(new AE_Rupture(Game.player.centerX(), Game.player.centerY(), ablt2Size, 80, ablt2Dmg));
 			md2 = false;
 		}
 	}
@@ -168,8 +167,8 @@ public class Weapon_Fisical extends Weapon {
 			double deltaY = Game.my / Game.scale + off - Game.player.centerY() + Camera.getY();
 			double mag = Math.hypot(deltaX, deltaY);
 			if (tspw % 2 == 0) {
-				Game.entities.add(new AE_PunchRain(Game.player.centerX(), Game.player.centerY(), 16, 16, 3,
-						deltaX / mag, deltaY / mag, ablt3Dmg, null, 20));
+				Game.entities.add(new AE_PunchRain(Game.player.centerX(), Game.player.centerY(), deltaX / mag,
+						deltaY / mag, ablt3Dmg));
 			}
 			if (tspw == 40) {
 				tspw = 0;

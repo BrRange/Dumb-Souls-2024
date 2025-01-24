@@ -126,21 +126,20 @@ public class Entity {
 		ent.mask = new Rectangle(ent.getX() + ent.mx, ent.getY() + ent.my, ent.mw, ent.mh);
 		return line.intersects(ent.mask);
 	}
-
-	public double getMagnitude(){
-		double mag = Math.hypot(x, y);
-		return mag == 0 ? 1 : mag;
-	}
 	
 	public static double getMagnitude(double dx, double dy){
 		double mag = Math.hypot(dx, dy);
 		return mag == 0 ? 1 : mag;
 	}
 
+	public void applySlowness(double slow){
+		slowness = Math.max(slowness, slow);
+	}
+
 	public void receiveKnockback(Entity source){
 		double deltaX = centerX() - source.centerX();
 		double deltaY = centerY() - source.centerY();
-		double mag = getMagnitude();
+		double mag = getMagnitude(deltaX, deltaY);
 		x += deltaX / mag * source.push;
 		y += deltaY / mag * source.push;
 	}
@@ -148,7 +147,7 @@ public class Entity {
 	public void receiveKnockback(Entity source, int amount){
 		double deltaX = centerX() - source.centerX();
 		double deltaY = centerY() - source.centerY();
-		double mag = getMagnitude();
+		double mag = getMagnitude(deltaX, deltaY);
 		x += deltaX / mag * amount;
 		y += deltaY / mag * amount;
 	}

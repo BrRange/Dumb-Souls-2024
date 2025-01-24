@@ -11,7 +11,7 @@ public class Shot_PlayerIce extends Shot{
     }
 
     public void die(Entity target){
-        if(target != null) target.slowness = Math.max(target.slowness, frost);
+        if(target != null) target.applySlowness(frost);
         Game.shots.remove(this);
     }
 }

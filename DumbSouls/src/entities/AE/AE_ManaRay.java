@@ -3,21 +3,18 @@ package entities.AE;
 import entities.Entity;
 import entities.enemies.Enemy;
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import main.Game;
 import world.Camera;
 
 public class AE_ManaRay extends AE_Attack_Entity {
 	
 	private static Color manaColor = new Color(47, 141, 224, 150);
-	private int time = 0;
 	private Enemy closest;
 	
-	public AE_ManaRay(int x, int y, int width, int height, BufferedImage sprite, int time, int dmg) {
-		super(x, y, width, height, sprite, time);
+	public AE_ManaRay(int x, int y, int time, int dmg) {
+		super(x, y, 16, 16, null, time);
 		damage = dmg;
 		depth = 2;
-		getAnimation(208, 112, 12, 12, 1);
 	}
 	
 	private void findClosest() {
@@ -35,19 +32,19 @@ public class AE_ManaRay extends AE_Attack_Entity {
 	
 	private void Collision() {
 		findClosest();
-		if (time % 10 == 0 && closest != null) {
+		if (tickTimer % 10 == 0 && closest != null) {
 			closest.life -= damage;
 			closest.damaged = true;
 		}
 	}
 	
 	public void tick() {
-		time++;
+		tickTimer++;
 		Collision();
 		x = Game.player.centerX();
 		y = Game.player.centerY();
 		
-		if (time == life) {
+		if (tickTimer == life) {
 			die();
 		}
 		if(closest == null) return; 

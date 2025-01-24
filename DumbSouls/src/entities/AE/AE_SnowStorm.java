@@ -1,29 +1,25 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
-import java.awt.image.BufferedImage;
 import java.util.function.Function;
 import main.Game;
 import world.Camera;
 
 public class AE_SnowStorm extends AE_Attack_Entity {
 	
-	private double speed, damage;
-	private int frames, maxFrames = 10, index, maxIndex = 2, time;
-	
-	public AE_SnowStorm(int x, int y, int width, int height, BufferedImage sprite, int time, double spd, int dmg) {
-		super(x, y, width, height, sprite, time);
+	public AE_SnowStorm(int x, int y, double spd, int dmg) {
+		super(x, y, 32, 32, null, 240);
 		speed = spd;
 		damage = dmg;
-		life = time;
 		depth = 3;
 		getAnimation(96, 112, 16, 16, maxIndex);
 		setMask(0, 24, 64, 40);
+		maxFrames = 10;
 	}
 	
 	public void tick() {
 		frames ++;
-		time ++;
+		tickTimer ++;
 		
 		double destX = Game.mx / Game.scale;
 		double destY = Game.my / Game.scale;
@@ -47,12 +43,11 @@ public class AE_SnowStorm extends AE_Attack_Entity {
 			}
 		}
 		
-		if (time == life) {
+		if (tickTimer == life) {
 			die();
 		}
 		
 		collisionEnemy(true, 20, attackCollision);
-		refreshTick();
 	}
 
 	Function<Enemy, Void> attackCollision = (target) -> { 

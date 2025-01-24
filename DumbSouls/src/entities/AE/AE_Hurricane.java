@@ -1,25 +1,21 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
-import java.awt.image.BufferedImage;
 import java.util.function.Function;
 import main.Game;
 import world.Camera;
 
 public class AE_Hurricane extends AE_Attack_Entity{
 	
-	private double speed, damage;
-	private int frames, maxFrames = 10, index, maxIndex = 2, time;
-	
-	public AE_Hurricane(int x, int y, int width, int height, BufferedImage sprite, int time, double spd, int dmg) {
-		super(x, y, width, height, sprite, time);
+	public AE_Hurricane(int x, int y, double spd, int dmg) {
+		super(x, y, 32, 32, null, 240);
 		speed = spd;
 		damage = dmg;
-		life = time;
 		push = -2;
 		depth = 2;
 		getAnimation(16, 128, 16, 16, maxIndex);
 		setMask(6, 0, 52, 32);
+		maxFrames = 10;
 	}
 
 	Function<Enemy, Void> attackCollision = (target) -> { 
@@ -30,7 +26,7 @@ public class AE_Hurricane extends AE_Attack_Entity{
 	
 	public void tick() {
 		frames ++;
-		time ++;
+		tickTimer ++;
 		
 		double destX = Game.mx / Game.scale;
 		double destY = Game.my / Game.scale;
@@ -55,12 +51,11 @@ public class AE_Hurricane extends AE_Attack_Entity{
 			}
 		}
 		
-		if (time == life) {
+		if (tickTimer == life) {
 			die();
 		}
 		
 		collisionEnemy(false, 0, attackCollision);
-		refreshTick();
 	}
 	
 	public void render() {

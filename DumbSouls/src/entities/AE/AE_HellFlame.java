@@ -1,23 +1,20 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
-import java.awt.image.BufferedImage;
 import java.util.function.Function;
 import main.Game;
 import world.Camera;
 
 public class AE_HellFlame extends AE_Attack_Entity {
 	
-	private double speed;
-	private double dx, dy, damage;
-	private int time, spawntime;
-	private int maxFrames = 20, frames = 0, index, maxIndex = 2;
+	private int spawntime;
+	private double dirX, dirY;
 	
-	public AE_HellFlame(int x, int y, int width, int height, double spd, double dx, double dy, int dmg, BufferedImage sprite, int time) {
-		super(x, y, height, width, sprite, time);
+	public AE_HellFlame(int x, int y, double spd, double dx, double dy, int dmg) {
+		super(x, y, 32, 32, null, 80);
 		speed = spd;
-		this.dx = dx;
-		this.dy = dy;
+		dirX = dx;
+		dirY = dy;
 		damage = dmg;
 		getAnimation(144, 112, 16, 16, 2);
 		setMask(0, 0, 48, 48);
@@ -25,9 +22,9 @@ public class AE_HellFlame extends AE_Attack_Entity {
 	}
 	
 	public void tick() {
-		x += dx * speed;
-		y += dy * speed;
-		time++;
+		x += dirX * speed;
+		y += dirY * speed;
+		tickTimer++;
 		frames ++;
 		if (frames == maxFrames) {
 			index++;
@@ -36,7 +33,7 @@ public class AE_HellFlame extends AE_Attack_Entity {
 				index = 0;
 			}
 		}
-		if (time == life) {
+		if (tickTimer == life) {
 			die();
 		}
 		
