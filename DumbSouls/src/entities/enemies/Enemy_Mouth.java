@@ -21,7 +21,7 @@ public class Enemy_Mouth extends Enemy {
 		maxSpeed = 1.5 + (specialMult - 1) / 3;
 		speed = maxSpeed;
 		timeSpawn = 240;
-		setMask(2, 3, 15, 13);
+		setMask(1, 3, 14, 13);
 		weight = 0.6f;
 	}
 
@@ -38,7 +38,7 @@ public class Enemy_Mouth extends Enemy {
 			movement();
 
 			if (isColiding(Game.player)) {
-				this.giveCollisionDamage(Game.player, 30, 1);
+				this.giveCollisionDamage(Game.player, 30);
 			}
 
 			slownessEffect(0.85);

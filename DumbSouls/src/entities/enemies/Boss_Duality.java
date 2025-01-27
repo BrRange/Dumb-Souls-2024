@@ -29,7 +29,7 @@ public class Boss_Duality extends Enemy {
 		life = maxLife;
 		speed = 0.8;
 		maxFrames = 40;
-		setMask(11, 6, 12, 20);
+		setMask(9, 3, 14, 21);
 		weight = 6;
 	}
 
@@ -77,10 +77,10 @@ public class Boss_Duality extends Enemy {
 		if (!shieldActive) {
 			shieldActive = true;
 			shieldLife = (int) life;
-			setMask(0, 0, 98, 64);
+			setMask(-13, -8, 64, 40);
 		} else {
 			shieldActive = false;
-			setMask(11, 6, 12, 20);
+			setMask(9, 3, 14, 21);
 		}
 	}
 
@@ -146,7 +146,7 @@ public class Boss_Duality extends Enemy {
 		}
 
 		if (shieldActive) {
-			Game.gameGraphics.drawImage(shield, centerX() - Camera.getX(), centerY() - Camera.getY(), 98, 80, null);
+			Game.gameGraphics.drawImage(shield, centerX() - Camera.getX() - 32, centerY() - Camera.getY() - 48, 64, 64, null);
 		}
 	}
 }

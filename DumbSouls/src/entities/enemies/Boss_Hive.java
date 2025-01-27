@@ -20,7 +20,7 @@ public class Boss_Hive extends Enemy {
 		maxLife = 600;
 		life = maxLife;
 		maxFrames = 40;
-		setMask(2, 4, 30, 28);
+		setMask(2, 4, 28, 26);
 		weight = 5;
 	}
 

@@ -28,7 +28,7 @@ public class Boss_Sucubus extends Enemy {
 		speed = maxSpeed;
 		maxIndex = 2;
 		maxFrames = 40;
-		setMask(2, 0, 30, 32);
+		setMask(2, 0, 27, 32);
 		weight = 2;
 	}
 

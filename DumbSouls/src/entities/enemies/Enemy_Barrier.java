@@ -13,7 +13,7 @@ public class Enemy_Barrier extends Enemy {
 			hue = 0xFFFFFF;
 		}
 		getAnimation(144, 80, 48, 32, 2);
-		expValue = 30 * specialMult;
+		expValue = 120 * specialMult;
 		soulValue = 12 * specialMult;
 		maxLife = 250 * specialMult + (int) (2.5 * World.wave);
 		life = maxLife;
@@ -29,9 +29,9 @@ public class Enemy_Barrier extends Enemy {
 
 	private void die() {
 		Game.enemies.remove(this);
-		Game.enemies.add(new Enemy_Debri(centerX(), centerY() - 16, expValue, specialRare));
-		Game.enemies.add(new Enemy_Debri(centerX() - 16, centerY() + 16, expValue, specialRare));
-		Game.enemies.add(new Enemy_Debri(centerX() + 16, centerY() + 16, expValue, specialRare));
+		Game.enemies.add(new Enemy_Debri(centerX(), centerY() - 16, specialRare));
+		Game.enemies.add(new Enemy_Debri(centerX() - 16, centerY() + 16, specialRare));
+		Game.enemies.add(new Enemy_Debri(centerX() + 16, centerY() + 16, specialRare));
 		Game.entities.add(new EXP_Orb(centerX(), centerY(), expValue, hue));
 		Player.souls += soulValue;
 	}
@@ -43,7 +43,7 @@ public class Enemy_Barrier extends Enemy {
 			if (!isColiding(Game.player)) {
 				movement();
 			} else {
-				giveCollisionDamage(Game.player, 30, 1);
+				giveCollisionDamage(Game.player, 30);
 			}
 
 			slownessEffect(0.92);

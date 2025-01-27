@@ -89,38 +89,33 @@ public class Enemy extends Entity {
 		y += deltaY * speed / mag;
 	}
 
-	int[] redoMask = {};
-
 	protected void spawnAnimation(int frames) {
 		if (contTS == 0) {
-			redoMask = getMask();
 			Game.enemies.add(new Enemy_SpawnPod(centerX(), centerY(), (int) (width * 1.5), (int) (height * 1.5),
 					timeSpawn, specialRare));
 		}
-		setMask(0, 0, 0, 0);
 		contTS++;
 		if (contTS >= timeSpawn) {
-			setMask(redoMask);
 			spawning = false;
 		}
 	}
 
 	public void render() {
 		if (!damaged) {
-			Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), getWidth(),
-					getHeight(), null);
+			Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), width,
+					height, null);
 		} else {
 			Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), getX() - Camera.getX(),
-					getY() - Camera.getY(), getWidth(), getHeight(), null);
+					getY() - Camera.getY(), width, height, null);
 		}
 	}
 
-	protected void giveCollisionDamage(Entity target, int attackTimerLimit, int attackTimerIncrease) {
+	protected void giveCollisionDamage(Entity target, int attackTimerLimit) {
 		if (this.attackTimer % attackTimerLimit == 0) {
 			target.life -= this.damage;
 			target.damaged = true;
 			this.attackTimer = 0;
 		}
-		this.attackTimer += attackTimerIncrease;
+		this.attackTimer ++;
 	}
 }

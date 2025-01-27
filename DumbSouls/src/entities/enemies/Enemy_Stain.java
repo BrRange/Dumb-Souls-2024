@@ -20,7 +20,7 @@ public class Enemy_Stain extends Enemy {
 		damage = 8 * specialMult + 0.08 * World.wave;
 		maxSpeed = 1 + (specialMult - 1) / 3;
 		speed = maxSpeed;
-		setMask(2, 2, 12, 13);
+		setMask(2, 2, 10, 13);
 		timeSpawn = 150;
 	}
 
@@ -37,7 +37,7 @@ public class Enemy_Stain extends Enemy {
 			if (!isColiding(Game.player)) {
 				movement();
 			} else {
-				this.giveCollisionDamage(Game.player, 15, 1);
+				this.giveCollisionDamage(Game.player, 15);
 			}
 
 			slownessEffect(0.99);
