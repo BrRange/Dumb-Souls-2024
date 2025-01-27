@@ -18,12 +18,12 @@ public class EXP_Orb extends Enemy{
 	}
 	
     public void tick() {
-		animate();
-		if (Entity.calculateDistance(centerX(), centerY(), Game.player.centerX(), Game.player.centerY()) < 128)
-			movement();
 		if (isColiding(Game.player) || expValue == 0){
             Game.entities.remove(this);
 			Game.player.exp += expValue;
         }
+		animate();
+		if (Entity.calculateDistance(centerX(), centerY(), Game.player.centerX(), Game.player.centerY()) < 128)
+			movement();
 	}
 }

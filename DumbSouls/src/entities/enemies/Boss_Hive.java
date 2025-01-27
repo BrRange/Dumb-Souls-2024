@@ -25,6 +25,7 @@ public class Boss_Hive extends Enemy {
 	}
 
 	private void attack() {
+		if(Game.enemies.size() > 15) return;
 		attackTimer++;
 		if (attackTimer % 120 == 0) {
 			Game.enemies.add(new Enemy_Stain(centerX() + 80, centerY() + 60));
