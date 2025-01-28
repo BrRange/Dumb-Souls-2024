@@ -16,7 +16,7 @@ public class Shot extends Entity{
 		diry = dy;
 		speed = spd;
 		damage = dmg;
-		this.life = life;
+		maxLife = this.life = life;
 		sprite = Shader.rotate(sprite, ang);
 		push = Game.player.push;
 		setMask(0, 0, w, h);
@@ -26,7 +26,7 @@ public class Shot extends Entity{
 		if(Game.shots.contains(this)) Game.shots.remove(this); else Game.eShots.remove(this);
 	}
 	
-	private void movement(){
+	protected void movement(){
 		x += dirx * speed;
 		y += diry * speed;
 	}

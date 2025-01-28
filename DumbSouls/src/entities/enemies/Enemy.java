@@ -15,7 +15,7 @@ public class Enemy extends Entity {
 	public int expValue, soulValue;
 	protected boolean spawning = true, specialRare;
 	protected int attackTimer = 0, timeSpawn = 0, contTS, specialMult = 1, hue = 0, frames, maxFrames = 10, index,
-			maxIndex = 3;
+			maxIndex = 3, state = 0;
 
 	public Enemy(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -102,7 +102,7 @@ public class Enemy extends Entity {
 
 	public void render() {
 		if (!damaged) {
-			Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), width,
+			Game.gameGraphics.drawImage(animation[index + state * maxIndex], getX() - Camera.getX(), getY() - Camera.getY(), width,
 					height, null);
 		} else {
 			Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), getX() - Camera.getX(),

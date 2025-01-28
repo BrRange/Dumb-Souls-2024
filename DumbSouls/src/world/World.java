@@ -6,16 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import entities.enemies.Enemy;
-import entities.enemies.Boss_Duality;
-import entities.enemies.Boss_Hive;
-import entities.enemies.Boss_Sucubus;
-import entities.enemies.Enemy_Barrier;
-import entities.enemies.Enemy_Eye;
-import entities.enemies.Enemy_Mortar;
-import entities.enemies.Enemy_Mouth;
-import entities.enemies.Enemy_Stain;
-import entities.enemies.Enemy_Trapper;
+import entities.enemies.*;
 import main.Game;
 
 public class World {
@@ -48,7 +39,8 @@ public class World {
 				new Bucket(Enemy_Mouth.class, 10),
 				new Bucket(Enemy_Trapper.class, 5),
 				new Bucket(Enemy_Barrier.class, 3),
-				new Bucket(Enemy_Mortar.class, 2));
+				new Bucket(Enemy_Mortar.class, 2),
+				new Bucket(Enemy_Wizard.class, 1));
 
 		private final Bucket[] buckets;
 
