@@ -80,9 +80,10 @@ public class Enemy_Mortar extends Enemy {
 	}
 
 	private void shoot(double dx, double dy) {
-		double deltaX = dx - centerX(), deltaY = dy - centerY();
-		double mag = getMagnitude(deltaX, deltaY);
-		Game.eShots.add(new Shot_MortarShell(centerX(), centerY(), deltaX / mag, deltaY / mag, mag / 90, damage));
+		dx -= centerX();
+		dy -= centerY();
+		double mag = getMagnitude(dx, dy);
+		Game.eShots.add(new Shot_MortarShell(centerX(), centerY(), dx / mag, dy / mag, mag / 90, damage));
 	}
 
 	public void tick() {

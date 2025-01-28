@@ -14,7 +14,7 @@ public class Weapon_Wind extends Weapon {
 	public static BufferedImage shotFace;
 	public static BufferedImage sprite = Game.sheet.getSprite(64, 32, 16, 16);
 	private int hrcDamage = 1, ablt3Dmg = 6;
-	private double hrcSpeed = 0.8, ablt3Spd = 5.0;
+	private double hrcSpeed = 0.8, ablt3Spd = 5;
 	public static int soulCost = 100;
 	public static boolean block = true;
 	private SoundPlayer sound1, sound2;
@@ -150,7 +150,7 @@ public class Weapon_Wind extends Weapon {
 			double deltaY = Game.my / Game.scale - Game.player.centerY() + Camera.getY();
 			double mag = Math.hypot(deltaX, deltaY);
 			if(mag == 0) mag = 1;
-			Game.entities.add(new AE_WindBarrage(Game.player.centerX(), Game.player.centerY(), 32, 32, ablt3Spd, deltaX / mag, deltaY / mag, ablt3Dmg, null, 30));
+			Game.entities.add(new AE_WindBarrage(Game.player.centerX(), Game.player.centerY(), 32, 32, ablt3Spd, deltaX / mag, deltaY / mag, ablt3Dmg, 30));
 			md3 = false;
 		}
 	}

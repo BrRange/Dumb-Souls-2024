@@ -116,9 +116,6 @@ public class Boss_Duality extends Enemy {
 		if (Entity.calculateDistance(Game.player.getX(), Game.player.getY(), getX(), getY()) > 40) {
 			movement();
 		}
-		if (speed < 0.8) {
-			speed = 0.8;
-		}
 		damagedAnimation();
 		animate();
 		closeAtk();

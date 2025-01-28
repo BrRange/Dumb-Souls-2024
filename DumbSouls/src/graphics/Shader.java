@@ -28,7 +28,7 @@ public class Shader {
 		BufferedImage rotated = new BufferedImage(w, h, sprite.getType());  
 		Graphics2D graphic = rotated.createGraphics();
 
-		graphic.rotate(angle, w/2, h/2);
+		graphic.rotate(angle, w/2.0, h/2.0);
 		graphic.drawImage(sprite, null, 0, 0);
 		graphic.dispose();
 		return rotated;

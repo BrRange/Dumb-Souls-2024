@@ -14,14 +14,12 @@ public class Shot extends Entity{
 		super(x, y, w, h, sprt);
 		dirx = dx;
 		diry = dy;
-		mw = w;
-		mh = h;
 		speed = spd;
 		damage = dmg;
 		this.life = life;
 		sprite = Shader.rotate(sprite, ang);
 		push = Game.player.push;
-		setMask(0, 0, width, height);
+		setMask(0, 0, w, h);
 	}
 
 	public void die(Entity target) {

@@ -1,7 +1,6 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
-import java.awt.image.BufferedImage;
 import java.util.function.Function;
 import main.Game;
 import world.Camera; 
@@ -10,8 +9,8 @@ public class AE_WindBarrage extends AE_Attack_Entity{
 
 	private double dirX, dirY;
 	
-	public AE_WindBarrage(int x, int y, int width, int height, double spd, double dx, double dy, double dmg, BufferedImage sprite, int time) {
-		super(x, y, width, height, sprite, time);
+	public AE_WindBarrage(int x, int y, int width, int height, double spd, double dx, double dy, double dmg, int time) {
+		super(x, y, width, height, null, time);
 		speed = spd;
 		dirX = dx;
 		dirY = dy;

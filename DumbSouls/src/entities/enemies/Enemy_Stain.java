@@ -33,22 +33,22 @@ public class Enemy_Stain extends Enemy {
 	public void tick() {
 		animate();
 		damagedAnimation();
-		if (spawning == false) {
-			if (!isColiding(Game.player)) {
-				movement();
-			} else {
-				this.giveCollisionDamage(Game.player, 15);
-			}
-
-			slownessEffect(0.99);
-
-			shotDamage();
-
-			if (life <= 0) {
-				die();
-			}
-		} else {
+		if (spawning) {
 			spawnAnimation(timeSpawn / 3);
+			return;
+		} 
+		if (!isColiding(Game.player)) {
+			movement();
+		} else {
+			this.giveCollisionDamage(Game.player, 15);
+		}
+
+		slownessEffect(0.99);
+
+		shotDamage();
+
+		if (life <= 0) {
+			die();
 		}
 	}
 }

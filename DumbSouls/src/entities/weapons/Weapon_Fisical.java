@@ -118,7 +118,7 @@ public class Weapon_Fisical extends Weapon {
 				break;
 			default:
 				Game.shots.add(new Shot(Game.player.centerX(), Game.player.centerY(), 3, 3, dx, dy, ang,
-						2.5 + (double) (combo / 10), shotDamage + combo, 20, shotFace));
+						2.5 + combo / 10.0, shotDamage + combo, 20, shotFace));
 				break;
 		}
 	}
@@ -162,7 +162,7 @@ public class Weapon_Fisical extends Weapon {
 		}
 		if (md3) {
 			tspw++;
-			double off = Game.rand.nextInt(20);
+			int off = Game.rand.nextInt(20);
 			double deltaX = Game.mx / Game.scale + off - Game.player.centerX() + Camera.getX();
 			double deltaY = Game.my / Game.scale + off - Game.player.centerY() + Camera.getY();
 			double mag = Math.hypot(deltaX, deltaY);

@@ -138,7 +138,7 @@ public class Weapon_Poison extends Weapon{
 		}
 		if (md3) {
 			tspw++;
-			double off = Game.rand.nextInt(40);
+			int off = Game.rand.nextInt(40);
 			int off2 = Game.rand.nextInt(1);
 			
 			if (off2 == 0) {

@@ -11,12 +11,10 @@ import java.awt.geom.Line2D;
 
 public class Entity {
 	
-	public double x, y, life, maxLife, damage, push, speed, maxSpeed, slowness;
+	public double x, y, life, maxLife, damage, push, speed, maxSpeed, slowness, weight = 1.f;
 	public int width, height, depth, damagedFrames, maxDamagedFrames = 15, damagedHue;
 	public boolean damaged;
-	protected int mx, my, mw, mh;
-	protected float weight = 1.f;
-	protected Rectangle mask;
+	protected Rectangle mask = new Rectangle();
 	
 	public BufferedImage sprite;
 	
@@ -98,33 +96,28 @@ public class Entity {
 		Game.gameGraphics.drawImage(sprite, getX() - Camera.getX(), getY() - Camera.getY(), null);
 	}
 
-	protected int[] getMask(){
-		int[] temp = {mx, my, mw, mh};
-		return temp;
+	protected Rectangle getMask(){
+		return mask;
 	}
 	
 	protected void setMask(int mx, int my, int mw, int mh) {
-		this.mx = mx;
-		this.my = my;
-		this.mw = mw;
-		this.mh = mh;
+		mask.x = mx;
+		mask.y = my;
+		mask.width = mw;
+		mask.height = mh;
 	}
 
-	protected void setMask(int[] mask) {
-		mx = mask[0];
-		my = mask[1];
-		mw = mask[2];
-		mh = mask[3];
+	protected void setMask(Rectangle mask) {
+		this.mask = mask;
 	}
 	
 	public boolean isColiding(Entity other) {
-		mask = new Rectangle(getX() + mx, getY() + my, mw, mh);
-		other.mask = new Rectangle(other.getX() + other.mx, other.getY() + other.my, other.mw, other.mh);
-		return mask.intersects(other.mask);
+		Rectangle sourceHitBox = new Rectangle(getX() + mask.x, getY() + mask.y, mask.width, mask.height);
+		return sourceHitBox.intersects(new Rectangle(other.getX() + other.mask.x, other.getY() + other.mask.y, other.mask.width, other.mask.height));
 	}
 	
 	public static boolean lineCollision(Line2D line, Entity ent) {
-		ent.mask = new Rectangle(ent.getX() + ent.mx, ent.getY() + ent.my, ent.mw, ent.mh);
+		ent.mask = new Rectangle(ent.getX() + ent.mask.x, ent.getY() + ent.mask.y, ent.mask.width, ent.mask.height);
 		return line.intersects(ent.mask);
 	}
 	

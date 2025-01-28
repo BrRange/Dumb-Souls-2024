@@ -28,8 +28,8 @@ public class AE_Hurricane extends AE_Attack_Entity{
 		frames ++;
 		tickTimer ++;
 		
-		double destX = Game.mx / Game.scale;
-		double destY = Game.my / Game.scale;
+		int destX = Game.mx / Game.scale;
+		int destY = Game.my / Game.scale;
 		double startX = x + 28 - Camera.getX();
 		double startY = y + 18 - Camera.getY();
 
