@@ -27,7 +27,7 @@ public class Enemy_Mouth extends Enemy {
 
 	private void die() {
 		Game.enemies.remove(this);
-		Game.entities.add(new EXP_Orb((int) x, (int) y, expValue, hue));
+		Game.entities.add(new EXP_Orb(centerX(), centerY(), expValue, hue));
 		Player.souls += soulValue;
 	}
 

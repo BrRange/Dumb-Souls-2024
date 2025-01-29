@@ -8,13 +8,12 @@ import world.Camera;
 public class AE_HellFlame extends AE_Attack_Entity {
 	
 	private int spawntime;
-	private double dirX, dirY;
+	private Vector dir = new Vector(0, 0);
 	
 	public AE_HellFlame(int x, int y, double spd, double dx, double dy, int dmg) {
 		super(x, y, 32, 32, null, 80);
 		speed = spd;
-		dirX = dx;
-		dirY = dy;
+		dir.set(dx, dy);
 		damage = dmg;
 		getAnimation(144, 112, 16, 16, 2);
 		setMask(0, 0, 48, 48);
@@ -22,8 +21,7 @@ public class AE_HellFlame extends AE_Attack_Entity {
 	}
 	
 	public void tick() {
-		x += dirX * speed;
-		y += dirY * speed;
+		pos.move(dir.x * speed, dir.y * speed);
 		tickTimer++;
 		frames ++;
 		if (frames == maxFrames) {
@@ -56,6 +54,6 @@ public class AE_HellFlame extends AE_Attack_Entity {
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), 48, 48, null);
+		Game.gameGraphics.drawImage(animation[index], pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), 48, 48, null);
 	}
 }

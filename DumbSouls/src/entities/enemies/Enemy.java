@@ -66,27 +66,18 @@ public class Enemy extends Entity {
 	}
 
 	protected void movement() {
-		double deltaX = Game.player.centerX() - centerX();
-		double deltaY = Game.player.centerY() - centerY();
-		double mag = getMagnitude(deltaX, deltaY);
-		x += deltaX * speed / mag;
-		y += deltaY * speed / mag;
+		Vector delta = new Vector(Game.player.centerX() - centerX(), Game.player.centerY() - centerY()).normalize();
+		pos.move(delta.x * speed, delta.y * speed);
 	}
 
 	protected void reverseMovement() {
-		double deltaX = Game.player.centerX() - centerX();
-		double deltaY = Game.player.centerY() - centerY();
-		double mag = getMagnitude(deltaX, deltaY);
-		x += deltaX * -speed / mag;
-		y += deltaY * -speed / mag;
+		Vector delta = new Vector(centerX() - Game.player.centerX(), centerY() - Game.player.centerY()).normalize();
+		pos.move(delta.x * speed, delta.y * speed);
 	}
 
 	protected void objectiveMovement(int xObjct, int yObjct) {
-		double deltaX = xObjct - centerX();
-		double deltaY = yObjct - centerY();
-		double mag = getMagnitude(deltaX, deltaY);
-		x += deltaX * speed / mag;
-		y += deltaY * speed / mag;
+		Vector delta = new Vector(xObjct - centerX(), yObjct - centerY()).normalize();
+		pos.move(delta.x * speed, delta.y * speed);
 	}
 
 	protected void spawnAnimation(int frames) {
@@ -102,11 +93,12 @@ public class Enemy extends Entity {
 
 	public void render() {
 		if (!damaged) {
-			Game.gameGraphics.drawImage(animation[index + state * maxIndex], getX() - Camera.getX(), getY() - Camera.getY(), width,
+			Game.gameGraphics.drawImage(animation[index + state * maxIndex], pos.getX() - Camera.getX(),
+					pos.getY() - Camera.getY(), width,
 					height, null);
 		} else {
-			Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), getX() - Camera.getX(),
-					getY() - Camera.getY(), width, height, null);
+			Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), pos.getX() - Camera.getX(),
+					pos.getY() - Camera.getY(), width, height, null);
 		}
 	}
 
@@ -116,6 +108,6 @@ public class Enemy extends Entity {
 			target.damaged = true;
 			this.attackTimer = 0;
 		}
-		this.attackTimer ++;
+		this.attackTimer++;
 	}
 }

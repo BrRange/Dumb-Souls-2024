@@ -78,8 +78,7 @@ public class Boss_Hive extends Enemy {
 		if (centerX() != spawnX && centerY() != spawnY) {
 			contPosition++;
 			if (contPosition == 120) {
-				x = spawnX;
-				y = spawnY;
+				pos.set(spawnX, spawnY);
 			}
 		}
 

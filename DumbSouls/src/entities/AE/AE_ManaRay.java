@@ -41,8 +41,7 @@ public class AE_ManaRay extends AE_Attack_Entity {
 	public void tick() {
 		tickTimer++;
 		Collision();
-		x = Game.player.centerX();
-		y = Game.player.centerY();
+		pos.set(Game.player.centerX(), Game.player.centerY());
 		
 		if (tickTimer == life) {
 			die();

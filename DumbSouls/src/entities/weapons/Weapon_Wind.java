@@ -114,7 +114,7 @@ public class Weapon_Wind extends Weapon {
 			Game.player.mana -= manaCost;
 		}
 		if(md1) {
-			Game.entities.add(new AE_WindDS(Game.player.getX(), Game.player.getY(), dashDuration));
+			Game.entities.add(new AE_WindDS(Game.player.pos.getX(), Game.player.pos.getY(), dashDuration));
 			dashTick ++;
 			if (dashTick < dashDuration) {
 				Game.player.speedBoost *= 4;

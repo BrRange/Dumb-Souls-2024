@@ -7,7 +7,7 @@ import graphics.TextObject;
 
 public class Menu_Level {
 	private static TextObject[] optionsBox;
-	private static int cur;
+	private static int cur, transitionTimer;
 
 	public Menu_Level(int numOP) {
 		optionsBox = new TextObject[numOP];
@@ -33,6 +33,10 @@ public class Menu_Level {
 			sortOptions(3);
 			Game.player.levelUp = false;
 		}
+		if(transitionTimer < 45){
+			transitionTimer++;
+			return;
+		}
 		for(int i = 0; i < optionsBox.length; i++){
 			if(optionsBox[i].hover()) cur = i;
 		}
@@ -50,6 +54,7 @@ public class Menu_Level {
 			Game.player.playerWeapon.checkOptions(optionsBox[cur].txt);
 			Game.player.life = Game.player.maxLife;
 			Game.gameStateHandler = Game.gameState.NORMAL;
+			transitionTimer = 0;
 		}
 		 
 		if (Game.keyController.contains(32) && Player.souls >= 20) {
@@ -80,5 +85,7 @@ public class Menu_Level {
 		Game.gameGraphics.setColor(new Color(74, 52, 160));
 		Game.gameGraphics.drawString("Souls : " + Player.souls, 255, 20);
 		Game.gameGraphics.drawString("[space] Refresh -20 souls", 180, 150);
+		Game.gameGraphics.setColor(new Color(0, 0, 0, 1 - transitionTimer / 45.f));
+		Game.gameGraphics.fillRect(0, 0, Game.width * Game.scale, Game.height * Game.scale);
 	}
 }

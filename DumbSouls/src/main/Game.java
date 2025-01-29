@@ -169,7 +169,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	}
 
 	private static void tick() {
-		player.moveX = player.moveY = 0;
+		player.moveDir.set(0, 0);
 		for(int i = 0; i < entities.size(); i++) {
 			entities.get(i).tick();
 		}

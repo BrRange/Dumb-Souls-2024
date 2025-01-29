@@ -35,7 +35,7 @@ public class Camera {
 	}
 
 	public static void centerPlayer(){
-		x = Game.player.getX();
-		y = Game.player.getY();
+		x = Game.player.pos.getX();
+		y = Game.player.pos.getY();
 	}
 }

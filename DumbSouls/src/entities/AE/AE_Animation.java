@@ -17,8 +17,7 @@ public class AE_Animation extends AE_Attack_Entity {
 	public void tick() {
 		time++;
 
-		x += Game.rand.nextDouble() - 0.5;
-		y -= Game.rand.nextDouble() / 2;
+		pos.move(Game.rand.nextDouble() - 0.5, Game.rand.nextDouble() / 2);
 
 		if (time == life) {
 			die();
@@ -26,7 +25,7 @@ public class AE_Animation extends AE_Attack_Entity {
 	}
 
 	public void render() {
-		Game.gameGraphics.drawImage(animation[0], getX() - Camera.getX(), getY() - Camera.getY(), getWidth(),
-				getHeight(), null);
+		Game.gameGraphics.drawImage(animation[0], pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), width,
+				height, null);
 	}
 }

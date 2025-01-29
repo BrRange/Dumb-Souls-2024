@@ -74,8 +74,7 @@ public class World {
 							tiles[xx + (yy * WIDTH)] = new Wall_Tile(xx * 16, yy * 16, Tile.wall_sprite);
 							break;
 						case 0xFF0000FF:
-							Game.player.setX(xx * 16);
-							Game.player.setY(yy * 16);
+							Game.player.pos.set(xx * 16, yy * 16);
 							Camera.x = xx * 16;
 							Camera.y = yy * 16;
 							Game.mx = Game.width / 2;

@@ -11,7 +11,52 @@ import java.awt.geom.Line2D;
 
 public class Entity {
 	
-	public double x, y, life, maxLife, damage, push, speed, maxSpeed, slowness, weight = 1.f;
+	public class Vector{
+		public double x, y;
+	
+		public Vector(double setx, double sety){
+			x = setx;
+			y = sety;
+		}
+
+		public static double getMagnitude(double dx, double dy){
+			final double mag = Math.hypot(dx, dy);
+			return mag == 0 ? 1 : mag;
+		}
+
+		public Vector normal(){
+			final double mag = getMagnitude(x, y);
+			return new Vector(x / mag, y / mag);
+		}
+
+		public Vector normalize(){
+			final double mag = getMagnitude(x, y);
+			x /= mag;
+			y /= mag;
+			return this;
+		}
+
+		public int getX(){
+			return (int) x;
+		}
+
+		public int getY(){
+			return (int) y;
+		}
+
+		public void set(double setx, double sety){
+			x = setx;
+			y = sety;
+		}
+
+		public void move(double dx, double dy){
+			x += dx;
+			y += dy;
+		}
+	}
+
+	public Vector pos = new Vector(0, 0);
+	public double life, maxLife, damage, push, speed, maxSpeed, slowness, weight = 1.f;
 	public int width, height, depth, damagedFrames, maxDamagedFrames = 15, damagedHue;
 	public boolean damaged;
 	protected Rectangle mask = new Rectangle();
@@ -19,8 +64,7 @@ public class Entity {
 	public BufferedImage sprite;
 	
 	public Entity(int x, int y, int w, int h, BufferedImage sprt) {
-		this.x = x - w / 2;
-		this.y = y - h / 2;
+		pos.set(x - w / 2, y - h / 2);
 		width = w;
 		height = h;
 		sprite = sprt;
@@ -31,24 +75,24 @@ public class Entity {
 	}
 	
 	public int outOfBounds(){
-		return (x > 1264 - width ? 1 : 0) + (y > 1264 - height ? 2 : 0) - (x < 16 ? 1 : 0) - (y < 16 ? 2 : 0);
+		return (pos.x > 1264 - width ? 1 : 0) + (pos.y > 1264 - height ? 2 : 0) - (pos.x < 16 ? 1 : 0) - (pos.y < 16 ? 2 : 0);
 	}
 
 	public void clampBounds(int sign){
 		switch(sign){
 		case -1:
-			x = 16; break;
+			pos.x = 16; break;
 		case -2:
-			y = 16; break;
+			pos.y = 16; break;
 		case -3:
-			x = y = 16; break;
+			pos.x = pos.y = 16; break;
 		case 1:
-			x = 1264 - width; break;
+			pos.x = 1264 - width; break;
 		case 2:
-			y = 1264 - height; break;
+			pos.y = 1264 - height; break;
 		case 3:
-			x = 1264 - width;
-			y = 1264 - height; break;
+			pos.x = 1264 - width;
+			pos.y = 1264 - height; break;
 		}
 	}
 
@@ -62,30 +106,11 @@ public class Entity {
 		}
 	};
 	
-	public void setX(int newX) {
-		x = newX;
-	}
-	public void setY(int newY) {
-		y = newY;
-	}
-	
-	public int getX() {
-		return (int)x;
-	}
-	public int getY() {
-		return (int)y;
-	}
-	public int getWidth() {
-		return width;
-	}
-	public int getHeight() {
-		return height;
-	}
 	public int centerX(){
-		return (int)x + width / 2;
+		return pos.getX() + width / 2;
 	}
 	public int centerY(){
-		return (int)y + height / 2;
+		return pos.getY() + height / 2;
 	}
 
 	public void tick() {
@@ -93,7 +118,7 @@ public class Entity {
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(sprite, getX() - Camera.getX(), getY() - Camera.getY(), null);
+		Game.gameGraphics.drawImage(sprite, pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), null);
 	}
 
 	protected Rectangle getMask(){
@@ -112,18 +137,13 @@ public class Entity {
 	}
 	
 	public boolean isColiding(Entity other) {
-		Rectangle sourceHitBox = new Rectangle(getX() + mask.x, getY() + mask.y, mask.width, mask.height);
-		return sourceHitBox.intersects(new Rectangle(other.getX() + other.mask.x, other.getY() + other.mask.y, other.mask.width, other.mask.height));
+		Rectangle sourceHitBox = new Rectangle(pos.getX() + mask.x, pos.getY() + mask.y, mask.width, mask.height);
+		return sourceHitBox.intersects(new Rectangle(other.pos.getX() + other.mask.x, other.pos.getY() + other.mask.y, other.mask.width, other.mask.height));
 	}
 	
 	public static boolean lineCollision(Line2D line, Entity ent) {
-		ent.mask = new Rectangle(ent.getX() + ent.mask.x, ent.getY() + ent.mask.y, ent.mask.width, ent.mask.height);
+		ent.mask = new Rectangle(ent.pos.getX() + ent.mask.x, ent.pos.getY() + ent.mask.y, ent.mask.width, ent.mask.height);
 		return line.intersects(ent.mask);
-	}
-	
-	public static double getMagnitude(double dx, double dy){
-		double mag = Math.hypot(dx, dy);
-		return mag == 0 ? 1 : mag;
 	}
 
 	public void applySlowness(double slow){
@@ -131,19 +151,14 @@ public class Entity {
 	}
 
 	public void receiveKnockback(Entity source){
-		double deltaX = centerX() - source.centerX();
-		double deltaY = centerY() - source.centerY();
-		double mag = getMagnitude(deltaX, deltaY) * weight;
-		x += deltaX / mag * source.push;
-		y += deltaY / mag * source.push;
+		Vector delta = new Vector(centerX() - source.centerX(), centerY() - source.centerY()).normalize();
+		pos.move(delta.x * source.push / weight, delta.y * source.push / weight);
 	}
 
 	public void receiveKnockback(Entity source, double amount){
-		double deltaX = centerX() - source.centerX();
-		double deltaY = centerY() - source.centerY();
-		double mag = getMagnitude(deltaX, deltaY) * weight;
-		x += deltaX / mag * amount;
-		y += deltaY / mag * amount;
+		Vector delta = new Vector(centerX() - source.centerX(), centerY() - source.centerY()).normalize();
+		amount /= weight;
+		pos.move(delta.x * amount, delta.y * amount);
 	}
 	
 	public void receiveDamage(Entity source){

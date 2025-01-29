@@ -84,14 +84,14 @@ public class Enemy_Trapper extends Enemy {
 	public void render() {
 		if (cont > 0) {
 			if (!damaged) {
-				Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), 16, 32,
+				Game.gameGraphics.drawImage(animation[index], pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), 16, 32,
 						null);
 			} else {
-				Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), getX() - Camera.getX(),
-						getY() - Camera.getY(), 16, 32, null);
+				Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), pos.getX() - Camera.getX(),
+						pos.getY() - Camera.getY(), 16, 32, null);
 			}
 		} else {
-			Game.gameGraphics.drawImage(animation[0], getX() - Camera.getX(), getY() - Camera.getY(), 16, 32, null);
+			Game.gameGraphics.drawImage(animation[0], pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), 16, 32, null);
 		}
 	}
 }

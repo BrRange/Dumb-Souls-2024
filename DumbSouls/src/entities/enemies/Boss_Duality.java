@@ -52,10 +52,8 @@ public class Boss_Duality extends Enemy {
 
 	private void closeAtk() {
 		if (Entity.calculateDistance(Game.player.centerX(), Game.player.centerY(), centerX(), centerY()) <= 60) {
-			double deltaX = Game.player.centerX() - centerX();
-			double deltaY = Game.player.centerY() - centerY();
-			double mag = getMagnitude(deltaX, deltaY);
-			Game.eShots.add(new Shot_DualityBlackHand(centerX(), centerY(), deltaX / mag, deltaY / mag, this));
+			Vector delta = new Vector(Game.player.centerX() - centerX(), Game.player.centerY() - centerY()).normalize();
+			Game.eShots.add(new Shot_DualityBlackHand(centerX(), centerY(), delta.x, delta.y, this));
 			Game.player.mana *= 0.75;
 		}
 	}
@@ -90,16 +88,12 @@ public class Boss_Duality extends Enemy {
 			Game.entities.add(new BAE_Spike(Game.player.centerX(), Game.player.centerY(), 16, 16, null, 60, 60));
 		}
 		if (attackTimer % 60 == 0) {
-			double deltaX = Game.player.centerX() - centerX();
-			double deltaY = Game.player.centerY() - centerY();
-			double mag = getMagnitude(deltaX, deltaY);
-			Game.eShots.add(new Shot_DualityBlackHand(centerX(), centerY(), deltaX / mag, deltaY / mag, this));
+			Vector delta = new Vector(Game.player.centerX() - centerX(), Game.player.centerY() - centerY()).normalize();
+			Game.eShots.add(new Shot_DualityBlackHand(centerX(), centerY(), delta.x, delta.y, this));
 		}
 		if (attackTimer % 80 == 0) {
-			double deltaX = Game.player.centerX() - centerX();
-			double deltaY = Game.player.centerY() - centerY();
-			double mag = getMagnitude(deltaX, deltaY);
-			Game.eShots.add(new Shot(centerX(), centerY(), 5, 5, deltaX / mag, deltaY / mag, Math.atan2(deltaY, deltaX),
+			Vector delta = new Vector(Game.player.centerX() - centerX(), Game.player.centerY() - centerY()).normalize();
+			Game.eShots.add(new Shot(centerX(), centerY(), 5, 5, delta.x, delta.y, Math.atan2(delta.y, delta.x),
 					3, 32, 50, spriteAtk));
 		}
 		if (attackTimer % 160 == 0) {
@@ -113,7 +107,7 @@ public class Boss_Duality extends Enemy {
 			balanceStats();
 		}
 
-		if (Entity.calculateDistance(Game.player.getX(), Game.player.getY(), getX(), getY()) > 40) {
+		if (Entity.calculateDistance(Game.player.centerX(), Game.player.centerY(), centerX(), centerY()) > 40) {
 			movement();
 		}
 		damagedAnimation();
@@ -134,16 +128,17 @@ public class Boss_Duality extends Enemy {
 	}
 
 	public void render() {
-		Game.gameGraphics.drawImage(aura, getX() - Camera.getX() - 32, getY() - Camera.getY() - 32, 98, 98, null);
+		Game.gameGraphics.drawImage(aura, pos.getX() - Camera.getX() - 32, pos.getY() - Camera.getY() - 32, 98, 98, null);
 		if (!damaged) {
-			Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), null);
+			Game.gameGraphics.drawImage(animation[index], pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), null);
 		} else {
-			Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), getX() - Camera.getX(),
-					getY() - Camera.getY(), null);
+			Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), pos.getX() - Camera.getX(),
+			pos.getY() - Camera.getY(), null);
 		}
 
 		if (shieldActive) {
-			Game.gameGraphics.drawImage(shield, centerX() - Camera.getX() - 32, centerY() - Camera.getY() - 48, 64, 64, null);
+			Game.gameGraphics.drawImage(shield, centerX() - Camera.getX() - 32, centerY() - Camera.getY() - 48, 64, 64,
+					null);
 		}
 	}
 }

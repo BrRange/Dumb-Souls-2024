@@ -12,17 +12,13 @@ public class Shot_WizardFocus extends Shot{
     private void narrowAngle(){
         double elapse = maxLife - life;
         speed =  elapse * elapse / 6400;
-        double deltaX = 1000 * dirx + Game.player.centerX() - centerX();
-        double deltaY = 1000 * diry + Game.player.centerY() - centerY();
-        double mag = Math.hypot(deltaX, deltaY);
-        if(mag == 0) mag = 1;
-        dirx = deltaX / mag;
-        diry = deltaY / mag;
+        dir.set(1000 * dir.x + Game.player.centerX() - centerX(), 1000 * dir.y + Game.player.centerY() - centerY());
+        dir.normalize();
     }
 
 	public void tick() {
         narrowAngle();
-		movement();
+		pos.move(dir.x * speed, dir.y * speed);
 		life--;
 		if (life == 0) die(null);
 	}

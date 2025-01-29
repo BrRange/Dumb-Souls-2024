@@ -132,8 +132,8 @@ public class Weapon_Fisical extends Weapon {
 		}
 		if (md1) {
 			dashTick += 1;
-			Game.entities.add(new AE_Animation(Game.player.getX() + Game.rand.nextInt(16),
-					Game.player.getY() + Game.rand.nextInt(16), 16, 16, 20, 192, 128));
+			Game.entities.add(new AE_Animation(Game.player.pos.getX() + Game.rand.nextInt(16),
+					Game.player.pos.getY() + Game.rand.nextInt(16), 16, 16, 20, 192, 128));
 			Game.player.speedBoost *= 3;
 			if (dashTick >= dashDuration) {
 				dashTick = 0;

@@ -99,6 +99,6 @@ public class AE_Attack_Entity extends Entity {
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(animation[0], getX() - Camera.getX(), getY() - Camera.getY(), null);
+		Game.gameGraphics.drawImage(animation[0], pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), null);
 	}
 }

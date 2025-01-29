@@ -16,8 +16,7 @@ public class AE_WindDS extends AE_Attack_Entity {
 	
 	public void tick() {
 		tickTimer ++;
-		x = Game.player.getX();
-		y = Game.player.getY();
+		pos.set(Game.player.pos.getX(), Game.player.pos.getY());
 		if (tickTimer == life) {
 			die();
 		}

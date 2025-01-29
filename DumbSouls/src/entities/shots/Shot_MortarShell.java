@@ -20,8 +20,8 @@ public class Shot_MortarShell extends Shot {
 
     public void render(){
         double parabola = Math.sin(Math.PI * life / 90);
-        Game.gameGraphics.drawImage(sprite, getX() - Camera.getX(), getY() - Camera.getY() - (int)(90 * parabola), null);
+        Game.gameGraphics.drawImage(sprite, pos.getX() - Camera.getX(), pos.getY() - Camera.getY() - (int)(90 * parabola), null);
         Game.gameGraphics.setColor(shadowColor);
-        Game.gameGraphics.fillOval(getX() - Camera.getX(), getY() - Camera.getY(), 8 - (int)(4 * parabola), 8 - (int)(4 * parabola));
+        Game.gameGraphics.fillOval(pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), 8 - (int)(4 * parabola), 8 - (int)(4 * parabola));
     }
 }

@@ -8,7 +8,7 @@ import main.Game;
 import world.World;
 
 public class Enemy_Eye extends Enemy {
-	private double range;
+	private float range;
 
 	public Enemy_Eye(int x, int y) {
 		super(x, y, 16, 16, Game.sheet.getSprite(48, 80, 16, 16));
@@ -33,17 +33,15 @@ public class Enemy_Eye extends Enemy {
 
 	private void die() {
 		Game.enemies.remove(this);
-		Game.entities.add(new EXP_Orb((int) x, (int) y, expValue, hue));
+		Game.entities.add(new EXP_Orb(centerX(), centerY(), expValue, hue));
 		Player.souls += soulValue;
 	}
 
 	private void attack() {
 		if (attackTimer >= 60) {
-			double deltaX = Game.player.centerX() - centerX();
-			double deltaY = Game.player.centerY() - centerY();
-			double mag = getMagnitude(deltaX, deltaY);
-			Game.eShots.add(new Shot(centerX(), centerY(), 3, 3, deltaX / mag, deltaY / mag, 0, 3, damage,
-					(int) (range / 2), Game.sheet.getSprite(0, 160, 16, 16)));
+			Vector delta = new Vector(Game.player.centerX() - centerX(), Game.player.centerY() - centerY()).normalize();
+			Game.eShots.add(new Shot(centerX(), centerY(), 3, 3, delta.x, delta.y, 0, 3, damage,
+					(int) range / 2, Game.sheet.getSprite(0, 160, 16, 16)));
 			attackTimer = 0;
 		}
 	}

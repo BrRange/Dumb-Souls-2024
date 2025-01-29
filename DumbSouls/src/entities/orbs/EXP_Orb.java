@@ -10,7 +10,7 @@ public class EXP_Orb extends Enemy{
 		super(x, y, 16, 16, Game.sheet.getSprite(0, 144, 16, 16));
 		this.hue = hue;
 		getAnimation(0, 144, 16, 16, 3);
-		expValue = World.bossTime ? 0 : exp;
+		expValue = World.wave % 10 == 0 ? 0 : exp;
 		speed = 0.8;
 		setMask(0, 0, 16, 16);
 		depth = 1;

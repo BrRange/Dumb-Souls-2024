@@ -73,7 +73,7 @@ public class Weapon {
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(animation[index], (Game.player.getX() - Camera.getX()) - 12, (Game.player.getY() - Camera.getY()) - 8, null);
+		Game.gameGraphics.drawImage(animation[index], (Game.player.pos.getX() - Camera.getX()) - 12, (Game.player.pos.getY() - Camera.getY()) - 8, null);
 	}
 	
 	protected static double getMagnitude(double dx, double dy){

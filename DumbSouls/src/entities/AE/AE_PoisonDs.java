@@ -27,8 +27,7 @@ public class AE_PoisonDs extends AE_Attack_Entity{
 				index = 0;
 			}
 		}
-		x = Game.player.centerX();
-		y = Game.player.centerY();
+		pos.set(Game.player.centerX(), Game.player.centerY());
 		if (tickTimer == life) {
 			die();
 		}
@@ -49,6 +48,6 @@ public class AE_PoisonDs extends AE_Attack_Entity{
 	};
 	
 	public void render() {
-		Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), width, height, null);
+		Game.gameGraphics.drawImage(animation[index], pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), width, height, null);
 	}
 }

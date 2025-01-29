@@ -5,13 +5,12 @@ import java.util.function.Function;
 
 public class AE_PunchRain extends AE_Attack_Entity {
 
-	private double dx, dy;
+	private Vector dir = new Vector(0, 0);
 	
 	public AE_PunchRain(int x, int y, double dirx, double diry, int dmg) {
 		super(x, y, 16, 16, null, 20);
 		speed = 3;
-		dx = dirx;
-		dy = diry;
+		dir.set(dirx, diry);
 		damage = dmg;
 		push = 0.5;
 		getAnimation(176, 112, 16, 16, 1);
@@ -20,8 +19,7 @@ public class AE_PunchRain extends AE_Attack_Entity {
 	}
 	
 	public void tick() {
-		x += dx * speed;
-		y += dy * speed;
+		pos.move(dir.x * speed, dir.y * speed);
 		tickTimer++;
 		if (tickTimer == life) {
 			die();

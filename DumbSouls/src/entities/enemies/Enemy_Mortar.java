@@ -48,6 +48,7 @@ public class Enemy_Mortar extends Enemy {
 		public void tick() {
 			if (calculateDistance(centerX(), centerY(), Game.player.centerX(), Game.player.centerY()) > 2)
 				movement();
+			else die(true);
 			if (life <= 0)
 				die(true);
 			life -= 1;
@@ -82,7 +83,7 @@ public class Enemy_Mortar extends Enemy {
 	private void shoot(double dx, double dy) {
 		dx -= centerX();
 		dy -= centerY();
-		double mag = getMagnitude(dx, dy);
+		double mag = Vector.getMagnitude(dx, dy);
 		Game.eShots.add(new Shot_MortarShell(centerX(), centerY(), dx / mag, dy / mag, mag / 90, damage));
 	}
 

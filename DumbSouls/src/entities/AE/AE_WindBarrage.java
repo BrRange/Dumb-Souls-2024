@@ -7,13 +7,12 @@ import world.Camera;
 
 public class AE_WindBarrage extends AE_Attack_Entity{
 
-	private double dirX, dirY;
+	private Vector dir = new Vector(0, 0);
 	
 	public AE_WindBarrage(int x, int y, int width, int height, double spd, double dx, double dy, double dmg, int time) {
 		super(x, y, width, height, null, time);
 		speed = spd;
-		dirX = dx;
-		dirY = dy;
+		dir.set(dx, dy);
 		damage = dmg;
 		push = -10;
 		depth = 2;
@@ -22,8 +21,7 @@ public class AE_WindBarrage extends AE_Attack_Entity{
 	}
 	
 	public void tick() {
-		x += dirX * speed;
-		y += dirY * speed;
+		pos.move(dir.x * speed, dir.y * speed);
 		tickTimer++;
 		if (tickTimer == life) {
 			die();
@@ -39,6 +37,6 @@ public class AE_WindBarrage extends AE_Attack_Entity{
 	};
 	
 	public void render() {
-		Game.gameGraphics.drawImage(animation[0], getX() - Camera.getX(), getY() - Camera.getY(), 32, 32, null);
+		Game.gameGraphics.drawImage(animation[0], pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), 32, 32, null);
 	}
 }

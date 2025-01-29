@@ -30,17 +30,14 @@ public class AE_Hurricane extends AE_Attack_Entity{
 		
 		int destX = Game.mx / Game.scale;
 		int destY = Game.my / Game.scale;
-		double startX = x + 28 - Camera.getX();
-		double startY = y + 18 - Camera.getY();
+		int startX = pos.getX() + 28 - Camera.getX();
+		int startY = pos.getY() + 18 - Camera.getY();
 
 		
-		if (calculateDistance((int)destX, (int)destY, (int)startX, (int)startY) > 1){
-			double deltaX = destX - startX;
-			double deltaY = destY - startY;
-			double mag = Math.hypot(deltaX, deltaY) + 10;
-			if(mag == 0) mag = 1;
-			x += deltaX / mag * (speed + mag / 50);
-			y += deltaY / mag * (speed + mag / 50);
+		if (calculateDistance(destX, destY, startX, startY) > 1){
+			Vector delta = new Vector(destX - startX, destY - startY);
+			double mag = Vector.getMagnitude(delta.x, delta.y) + 10;
+			pos.move(delta.x / mag * (speed + mag / 50), delta.y / mag * (speed + mag / 50));
 		}
 		
 		if (frames == maxFrames) {
@@ -59,7 +56,7 @@ public class AE_Hurricane extends AE_Attack_Entity{
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), 64, 32, null);
+		Game.gameGraphics.drawImage(animation[index], pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), 64, 32, null);
 	}
 	
 }

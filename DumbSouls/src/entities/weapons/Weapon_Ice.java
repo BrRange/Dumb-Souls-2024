@@ -110,8 +110,7 @@ public class Weapon_Ice extends Weapon{
 			dashTick ++;
 			double dashSpeed = Game.player.speed / 3;
 			if (dashTick < dashDuration) {
-				Game.player.moveX += Math.signum(Game.player.moveX) * dashSpeed;
-				Game.player.moveY += Math.signum(Game.player.moveY) * dashSpeed;
+				Game.player.speedBoost += dashSpeed;
 				if(dashTick % 4 == 0) {
 					Game.entities.add(new AE_IceDs(Game.player.centerX(), Game.player.centerY()));
 				}

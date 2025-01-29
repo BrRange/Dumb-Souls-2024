@@ -50,18 +50,14 @@ public class Boss_Sucubus extends Enemy {
 	}
 
 	private void attack1() {
-		double deltaX = Game.player.centerX() - centerX();
-		double deltaY = Game.player.centerY() - centerY();
-		double mag = getMagnitude(deltaX, deltaY);
-		Game.eShots.add(new Shot(centerX(), centerY(), 6, 3, deltaX / mag, deltaY / mag, 0, 5, damage, 30, spriteAtk));
+		Vector delta = new Vector(Game.player.centerX() - centerX(), Game.player.centerY() - centerY()).normalize();
+		Game.eShots.add(new Shot(centerX(), centerY(), 6, 3, delta.x, delta.y, 0, 5, damage, 30, spriteAtk));
 	}
 
 	private void attack2() {
-		double deltaX = Game.player.centerX() - centerX();
-		double deltaY = Game.player.centerY() - centerY();
-		double mag = getMagnitude(deltaX, deltaY);
-		Game.eShots.add(new Shot_SuccubusVampireBat(Game.player.centerX(), Game.player.centerY(), deltaX / mag,
-				deltaY / mag, damage / 3, this));
+		Vector delta = new Vector(Game.player.centerX() - centerX(), Game.player.centerY() - centerY()).normalize();
+		Game.eShots.add(new Shot_SuccubusVampireBat(Game.player.centerX(), Game.player.centerY(), delta.x,
+				delta.y, damage / 3, this));
 	}
 
 	private void renderAura() {
@@ -88,8 +84,7 @@ public class Boss_Sucubus extends Enemy {
 				prop = 1;
 			}
 
-			x = Game.player.centerX() + (48 * prop);
-			y = Game.player.centerY();
+			pos.set(Game.player.centerX() + (48 * prop), Game.player.centerY());
 			attackTimer = 0;
 		}
 	}
@@ -126,13 +121,13 @@ public class Boss_Sucubus extends Enemy {
 
 	public void render() {
 		if (!damaged) {
-			Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), null);
+			Game.gameGraphics.drawImage(animation[index], pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), null);
 		} else {
-			Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), getX() - Camera.getX(),
-					getY() - Camera.getY(), null);
+			Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), pos.getX() - Camera.getX(),
+					pos.getY() - Camera.getY(), null);
 		}
 		if (showAura) {
-			Game.gameGraphics.drawImage(aura, getX() - Camera.getX(), getY() - Camera.getY(), 32, 32, null);
+			Game.gameGraphics.drawImage(aura, pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), 32, 32, null);
 		}
 	}
 }

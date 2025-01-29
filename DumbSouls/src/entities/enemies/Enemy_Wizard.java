@@ -57,16 +57,14 @@ public class Enemy_Wizard extends Enemy{
 
 	private void die() {
 		Game.enemies.remove(this);
-		Game.entities.add(new EXP_Orb((int) x, (int) y, expValue, hue));
+		Game.entities.add(new EXP_Orb(centerX(), centerY(), expValue, hue));
 		Player.souls += soulValue;
 	}
 
 	private void attack() {
 		if (attackTimer >= 450) {
-			double deltaX = Game.player.centerX() - centerX();
-			double deltaY = Game.player.centerY() - centerY();
-			double mag = getMagnitude(deltaX, deltaY);
-			Game.eShots.add(new Shot_WizardFocus(centerX(), centerY(), deltaX / mag, deltaY / mag, damage, shotSprite));
+			Vector delta = new Vector(Game.player.centerX() - centerX(), Game.player.centerY() - centerY()).normalize();
+			Game.eShots.add(new Shot_WizardFocus(centerX(), centerY(), delta.x, delta.y, damage, shotSprite));
 			attackTimer = 0;
 		}
 	}

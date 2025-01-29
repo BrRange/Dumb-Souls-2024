@@ -36,6 +36,6 @@ public class AE_Fire extends AE_Attack_Entity {
 	}
 	
 	public void render() {
-		Game.gameGraphics.drawImage(animation[index], getX() - Camera.getX(), getY() - Camera.getY(), null);
+		Game.gameGraphics.drawImage(animation[index], pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), null);
 	}
 }
