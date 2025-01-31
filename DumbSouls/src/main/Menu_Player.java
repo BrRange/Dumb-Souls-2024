@@ -4,19 +4,15 @@ import java.awt.Color;
 import java.awt.Font;
 
 import entities.Player;
-import entities.weapons.Weapon_Fire;
-import entities.weapons.Weapon_Fisical;
-import entities.weapons.Weapon_Ice;
-import entities.weapons.Weapon_Mana;
-import entities.weapons.Weapon_Poison;
-import entities.weapons.Weapon_Wind;
+import entities.runes.Rune;
+import entities.weapons.*;
 import graphics.TextObject;
 import world.Camera;
 
 public class Menu_Player {
 	private static int cur, curW, weaponCost;
 	private static String[] weapons = {"Mana Weapon", "Fire Weapon", "Wind Weapon", "Ice Weapon", "Fisical Weapon", "Poison Weapon"};
-	private static boolean clickR, clickL, weaponBlock;
+	private static boolean clickR, clickL, weaponUnlocked, hasRunes;
 	private static TextObject
 	bookBox = new TextObject("arial", Font.BOLD, 9, weapons[0], 30, 70, Color.white),
 	startBox = new TextObject("arial", Font.BOLD, 9, "Start", 30, 90, Color.white),
@@ -61,8 +57,8 @@ public class Menu_Player {
 			clickR = false;
 			clickL = false;
 			if (enter || startBox.click()) {
-				if (costPossible() || isWeaponBlock()) {
-					if (!isWeaponBlock()) Player.souls -= weaponCost;
+				if (costPossible() || weaponUnlocked) {
+					if (!weaponUnlocked) Player.souls -= weaponCost;
 					Game.gameStateHandler = Game.gameState.NORMAL;
 					Camera.centerPlayer();
 					weaponVerification();
@@ -74,7 +70,8 @@ public class Menu_Player {
 		if (cur == 2) {
 			clickR = false;
 			clickL = false;
-			if ((enter || runesBox.click()) && !Player.runesInventory.isEmpty()){
+			if ((enter || runesBox.click()) && hasRunes){
+				Menu_Runes.startMenu();
 				Game.gameStateHandler = Game.gameState.MENURUNES;
 				cur = 0;
 			}
@@ -90,15 +87,6 @@ public class Menu_Player {
 		Game.clickController.clear();
 	}
 	
-	private static boolean isWeaponBlock() {
-		if (weaponBlock == false) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
 	private static boolean costPossible() {
 		if (Player.souls >= weaponCost) {
 			return true;
@@ -108,31 +96,41 @@ public class Menu_Player {
 		}
 	}
 	
+	public static void startMenu(){
+		for(Rune rn : Player.runesInventory){
+			if(rn.collected){
+				hasRunes = true;
+				return;
+			}
+			hasRunes = false;
+		}
+	}
+
 	private static void weaponVerification() {
 		switch(curW){
 			case 0: 
 				Game.player.playerWeapon = new Weapon_Mana();
-				Weapon_Mana.block = false;
+				Weapon_Mana.unlocked = true;
 				break;
 			case 1:
 				Game.player.playerWeapon = new Weapon_Fire();
-				Weapon_Fire.block = false;
+				Weapon_Fire.unlocked = true;
 				break;
 			case 2:
 				Game.player.playerWeapon = new Weapon_Wind();
-				Weapon_Wind.block = false;
+				Weapon_Wind.unlocked = true;
 				break;
 			case 3:
 				Game.player.playerWeapon = new Weapon_Ice();
-				Weapon_Ice.block = false;
+				Weapon_Ice.unlocked = true;
 				break;
 			case 4:
 				Game.player.playerWeapon = new Weapon_Fisical();
-				Weapon_Fisical.block = false;
+				Weapon_Fisical.unlocked = true;
 				break;
 			case 5:
 				Game.player.playerWeapon = new Weapon_Poison();
-				Weapon_Poison.block = false;
+				Weapon_Poison.unlocked = true;
 				break;
 		}
 	}
@@ -141,27 +139,27 @@ public class Menu_Player {
 		switch(curW) {
 		case 0:
 			weaponCost = Weapon_Mana.soulCost;
-			weaponBlock = Weapon_Mana.block;
+			weaponUnlocked = Weapon_Mana.unlocked;
 			break;
 		case 1:
 			weaponCost = Weapon_Fire.soulCost;
-			weaponBlock = Weapon_Fire.block;
+			weaponUnlocked = Weapon_Fire.unlocked;
 			break;
 		case 2:
 			weaponCost = Weapon_Wind.soulCost;
-			weaponBlock = Weapon_Wind.block;
+			weaponUnlocked = Weapon_Wind.unlocked;
 			break;
 		case 3:
 			weaponCost = Weapon_Ice.soulCost;
-			weaponBlock = Weapon_Ice.block;
+			weaponUnlocked = Weapon_Ice.unlocked;
 			break;
 		case 4:
 			weaponCost = Weapon_Fisical.soulCost;
-			weaponBlock = Weapon_Fisical.block;
+			weaponUnlocked = Weapon_Fisical.unlocked;
 			break;
 		case 5:
 			weaponCost = Weapon_Poison.soulCost;
-			weaponBlock = Weapon_Poison.block;
+			weaponUnlocked = Weapon_Poison.unlocked;
 			break;
 		}
 	}
@@ -199,7 +197,7 @@ public class Menu_Player {
 		
 		bookBox.render();
 		startBox.render();
-		runesBox.updateColor(Player.runesInventory.isEmpty() ? Color.darkGray : Color.white);
+		runesBox.updateColor(hasRunes ? Color.white : Color.darkGray);
 		runesBox.render();
 		backBox.render();
 		
@@ -220,7 +218,7 @@ public class Menu_Player {
 			Game.gameGraphics.drawString(">", 20, 70 + 20 * cur);
 		}
 		
-		if (isWeaponBlock()) {
+		if (weaponUnlocked) {
 			Game.gameGraphics.setColor(new Color(0, 127, 14));
 			Game.gameGraphics.drawString("Unlocked", 194, 100);
 		}

@@ -62,7 +62,7 @@ public class Boss_Hive extends Enemy {
 		Game.player.exp += expValue;
 		Player.souls += soulValue;
 		World.bossTime = false;
-		Game.enemies.add(new Rune_Orb(centerX(), centerY(), 16, 16));
+		Game.enemies.add(new Rune_Orb(centerX(), centerY()));
 		World.bossName = "";
 	}
 

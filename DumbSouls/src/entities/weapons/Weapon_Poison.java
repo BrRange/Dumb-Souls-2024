@@ -17,7 +17,7 @@ public class Weapon_Poison extends Weapon{
     private int tspw, maxTspw = 180;
     private double ablt3D = 0.05;
     public static int soulCost = 700;
-    public static boolean block = true;
+    public static boolean unlocked = false;
 	
     public Weapon_Poison() {
 		setAttackTimer(30);

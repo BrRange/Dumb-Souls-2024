@@ -6,21 +6,18 @@ import main.Game;
 
 public class Mana_Rune extends Rune{
 	
-	private boolean effectsAplied;
+	private boolean effectsApplied = false;
 	public static BufferedImage sprite = Game.sheet.getSprite(16, 256, 16, 16);
 	
 	public Mana_Rune() {
-		super(sprite);
-		name = "Rune of Mana";
-		index = 2;
-		description = "Max Mana +50, Mana Regen +2";
+		super("Magae Rune", "Boosts mana efficiency", 1, sprite);
 	}
 	
 	public void tick() {
-		if (!effectsAplied) {
+		if (!effectsApplied) {
 			Game.player.maxMana += 50;
 			Game.player.manaRec += 2;
-			effectsAplied = true;
+			effectsApplied = true;
 		}
 	}
 	

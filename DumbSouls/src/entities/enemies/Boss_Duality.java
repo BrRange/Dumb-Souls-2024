@@ -47,7 +47,7 @@ public class Boss_Duality extends Enemy {
 		Player.souls += soulValue;
 		World.bossTime = false;
 		World.bossName = "";
-		Game.enemies.add(new Rune_Orb(centerX(), centerY(), 16, 16));
+		Game.enemies.add(new Rune_Orb(centerX(), centerY()));
 	}
 
 	private void closeAtk() {

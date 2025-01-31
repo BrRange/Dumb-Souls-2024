@@ -1,6 +1,7 @@
 package main;
 
 import entities.Player;
+import entities.runes.Rune;
 import graphics.TextObject;
 
 import java.awt.Color;
@@ -12,23 +13,26 @@ public class Menu_Runes {
 	runeBox = new TextObject("arial", Font.BOLD, 9, "Rune", 30, 40, Color.white),
 	equipBox = new TextObject("arial", Font.BOLD, 9, "Equip", 30, 60, Color.white),
 	unequipBox = new TextObject("arial", Font.BOLD, 9, "Unequip", 30, 80, Color.white),
-	deleteBox = new TextObject("arial", Font.BOLD, 9, "Delete", 30, 100, Color.white),
-	limitBox = new TextObject("arial", Font.BOLD, 9, "Limit Break", 30, 120, Color.white),
+	limitBox = new TextObject("arial", Font.BOLD, 9, "Rune slots", 30, 100, Player.runeLimit < Rune.runesInGame ? Color.white : Color.darkGray),
 	backBox = new TextObject("arial", Font.BOLD, 9, "Back", 30, 140, Color.white);
 	private static int cur = 0, curR = 0;
 	private static boolean clickR, clickL;
 	
-	public static void tick() {
-		if(Player.runesInventory.isEmpty()){
-			Game.gameStateHandler = Game.gameState.MENUPLAYER;
-		};
+	public static void startMenu(){
+		for(Rune rn : Player.runesInventory){
+			if(rn.collected){
+				curR = rn.index;
+				return;
+			}
+		}
+	}
 
+	public static void tick() {
 		if(runeBox.hover()) cur = 0;
 		if(equipBox.hover()) cur = 1;
 		if(unequipBox.hover()) cur = 2;
-		if(deleteBox.hover()) cur = 3;
-		if(limitBox.hover()) cur = 4;
-		if(backBox.hover()) cur = 5;
+		if(limitBox.hover()) cur = 3;
+		if(backBox.hover()) cur = 4;
 
 		boolean enter = Game.keyController.contains(10);
 		if (Game.keyController.contains(87) || Game.keyController.contains(38)) {//W UP
@@ -45,22 +49,26 @@ public class Menu_Runes {
 			if (Game.keyController.contains(68) || Game.keyController.contains(39) || Game.scrollNum > 0) {//D RIGHT
 				clickR = true;
 				clickL = false;
-				curR++;
-				if (curR > Player.runesInventory.size() - 1) curR = 0;
+				curR = curR + 1 == Rune.runesInGame ? 0 : curR + 1;
+				while(!Player.runesInventory.get(curR).collected){
+					curR = curR + 1 == Rune.runesInGame ? 0 : curR + 1;
+				}
 			}
 			if (Game.keyController.contains(65) || Game.keyController.contains(37) || Game.scrollNum < 0) {//A LEFT
 				clickR = false;
 				clickL = true;
-				curR--;
-				if (curR < 0) curR = Player.runesInventory.size() - 1;
+				curR = curR == 0 ? Rune.runesInGame - 1 : curR - 1;
+				while(!Player.runesInventory.get(curR).collected){
+					curR = curR == 0 ? Rune.runesInGame - 1 : curR - 1;
+				}
 			}
 		}
 		
 		if(cur == 1) {
 			if (enter || equipBox.click()) {
-				if (Game.player.runesEquipped.size() < Player.runeLimit ) {
+				if (Player.runesEquipped.size() < Player.runeLimit ) {
 					if (!Player.runesInventory.get(curR).equipped) {
-						Game.player.runesEquipped.add(Player.runesInventory.get(curR));
+						Player.runesEquipped.add(Player.runesInventory.get(curR));
 						Player.runesInventory.get(curR).equipped = true;
 					}
 				}
@@ -69,27 +77,23 @@ public class Menu_Runes {
 		
 		if(cur == 2) {
 			if (enter || unequipBox.click()) {
-				Game.player.runesEquipped.remove(Player.runesInventory.get(curR));
+				Player.runesEquipped.remove(Player.runesInventory.get(curR));
 				Player.runesInventory.get(curR).equipped = false;
 			}	
 		}
 		
 		if (cur == 3) {
-			if (enter || deleteBox.click()) {
-				Player.runesInventory.remove(Player.runesInventory.get(curR));
-			}	
-		}
-		
-		if (cur == 4) {
 			if (enter || limitBox.click()) {
-				if (Player.souls >= 5000) {
+				if (Player.souls >= 5000 && Player.runeLimit < Rune.runesInGame) {
 					Player.runeLimit ++;
 					Player.souls -= 5000;
+					if(Player.runeLimit == Rune.runesInGame)
+						limitBox.updateColor(Color.darkGray);
 				}
 			}	
 		}
 		
-		if (cur == 5) {
+		if (cur == 4) {
 			if (enter || backBox.click()) {
 				Game.gameStateHandler = Game.gameState.MENUPLAYER;
 			}	
@@ -135,7 +139,6 @@ public class Menu_Runes {
 		runeBox.render();
 		equipBox.render();
 		unequipBox.render();
-		deleteBox.render();
 		limitBox.render();
 		backBox.render();
 		
@@ -159,21 +162,20 @@ public class Menu_Runes {
 		}
 		else if (cur == 3) {
 			Game.gameGraphics.drawString(">", 20, 100);
+			if(Player.runeLimit < Rune.runesInGame){
+				Game.gameGraphics.setColor(new Color(74, 52, 160));
+				Game.gameGraphics.drawString("-5000 souls", 60, 109);
+			}
 		}
 		else if (cur == 4) {
-			Game.gameGraphics.drawString(">", 20, 120);
-			Game.gameGraphics.setColor(new Color(74, 52, 160));
-			Game.gameGraphics.drawString("-5000 souls", 60, 129);
-		}
-		else if (cur == 5) {
 			Game.gameGraphics.drawString(">", 20, 140);
 		}
 		
 		Game.gameGraphics.setColor(new Color(0, 127, 0));
 		Game.gameGraphics.setFont(new Font("arial", Font.BOLD, 9));
-		Game.gameGraphics.drawString("Rune Limit: " + Game.player.runesEquipped.size() + "/" + Player.runeLimit, 20, 150);
+		Game.gameGraphics.drawString("Rune slots: " + Player.runesEquipped.size() + "/" + Player.runeLimit, 100, 150);
 		
 		Game.gameGraphics.setColor(new Color(74, 52, 160));
-		Game.gameGraphics.drawString("Souls : " + Player.souls, 255, 150);
+		Game.gameGraphics.drawString("Souls: " + Player.souls, 255, 150);
 	}
 }

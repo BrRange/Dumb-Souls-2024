@@ -16,12 +16,12 @@ public class Weapon_Wind extends Weapon {
 	private int hrcDamage = 1, ablt3Dmg = 6;
 	private double hrcSpeed = 0.8, ablt3Spd = 5;
 	public static int soulCost = 100;
-	public static boolean block = true;
+	public static boolean unlocked = false;
 	private SoundPlayer sound1, sound2;
 	
 	public Weapon_Wind() {
 		shotFace = Game.sheet.getSprite(128, 32, 16, 16);
-		super.setAttackTimer(2);
+		setAttackTimer(2);
 		Game.player.push = 5;
 		sound1 = new SoundPlayer("res/sounds/wind_atk.wav");
 		sound2 = new SoundPlayer("res/sounds/wind_ablt2.wav");

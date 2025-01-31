@@ -15,7 +15,7 @@ public class Weapon_Ice extends Weapon{
 	private double specialMoveSpd = 0.5;
 	private static double frost = 5;
 	public static int soulCost = 400;
-	 public static boolean block = true;
+	 public static boolean unlocked = false;
 	
 	public Weapon_Ice() {
 		setAttackTimer(6);

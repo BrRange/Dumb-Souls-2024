@@ -9,10 +9,7 @@ public class Life_Rune extends Rune {
 	public static BufferedImage sprite = Game.sheet.getSprite(0, 256, 16, 16);
 	
 	public Life_Rune() {
-		super(sprite);
-		name = "Rune of Life";
-		index = 1;
-		description = "Health +50, Regen +0.1%";
+		super("Vitae Rune", "Provides increased vitality", 0, sprite);
 	}
 	
 	public void tick() {

@@ -14,7 +14,7 @@ public class Weapon_Mana extends Weapon {
 	private float dashPercent = 1.5f;
 	private static int ablt2Dmg = 25, ablt2Knck = 8, qntSpcShots, grafEfcCont;
 	public static int soulCost = 0;
-	public static boolean block = false;
+	public static boolean unlocked = true;
 
 	public Weapon_Mana() {
 		imgPowerMove = Game.sheet.getSprite(176, 128, 16, 16);
@@ -129,9 +129,19 @@ public class Weapon_Mana extends Weapon {
 
 	public void powerMove() {
 		int manaCost = 68;
-		if (availablePowerMove && Game.player.mana >= manaCost && qntSpcShots == 0) {
+		if (availablePowerMove && Game.player.mana >= manaCost && !usePowerMove) {
 			Game.player.mana -= manaCost;
 			qntSpcShots += spcShotsGain;
+			usePowerMove = true;
+		}
+		else if(usePowerMove){
+			if (grafEfcCont == 10) {
+				grafEfcCont = 0;
+				Game.entities.add(new AE_Animation(Game.player.centerX(), Game.player.centerY(), 16, 16, 15, 96, 144));
+			}
+			grafEfcCont++;
+			if(qntSpcShots == 0)
+				usePowerMove = false;
 		}
 	}
 
@@ -160,17 +170,6 @@ public class Weapon_Mana extends Weapon {
 		} else {
 			Game.shots.add(new Shot_PlayerMana(Game.player.centerX(), Game.player.centerY(), dx, dy, ang, shotSpeed,
 					shotDamage, 0, 0));
-		}
-	}
-
-	public void render() {
-		Game.gameGraphics.drawImage(animation[index], (Game.player.pos.getX() - Camera.getX()) - 12, (Game.player.pos.getY() - Camera.getY()) - 8, null);
-		if (qntSpcShots > 0) {
-			if (grafEfcCont == 10) {
-				grafEfcCont = 0;
-				Game.entities.add(new AE_Animation(Game.player.centerX(), Game.player.centerY(), 16, 16, 15, 96, 144));
-			}
-			grafEfcCont++;
 		}
 	}
 }

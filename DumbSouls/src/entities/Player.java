@@ -15,7 +15,6 @@ import world.World;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Player extends Entity {
 
@@ -30,8 +29,7 @@ public class Player extends Entity {
 	public double maxSpeed = 1.5, speed = maxSpeed, speedBoost = 1, mana = 100, manaRec = 2, lifeRec = 1.001;
 	public Vector moveDir = new Vector(0, 0);
 	public Weapon playerWeapon;
-	public static List<Rune> runesInventory;
-	public List<Rune> runesEquipped;
+	public static ArrayList<Rune> runesInventory, runesEquipped;
 	public static int runeLimit = 3;
 
 	private BufferedImage[] playerDown;
@@ -48,9 +46,8 @@ public class Player extends Entity {
 		playerRight = new BufferedImage[4];
 		playerLeft = new BufferedImage[4];
 		playerUp = new BufferedImage[4];
-
-		runesInventory = runesInventory == null ? new ArrayList<Rune>() : runesInventory;
-		runesEquipped = new ArrayList<Rune>();
+		runesInventory = runesInventory == null ? new ArrayList<Rune>(5) : runesInventory;
+		runesEquipped = runesEquipped == null ? new ArrayList<Rune>(5) : runesEquipped;
 
 		for (int xsp = 0; xsp < 4; xsp++) {
 			playerDown[xsp] = Game.sheet.getSprite(xsp * 16, 16, 16, 16);

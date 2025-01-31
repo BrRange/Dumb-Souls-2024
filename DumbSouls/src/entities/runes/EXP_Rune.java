@@ -9,10 +9,8 @@ public class EXP_Rune extends Rune {
 	public static BufferedImage sprite = Game.sheet.getSprite(64, 256, 16, 16);
 	
 	public EXP_Rune() {
-		super(sprite);
-		name = "Rune of Experience";
-		index = 4;
-		description = "Passive EXP +10, scales per level";
+		super("Cognitionis Rune", "Grants a constant flow of experience", 4, sprite);
+		super.sprite = sprite;
 	}
 	
 	public void tick() {

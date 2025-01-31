@@ -59,6 +59,7 @@ public class Menu_Init {
 			Game.gameGraphics.drawString(">", 90, 60);
 			if (Game.keyController.contains(10)){
 				Game.keyController.clear();
+				Menu_Player.startMenu();
 				Game.gameStateHandler = Game.gameState.MENUPLAYER;
 			}
 		}
