@@ -11,15 +11,14 @@ import world.Camera;
 
 public class Weapon_Fisical extends Weapon {
 	public static BufferedImage shotFace;
-	public static BufferedImage sprite = Game.sheet.getSprite(144, 16, 16, 16);
-	private int ablt2Dmg = 10, ablt2Size = 64, ablt3Dmg = 6, tspw, combo;
+	private int powerMoveDmg = 10, powerMoveSize = 64, specialMoveDmg = 6, specialMoveTick, combo;
 	public static int soulCost = 500;
 	public static boolean block = true;
+	public static BufferedImage sprite = Game.sheet.getSprite(144, 16, 16, 16);
 
 	public Weapon_Fisical() {
-		super(sprite);
 		shotFace = Game.sheet.getSprite(211, 19, 10, 10);
-		super.setAttackTimer(3);
+		setAttackTimer(3);
 		Game.player.push = 10;
 		attackTimer = 12;
 		setOptionsNames(9);
@@ -59,27 +58,28 @@ public class Weapon_Fisical extends Weapon {
 				break;
 			case "Punch Strength":
 				shotDamage += 2;
+				Game.player.push += 2;
 				break;
 			case "Fisical Dash":
-				if (dashAva == false) {
-					dashAva = true;
+				if (availableDash == false) {
+					availableDash = true;
 				} else {
 					dashDuration += 20;
 				}
 				break;
 			case "Strength Wave":
-				if (ablt2Ava == false) {
-					ablt2Ava = true;
+				if (availablePowerMove == false) {
+					availablePowerMove = true;
 				} else {
-					ablt2Size += 24;
-					ablt2Dmg += 5;
+					powerMoveSize += 24;
+					powerMoveDmg += 5;
 				}
 				break;
 			case "Punch Rain":
-				if (ablt3Ava == false) {
-					ablt3Ava = true;
+				if (availableSpecialMove == false) {
+					availableSpecialMove = true;
 				} else {
-					ablt3Dmg += 3;
+					specialMoveDmg += 3;
 				}
 				break;
 			case "Fisical Condition":
@@ -126,53 +126,53 @@ public class Weapon_Fisical extends Weapon {
 	public void Dash() {
 		int manaCost = 4;
 
-		if (dashAva && Game.player.mana >= manaCost && !md1) {
-			md1 = true;
+		if (availableDash && Game.player.mana >= manaCost && !useDash) {
+			useDash = true;
 			Game.player.mana -= manaCost;
 		}
-		if (md1) {
+		if (useDash) {
 			dashTick += 1;
 			Game.entities.add(new AE_Animation(Game.player.pos.getX() + Game.rand.nextInt(16),
 					Game.player.pos.getY() + Game.rand.nextInt(16), 16, 16, 20, 192, 128));
 			Game.player.speedBoost *= 3;
 			if (dashTick >= dashDuration) {
 				dashTick = 0;
-				md1 = false;
+				useDash = false;
 			}
 		}
 	}
 
-	public void Ablt2() {
+	public void powerMove() {
 		int manaCost = 30;
-		if (ablt2Ava && Game.player.mana >= manaCost && !md2) {
-			md2 = true;
+		if (availablePowerMove && Game.player.mana >= manaCost && !usePowerMove) {
+			usePowerMove = true;
 			Game.player.mana -= manaCost;
 		}
-		if (md2) {
-			Game.entities.add(new AE_Rupture(Game.player.centerX(), Game.player.centerY(), ablt2Size, 80, ablt2Dmg));
-			md2 = false;
+		if (usePowerMove) {
+			Game.entities.add(new AE_Rupture(Game.player.centerX(), Game.player.centerY(), powerMoveSize, 80, powerMoveDmg));
+			usePowerMove = false;
 		}
 	}
 
-	public void Ablt3() {
+	public void specialMove() {
 		int manaCost = 50;
-		if (ablt3Ava && Game.player.mana >= manaCost && !md3) {
-			md3 = true;
+		if (availableSpecialMove && Game.player.mana >= manaCost && !useSpecialMove) {
+			useSpecialMove = true;
 			Game.player.mana -= manaCost;
 		}
-		if (md3) {
-			tspw++;
+		if (useSpecialMove) {
+			specialMoveTick++;
 			int off = Game.rand.nextInt(20);
 			double deltaX = Game.mx / Game.scale + off - Game.player.centerX() + Camera.getX();
 			double deltaY = Game.my / Game.scale + off - Game.player.centerY() + Camera.getY();
 			double mag = Math.hypot(deltaX, deltaY);
-			if (tspw % 2 == 0) {
+			if (specialMoveTick % 2 == 0) {
 				Game.entities.add(new AE_PunchRain(Game.player.centerX(), Game.player.centerY(), deltaX / mag,
-						deltaY / mag, ablt3Dmg));
+						deltaY / mag, specialMoveDmg));
 			}
-			if (tspw == 40) {
-				tspw = 0;
-				md3 = false;
+			if (specialMoveTick >= 40) {
+				specialMoveTick = 0;
+				useSpecialMove = false;
 			}
 		}
 	}

@@ -25,7 +25,7 @@ public class AE_WindDS extends AE_Attack_Entity {
 
 	Function<Enemy, Void> attackCollision = (target) -> { 
 		target.life -= 0.2;
-		target.receiveKnockback(this);
+		target.receiveKnockback(this, push);
 		return null;
 	};
 }

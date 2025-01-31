@@ -17,9 +17,8 @@ public class Weapon_Mana extends Weapon {
 	public static boolean block = false;
 
 	public Weapon_Mana() {
-		super(sprite);
-		ablt2Img = Game.sheet.getSprite(176, 128, 16, 16);
-		ablt3Img = Game.sheet.getSprite(0, 224, 16, 16);
+		imgPowerMove = Game.sheet.getSprite(176, 128, 16, 16);
+		imgSpecialMove = Game.sheet.getSprite(0, 224, 16, 16);
 		qntSpcShots = 0;
 		setAttackTimer(6);
 		setOptionsNames(9);
@@ -76,28 +75,28 @@ public class Weapon_Mana extends Weapon {
 				shotSpeed += 1;
 				break;
 			case "Mana Step":
-				if (dashAva) {
+				if (availableDash) {
 					dashDuration += 300;
 					dashPercent += 0.25f;
 				} else {
-					dashAva = true;
+					availableDash = true;
 				}
 				break;
 			case "Mana Explosion":
-				if (ablt2Ava) {
+				if (availablePowerMove) {
 					ablt2Dmg += 5;
 					ablt2Knck += 4;
 					spcShotsGain += 5;
 				} else {
-					ablt2Ava = true;
+					availablePowerMove = true;
 				}
 				break;
 			case "Mana Ray":
-				if (ablt3Ava) {
+				if (availableSpecialMove) {
 					ablt3Dmg += 2;
 					timeAblt3 += 30;
 				} else {
-					ablt3Ava = true;
+					availableSpecialMove = true;
 				}
 				break;
 		}
@@ -105,11 +104,11 @@ public class Weapon_Mana extends Weapon {
 
 	public void Dash() {
 		int manaCost = 40;
-		if (dashAva && Game.player.mana >= manaCost && !md1) {
-			md1 = true;
+		if (availableDash && Game.player.mana >= manaCost && !useDash) {
+			useDash = true;
 			Game.player.mana -= manaCost;
 		}
-		if (md1) {
+		if (useDash) {
 			Game.player.speedBoost *= dashPercent;
 			if (dashTick % 10 == 0) {
 				Game.entities.add(new AE_Animation(Game.player.centerX(), Game.player.centerY(), 16, 16, 20, 192, 128));
@@ -123,29 +122,29 @@ public class Weapon_Mana extends Weapon {
 			dashTick ++;
 			if (dashTick >= dashDuration) {
 				dashTick = 0;
-				md1 = false;
+				useDash = false;
 			}
 		}
 	}
 
-	public void Ablt2() {
+	public void powerMove() {
 		int manaCost = 68;
-		if (ablt2Ava && Game.player.mana >= manaCost && qntSpcShots == 0) {
+		if (availablePowerMove && Game.player.mana >= manaCost && qntSpcShots == 0) {
 			Game.player.mana -= manaCost;
 			qntSpcShots += spcShotsGain;
 		}
 	}
 
-	public void Ablt3() {
+	public void specialMove() {
 		int manaCost = 35;
-		if (ablt3Ava && Game.player.mana >= manaCost && !md3) {
-			md3 = true;
+		if (availableSpecialMove && Game.player.mana >= manaCost && !useSpecialMove) {
+			useSpecialMove = true;
 			Game.player.mana -= manaCost;
 		}
-		if (md3) {
+		if (useSpecialMove) {
 			Game.entities.add(
 					new AE_ManaRay(Game.player.centerX(), Game.player.centerY(), timeAblt3, ablt3Dmg));
-			md3 = false;
+			useSpecialMove = false;
 		}
 	}
 
@@ -164,7 +163,8 @@ public class Weapon_Mana extends Weapon {
 		}
 	}
 
-	public static void grafficEffect() {
+	public void render() {
+		Game.gameGraphics.drawImage(animation[index], (Game.player.pos.getX() - Camera.getX()) - 12, (Game.player.pos.getY() - Camera.getY()) - 8, null);
 		if (qntSpcShots > 0) {
 			if (grafEfcCont == 10) {
 				grafEfcCont = 0;

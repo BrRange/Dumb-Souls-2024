@@ -77,28 +77,28 @@ public class UI {
 	}
 
 	private void skills(){
-		if(Game.player.playerWeapon.dashAva){
+		if(Game.player.playerWeapon.availableDash){
 			Game.gameGraphics.setColor(new Color(50, 50, 50));
 			Game.gameGraphics.fillRect(20, 320, 60, 60);
 			Game.gameGraphics.setColor(Color.black);
 			Game.gameGraphics.fillRect(25, 325, 50, 50);
-			Game.gameGraphics.drawImage(Game.player.playerWeapon.ablt2Img, 25, 325, 50, 50, null);
+			Game.gameGraphics.drawImage(Game.player.playerWeapon.imgDash, 25, 325, 50, 50, null);
 			Game.gameGraphics.drawImage(spaceIcon, 56, 356, 48, 48, null);
 		}
-		if(Game.player.playerWeapon.ablt2Ava){
+		if(Game.player.playerWeapon.availablePowerMove){
 			Game.gameGraphics.setColor(new Color(50, 50, 50));
 			Game.gameGraphics.fillRect(20, 400, 60, 60);
 			Game.gameGraphics.setColor(Color.black);
 			Game.gameGraphics.fillRect(25, 405, 50, 50);
-			Game.gameGraphics.drawImage(Game.player.playerWeapon.ablt2Img, 25, 405, 50, 50, null);
+			Game.gameGraphics.drawImage(Game.player.playerWeapon.imgPowerMove, 25, 405, 50, 50, null);
 			Game.gameGraphics.drawImage(shiftIcon, 56, 436, 48, 48, null);
 		}
-		if(Game.player.playerWeapon.ablt3Ava){
+		if(Game.player.playerWeapon.availableSpecialMove){
 			Game.gameGraphics.setColor(new Color(50, 50, 50));
 			Game.gameGraphics.fillRect(100, 400, 60, 60);
 			Game.gameGraphics.setColor(new Color(15, 15, 15));
 			Game.gameGraphics.fillRect(105, 405, 50, 50);
-			Game.gameGraphics.drawImage(Game.player.playerWeapon.ablt3Img, 105, 405, 50, 50, null);
+			Game.gameGraphics.drawImage(Game.player.playerWeapon.imgSpecialMove, 105, 405, 50, 50, null);
 			Game.gameGraphics.drawImage(controlIcon, 136, 436, 48, 48, null);
 		}
 	}

@@ -13,16 +13,15 @@ public class Weapon_Fire extends Weapon {
 	
 	public static BufferedImage shotFace;
 	public static BufferedImage sprite = Game.sheet.getSprite(64, 16, 16, 16);
-	private int tspw, tspw2, maxtspw2 = 60, ablt2Dmg = 1, ablt3Dmg = 16;
-	private double ablt3Spd = 0.8;
+	private int powerMoveDmg = 1, powerMoveTick, powerMoveDuration = 60, specialMoveDmg = 16;
+	private double specialMoveSpd = 0.8;
 	public static int soulCost = 100;
 	public static boolean block = true;
 	private SoundPlayer sound1, sound2, sound3;
 	
 	public Weapon_Fire() {
-		super(sprite);
 		shotFace = Game.sheet.getSprite(128, 16, 16, 16);
-		super.setAttackTimer(3);
+		setAttackTimer(3);
 		sound1 = new SoundPlayer("res/sounds/fire_atk.wav");
 		sound2 = new SoundPlayer("res/sounds/fire_ablt1.wav");
 		sound3 = new SoundPlayer("res/sounds/fire_ablt2.wav");
@@ -68,29 +67,29 @@ public class Weapon_Fire extends Weapon {
 				shotSpeed += 1;
 				break;
 			case "Fire Dash":
-				if (dashAva == false) {
-					dashAva = true;
+				if (availableDash == false) {
+					availableDash = true;
 				}
 				else {
 					dashDuration += 15;
 				}
 				break;
 			case "Blaze":
-				if (ablt2Ava == false) {
-					ablt2Ava = true;
+				if (availablePowerMove == false) {
+					availablePowerMove = true;
 				}
 				else {
-					ablt2Dmg += 1;
-					maxtspw2 += 5;
+					powerMoveDmg += 1;
+					powerMoveDuration += 5;
 				}
 				break;
 			case "Hell Flame":
-				if (ablt3Ava == false) {
-					ablt3Ava = true;
+				if (availableSpecialMove == false) {
+					availableSpecialMove = true;
 				}
 				else {
-					ablt3Dmg += 3;
-					ablt3Spd += 0.2;
+					specialMoveDmg += 3;
+					specialMoveSpd += 0.2;
 				}
 				break;
 			}
@@ -108,68 +107,63 @@ public class Weapon_Fire extends Weapon {
 	public void Dash() {
 		int manaCost = 12;
 		
-		if (dashAva && Game.player.mana >= manaCost && !md1) {
-			md1 = true;
+		if (availableDash && Game.player.mana >= manaCost && !useDash) {
+			useDash = true;
 			Game.player.mana -= manaCost;
 			sound3.PlaySound();
 		}
-		if (md1) {
+		if (useDash) {
 			Game.player.speedBoost *= 2.5;
 			
 			dashTick += 1;
-			if (tspw > 2) {
-				tspw = 0;
-			}
-			tspw ++;
-			if (tspw == 2) {
+			if (dashTick % 2 == 0) {
 				Game.entities.add(new AE_Fire(Game.player.centerX(), Game.player.centerY(), 125));
-				tspw = 0;
 			}
 			if (dashTick >= dashDuration) {
-				md1 = false;
+				useDash = false;
 				dashTick = 0;
 				Game.player.speed = Game.player.maxSpeed;
 			}
 		}
 	}
 	
-	public void Ablt2() {
+	public void powerMove() {
 		int manaCost = 34;
-		if (ablt2Ava && Game.player.mana >= manaCost && !md2) {
+		if (availablePowerMove && Game.player.mana >= manaCost && !usePowerMove) {
 			sound2.PlaySound();
-			md2 = true;
+			usePowerMove = true;
 			Game.player.mana -= manaCost;
 		}
-		if (md2) {
-			tspw2++;
+		if (usePowerMove) {
+			powerMoveTick++;
 			double deltaX = Game.mx / Game.scale - Game.player.centerX() + Camera.getX();
 			double deltaY = Game.my / Game.scale - Game.player.centerY() + Camera.getY();
 			double mag = getMagnitude(deltaX, deltaY);
-			if (tspw2 % 4 == 0) {
-				Game.entities.add(new AE_Fire2(Game.player.centerX(), Game.player.centerY(), deltaX / mag, deltaY / mag, ablt2Dmg));
+			if (powerMoveTick % 4 == 0) {
+				Game.entities.add(new AE_Fire2(Game.player.centerX(), Game.player.centerY(), deltaX / mag, deltaY / mag,powerMoveDmg));
 			}
-			if (tspw2 == maxtspw2) {
-				tspw2 = 0;
-				md2 = false;
+			if (powerMoveTick >= powerMoveDuration) {
+				powerMoveTick = 0;
+				usePowerMove = false;
 				sound2.StopSound();
 			}
 		}
 	}
 	
-	public void Ablt3() {
+	public void specialMove() {
 		int manaCost = 68;
 		
-		if (ablt3Ava && Game.player.mana >= manaCost && !md3) {
+		if (availableSpecialMove && Game.player.mana >= manaCost && !useSpecialMove) {
 			sound3.PlaySound();
-			md3 = true;
+			useSpecialMove = true;
 			Game.player.mana -= manaCost;
 		}
-		if(md3){
+		if(useSpecialMove){
 			double deltaX = Game.mx / Game.scale - Game.player.centerX() + Camera.getX();
 			double deltaY = Game.my / Game.scale - Game.player.centerY() + Camera.getY();
 			double mag = Math.hypot(deltaX, deltaY);
-			Game.entities.add(new AE_HellFlame(Game.player.centerX(), Game.player.centerY(), ablt3Spd, deltaX / mag, deltaY / mag, ablt3Dmg));
-			md3 = false;
+			Game.entities.add(new AE_HellFlame(Game.player.centerX(), Game.player.centerY(), specialMoveSpd, deltaX / mag, deltaY / mag, specialMoveDmg));
+			useSpecialMove = false;
 		}	
 	}
 }

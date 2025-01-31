@@ -2,7 +2,7 @@ package entities.runes;
 
 import java.awt.image.BufferedImage;
 
-public class Rune {
+public abstract class Rune {
 	
 	public BufferedImage sprite;
 	public boolean equipped;
@@ -15,8 +15,6 @@ public class Rune {
 		description = "Default desc.";
 	}
 	
-	public void tick() {
-		
-	}
+	public abstract void tick();
 	
 }

@@ -11,15 +11,14 @@ import entities.AE.AE_SnowStorm;
 public class Weapon_Ice extends Weapon{
 	
 	public static BufferedImage sprite = Game.sheet.getSprite(64, 48, 16, 16);
-	private int ablt2Dmg = 4, ablt2Quant = 3, ablt3Dmg = 5;
-	private double ablt3Spd = 0.5;
+	private int powerMoveDmg = 4, powerMoveAmount = 3, specialMoveDmg = 5;
+	private double specialMoveSpd = 0.5;
 	private static double frost = 5;
 	public static int soulCost = 400;
 	 public static boolean block = true;
 	
 	public Weapon_Ice() {
-		super(sprite);
-		super.setAttackTimer(6);
+		setAttackTimer(6);
 		setOptionsNames(9);
 		getAnimation(80, 48, 16, 16, 3);
 		dashDuration = 150;
@@ -64,29 +63,29 @@ public class Weapon_Ice extends Weapon{
 				frost += 0.5;
 				break;
 			case "Ice Dash":
-				if (dashAva == false) {
-					dashAva = true;
+				if (availableDash == false) {
+					availableDash = true;
 				}
 				else {
 					dashDuration += 20;
 				}
 				break;
 			case "Ice Spike":
-				if (ablt2Ava == false) {
-					ablt2Ava = true;
+				if (availablePowerMove == false) {
+					availablePowerMove = true;
 				}
 				else {
-					ablt2Quant += 1;
-					ablt2Dmg += 2;
+					powerMoveAmount += 1;
+					powerMoveDmg += 2;
 				}
 				break;
 			case "Snow Storm":
-				if (ablt3Ava == false) {
-					ablt3Ava = true;
+				if (availableSpecialMove == false) {
+					availableSpecialMove = true;
 				}
 				else {
-					ablt3Dmg += 2;
-					ablt3Spd += 0.3;
+					specialMoveDmg += 2;
+					specialMoveSpd += 0.3;
 				}
 				break;
 		}
@@ -102,11 +101,11 @@ public class Weapon_Ice extends Weapon{
 	
 	public void Dash() {
 		int manaCost = 25;
-		if (dashAva && Game.player.mana >= manaCost && !md1) {
-			md1 = true;
+		if (availableDash && Game.player.mana >= manaCost && !useDash) {
+			useDash = true;
 			Game.player.mana -= manaCost;
 		}
-		if (md1) {
+		if (useDash) {
 			dashTick ++;
 			double dashSpeed = Game.player.speed / 3;
 			if (dashTick < dashDuration) {
@@ -116,37 +115,37 @@ public class Weapon_Ice extends Weapon{
 				}
 			}
 			else {
-				md1 = false;
+				useDash = false;
 				dashTick = 0;
 			}
 		}
 	}
 
-	public void Ablt2() {
+	public void powerMove() {
 		int manaCost = 50;
-		if (ablt2Ava && Game.player.mana >= manaCost && !md2) {
-			md2 = true;
+		if (availablePowerMove && Game.player.mana >= manaCost && !usePowerMove) {
+			usePowerMove = true;
 			Game.player.mana -= manaCost;
 		}
-		if (md2) {
+		if (usePowerMove) {
 			for (int c = 0; c < 8; c++) {
-				for (int i = 1; i <= ablt2Quant; i++) {
-					Game.entities.add(new AE_IceSpike((int)(Game.player.centerX() + i * 14 * Math.cos(c * Math.PI / 4)), (int)(Game.player.centerY() + i * 14 * Math.sin(c * Math.PI / 4)), ablt2Dmg));
+				for (int i = 1; i <= powerMoveAmount; i++) {
+					Game.entities.add(new AE_IceSpike((int)(Game.player.pos.getX() + i * 14 * Math.cos(c * Math.PI / 4)), (int)(Game.player.centerY() + i * 14 * Math.sin(c * Math.PI / 4)), powerMoveDmg));
 				}
 			}
-			md2 = false;
+			usePowerMove = false;
 		}
 	}
 	
-	public void Ablt3() {
+	public void specialMove() {
 		int manaCost = 60;
-		if (ablt3Ava && Game.player.mana >= manaCost && !md3) {
-			md3 = true;
+		if (availableSpecialMove && Game.player.mana >= manaCost && !useSpecialMove) {
+			useSpecialMove = true;
 			Game.player.mana -= manaCost;
 		}
-		if (md3) {
-			Game.entities.add(new AE_SnowStorm(Game.player.centerX(), Game.player.centerY(), ablt3Spd, ablt3Dmg));
-			md3 = false;
+		if (useSpecialMove) {
+			Game.entities.add(new AE_SnowStorm(Game.player.centerX(), Game.player.centerY(), specialMoveSpd, specialMoveDmg));
+			useSpecialMove = false;
 		}
 	}
 }

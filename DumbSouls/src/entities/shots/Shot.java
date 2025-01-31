@@ -17,7 +17,6 @@ public class Shot extends Entity{
 		damage = dmg;
 		maxLife = this.life = life;
 		sprite = Shader.rotate(sprite, ang);
-		push = Game.player.push;
 		setMask(0, 0, w, h);
 	}
 

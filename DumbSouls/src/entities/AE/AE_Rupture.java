@@ -38,7 +38,7 @@ public class AE_Rupture extends AE_Attack_Entity {
 
 	Function<Enemy, Void> attackCollision = (target) -> { 
 		target.life -= damage;
-		target.receiveKnockback(Game.player);
+		target.receiveKnockback(this, damage);
 		return null;
 	};
 	

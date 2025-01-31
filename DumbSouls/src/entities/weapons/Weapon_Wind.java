@@ -20,7 +20,6 @@ public class Weapon_Wind extends Weapon {
 	private SoundPlayer sound1, sound2;
 	
 	public Weapon_Wind() {
-		super(sprite);
 		shotFace = Game.sheet.getSprite(128, 32, 16, 16);
 		super.setAttackTimer(2);
 		Game.player.push = 5;
@@ -70,16 +69,16 @@ public class Weapon_Wind extends Weapon {
 			Game.player.push += 0.2;
 			break;
 		case "Wind Dash":
-			if (dashAva == false) {
-				dashAva = true;
+			if (availableDash == false) {
+				availableDash = true;
 			}
 			else {
 				dashDuration += 5;
 			}
 			break;
 		case "Hurricane":
-			if (ablt2Ava == false) {
-				ablt2Ava = true;
+			if (availablePowerMove == false) {
+				availablePowerMove = true;
 			}
 			else {
 				hrcSpeed += 0.1;
@@ -87,8 +86,8 @@ public class Weapon_Wind extends Weapon {
 			}
 			break;
 		case "Wind Barrage":
-			if (ablt3Ava == false) {
-				ablt3Ava = true;
+			if (availableSpecialMove == false) {
+				availableSpecialMove = true;
 			}
 			else {
 				ablt3Dmg += 2;
@@ -109,11 +108,11 @@ public class Weapon_Wind extends Weapon {
 	
 	public void Dash() {
 		int manaCost = 20;
-		if (dashAva && Game.player.mana >= manaCost && !md1) {
-			md1 = true;
+		if (availableDash && Game.player.mana >= manaCost && !useDash) {
+			useDash = true;
 			Game.player.mana -= manaCost;
 		}
-		if(md1) {
+		if(useDash) {
 			Game.entities.add(new AE_WindDS(Game.player.pos.getX(), Game.player.pos.getY(), dashDuration));
 			dashTick ++;
 			if (dashTick < dashDuration) {
@@ -121,37 +120,37 @@ public class Weapon_Wind extends Weapon {
 			}
 			else {
 				dashTick = 0;
-				md1 = false;
+				useDash = false;
 			}
 		}
 	}
 	
-	public void Ablt2() {
+	public void powerMove() {
 		int manaCost = 64;
-		if (ablt2Ava && Game.player.mana >= manaCost && !md2) {
-			md2 = true;
+		if (availablePowerMove && Game.player.mana >= manaCost && !usePowerMove) {
+			usePowerMove = true;
 			Game.player.mana -= manaCost;
 		}
-		if (md2) {
-			md2 = false;
+		if (usePowerMove) {
+			usePowerMove = false;
 			Game.entities.add(new AE_Hurricane(Game.player.centerX(), Game.player.centerY(), hrcSpeed, hrcDamage));
 		}
 	}
 	
-	public void Ablt3() {
+	public void specialMove() {
 		int manaCost = 36;
-		if (ablt3Ava && Game.player.mana >= manaCost && !md3) {
+		if (availableSpecialMove && Game.player.mana >= manaCost && !useSpecialMove) {
 			sound2.PlaySound();
-			md3 = true;
+			useSpecialMove = true;
 			Game.player.mana -= manaCost;
 		}
-		if (md3) {
+		if (useSpecialMove) {
 			double deltaX = Game.mx / Game.scale - Game.player.centerX() + Camera.getX();
 			double deltaY = Game.my / Game.scale - Game.player.centerY() + Camera.getY();
 			double mag = Math.hypot(deltaX, deltaY);
 			if(mag == 0) mag = 1;
 			Game.entities.add(new AE_WindBarrage(Game.player.centerX(), Game.player.centerY(), 32, 32, ablt3Spd, deltaX / mag, deltaY / mag, ablt3Dmg, 30));
-			md3 = false;
+			useSpecialMove = false;
 		}
 	}
 }

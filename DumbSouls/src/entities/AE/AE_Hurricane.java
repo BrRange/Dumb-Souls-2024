@@ -20,7 +20,7 @@ public class AE_Hurricane extends AE_Attack_Entity{
 
 	Function<Enemy, Void> attackCollision = (target) -> { 
 		target.life -= damage;
-		target.receiveKnockback(this);
+		target.receiveKnockback(this, push);
         return null;
 	};
 	

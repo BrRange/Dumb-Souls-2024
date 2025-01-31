@@ -8,7 +8,7 @@ import java.util.function.Function;
 import main.Game;
 import world.Camera;
 
-public class AE_Attack_Entity extends Entity {
+public abstract class AE_Attack_Entity extends Entity {
 	protected int tickTimer = 0, maxFrames = 20, frames = 0, index = 0, maxIndex = 2;
 	protected BufferedImage[] animation;
 	
@@ -28,10 +28,6 @@ public class AE_Attack_Entity extends Entity {
 	
 	protected void die() {
 		Game.entities.remove(this);
-	}
-	
-	public void tick() {
-		
 	}
 
 	protected void collisionEnemy(boolean hasTickTimer, int framesDamage, Function<Enemy, Void> attack) {

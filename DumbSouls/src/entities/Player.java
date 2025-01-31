@@ -3,7 +3,6 @@ package entities;
 import entities.runes.Rune;
 import entities.shots.Shot;
 import entities.weapons.Weapon;
-import entities.weapons.Weapon_Mana;
 import graphics.Shader;
 import graphics.UI;
 import main.Game;
@@ -166,23 +165,23 @@ public class Player extends Entity {
 	}
 
 	private void castAblt() {
-		if (playerWeapon.md1)
+		if (playerWeapon.useDash)
 			playerWeapon.Dash();
-		if (playerWeapon.md2)
-			playerWeapon.Ablt2();
-		if (playerWeapon.md3)
-			playerWeapon.Ablt3();
+		if (playerWeapon.usePowerMove)
+			playerWeapon.powerMove();
+		if (playerWeapon.useSpecialMove)
+			playerWeapon.specialMove();
 		if (abltCooldown == 0) {
 			if (Game.keyController.contains(32)) {
 				playerWeapon.Dash();
 				abltCooldown = 30;
 			}
 			if (Game.keyController.contains(16)) {
-				playerWeapon.Ablt2();
+				playerWeapon.powerMove();
 				abltCooldown = 30;
 			}
 			if (Game.keyController.contains(17)) {
-				playerWeapon.Ablt3();
+				playerWeapon.specialMove();
 				abltCooldown = 30;
 			}
 		} else {
@@ -228,7 +227,6 @@ public class Player extends Entity {
 			die();
 
 		playerWeapon.tick();
-		playerWeapon.Effect();
 		runeTick();
 
 		pos.move(speed * speedBoost * moveDir.x, speed * speedBoost * moveDir.y);
@@ -240,10 +238,6 @@ public class Player extends Entity {
 		checkExp();
 		shotDamage();
 		damagedAnimation();
-
-		if (playerWeapon instanceof Weapon_Mana) {
-			Weapon_Mana.grafficEffect();
-		}
 
 		final int MED = 2; // Mouse-Efectiveness-Denominator
 		Camera.Clamp(pos.getX() + camXOffset + (Game.mx / Game.scale - Game.width / 2) / MED,

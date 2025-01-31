@@ -20,9 +20,7 @@ public class Weapon_Poison extends Weapon{
     public static boolean block = true;
 	
     public Weapon_Poison() {
-		super(sprite);
-		super.setAttackTimer(30);
-		
+		setAttackTimer(30);
         setOptionsNames(9);
         getAnimation(160, 32, 16, 16, 3);
 		dashDuration = 120;
@@ -63,31 +61,31 @@ public class Weapon_Poison extends Weapon{
             		poisonPoolSize += 8;
             	break;
             case "Poison Barrier":
-            	if (dashAva) {
+            	if (availableDash) {
             		dashSize += 2;
             		dashDamage += 2;
             		dashDuration += 30;
             	}
             	else {
-            		dashAva = true;
+            		availableDash = true;
             	}
             	break;
             case "Venom Pool":
-            	if (ablt2Ava) {
+            	if (availablePowerMove) {
             		ablt2S += 16;
             		ablt2D += 1;
             	}
             	else {
-            		ablt2Ava = true;
+            		availablePowerMove = true;
             	}
             	break;
             case "Venom Gas":
-            	if (ablt3Ava) {
+            	if (availableSpecialMove) {
             		 maxTspw += 20;
                 	 ablt3D += 0.03;
             	}
             	else {
-            		ablt3Ava = true;
+            		availableSpecialMove = true;
             	}
             	break;
         }
@@ -104,39 +102,39 @@ public class Weapon_Poison extends Weapon{
     public void Dash() {
 		int manaCost = 30;
 		
-		if (dashAva && Game.player.mana >= manaCost && !md1) {
-			md1 = true;
+		if (availableDash && Game.player.mana >= manaCost && !useDash) {
+			useDash = true;
 			Game.player.mana -= manaCost;
 		}
-		if (md1) {
+		if (useDash) {
 			Game.entities.add(new AE_PoisonDs(Game.player.centerX(), Game.player.centerY(), dashSize, dashDuration, dashDamage));
-			md1 = false;
+			useDash = false;
         }
     }
 
-    public void Ablt2() {
+    public void powerMove() {
 		int manaCost = 36;
 		
-		if (ablt2Ava && Game.player.mana >= manaCost && !md2) {
-			md2 = true;
+		if (availablePowerMove && Game.player.mana >= manaCost && !usePowerMove) {
+			usePowerMove = true;
 			Game.player.mana -= manaCost;
 		}
-		if (md2) {
+		if (usePowerMove) {
 			Game.entities.add(new AE_PoisonPool(Game.player.centerX(), Game.player.centerY(), ablt2S, 150, ablt2D));
-			md2 = false;
+			usePowerMove = false;
         }
     }
 
-    public void Ablt3() {
+    public void specialMove() {
 		int manaCost = 54;
 		
-		if (ablt3Ava && Game.player.mana >= manaCost) {
-			if (!md3) {
-				md3 = true;
+		if (availableSpecialMove && Game.player.mana >= manaCost) {
+			if (!useSpecialMove) {
+				useSpecialMove = true;
 				Game.player.mana -= manaCost;
 			}
 		}
-		if (md3) {
+		if (useSpecialMove) {
 			tspw++;
 			int off = Game.rand.nextInt(40);
 			int off2 = Game.rand.nextInt(1);
@@ -154,7 +152,7 @@ public class Weapon_Poison extends Weapon{
 			}
 			if (tspw == maxTspw) {
 				tspw = 0;
-				md3 = false;
+				useSpecialMove = false;
 			}
 		}
     }

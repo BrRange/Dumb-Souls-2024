@@ -4,20 +4,16 @@ import java.awt.image.BufferedImage;
 import main.Game;
 import world.Camera;
 
-public class Weapon {
+public abstract class Weapon {
 	
-	public BufferedImage displaySprite, dashImg, ablt2Img, ablt3Img;
+	public BufferedImage imgDash, imgPowerMove, imgSpecialMove;
 	protected BufferedImage[] animation;
-	private int frames, maxFrames = 10, index, maxIndex = 3;
+	protected int frames, maxFrames = 10, index, maxIndex = 3;
 	protected int dashDuration, dashTick = 0, shotDamage;
 	protected double shotSpeed;
 	public int attackTimer;
 	public String[] listNames;
-	public boolean md1, md2, md3, dashAva, ablt2Ava, ablt3Ava;
-	
-	public Weapon(BufferedImage baseSprite) {
-		displaySprite = baseSprite;
-	}
+	public boolean useDash, usePowerMove, useSpecialMove, availableDash, availablePowerMove, availableSpecialMove;
 	
 	protected void getAnimation(int x, int y, int width, int height, int frames) {
 		animation = new BufferedImage[frames];
@@ -32,9 +28,7 @@ public class Weapon {
 		attackTimer = frames;
 	}
 
-	public void checkOptions(String opt) {
-		
-	}
+	public abstract void checkOptions(String opt);
 	
 	public String checkOptionName(int opt) {
 		switch(opt){
@@ -57,7 +51,7 @@ public class Weapon {
 			case 8:
 				return listNames[8];
 			default:
-				return "";
+				return "Blank";
 		}
 	}
 	
@@ -81,23 +75,11 @@ public class Weapon {
 		return mag == 0 ? 1 : mag;
 	}
 
-	public void Attack() {
-		
-	}
+	public abstract void Attack();
 	
-	public void Dash() {
-		
-	}
+	public abstract void Dash();
 	
-	public void Ablt2() {
-		
-	}
-	
-	public void Ablt3() {
-		
-	}
-	
-	public void Effect() {
-		
-	}
+	public abstract void powerMove();
+
+	public abstract void specialMove();
 }

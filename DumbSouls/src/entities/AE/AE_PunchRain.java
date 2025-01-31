@@ -30,7 +30,7 @@ public class AE_PunchRain extends AE_Attack_Entity {
 
 	Function<Enemy, Void> attackCollision = (target) -> { 
 		target.life -= damage;
-		target.receiveKnockback(this);
+		target.receiveKnockback(this, push);
 		die();
 		return null;
 	};

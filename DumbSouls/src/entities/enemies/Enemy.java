@@ -9,7 +9,7 @@ import entities.Entity;
 import entities.shots.Shot;
 import world.Camera;
 
-public class Enemy extends Entity {
+public abstract class Enemy extends Entity {
 
 	protected BufferedImage[] animation;
 	public int expValue, soulValue;
@@ -58,7 +58,7 @@ public class Enemy extends Entity {
 			Shot sh = Game.shots.get(i);
 			if (isColiding(sh)) {
 				life -= sh.damage;
-				receiveKnockback(Game.player);
+				receiveKnockback(Game.player, Game.player.push);
 				this.damaged = true;
 				sh.die(this);
 			}

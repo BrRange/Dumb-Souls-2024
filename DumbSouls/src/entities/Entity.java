@@ -9,7 +9,7 @@ import world.Camera;
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 
-public class Entity {
+public abstract class Entity {
 	
 	public class Vector{
 		public double x, y;
@@ -113,9 +113,7 @@ public class Entity {
 		return pos.getY() + height / 2;
 	}
 
-	public void tick() {
-		
-	}
+	public abstract void tick();
 	
 	public void render() {
 		Game.gameGraphics.drawImage(sprite, pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), null);
@@ -148,11 +146,6 @@ public class Entity {
 
 	public void applySlowness(double slow){
 		slowness = Math.max(slowness, slow);
-	}
-
-	public void receiveKnockback(Entity source){
-		Vector delta = new Vector(centerX() - source.centerX(), centerY() - source.centerY()).normalize();
-		pos.move(delta.x * source.push / weight, delta.y * source.push / weight);
 	}
 
 	public void receiveKnockback(Entity source, double amount){
