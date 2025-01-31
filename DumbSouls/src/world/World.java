@@ -19,7 +19,9 @@ public class World {
 
 	private static enum waveBuckets {
 		WAVE5(
-				new Bucket(Rune_Orb.class, 1)),
+				new Bucket(Enemy_Stain.class, 20),
+				new Bucket(Enemy_Eye.class, 3),
+				new Bucket(Enemy_Mouth.class, 1)),
 		WAVE10(
 				new Bucket(Enemy_Stain.class, 20),
 				new Bucket(Enemy_Eye.class, 14),
