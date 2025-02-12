@@ -13,24 +13,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.ArrayList;
 
 public class Save_Game{
 
 	private static int bitIntWriter(boolean value, int bitIndex) {
 		return value ? bitIndex : 0;
-		return value ? bitIndex : 0;
 	}
 	
 	public static void save() throws Exception{
-		int weaponSum = bitIntWriter(Weapon_Fire.unlocked, 1);
-		weaponSum += bitIntWriter(Weapon_Wind.unlocked, 2);
-		weaponSum += bitIntWriter(Weapon_Ice.unlocked, 4);
-		weaponSum += bitIntWriter(Weapon_Fisical.unlocked, 8);
-		weaponSum += bitIntWriter(Weapon_Poison.unlocked, 16);
-		int runeSum = 0;
-		for(int i = 0; i < Rune.runesInGame; i++)
-			runeSum += bitIntWriter(Player.runesInventory.get(i).collected, 1 << i);
 		int weaponSum = bitIntWriter(Weapon_Fire.unlocked, 1);
 		weaponSum += bitIntWriter(Weapon_Wind.unlocked, 2);
 		weaponSum += bitIntWriter(Weapon_Ice.unlocked, 4);
@@ -51,13 +41,9 @@ public class Save_Game{
 		} catch(Exception exc){
 			createSaveFile();
 		}
-		} catch(Exception exc){
-			createSaveFile();
-		}
 	}
 
 	private static boolean intBitReader(int value, int bitIndex){
-		return (value & bitIndex) != 0;
 		return (value & bitIndex) != 0;
 	}
 	
@@ -65,7 +51,6 @@ public class Save_Game{
 		try {
 			BufferedInputStream reader = new BufferedInputStream(new FileInputStream("SaveDS.save"));
 			
-			int souls[] = new int[4], weapons[] = new int[1], runes[] = new int[1];
 			int souls[] = new int[4], weapons[] = new int[1], runes[] = new int[1];
 			for(int i = 0; i < souls.length; i++){
 				souls[i] = reader.read();

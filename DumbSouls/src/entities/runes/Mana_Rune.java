@@ -10,7 +10,6 @@ public class Mana_Rune extends Rune {
 
 	public Mana_Rune() {
 		super("Magae Rune", "Boosts mana efficiency", 1, sprite);
-		super("Magae Rune", "Boosts mana efficiency", 1, sprite);
 	}
 
 	public void setup() {

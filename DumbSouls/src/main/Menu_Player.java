@@ -6,8 +6,6 @@ import java.awt.Font;
 import entities.Player;
 import entities.runes.Rune;
 import entities.weapons.*;
-import entities.runes.Rune;
-import entities.weapons.*;
 import graphics.TextObject;
 import world.Camera;
 

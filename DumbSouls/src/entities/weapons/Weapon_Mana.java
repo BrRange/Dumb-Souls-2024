@@ -130,7 +130,6 @@ public class Weapon_Mana extends Weapon {
 	public void powerMove() {
 		int manaCost = 68;
 		if (availablePowerMove && Game.player.mana >= manaCost && !usePowerMove) {
-		if (availablePowerMove && Game.player.mana >= manaCost && !usePowerMove) {
 			Game.player.mana -= manaCost;
 			qntSpcShots += spcShotsGain;
 			usePowerMove = true;
@@ -183,6 +182,4 @@ public class Weapon_Mana extends Weapon {
 					shotDamage, 0, 0));
 		}
 	}
-}
-
 }

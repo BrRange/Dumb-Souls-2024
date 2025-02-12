@@ -2,7 +2,6 @@ package main;
 
 import entities.Player;
 import entities.runes.Rune;
-import entities.runes.Rune;
 import graphics.TextObject;
 
 import java.awt.Color;
