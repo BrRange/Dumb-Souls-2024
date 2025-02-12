@@ -130,8 +130,19 @@ public class Weapon_Mana extends Weapon {
 	public void powerMove() {
 		int manaCost = 68;
 		if (availablePowerMove && Game.player.mana >= manaCost && !usePowerMove) {
+		if (availablePowerMove && Game.player.mana >= manaCost && !usePowerMove) {
 			Game.player.mana -= manaCost;
 			qntSpcShots += spcShotsGain;
+			usePowerMove = true;
+		}
+		else if(usePowerMove){
+			if (grafEfcCont == 10) {
+				grafEfcCont = 0;
+				Game.entities.add(new AE_Animation(Game.player.centerX(), Game.player.centerY(), 16, 16, 15, 96, 144));
+			}
+			grafEfcCont++;
+			if(qntSpcShots == 0)
+				usePowerMove = false;
 			usePowerMove = true;
 		}
 		else if(usePowerMove){
@@ -172,4 +183,6 @@ public class Weapon_Mana extends Weapon {
 					shotDamage, 0, 0));
 		}
 	}
+}
+
 }

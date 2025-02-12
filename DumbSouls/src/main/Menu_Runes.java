@@ -2,6 +2,7 @@ package main;
 
 import entities.Player;
 import entities.runes.Rune;
+import entities.runes.Rune;
 import graphics.TextObject;
 
 import java.awt.Color;
@@ -76,6 +77,7 @@ public class Menu_Runes {
 				if (Player.runesEquipped.size() < Player.runeLimit) {
 					if (!Player.runesInventory.get(curR).equipped) {
 						Player.runesEquipped.add(Player.runesInventory.get(curR));
+						Player.runesEquipped.add(Player.runesInventory.get(curR));
 						Player.runesInventory.get(curR).equipped = true;
 					}
 				}
@@ -84,6 +86,7 @@ public class Menu_Runes {
 
 		if (cur == 2) {
 			if (enter || unequipBox.click()) {
+				Player.runesEquipped.remove(Player.runesInventory.get(curR));
 				Player.runesEquipped.remove(Player.runesInventory.get(curR));
 				Player.runesInventory.get(curR).equipped = false;
 			}
@@ -178,6 +181,7 @@ public class Menu_Runes {
 		Game.gameGraphics.drawString("Rune slots: " + Player.runesEquipped.size() + "/" + Player.runeLimit, 100, 150);
 
 		Game.gameGraphics.setColor(new Color(74, 52, 160));
+		Game.gameGraphics.drawString("Souls: " + Player.souls, 255, 150);
 		Game.gameGraphics.drawString("Souls: " + Player.souls, 255, 150);
 	}
 }

@@ -12,27 +12,37 @@ public class Rune_Orb extends Enemy {
 
 	public Rune_Orb(int x, int y) {
 		super(x, y, 16, 16, null);
+	public Rune_Orb(int x, int y) {
+		super(x, y, 16, 16, null);
 
 		maxIndex = 1;
 		indexRunes = Game.rand.nextInt(Rune.runesInGame);
+		indexRunes = Game.rand.nextInt(Rune.runesInGame);
 
+		switch (indexRunes) {
+			case 0:
 		switch (indexRunes) {
 			case 0:
 				getAnimation(Life_Rune.sprite);
 				break;
 			case 1:
+			case 1:
 				getAnimation(Mana_Rune.sprite);
 				break;
+			case 2:
 			case 2:
 				getAnimation(Speed_Rune.sprite);
 				break;
 			case 3:
+			case 3:
 				getAnimation(MultiAttack_Rune.sprite);
 				break;
+			case 4:
 			case 4:
 				getAnimation(EXP_Rune.sprite);
 				break;
 		}
+		speed = Game.player.maxSpeed * 1.2;
 		speed = Game.player.maxSpeed * 1.2;
 		setMask(0, 0, 16, 16);
 		depth = 1;
