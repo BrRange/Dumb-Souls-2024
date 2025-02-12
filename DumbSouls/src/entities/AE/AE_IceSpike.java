@@ -12,9 +12,9 @@ public class AE_IceSpike extends AE_Attack_Entity {
 		setMask(2, 4, 12, 12);
 	}
 
-	Function<Enemy, Void> attackCollision = (target) -> { 
-		target.life -= damage;
-		target.applySlowness(damage);
+	Function<Enemy, Void> attackCollision = (ene) -> { 
+		ene.takeDamage(damage);
+		ene.applySlowness(damage);
 		return null;
 	};
 	

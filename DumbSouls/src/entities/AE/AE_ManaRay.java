@@ -33,7 +33,7 @@ public class AE_ManaRay extends AE_Attack_Entity {
 	private void Collision() {
 		findClosest();
 		if (tickTimer % 10 == 0 && closest != null) {
-			closest.life -= damage;
+			closest.takeDamage(damage);
 			closest.damaged = true;
 		}
 	}

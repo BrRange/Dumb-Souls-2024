@@ -39,8 +39,8 @@ public class AE_HellFlame extends AE_Attack_Entity {
 		spawnFire();
 	}
 
-	Function<Enemy, Void> attackCollision = (target) -> { 
-		target.life -= damage;
+	Function<Enemy, Void> attackCollision = (ene) -> { 
+		ene.takeDamage(damage);
         return null;
 	};
 	

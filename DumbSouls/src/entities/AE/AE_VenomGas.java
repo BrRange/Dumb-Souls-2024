@@ -26,9 +26,9 @@ public class AE_VenomGas extends AE_Attack_Entity {
 		collisionEnemy(false, 0, attackCollision);
 	}
 
-	Function<Enemy, Void> attackCollision = (target) -> { 
-		target.applySlowness(3);
-		target.life -= damage;
+	Function<Enemy, Void> attackCollision = (ene) -> { 
+		ene.applySlowness(3);
+		ene.takeDamage(damage);
 		return null;
 	};
 }

@@ -34,10 +34,10 @@ public class AE_PoisonDs extends AE_Attack_Entity{
 		collisionEnemiesShots(false, false, 0, enemyCollision, shotCollision);
 	}
 
-	Function<Enemy, Void> enemyCollision = (target) -> { 
+	Function<Enemy, Void> enemyCollision = (ene) -> { 
 		if (tickTimer % 5 == 0) {
-			target.applySlowness(damage);
-			target.life -= damage;
+			ene.applySlowness(damage);
+			ene.takeDamage(damage);
 		}
 		return null;
 	};

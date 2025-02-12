@@ -17,8 +17,8 @@ public class AE_Fire2 extends AE_Attack_Entity{
 		depth = 2;
 	}
 
-	Function<Enemy, Void> attackCollision = (target) -> { 
-		target.life -= damage;
+	Function<Enemy, Void> attackCollision = (ene) -> { 
+		ene.takeDamage(damage);
         return null;
 	};
 	

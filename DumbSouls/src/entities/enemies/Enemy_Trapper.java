@@ -27,6 +27,7 @@ public class Enemy_Trapper extends Enemy {
 		timeSpawn = 600;
 		maxIndex = 3;
 		maxFrames = 10;
+		weight = 0;
 	}
 
 	private void die() {
@@ -65,9 +66,11 @@ public class Enemy_Trapper extends Enemy {
 		damagedAnimation();
 		if (!spawning) {
 			if (centerX() != xP && centerY() != yP && !isColiding(Game.player) && cont == 0) {
+				invulnerable = true;
 				objectiveMovement(xP, yP);
 				setMask(0, 16, 16, 16);
 			} else {
+				invulnerable = false;
 				stage2();
 			}
 

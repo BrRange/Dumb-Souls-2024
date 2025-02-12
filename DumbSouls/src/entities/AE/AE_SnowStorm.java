@@ -47,9 +47,9 @@ public class AE_SnowStorm extends AE_Attack_Entity {
 		collisionEnemy(true, 20, attackCollision);
 	}
 
-	Function<Enemy, Void> attackCollision = (target) -> { 
-		target.life -= damage;
-		target.slowness += 2;
+	Function<Enemy, Void> attackCollision = (ene) -> { 
+		ene.takeDamage(damage);
+		ene.slowness += 2;
 		return null;
 	};
 	

@@ -149,14 +149,10 @@ public abstract class Entity {
 	}
 
 	public void receiveKnockback(Entity source, double amount){
+		if(weight <= 0) return;
 		Vector delta = new Vector(centerX() - source.centerX(), centerY() - source.centerY()).normalize();
 		amount /= weight;
 		pos.move(delta.x * amount, delta.y * amount);
-	}
-	
-	public void receiveDamage(Entity source){
-		life -= source.damage;
-		damaged = true;
 	}
 
 	protected void damagedAnimation() {

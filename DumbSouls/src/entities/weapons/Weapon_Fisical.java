@@ -13,7 +13,7 @@ public class Weapon_Fisical extends Weapon {
 	public static BufferedImage shotFace;
 	private int powerMoveDmg = 10, powerMoveSize = 64, specialMoveDmg = 6, specialMoveTick, combo;
 	public static int soulCost = 500;
-	public static boolean block = true;
+	public static boolean unlocked = false;
 	public static BufferedImage sprite = Game.sheet.getSprite(144, 16, 16, 16);
 
 	public Weapon_Fisical() {

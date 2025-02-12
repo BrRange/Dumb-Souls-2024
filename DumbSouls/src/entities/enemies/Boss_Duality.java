@@ -5,7 +5,6 @@ import entities.Player;
 import entities.AE.BAE_Spike;
 import entities.orbs.Rune_Orb;
 import entities.shots.Shot;
-import entities.shots.Shot_DualityBlackHand;
 import graphics.Shader;
 import java.awt.image.BufferedImage;
 import main.Game;
@@ -14,7 +13,6 @@ import world.World;
 
 public class Boss_Duality extends Enemy {
 
-	private int shieldLife;
 	private boolean balance, shieldActive;
 	private BufferedImage aura = Game.sheet.getSprite(16, 160, 16, 16);
 	private BufferedImage shield = Game.sheet.getSprite(16, 176, 16, 16);
@@ -33,6 +31,22 @@ public class Boss_Duality extends Enemy {
 		weight = 6;
 	}
 
+	public class Shot_DualityBlackHand extends Shot {
+		private Boss_Duality owner;
+		public Shot_DualityBlackHand(int x, int y, double dx, double dy, Boss_Duality own){
+			super(x, y, 13, 14, dx, dy, 0, 5, 40, 35, Game.sheet.getSprite(32, 160, 16, 16));
+			owner = own;
+		}
+	
+		public void die(Entity target) {
+			if(target == Game.player && World.bossTime){
+				Game.player.mana = Math.max(Game.player.mana - damage, 0);
+				owner.life = Math.min(owner.maxLife, owner.life + damage);
+			}
+			Game.eShots.remove(this);
+		}
+	}
+
 	private void balanceStats() {
 		maxLife = 800 * World.wave / 10;
 		expValue = 1500 * World.wave / 10;
@@ -47,7 +61,7 @@ public class Boss_Duality extends Enemy {
 		Player.souls += soulValue;
 		World.bossTime = false;
 		World.bossName = "";
-		Game.enemies.add(new Rune_Orb(centerX(), centerY(), 16, 16));
+		Game.enemies.add(new Rune_Orb(centerX(), centerY()));
 	}
 
 	private void closeAtk() {
@@ -58,27 +72,15 @@ public class Boss_Duality extends Enemy {
 		}
 	}
 
-	private void shieldColision() {
-		for (int i = 0; i < Game.shots.size(); i++) {
-			Shot sh = Game.shots.get(i);
-			if (isColiding(sh)) {
-				sh.die(null);
-			}
-		}
-
-		if (life <= shieldLife) {
-			life = shieldLife;
-		}
-	}
-
 	private void addShield() {
 		if (!shieldActive) {
+			invulnerable = true;
+			weight = 0;
 			shieldActive = true;
-			shieldLife = (int) life;
-			setMask(-13, -8, 64, 40);
 		} else {
+			invulnerable = false;
+			weight = 6;
 			shieldActive = false;
-			setMask(9, 3, 14, 21);
 		}
 	}
 
@@ -93,7 +95,7 @@ public class Boss_Duality extends Enemy {
 		}
 		if (attackTimer % 80 == 0) {
 			Vector delta = new Vector(Game.player.centerX() - centerX(), Game.player.centerY() - centerY()).normalize();
-			Game.eShots.add(new Shot(centerX(), centerY(), 5, 5, delta.x, delta.y, Math.atan2(delta.y, delta.x),
+			Game.eShots.add(new Shot(centerX(), centerY(), 5, 5, delta.x, delta.y, Math.atan2(centerY() - Game.player.centerY(), centerX() - Game.player.centerX()),
 					3, 32, 50, spriteAtk));
 		}
 		if (attackTimer % 160 == 0) {
@@ -114,12 +116,7 @@ public class Boss_Duality extends Enemy {
 		animate();
 		closeAtk();
 		rangeAtk();
-
-		if (shieldActive) {
-			shieldColision();
-		} else {
-			shotDamage();
-		}
+		shotDamage();
 
 		if (life <= 0) {
 			die();

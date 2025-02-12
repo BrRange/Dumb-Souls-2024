@@ -3,11 +3,11 @@ package entities.enemies;
 import main.Game;
 
 public class Enemy_SpawnPod extends Enemy {
-
-	public Enemy_SpawnPod(int x, int y, int w, int h, int time, boolean special) {
+	private Enemy owner;
+	public Enemy_SpawnPod(int x, int y, int w, int h, int time, Enemy own) {
 		super(x, y, w, h, null);
+		owner = own;
 		life = time;
-		specialRare = special;
 		getAnimation(112, 153, 32, 23, 3);
 		maxFrames = time / 3;
 		this.maxIndex = 3;
@@ -19,6 +19,7 @@ public class Enemy_SpawnPod extends Enemy {
 		animate();
 		damagedAnimation();
 		if (attackTimer == life) {
+			owner.invulnerable = false;
 			Game.enemies.remove(this);
 		}
 

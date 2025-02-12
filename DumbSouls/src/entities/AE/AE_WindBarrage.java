@@ -30,9 +30,9 @@ public class AE_WindBarrage extends AE_Attack_Entity{
 		collisionEnemy(true, 5, attackCollision);
 	}
 
-	Function<Enemy, Void> attackCollision = (target) -> { 
-		target.life -= damage;
-		target.receiveKnockback(this, push);
+	Function<Enemy, Void> attackCollision = (ene) -> { 
+		ene.takeDamage(damage);
+		ene.receiveKnockback(this, push);
 		return null;
 	};
 	

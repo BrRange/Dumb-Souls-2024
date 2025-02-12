@@ -34,9 +34,9 @@ public class AE_PoisonPool extends AE_Attack_Entity {
 		}
 	}
 
-	Function<Enemy, Void> attackCollision = (target) -> { 
-		target.applySlowness(5);
-		target.life -= damage;
+	Function<Enemy, Void> attackCollision = (ene) -> { 
+		ene.applySlowness(5);
+		ene.takeDamage(damage);
 		return null;
 	};
 	

@@ -9,9 +9,9 @@ public abstract class Weapon {
 	public BufferedImage imgDash, imgPowerMove, imgSpecialMove;
 	protected BufferedImage[] animation;
 	protected int frames, maxFrames = 10, index, maxIndex = 3;
-	protected int dashDuration, dashTick = 0, shotDamage;
+	protected int dashDuration, dashTick = 0;
+	public int shotDamage, attackTimer;
 	protected double shotSpeed;
-	public int attackTimer;
 	public String[] listNames;
 	public boolean useDash, usePowerMove, useSpecialMove, availableDash, availablePowerMove, availableSpecialMove;
 	

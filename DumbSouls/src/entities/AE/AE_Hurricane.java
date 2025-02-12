@@ -18,9 +18,9 @@ public class AE_Hurricane extends AE_Attack_Entity{
 		maxFrames = 10;
 	}
 
-	Function<Enemy, Void> attackCollision = (target) -> { 
-		target.life -= damage;
-		target.receiveKnockback(this, push);
+	Function<Enemy, Void> attackCollision = (ene) -> { 
+		ene.takeDamage(damage);
+		ene.receiveKnockback(this, push);
         return null;
 	};
 	

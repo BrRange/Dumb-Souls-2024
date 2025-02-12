@@ -30,15 +30,15 @@ public class AE_ManaExplosion extends AE_Attack_Entity{
 		for (int i = 0; i < Game.enemies.size(); i++) {
 			Enemy ene = Game.enemies.get(i);
 			if(isColiding(ene)) {
-				ene.life -= damage;
+				ene.takeDamage(damage);
 				ene.receiveKnockback(this, push);
 			}
 		}	
 	}
 
-	Function<Enemy, Void> attackCollision = (target) -> { 
-		target.life -= damage;
-		target.receiveKnockback(this, push);
+	Function<Enemy, Void> attackCollision = (ene) -> { 
+		ene.takeDamage(damage);
+		ene.receiveKnockback(this, push);
         return null;
 	};
 	

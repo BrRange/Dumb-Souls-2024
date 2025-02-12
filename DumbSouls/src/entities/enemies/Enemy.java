@@ -13,7 +13,7 @@ public abstract class Enemy extends Entity {
 
 	protected BufferedImage[] animation;
 	public int expValue, soulValue;
-	protected boolean spawning = true, specialRare;
+	protected boolean spawning = true, specialRare, invulnerable = true;
 	protected int attackTimer = 0, timeSpawn = 0, contTS, specialMult = 1, hue = 0, frames, maxFrames = 10, index,
 			maxIndex = 3, state = 0;
 
@@ -25,6 +25,12 @@ public abstract class Enemy extends Entity {
 	void isSpecial() {
 		if (Game.rand.nextInt(256) == 0)
 			specialRare = true;
+	}
+
+	public boolean takeDamage(double amount){
+		if(invulnerable) return false;
+		life -= amount;
+		return true;
 	}
 
 	protected void getAnimation(int x, int y, int width, int height, int frames) {
@@ -57,10 +63,9 @@ public abstract class Enemy extends Entity {
 		for (int i = 0; i < Game.shots.size(); i++) {
 			Shot sh = Game.shots.get(i);
 			if (isColiding(sh)) {
-				life -= sh.damage;
 				receiveKnockback(Game.player, Game.player.push);
-				this.damaged = true;
 				sh.die(this);
+				if(takeDamage(sh.damage)) this.damaged = true;
 			}
 		}
 	}
@@ -83,7 +88,7 @@ public abstract class Enemy extends Entity {
 	protected void spawnAnimation(int frames) {
 		if (contTS == 0) {
 			Game.enemies.add(new Enemy_SpawnPod(centerX(), centerY(), (int) (width * 1.5), (int) (height * 1.5),
-					timeSpawn, specialRare));
+					timeSpawn, this));
 		}
 		contTS++;
 		if (contTS >= timeSpawn) {

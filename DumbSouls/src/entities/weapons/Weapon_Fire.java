@@ -16,7 +16,7 @@ public class Weapon_Fire extends Weapon {
 	private int powerMoveDmg = 1, powerMoveTick, powerMoveDuration = 60, specialMoveDmg = 16;
 	private double specialMoveSpd = 0.8;
 	public static int soulCost = 100;
-	public static boolean block = true;
+	public static boolean unlocked = false;
 	private SoundPlayer sound1, sound2, sound3;
 	
 	public Weapon_Fire() {

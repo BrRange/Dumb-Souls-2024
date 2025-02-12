@@ -24,7 +24,7 @@ public class Enemy_Barrier extends Enemy {
 		timeSpawn = 180;
 		maxIndex = 2;
 		maxFrames = 20;
-		weight = 10;
+		weight = 0;
 	}
 
 	private void die() {
