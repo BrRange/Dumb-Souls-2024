@@ -36,7 +36,6 @@ public class Save_Game{
 			writer.write((char)(Player.souls & 255));
 			writer.write((char)weaponSum);
 			writer.write((char)runeSum);
-			writer.write((char)runeSum);
 			writer.close();
 		} catch(Exception exc){
 			createSaveFile();
@@ -56,7 +55,6 @@ public class Save_Game{
 				souls[i] = reader.read();
 			}
 			weapons[0] = reader.read();
-			runes[0] = reader.read();
 			runes[0] = reader.read();
 			reader.close();
 			Player.souls = souls[0] << 24 | souls[1] << 16 | souls[2] << 8 | souls[3];

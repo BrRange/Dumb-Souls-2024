@@ -142,16 +142,6 @@ public class Weapon_Mana extends Weapon {
 			grafEfcCont++;
 			if(qntSpcShots == 0)
 				usePowerMove = false;
-			usePowerMove = true;
-		}
-		else if(usePowerMove){
-			if (grafEfcCont == 10) {
-				grafEfcCont = 0;
-				Game.entities.add(new AE_Animation(Game.player.centerX(), Game.player.centerY(), 16, 16, 15, 96, 144));
-			}
-			grafEfcCont++;
-			if(qntSpcShots == 0)
-				usePowerMove = false;
 		}
 	}
 

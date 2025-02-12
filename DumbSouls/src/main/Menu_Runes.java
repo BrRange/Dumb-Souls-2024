@@ -76,7 +76,6 @@ public class Menu_Runes {
 				if (Player.runesEquipped.size() < Player.runeLimit) {
 					if (!Player.runesInventory.get(curR).equipped) {
 						Player.runesEquipped.add(Player.runesInventory.get(curR));
-						Player.runesEquipped.add(Player.runesInventory.get(curR));
 						Player.runesInventory.get(curR).equipped = true;
 					}
 				}
@@ -85,7 +84,6 @@ public class Menu_Runes {
 
 		if (cur == 2) {
 			if (enter || unequipBox.click()) {
-				Player.runesEquipped.remove(Player.runesInventory.get(curR));
 				Player.runesEquipped.remove(Player.runesInventory.get(curR));
 				Player.runesInventory.get(curR).equipped = false;
 			}
@@ -153,12 +151,10 @@ public class Menu_Runes {
 		if (cur == 0) {
 			Game.gameGraphics.drawString("<", 20, 40);
 			Game.gameGraphics.drawString(">", runeBox.getWidth() + 25, 40);
+			Game.gameGraphics.setColor(Color.red);
 			if (clickR) {
-				Game.gameGraphics.setColor(Color.red);
 				Game.gameGraphics.drawString(">", runeBox.getWidth() + 25, 40);
-			}
-			if (clickL) {
-				Game.gameGraphics.setColor(Color.red);
+			} else if (clickL) {
 				Game.gameGraphics.drawString("<", 20, 40);
 			}
 		} else if (cur == 1) {
@@ -180,7 +176,6 @@ public class Menu_Runes {
 		Game.gameGraphics.drawString("Rune slots: " + Player.runesEquipped.size() + "/" + Player.runeLimit, 100, 150);
 
 		Game.gameGraphics.setColor(new Color(74, 52, 160));
-		Game.gameGraphics.drawString("Souls: " + Player.souls, 255, 150);
 		Game.gameGraphics.drawString("Souls: " + Player.souls, 255, 150);
 	}
 }

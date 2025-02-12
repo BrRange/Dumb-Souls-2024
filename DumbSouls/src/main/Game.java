@@ -30,11 +30,12 @@ import graphics.UI;
 import sounds.SoundPlayer;
 import world.World;
 
-public class Game extends Canvas implements Runnable, KeyListener, MouseListener, MouseMotionListener, MouseWheelListener{
+public class Game extends Canvas
+		implements Runnable, KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 	private static final long serialVersionUID = 1L;
-	private static Thread thread;
+	private static Thread thread, enemyThread, entityThread;
 	private static boolean isRuning = false;
-	
+
 	public static HashSet<Integer> keyController = new HashSet<Integer>();
 	public static HashSet<Integer> clickController = new HashSet<Integer>();
 	public static JFrame frame;
@@ -42,24 +43,31 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	public static final int height = 160;
 	public static final int scale = 3;
 	public static int mx, my, amountTicks, scrollNum;
-	
+
 	private static BufferedImage image;
 	public static Spritesheet sheet;
-	public static enum gameState{
+
+	public static enum gameState {
 		NORMAL(() -> tick(), () -> render()),
 		MENULEVEL(() -> Menu_Level.tick(), () -> Menu_Level.render()),
-    	MENUINIT(() -> Menu_Init.tick(), () -> Menu_Init.render()),
+		MENUINIT(() -> Menu_Init.tick(), () -> Menu_Init.render()),
 		MENUPLAYER(() -> Menu_Player.tick(), () -> Menu_Player.render()),
 		MENUHELP(() -> Menu_Help.tick(), () -> Menu_Help.render()),
-		MENUPAUSE(() -> Menu_Pause.tick(), () -> {render(); Menu_Pause.render();}),
+		MENUPAUSE(() -> Menu_Pause.tick(), () -> {
+			render();
+			Menu_Pause.render();
+		}),
 		MENURUNES(() -> Menu_Runes.tick(), () -> Menu_Runes.render());
 
 		private Runnable stateTick, stateRender;
-		gameState(Runnable stateTick, Runnable stateRender){
+
+		gameState(Runnable stateTick, Runnable stateRender) {
 			this.stateTick = stateTick;
 			this.stateRender = stateRender;
 		}
-	} public static gameState gameStateHandler;
+	}
+
+	public static gameState gameStateHandler;
 
 	public static UI ui;
 	public static World world;
@@ -72,7 +80,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	public static Menu_Pause pauseMenu;
 	public static Menu_Runes runesMenu;
 	private static SoundPlayer soundtrack;
-	
+
 	public static List<Entity> entities;
 	public static List<Enemy> enemies;
 	public static List<Shot> shots, eShots;
@@ -107,18 +115,19 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		gameStateHandler = gameState.MENUINIT;
 		Save_Game.loadSave();
 	}
-	
+
 	public void start() {
-		Thread thread = new Thread(this);
+		thread = new Thread(this);
 		thread.start();
 		isRuning = true;
 	}
-	
+
 	public static void main(String args[]) {
 		Game game = new Game();
 		game.start();
 		soundtrack.LoopSound();
 	}
+
 	public void end() {
 		isRuning = false;
 		try {
@@ -126,9 +135,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		} catch (InterruptedException exc) {
 			exc.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public void initFrame() {
 		frame = new JFrame("Dumb Souls");
 		frame.add(this);
@@ -139,9 +148,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.createBufferStrategy(3);
 	}
-	
+
 	private static void spawnEnemies() {
-		if (enemies.size() > 0) return;
+		if (enemies.size() > 0)
+			return;
 		World.wave++;
 		if (World.wave % 10 != 0) {
 			world.raiseMaxEnemies();
@@ -153,7 +163,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		world.spawnBoss();
 	}
 
-	private void baseRender(){
+	private void baseRender() {
 		BufferStrategy bs = getBufferStrategy();
 		if (bs == null) {
 			createBufferStrategy(3);
@@ -164,31 +174,48 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		gameGraphics.dispose();
 		gameGraphics = bs.getDrawGraphics();
 		gameGraphics.drawImage(image, 0, 0, width * scale, height * scale, null);
-		if(gameStateHandler == gameState.NORMAL) ui.render();
+		if (gameStateHandler == gameState.NORMAL)
+			ui.render();
 		bs.show();
 	}
 
-	private static void tick() {
-		player.moveDir.set(0, 0);
-		for(int i = 0; i < entities.size(); i++) {
-			entities.get(i).tick();
-		}
-		for(int i = 0; i < shots.size(); i++) {
-			shots.get(i).tick();
-		}
-		for(int i = 0; i < enemies.size(); i++) {
-			Enemy ene = enemies.get(i);
-			ene.tick();
-			for(int j = i + 1; j < enemies.size(); j++){
-				Enemy other = enemies.get(j);
-				if(ene.isColiding(other)){
-					ene.receiveKnockback(other, 1);
-					other.receiveKnockback(ene, 1);
+	private static void refreshThreads(){
+		entityThread = new Thread(() -> {
+			for (int i = 0; i < entities.size(); i++) {
+				entities.get(i).tick();
+			}
+			for (int i = 0; i < shots.size(); i++) {
+				shots.get(i).tick();
+			}
+		});
+		entityThread.start();
+		enemyThread = new Thread(() -> {
+			for (int i = 0; i < enemies.size(); i++) {
+				Enemy ene = enemies.get(i);
+				ene.tick();
+				for (int j = i + 1; j < enemies.size(); j++) {
+					Enemy other = enemies.get(j);
+					if (ene.isColiding(other)) {
+						ene.receiveKnockback(other, 1);
+						other.receiveKnockback(ene, 1);
+					}
 				}
 			}
-		}
-		for(int i = 0; i < eShots.size(); i++) {
-			eShots.get(i).tick();
+			for (int i = 0; i < eShots.size(); i++) {
+				eShots.get(i).tick();
+			}
+		});
+		enemyThread.start();
+	}
+
+	private static void tick() {
+		refreshThreads();
+		player.moveDir.set(0, 0);
+		try {
+			entityThread.join();
+			enemyThread.join();
+		} catch (Exception exc) {
+			exc.printStackTrace();
 		}
 		spawnEnemies();
 	}
@@ -199,27 +226,27 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		world.render();
 		Collections.sort(entities, Entity.entityDepth);
 		Collections.sort(enemies, Entity.entityDepth);
-		for(Entity ent : entities) {
+		for (Entity ent : entities) {
 			ent.render();
 		}
-		for(Enemy ene : enemies) {
+		for (Enemy ene : enemies) {
 			ene.render();
 		}
-		for(Shot sh : shots) {
+		for (Shot sh : shots) {
 			sh.render();
 		}
-		for(Shot eSh : eShots) {
+		for (Shot eSh : eShots) {
 			eSh.render();
 		}
 	}
-	
+
 	public void run() {
 		requestFocus();
 		long lastTime = System.currentTimeMillis();
-		
-		while(isRuning) {
+
+		while (isRuning) {
 			long now = System.currentTimeMillis();
-			if((now - lastTime) / 1000.0 >= 1f / 60) {
+			if ((now - lastTime) / 1000.0 >= 1f / 60) {
 				gameStateHandler.stateTick.run();
 				lastTime = now;
 			}
@@ -243,15 +270,16 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		keyController.add(eve.getKeyCode());
 
 		if (keyController.contains(KeyEvent.VK_ESCAPE)) {
-			switch(gameStateHandler) {
-			case NORMAL:
-				gameStateHandler = gameState.MENUPAUSE;
-				break;
-			case MENUPAUSE:
-				player.stopMoving();
-				gameStateHandler = gameState.NORMAL;
-				break;
-			default: break;
+			switch (gameStateHandler) {
+				case NORMAL:
+					gameStateHandler = gameState.MENUPAUSE;
+					break;
+				case MENUPAUSE:
+					player.stopMoving();
+					gameStateHandler = gameState.NORMAL;
+					break;
+				default:
+					break;
 			}
 		}
 	}
@@ -278,19 +306,20 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 	@Override
 	public void mouseEntered(MouseEvent eve) {
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent eve) {
 		clickController.clear();
 		keyController.clear();
-		if(gameStateHandler == gameState.NORMAL) gameStateHandler = gameState.MENUPAUSE;
+		if (gameStateHandler == gameState.NORMAL)
+			gameStateHandler = gameState.MENUPAUSE;
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent eve) {
-		
+
 	}
 
 	@Override
@@ -300,7 +329,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	}
 
 	@Override
-	public void mouseWheelMoved(MouseWheelEvent eve){
+	public void mouseWheelMoved(MouseWheelEvent eve) {
 		scrollNum = eve.getWheelRotation();
 	}
 }

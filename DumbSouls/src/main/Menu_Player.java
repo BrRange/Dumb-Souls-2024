@@ -119,31 +119,25 @@ public class Menu_Player {
 			case 0:
 				Game.player.playerWeapon = new Weapon_Mana();
 				Weapon_Mana.unlocked = true;
-				Weapon_Mana.unlocked = true;
 				break;
 			case 1:
 				Game.player.playerWeapon = new Weapon_Fire();
-				Weapon_Fire.unlocked = true;
 				Weapon_Fire.unlocked = true;
 				break;
 			case 2:
 				Game.player.playerWeapon = new Weapon_Wind();
 				Weapon_Wind.unlocked = true;
-				Weapon_Wind.unlocked = true;
 				break;
 			case 3:
 				Game.player.playerWeapon = new Weapon_Ice();
-				Weapon_Ice.unlocked = true;
 				Weapon_Ice.unlocked = true;
 				break;
 			case 4:
 				Game.player.playerWeapon = new Weapon_Fisical();
 				Weapon_Fisical.unlocked = true;
-				Weapon_Fisical.unlocked = true;
 				break;
 			case 5:
 				Game.player.playerWeapon = new Weapon_Poison();
-				Weapon_Poison.unlocked = true;
 				Weapon_Poison.unlocked = true;
 				break;
 		}
@@ -212,7 +206,6 @@ public class Menu_Player {
 
 		bookBox.render();
 		startBox.render();
-		runesBox.updateColor(hasRunes ? Color.white : Color.darkGray);
 		runesBox.updateColor(hasRunes ? Color.white : Color.darkGray);
 		runesBox.render();
 		backBox.render();

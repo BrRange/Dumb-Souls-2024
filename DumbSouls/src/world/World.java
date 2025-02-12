@@ -140,7 +140,7 @@ public class World {
 			if (b.poolMin <= total && b.poolMax >= total) {
 				try {
 					return b.eClass.getConstructor(int.class, int.class).newInstance(x, y);
-				} catch (Exception e) {
+				} catch (Exception exc) {
 					return new Enemy_Stain(x, y);
 				}
 			}
