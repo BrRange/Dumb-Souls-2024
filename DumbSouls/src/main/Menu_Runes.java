@@ -12,13 +12,13 @@ public class Menu_Runes {
 	private static TextObject runeBox = new TextObject("arial", Font.BOLD, 9, "Rune", 30, 40, Color.white),
 			equipBox = new TextObject("arial", Font.BOLD, 9, "Equip", 30, 60, Color.white),
 			unequipBox = new TextObject("arial", Font.BOLD, 9, "Unequip", 30, 80, Color.white),
-			limitBox = new TextObject("arial", Font.BOLD, 9, "Rune slots", 30, 100,
-					Player.runeLimit < Rune.runesInGame ? Color.white : Color.darkGray),
+			limitBox = new TextObject("arial", Font.BOLD, 9, "Rune slots", 30, 100, Color.white),
 			backBox = new TextObject("arial", Font.BOLD, 9, "Back", 30, 140, Color.white);
 	private static int cur = 0, curR = 0;
 	private static boolean clickR, clickL;
 
 	public static void startMenu() {
+		if(Player.runeLimit == Rune.runesInGame) limitBox.updateColor(Color.darkGray);
 		for (Rune rn : Player.runesInventory) {
 			if (rn.collected) {
 				curR = rn.index;
@@ -30,13 +30,13 @@ public class Menu_Runes {
 	public static void tick() {
 		if (runeBox.hover())
 			cur = 0;
-		if (equipBox.hover())
+		else if (equipBox.hover())
 			cur = 1;
-		if (unequipBox.hover())
+		else if (unequipBox.hover())
 			cur = 2;
-		if (limitBox.hover())
+		else if (limitBox.hover())
 			cur = 3;
-		if (backBox.hover())
+		else if (backBox.hover())
 			cur = 4;
 
 		boolean enter = Game.keyController.contains(10);

@@ -33,6 +33,7 @@ public class Boss_Sucubus extends Enemy {
 	}
 
 	private void balanceStats() {
+		invulnerable = false;
 		maxLife = 300 * World.wave / 10;
 		expValue = 1500 * World.wave / 10;
 		soulValue = 20 * World.wave / 10;

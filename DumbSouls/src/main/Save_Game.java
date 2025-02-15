@@ -36,6 +36,7 @@ public class Save_Game{
 			writer.write((char)(Player.souls & 255));
 			writer.write((char)weaponSum);
 			writer.write((char)runeSum);
+			writer.write((char)(Player.runeLimit - 3));
 			writer.close();
 		} catch(Exception exc){
 			createSaveFile();
@@ -56,6 +57,8 @@ public class Save_Game{
 			}
 			weapons[0] = reader.read();
 			runes[0] = reader.read();
+			Player.runeLimit += reader.read();
+			if(Player.runeLimit > Rune.runesInGame) Player.runeLimit = Rune.runesInGame;
 			reader.close();
 			Player.souls = souls[0] << 24 | souls[1] << 16 | souls[2] << 8 | souls[3];
 			Weapon_Fire.unlocked = intBitReader(weapons[0], 1);
@@ -88,7 +91,7 @@ public class Save_Game{
 		try{
 			new File("SaveDS.save").createNewFile();
 			PrintWriter pWriter = new PrintWriter("SaveDS.save");
-			pWriter.print("\0\0\0\0\0\0");
+			pWriter.print("\0\0\0\0\0\0\0");
 			pWriter.close();
 			if(Player.runesInventory == null) InventoryMaker();
 		} catch(Exception err){}

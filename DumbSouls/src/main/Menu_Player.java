@@ -105,6 +105,7 @@ public class Menu_Player {
 	}
 
 	public static void startMenu() {
+		costWeapon();
 		for (Rune rn : Player.runesInventory) {
 			if (rn.collected) {
 				hasRunes = true;

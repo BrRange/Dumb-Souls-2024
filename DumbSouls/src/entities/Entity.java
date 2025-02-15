@@ -133,8 +133,13 @@ public abstract class Entity {
 	protected void setMask(Rectangle mask) {
 		this.mask = mask;
 	}
+
+	private boolean outOfPerimeter(Entity other){
+		return Math.abs(centerX() - other.centerX()) + Math.abs(centerY() - other.centerY()) > Math.max(width, other.width) + Math.max(height, other.height);
+	}
 	
 	public boolean isColiding(Entity other) {
+		if(outOfPerimeter(other)) return false;
 		Rectangle sourceHitBox = new Rectangle(pos.getX() + mask.x, pos.getY() + mask.y, mask.width, mask.height);
 		return sourceHitBox.intersects(new Rectangle(other.pos.getX() + other.mask.x, other.pos.getY() + other.mask.y, other.mask.width, other.mask.height));
 	}
