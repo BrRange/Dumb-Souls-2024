@@ -11,7 +11,7 @@ public class AE_HellFlame extends AE_Attack_Entity {
 	private Vector dir = new Vector(0, 0);
 	
 	public AE_HellFlame(int x, int y, double spd, double dx, double dy, int dmg) {
-		super(x, y, 32, 32, null, 80);
+		super(x, y, 32, 32, 80);
 		speed = spd;
 		dir.set(dx, dy);
 		damage = dmg;

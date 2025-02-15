@@ -9,7 +9,7 @@ import world.Camera;
 public class AE_PoisonDs extends AE_Attack_Entity{
 	
 	public AE_PoisonDs(int x, int y, int size, int time, int dmg) {
-		super(x, y, size, size, null, time);
+		super(x, y, size, size, time);
 		damage = dmg;
 		setMask(0, 0, width, height);
 		getAnimation(64, 112, 16, 16, 2);

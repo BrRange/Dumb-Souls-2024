@@ -8,7 +8,7 @@ public class AE_VenomGas extends AE_Attack_Entity {
 	private Vector dir = new Vector(0, 0);
 	
 	public AE_VenomGas(int x, int y, double dirx, double diry, double dmg) {
-		super(x, y, 32, 32, null, 80);
+		super(x, y, 32, 32, 80);
 		speed = 1.3;
 		dir.set(dirx, diry);
 		damage = dmg;

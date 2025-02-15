@@ -10,7 +10,7 @@ public class AE_WindBarrage extends AE_Attack_Entity{
 	private Vector dir = new Vector(0, 0);
 	
 	public AE_WindBarrage(int x, int y, int width, int height, double spd, double dx, double dy, double dmg, int time) {
-		super(x, y, width, height, null, time);
+		super(x, y, width, height, time);
 		speed = spd;
 		dir.set(dx, dy);
 		damage = dmg;

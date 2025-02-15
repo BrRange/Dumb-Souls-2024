@@ -8,7 +8,7 @@ import world.Camera;
 public class AE_PoisonPool extends AE_Attack_Entity {
 
 	public AE_PoisonPool(int x, int y, int size, int time, int dmg) {
-		super(x, y, size, size, null, time);
+		super(x, y, size, size, time);
 		setMask(0, 0, width, height);
 		getAnimation(128, 128, 16, 16, 2);
 		damage = dmg;

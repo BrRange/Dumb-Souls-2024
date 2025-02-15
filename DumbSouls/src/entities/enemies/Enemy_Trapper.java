@@ -11,7 +11,7 @@ public class Enemy_Trapper extends Enemy {
 	private int xP = Game.player.centerX(), yP = Game.player.centerY(), cont = 120;
 
 	public Enemy_Trapper(int x, int y) {
-		super(x, y, 16, 32, null);
+		super(x, y, 16, 32,Game.sheet.getSprite(240, 80, 16, 16));
 		if (specialRare) {
 			specialMult = 2;
 			hue = 0xFFFFFF;

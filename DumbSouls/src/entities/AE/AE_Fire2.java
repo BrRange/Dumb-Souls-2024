@@ -8,7 +8,7 @@ public class AE_Fire2 extends AE_Attack_Entity{
 	private Vector dir = new Vector(0, 0);
 	
 	public AE_Fire2(int x, int y, double dirx, double diry, int dmg) {
-		super(x + 2, y, 11, 13, null, 60);
+		super(x + 2, y, 11, 13, 60);
 		speed = 2;
 		dir.set(dirx, diry);
 		damage = dmg;

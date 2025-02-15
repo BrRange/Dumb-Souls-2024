@@ -11,7 +11,7 @@ import java.awt.geom.Line2D;
 
 public abstract class Entity {
 	
-	public class Vector{
+	public static class Vector{
 		public double x, y;
 	
 		public Vector(double setx, double sety){
@@ -68,6 +68,10 @@ public abstract class Entity {
 		width = w;
 		height = h;
 		sprite = sprt;
+	}
+
+	public Entity(int x, int y, int w, int h) {
+		this(x, y, w, h, null);
 	}
 	
 	public static double calculateDistance(int x1, int y1, int x2, int y2) {

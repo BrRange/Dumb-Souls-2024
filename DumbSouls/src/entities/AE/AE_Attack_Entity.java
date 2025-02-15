@@ -12,8 +12,8 @@ public abstract class AE_Attack_Entity extends Entity {
 	protected int tickTimer = 0, maxFrames = 20, frames = 0, index = 0, maxIndex = 2;
 	protected BufferedImage[] animation;
 	
-	public AE_Attack_Entity(int x, int y, int width, int height, BufferedImage sprite, int life) {
-		super(x, y, width, height, sprite);
+	public AE_Attack_Entity(int x, int y, int width, int height, int life) {
+		super(x, y, width, height);
 		this.life = life;
 	}
 	

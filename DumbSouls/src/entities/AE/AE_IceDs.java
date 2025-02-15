@@ -6,7 +6,7 @@ import java.util.function.Function;
 public class AE_IceDs extends AE_Attack_Entity {
 	
 	public AE_IceDs(int x, int y) {
-		super(x, y + 4, 16, 16, null, 60);
+		super(x, y + 4, 16, 16, 60);
 		setMask(0, 0, 16, 16);
 		getAnimation(32, 112, 16, 16, 1);
 		depth = 0;

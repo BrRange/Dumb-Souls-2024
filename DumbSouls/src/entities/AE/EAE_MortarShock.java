@@ -6,7 +6,7 @@ import world.Camera;
 public class EAE_MortarShock extends AE_Attack_Entity {
 
     public EAE_MortarShock(int x, int y, double dmg){
-        super(x, y, 32, 32, null, 30);
+        super(x, y, 32, 32, 30);
         setMask(0, 0, 32, 32);
         getAnimation(48, 176, 16, 16, 4);
         damage = dmg;

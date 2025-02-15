@@ -8,7 +8,7 @@ import world.Camera;
 public class AE_Rupture extends AE_Attack_Entity {
 	
 	public AE_Rupture(int x, int y, int size, int time, int dmg) {
-		super(x, y, size, size, null, time);
+		super(x, y, size, size, time);
 		setMask(0, 0, width, height);
 		getAnimation(80, 128, 16, 16, 3);
 		damage = dmg;

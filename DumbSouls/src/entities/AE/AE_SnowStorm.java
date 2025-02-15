@@ -8,7 +8,7 @@ import world.Camera;
 public class AE_SnowStorm extends AE_Attack_Entity {
 	
 	public AE_SnowStorm(int x, int y, double spd, int dmg) {
-		super(x, y, 32, 32, null, 240);
+		super(x, y, 32, 32, 240);
 		speed = spd;
 		damage = dmg;
 		depth = 3;

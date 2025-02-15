@@ -12,7 +12,7 @@ public class AE_ManaRay extends AE_Attack_Entity {
 	private Enemy closest;
 	
 	public AE_ManaRay(int x, int y, int time, int dmg) {
-		super(x, y, 16, 16, null, time);
+		super(x, y, 16, 16, time);
 		damage = dmg;
 		depth = 2;
 	}

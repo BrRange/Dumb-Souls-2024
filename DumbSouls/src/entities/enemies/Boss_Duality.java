@@ -1,8 +1,8 @@
 package entities.enemies;
 
+import entities.AE.BAE_Spike;
 import entities.Entity;
 import entities.Player;
-import entities.AE.BAE_Spike;
 import entities.orbs.Rune_Orb;
 import entities.shots.Shot;
 import graphics.Shader;
@@ -88,7 +88,7 @@ public class Boss_Duality extends Enemy {
 	private void rangeAtk() {
 		attackTimer++;
 		if (attackTimer % 40 == 0) {
-			Game.entities.add(new BAE_Spike(Game.player.centerX(), Game.player.centerY(), 16, 16, null, 60, 60));
+			Game.entities.add(new BAE_Spike(Game.player.centerX(), Game.player.centerY(), 16, 16, 60, 60));
 		}
 		if (attackTimer % 60 == 0) {
 			Vector delta = new Vector(Game.player.centerX() - centerX(), Game.player.centerY() - centerY()).normalize();

@@ -6,7 +6,7 @@ import java.util.function.Function;
 public class AE_IceSpike extends AE_Attack_Entity {
 	
 	public AE_IceSpike(int x, int y, int damage) {
-		super(x, y, 6, 16, null, 60);
+		super(x, y, 6, 16, 60);
 		this.damage = damage;
 		getAnimation(48, 128, 16, 16, 1);
 		setMask(2, 4, 12, 12);

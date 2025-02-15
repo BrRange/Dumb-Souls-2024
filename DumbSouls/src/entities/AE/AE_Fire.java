@@ -8,7 +8,7 @@ import world.Camera;
 public class AE_Fire extends AE_Attack_Entity {
 	
 	public AE_Fire(int x, int y, int life) {
-		super(x + 1, y + 6, 14, 10, null, life);
+		super(x + 1, y + 6, 14, 10, life);
 		setMask(1, 0, 14, 8);
 		getAnimation(0, 118, 16, 10, maxIndex);
 		depth = 2;

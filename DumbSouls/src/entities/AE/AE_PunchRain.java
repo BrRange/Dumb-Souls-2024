@@ -8,7 +8,7 @@ public class AE_PunchRain extends AE_Attack_Entity {
 	private Vector dir = new Vector(0, 0);
 	
 	public AE_PunchRain(int x, int y, double dirx, double diry, int dmg) {
-		super(x, y, 16, 16, null, 20);
+		super(x, y, 16, 16, 20);
 		speed = 3;
 		dir.set(dirx, diry);
 		damage = dmg;

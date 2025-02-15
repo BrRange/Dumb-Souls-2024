@@ -1,13 +1,12 @@
 package entities.AE;
 
-import java.awt.image.BufferedImage;
-import world.Camera;
 import main.Game;
+import world.Camera;
 
 public class BAE_Spike extends AE_Attack_Entity{
 	
-	public BAE_Spike(int x, int y, int width, int height, BufferedImage sprite, int life, double dmg) {
-		super(x, y, width, height, sprite, life);
+	public BAE_Spike(int x, int y, int width, int height, int life, double dmg) {
+		super(x, y, width, height, life);
 		depth = 0;
 		damage = dmg;
 		getAnimation(16, 160, 16, 16, 3);

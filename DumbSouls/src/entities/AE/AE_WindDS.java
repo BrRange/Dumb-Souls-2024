@@ -7,7 +7,7 @@ import main.Game;
 public class AE_WindDS extends AE_Attack_Entity {
 	
 	public AE_WindDS(int x, int y, int time) {
-		super(x, y, 16, 16,null, time);
+		super(x, y, 16, 16, time);
 		push = 10;
 		setMask(0, 0, 16, 16);
 		getAnimation(48, 112, 16, 16, 1);
