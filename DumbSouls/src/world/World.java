@@ -1,12 +1,10 @@
 package world;
 
+import entities.enemies.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
-import entities.enemies.*;
 import main.Game;
 
 public class World {
@@ -18,6 +16,17 @@ public class World {
 
 	private static enum waveBuckets {
 		WAVE5(
+				/*
+				//Debug Wave
+				new Bucket(Enemy_Wizard.class, 1),
+				new Bucket(Enemy_Trapper.class, 1),
+				new Bucket(Enemy_Barrier.class, 1),
+				new Bucket(Enemy_Mortar.class, 1),
+				new Bucket(Enemy_Stain.class, 1),
+				new Bucket(Enemy_Eye.class, 1),
+				new Bucket(Enemy_Mouth.class, 1)),
+				 */
+				
 				new Bucket(Enemy_Stain.class, 20),
 				new Bucket(Enemy_Eye.class, 3),
 				new Bucket(Enemy_Mouth.class, 1)),

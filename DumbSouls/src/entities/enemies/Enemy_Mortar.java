@@ -3,6 +3,7 @@ package entities.enemies;
 import entities.Player;
 import entities.orbs.EXP_Orb;
 import entities.shots.Shot_MortarShell;
+import graphics.Spritesheet;
 import main.Game;
 import world.World;
 
@@ -10,13 +11,15 @@ public class Enemy_Mortar extends Enemy {
 	private float range;
 	private double distPlayer;
 
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemy_Mortar.png");
+
 	public Enemy_Mortar(int x, int y) {
-		super(x, y, 32, 16, Game.sheet.getSprite(240, 96, 32, 16));
+		super(x, y, 32, 16, sheet.getSprite(0, 0, 32, 16));
 		if (specialRare) {
 			specialMult = 3;
 			hue = 0xFFFFFF;
 		}
-		getAnimation(240, 96, 32, 16, 1);
+		getAnimation(0, 0, 32, 16, 1, sheet);
 		expValue = 35 * specialMult;
 		soulValue = 7 * specialMult;
 		maxLife = 50 * specialMult + (int) (0.2 * World.wave);

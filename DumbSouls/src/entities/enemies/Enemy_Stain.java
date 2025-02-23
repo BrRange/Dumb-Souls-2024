@@ -2,17 +2,20 @@ package entities.enemies;
 
 import entities.Player;
 import entities.orbs.EXP_Orb;
+import graphics.Spritesheet;
 import main.Game;
 import world.World;
 
 public class Enemy_Stain extends Enemy {
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemy_Stain.png");
+
 	public Enemy_Stain(int x, int y) {
-		super(x, y, 16, 16, Game.sheet.getSprite(0, 80, 16, 16));
+		super(x, y, 16, 16, sheet.getSprite(0, 0, 16, 16));
 		if (specialRare) {
 			specialMult = 3;
 			hue = 0xFFFFFF;
 		}
-		getAnimation(0, 80, 16, 16, 3);
+		getAnimation(0, 0, 16, 16, 3, sheet);
 		expValue = 10 * specialMult;
 		soulValue = 1 * specialMult;
 		maxLife = 10 * specialMult + (int) (0.1 * World.wave);

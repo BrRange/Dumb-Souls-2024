@@ -1,18 +1,17 @@
 package entities.enemies;
 
-import java.awt.image.BufferedImage;
-
 import entities.Entity;
 import entities.Player;
 import entities.orbs.EXP_Orb;
 import entities.shots.Shot;
 import graphics.Shader;
 import graphics.Spritesheet;
+import java.awt.image.BufferedImage;
 import main.Game;
 import world.World;
 
 public class Enemy_Wizard extends Enemy{
-    private static Spritesheet sheet = new Spritesheet("res/Enemy_Wizard.png");
+    private static Spritesheet sheet = new Spritesheet("res/spriteSheets/Enemy_Wizard.png");
     private double range;
     private static BufferedImage shotSprite = sheet.getSprite(48, 0, 16, 16);
 
@@ -22,6 +21,7 @@ public class Enemy_Wizard extends Enemy{
 			specialMult = 2;
 			hue = 0xFFFFFF;
 		}
+		//getAnimation(0, 0, 16, 32, 3, sheet);
 		getAnimation(3, 2);
 		expValue = 42 * specialMult;
 		soulValue = 18 * specialMult;

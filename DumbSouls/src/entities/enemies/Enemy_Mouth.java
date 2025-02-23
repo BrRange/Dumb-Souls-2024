@@ -2,17 +2,20 @@ package entities.enemies;
 
 import entities.Player;
 import entities.orbs.EXP_Orb;
+import graphics.Spritesheet;
 import main.Game;
 import world.World;
 
 public class Enemy_Mouth extends Enemy {
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemy_Mouth.png");
+
 	public Enemy_Mouth(int x, int y) {
-		super(x, y, 16, 16, Game.sheet.getSprite(96, 80, 16, 16));
+		super(x, y, 16, 16, sheet.getSprite(0, 0, 16, 16));
 		if (specialRare) {
 			specialMult = 2;
 			hue = 0xFFFFFF;
 		}
-		getAnimation(96, 80, 16, 16, 3);
+		getAnimation(0, 0, 16, 16, 3, sheet);
 		expValue = 20 * specialMult;
 		soulValue = 2 * specialMult;
 		maxLife = 12 * specialMult + (int) (0.12 * World.wave);

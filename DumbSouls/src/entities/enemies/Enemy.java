@@ -1,12 +1,11 @@
 package entities.enemies;
 
-import graphics.Shader;
-import main.Game;
-
-import java.awt.image.BufferedImage;
-
 import entities.Entity;
 import entities.shots.Shot;
+import graphics.Shader;
+import graphics.Spritesheet;
+import java.awt.image.BufferedImage;
+import main.Game;
 import world.Camera;
 
 public abstract class Enemy extends Entity {
@@ -31,6 +30,16 @@ public abstract class Enemy extends Entity {
 		if(invulnerable) return false;
 		life -= amount;
 		return true;
+	}
+
+	protected void getAnimation(int x, int y, int width, int height, int frames, Spritesheet sheet) {
+		animation = new BufferedImage[frames];
+
+		for (int i = 0; i < animation.length; i++) {
+			animation[i] = sheet.getSprite(x, y, width, height);
+			animation[i] = Shader.reColor(animation[i], hue);
+			x += width;
+		}
 	}
 
 	protected void getAnimation(int x, int y, int width, int height, int frames) {

@@ -4,19 +4,21 @@ import entities.Entity;
 import entities.Player;
 import entities.orbs.EXP_Orb;
 import entities.shots.Shot;
+import graphics.Spritesheet;
 import main.Game;
 import world.World;
 
 public class Enemy_Eye extends Enemy {
 	private float range;
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemy_Eye.png");
 
 	public Enemy_Eye(int x, int y) {
-		super(x, y, 16, 16, Game.sheet.getSprite(48, 80, 16, 16));
+		super(x, y, 16, 16, sheet.getSprite(48, 80, 16, 16));
 		if (specialRare) {
 			specialMult = 2;
 			hue = 0xFFFFFF;
 		}
-		getAnimation(48, 80, 16, 16, 3);
+		getAnimation(0, 0, 16, 16, 3, sheet);
 		expValue = 25 * specialMult;
 		soulValue = 3 * specialMult;
 		range += 80f + 0.04f * World.wave;

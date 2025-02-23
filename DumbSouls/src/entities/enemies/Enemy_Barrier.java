@@ -2,17 +2,20 @@ package entities.enemies;
 
 import entities.Player;
 import entities.orbs.EXP_Orb;
+import graphics.Spritesheet;
 import main.Game;
 import world.World;
 
 public class Enemy_Barrier extends Enemy {
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemy_Barrier.png");
+
 	public Enemy_Barrier(int x, int y) {
-		super(x, y, 48, 32, Game.sheet.getSprite(144, 80, 48, 32));
+		super(x, y, 48, 32, sheet.getSprite(0, 0, 48, 32));
 		if (specialRare) {
 			specialMult = 2;
 			hue = 0xFFFFFF;
 		}
-		getAnimation(144, 80, 48, 32, 2);
+		getAnimation(0, 0, 48, 32, 2, sheet);
 		expValue = 120 * specialMult;
 		soulValue = 12 * specialMult;
 		maxLife = 250 * specialMult + (int) (2.5 * World.wave);

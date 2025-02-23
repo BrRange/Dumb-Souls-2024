@@ -3,20 +3,22 @@ package entities.enemies;
 import entities.Player;
 import entities.orbs.EXP_Orb;
 import graphics.Shader;
+import graphics.Spritesheet;
 import main.Game;
 import world.Camera;
 import world.World;
 
 public class Enemy_Trapper extends Enemy {
 	private int xP = Game.player.centerX(), yP = Game.player.centerY(), cont = 120;
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemy_Trapper.png");
 
 	public Enemy_Trapper(int x, int y) {
-		super(x, y, 16, 32,Game.sheet.getSprite(240, 80, 16, 16));
+		super(x, y, 16, 32, sheet.getSprite(0, 0, 16, 16));
 		if (specialRare) {
 			specialMult = 2;
 			hue = 0xFFFFFF;
 		}
-		getAnimation(240, 80, 16, 16, 3);
+		getAnimation(0, 0, 16, 16, 3, sheet);
 		expValue = 37 * specialMult;
 		soulValue = 5 * specialMult;
 		maxLife = 40 + (int) (0.4 * World.wave);
