@@ -17,6 +17,7 @@ public class Enemy_Debri extends Enemy {
 		getAnimation(0, 0, 16, 16, 3, sheet);
 		maxLife = 8 * specialMult + (int) (0.08 * World.wave);
 		life = maxLife;
+		expValue = 45 * specialMult;
 		damage = 6 * specialMult + 0.06 * World.wave;
 		maxSpeed = 0.2 + (specialMult - 1) / 3;
 		speed = maxSpeed;
@@ -28,6 +29,7 @@ public class Enemy_Debri extends Enemy {
 
 	public void die() {
 		Game.enemies.remove(this);
+		Game.player.exp += expValue;
 	}
 
 	public void tick() {

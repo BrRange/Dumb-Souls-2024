@@ -36,11 +36,19 @@ public abstract class Enemy extends Entity {
 		animation = new BufferedImage[frames];
 
 		for (int i = 0; i < animation.length; i++) {
-			animation[i] = sheet.getSprite(x, y, width, height);
-			animation[i] = Shader.reColor(animation[i], hue);
+			animation[i] = Shader.reColor(sheet.getSprite(x, y, width, height), hue);
 			x += width;
 		}
 	}
+
+	protected void getAnimation(int x, int y, int width, int height, int frames, Spritesheet sheet, int states) {
+		animation = new BufferedImage[frames * states];
+
+        for(int i = y; i < states; i++)
+            for (int j = x; j < frames; j++)
+                animation[j + i * frames] = Shader.reColor(sheet.getSprite(width * j, height * i, width, height), hue);
+	}
+
 
 	protected void getAnimation(int x, int y, int width, int height, int frames) {
 		animation = new BufferedImage[frames];
@@ -96,7 +104,7 @@ public abstract class Enemy extends Entity {
 
 	protected void spawnAnimation(int frames) {
 		if (contTS == 0) {
-			Game.enemies.add(new Enemy_SpawnPod(centerX(), centerY(), (int) (width * 1.5), (int) (height * 1.5),
+			Game.enemies.add(new Enemy_SpawnPod(centerX(),(int)(centerY() - width * 0.1), (int) (width * 1.8), (int) (height * 1.8),
 					timeSpawn, this));
 		}
 		contTS++;
@@ -111,7 +119,7 @@ public abstract class Enemy extends Entity {
 					pos.getY() - Camera.getY(), width,
 					height, null);
 		} else {
-			Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), pos.getX() - Camera.getX(),
+			Game.gameGraphics.drawImage(Shader.reColor(animation[index + state * maxIndex], damagedHue), pos.getX() - Camera.getX(),
 					pos.getY() - Camera.getY(), width, height, null);
 		}
 	}

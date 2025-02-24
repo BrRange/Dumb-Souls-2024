@@ -4,7 +4,6 @@ import entities.Entity;
 import entities.Player;
 import entities.orbs.EXP_Orb;
 import entities.shots.Shot;
-import graphics.Shader;
 import graphics.Spritesheet;
 import java.awt.image.BufferedImage;
 import main.Game;
@@ -13,16 +12,15 @@ import world.World;
 public class Enemy_Wizard extends Enemy{
     private static Spritesheet sheet = new Spritesheet("res/spriteSheets/Enemy_Wizard.png");
     private double range;
-    private static BufferedImage shotSprite = sheet.getSprite(48, 0, 16, 16);
+   private static BufferedImage shotSprite = sheet.getSprite(0, 64, 16, 16);
 
 	public Enemy_Wizard(int x, int y) {
-		super(x, y, 16, 32, null);
+		super(x, y, 32, 32, null);
 		if (specialRare) {
 			specialMult = 2;
 			hue = 0xFFFFFF;
 		}
-		//getAnimation(0, 0, 16, 32, 3, sheet);
-		getAnimation(3, 2);
+		getAnimation(0, 0, 32, 32, 3, sheet, 2);
 		expValue = 42 * specialMult;
 		soulValue = 18 * specialMult;
 		range += 70f + 0.035f * World.wave;
@@ -31,7 +29,7 @@ public class Enemy_Wizard extends Enemy{
 		damage = 38 * specialMult + 0.38 * World.wave;
 		maxSpeed = 1.2 + (specialMult - 1) / 3;
 		speed = maxSpeed;
-		setMask(0, 0, 16, 32);
+		setMask(7, 2, 23, 30);
 		timeSpawn = 270;
 		weight = 3;
 	}
@@ -54,14 +52,6 @@ public class Enemy_Wizard extends Enemy{
 			life--;
 			if (life == 0) die(null);
 		}
-	}
-
-    protected void getAnimation(int frames, int states) {
-		animation = new BufferedImage[frames * states];
-
-        for(int i = 0; i < states; i++)
-            for (int j = 0; j < frames; j++)
-                animation[j + i * frames] = Shader.reColor(sheet.getSprite(width * j, height * i, width, height), hue);
 	}
 
     protected void animate() {
@@ -98,9 +88,9 @@ public class Enemy_Wizard extends Enemy{
 		}
 		if (Entity.calculateDistance(centerX(), centerY(), Game.player.centerX(), Game.player.centerY()) >= range) {
 			movement();
-		} else
-			attack();
-            state = attackTimer >= 450 ? 1 : 0;
+		} else attack();
+        
+		state = attackTimer >= 450 ? 1 : 0;
 		attackTimer++;
 		shotDamage();
 

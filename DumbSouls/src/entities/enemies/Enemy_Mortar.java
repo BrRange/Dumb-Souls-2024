@@ -14,12 +14,12 @@ public class Enemy_Mortar extends Enemy {
 	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemy_Mortar.png");
 
 	public Enemy_Mortar(int x, int y) {
-		super(x, y, 32, 16, sheet.getSprite(0, 0, 32, 16));
+		super(x, y, 32, 32, sheet.getSprite(0, 0, 32, 32));
 		if (specialRare) {
 			specialMult = 3;
 			hue = 0xFFFFFF;
 		}
-		getAnimation(0, 0, 32, 16, 1, sheet);
+		getAnimation(0, 0, 32, 32, 2, sheet);
 		expValue = 35 * specialMult;
 		soulValue = 7 * specialMult;
 		maxLife = 50 * specialMult + (int) (0.2 * World.wave);
@@ -28,9 +28,10 @@ public class Enemy_Mortar extends Enemy {
 		range += 160f + 0.8 * World.wave;
 		maxSpeed = 0.3 + (specialMult - 1) / 3;
 		speed = maxSpeed;
-		setMask(2, 4, 27, 12);
+		setMask(2, 5, 24, 27);
 		timeSpawn = 210;
-		maxIndex = 1;
+		maxIndex = 2;
+		maxFrames = 30;
 	}
 
 	Enemy_Target target = null;
@@ -91,6 +92,7 @@ public class Enemy_Mortar extends Enemy {
 	}
 
 	public void tick() {
+		animate();
 		damagedAnimation();
 		if (spawning) {
 			spawnAnimation(timeSpawn / 3);

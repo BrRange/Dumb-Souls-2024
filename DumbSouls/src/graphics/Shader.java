@@ -8,7 +8,7 @@ public class Shader {
 	public static BufferedImage reColor(BufferedImage sprite, int hue){
 		int w = sprite.getWidth();
 		int h = sprite.getHeight();
-		BufferedImage recolored = new BufferedImage(w, h, sprite.getType());
+		BufferedImage recolored = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 		int[] pixels = new int[w * h];
 		Graphics2D graphic = recolored.createGraphics();
 		sprite.getRGB(0, 0, w, h, pixels, 0, w);
@@ -18,7 +18,7 @@ public class Shader {
 		recolored.setRGB(0, 0, w, h, pixels, 0, w);
 		graphic.drawImage(recolored, null, 0, 0);
 		graphic.dispose();
-		return sprite;
+		return recolored;
 	}
 
     public static BufferedImage rotate(BufferedImage sprite, double angle) {
