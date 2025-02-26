@@ -6,6 +6,7 @@ import entities.Player;
 import entities.orbs.Rune_Orb;
 import entities.shots.Shot;
 import graphics.Shader;
+import graphics.Spritesheet;
 import java.awt.image.BufferedImage;
 import main.Game;
 import world.Camera;
@@ -13,14 +14,17 @@ import world.World;
 
 public class Boss_Duality extends Enemy {
 
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Bosses/Boss_Duality.png");
+
 	private boolean balance, shieldActive;
-	private BufferedImage aura = Game.sheet.getSprite(16, 160, 16, 16);
-	private BufferedImage shield = Game.sheet.getSprite(16, 176, 16, 16);
-	private BufferedImage spriteAtk = Game.sheet.getSprite(32, 176, 16, 16);
+	private BufferedImage aura = sheet.getSprite(0, 64, 16, 16);
+	private BufferedImage shield = sheet.getSprite(32, 64, 16, 16);
+	private BufferedImage spriteAtk = sheet.getSprite(48, 64, 16, 16);
+
 
 	public Boss_Duality(int x, int y) {
-		super(x, y, 32, 32, Game.sheet.getSprite(11, 195, 10, 10));
-		getAnimation(0, 192, 32, 32, 3);
+		super(x, y, 32, 32, sheet.getSprite(11, 3, 10, 10));
+		getAnimation(0, 0, 32, 32, 3, sheet);
 		expValue = 1500;
 		soulValue = 20;
 		maxLife = 800;
@@ -34,7 +38,7 @@ public class Boss_Duality extends Enemy {
 	public class Shot_DualityBlackHand extends Shot {
 		private Boss_Duality owner;
 		public Shot_DualityBlackHand(int x, int y, double dx, double dy, Boss_Duality own){
-			super(x, y, 13, 14, dx, dy, 0, 5, 40, 35, Game.sheet.getSprite(32, 160, 16, 16));
+			super(x, y, 13, 14, dx, dy, 0, 5, 40, 35, sheet.getSprite(16, 64, 16, 16));
 			owner = own;
 		}
 	

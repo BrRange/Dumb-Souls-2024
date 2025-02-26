@@ -10,7 +10,7 @@ import world.World;
 
 public class Enemy_Eye extends Enemy {
 	private float range;
-	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemy_Eye.png");
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemies/Enemy_Eye.png");
 
 	public Enemy_Eye(int x, int y) {
 		super(x, y, 16, 16, sheet.getSprite(48, 80, 16, 16));

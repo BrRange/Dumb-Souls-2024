@@ -11,7 +11,7 @@ public class Enemy_Mortar extends Enemy {
 	private float range;
 	private double distPlayer;
 
-	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemy_Mortar.png");
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemies/Enemy_Mortar.png");
 
 	public Enemy_Mortar(int x, int y) {
 		super(x, y, 32, 32, sheet.getSprite(0, 0, 32, 32));

@@ -10,7 +10,7 @@ import world.World;
 
 public class Enemy_Trapper extends Enemy {
 	private int xP = Game.player.centerX(), yP = Game.player.centerY(), cont = 120;
-	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemy_Trapper.png");
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemies/Enemy_Trapper.png");
 
 	public Enemy_Trapper(int x, int y) {
 		super(x, y, 16, 32, sheet.getSprite(0, 0, 16, 16));

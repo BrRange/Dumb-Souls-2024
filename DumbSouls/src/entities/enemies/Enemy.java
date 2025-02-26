@@ -3,18 +3,15 @@ package entities.enemies;
 import entities.Entity;
 import entities.shots.Shot;
 import graphics.Shader;
-import graphics.Spritesheet;
 import java.awt.image.BufferedImage;
 import main.Game;
 import world.Camera;
 
 public abstract class Enemy extends Entity {
 
-	protected BufferedImage[] animation;
 	public int expValue, soulValue;
 	protected boolean spawning = true, specialRare, invulnerable = true;
-	protected int attackTimer = 0, timeSpawn = 0, contTS, specialMult = 1, hue = 0, frames, maxFrames = 10, index,
-			maxIndex = 3, state = 0;
+	protected int attackTimer = 0, timeSpawn = 0, contTS, specialMult = 1, hue = 0, frames, maxFrames = 10;
 
 	public Enemy(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -30,23 +27,6 @@ public abstract class Enemy extends Entity {
 		if(invulnerable) return false;
 		life -= amount;
 		return true;
-	}
-
-	protected void getAnimation(int x, int y, int width, int height, int frames, Spritesheet sheet) {
-		animation = new BufferedImage[frames];
-
-		for (int i = 0; i < animation.length; i++) {
-			animation[i] = Shader.reColor(sheet.getSprite(x, y, width, height), hue);
-			x += width;
-		}
-	}
-
-	protected void getAnimation(int x, int y, int width, int height, int frames, Spritesheet sheet, int states) {
-		animation = new BufferedImage[frames * states];
-
-        for(int i = y; i < states; i++)
-            for (int j = x; j < frames; j++)
-                animation[j + i * frames] = Shader.reColor(sheet.getSprite(width * j, height * i, width, height), hue);
 	}
 
 

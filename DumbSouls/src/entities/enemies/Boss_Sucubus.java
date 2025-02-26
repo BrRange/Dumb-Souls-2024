@@ -6,6 +6,7 @@ import entities.orbs.Rune_Orb;
 import entities.shots.Shot;
 import entities.shots.Shot_SuccubusVampireBat;
 import graphics.Shader;
+import graphics.Spritesheet;
 import java.awt.image.BufferedImage;
 import main.Game;
 import world.Camera;
@@ -13,12 +14,15 @@ import world.World;
 
 public class Boss_Sucubus extends Enemy {
 	private boolean balance, showAura;
-	private BufferedImage spriteAtk = Game.sheet.getSprite(64, 160, 16, 16);
-	private BufferedImage aura = Game.sheet.getSprite(80, 160, 16, 16);
+
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Bosses/Boss_Sucubus.png");
+
+	private BufferedImage spriteAtk = Shader.reColor(sheet.getSprite(0, 64, 16, 16), hue);
+	private BufferedImage aura = sheet.getSprite(16, 64, 16, 16);
 
 	public Boss_Sucubus(int x, int y) {
-		super(x, y, 32, 32, Game.sheet.getSprite(105, 192, 12, 10));
-		getAnimation(96, 192, 32, 32, 2);
+		super(x, y, 32, 32, sheet.getSprite(11, 0, 12, 10));
+		getAnimation(0, 0, 32, 32, 2, sheet);
 		expValue = 1500;
 		soulValue = 20;
 		maxLife = 300;
@@ -58,7 +62,7 @@ public class Boss_Sucubus extends Enemy {
 	private void attack2() {
 		Vector delta = new Vector(Game.player.centerX() - centerX(), Game.player.centerY() - centerY()).normalize();
 		Game.eShots.add(new Shot_SuccubusVampireBat(Game.player.centerX(), Game.player.centerY(), delta.x,
-				delta.y, damage / 3, this));
+				delta.y, damage / 3, this, Shader.reColor(sheet.getSprite(32, 64, 16, 16), hue)));
 	}
 
 	private void renderAura() {

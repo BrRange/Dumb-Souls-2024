@@ -9,12 +9,12 @@ import main.Game;
 import world.Camera;
 
 public abstract class AE_Attack_Entity extends Entity {
-	protected int tickTimer = 0, maxFrames = 20, frames = 0, index = 0, maxIndex = 2;
-	protected BufferedImage[] animation;
+	protected int tickTimer = 0, maxFrames = 20, frames = 0;
 	
 	public AE_Attack_Entity(int x, int y, int width, int height, int life) {
 		super(x, y, width, height);
 		this.life = life;
+		this.maxIndex = 2;
 	}
 	
 	protected void getAnimation(int x, int y, int width, int height, int frames) {

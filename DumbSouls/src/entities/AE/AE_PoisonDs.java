@@ -27,7 +27,7 @@ public class AE_PoisonDs extends AE_Attack_Entity{
 				index = 0;
 			}
 		}
-		pos.set(Game.player.centerX(), Game.player.centerY());
+		pos.set(Game.player.centerX() - width / 2, Game.player.centerY() - height / 2);
 		if (tickTimer == life) {
 			die();
 		}

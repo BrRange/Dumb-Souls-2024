@@ -4,7 +4,9 @@ import entities.runes.Rune;
 import entities.shots.Shot;
 import entities.weapons.Weapon;
 import graphics.Shader;
+import graphics.Spritesheet;
 import graphics.UI;
+import java.util.List;
 import main.Game;
 import main.Menu_Init;
 import main.Menu_Level;
@@ -12,9 +14,6 @@ import main.Menu_Player;
 import main.Save_Game;
 import world.Camera;
 import world.World;
-
-import java.awt.image.BufferedImage;
-import java.util.List;
 
 public class Player extends Entity {
 
@@ -31,34 +30,14 @@ public class Player extends Entity {
 	public Weapon playerWeapon;
 	public static List<Rune> runesInventory, runesEquipped;
 	public static int runeLimit = 3;
-
-	private BufferedImage[] playerDown;
-	private BufferedImage[] playerRight;
-	private BufferedImage[] playerLeft;
-	private BufferedImage[] playerUp;
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Player.png");
 
 	public Player(int x, int y) {
 		super(x, y, 16, 16, Game.sheet.getSprite(0, 16, 16, 16));
 
 		this.life = 100;
 
-		playerDown = new BufferedImage[4];
-		playerRight = new BufferedImage[4];
-		playerLeft = new BufferedImage[4];
-		playerUp = new BufferedImage[4];
-
-		for (int xsp = 0; xsp < 4; xsp++) {
-			playerDown[xsp] = Game.sheet.getSprite(xsp * 16, 16, 16, 16);
-		}
-		for (int xsp = 0; xsp < 4; xsp++) {
-			playerRight[xsp] = Game.sheet.getSprite(xsp * 16, 16 * 2, 16, 16);
-		}
-		for (int xsp = 0; xsp < 4; xsp++) {
-			playerLeft[xsp] = Game.sheet.getSprite(xsp * 16, 16 * 3, 16, 16);
-		}
-		for (int xsp = 0; xsp < 4; xsp++) {
-			playerUp[xsp] = Game.sheet.getSprite(xsp * 16, 16 * 4, 16, 16);
-		}
+		getAnimation(0, 0, 16, 16, 4, sheet, 4);
 
 		setMask(4, 1, 8, 15);
 		depth = 1;
@@ -206,14 +185,22 @@ public class Player extends Entity {
 		if (moveDir.x == 0 && moveDir.y == 0) {
 			moving = false;
 		} else {
-			if (moveDir.x > 0)
+			if (moveDir.x > 0) {
 				direct = 0;
-			else if (moveDir.x < 0)
+				state = 0;
+			}
+			else if (moveDir.x < 0) {
 				direct = 1;
-			else if (moveDir.y > 0)
+				state = 1;
+			}
+			else if (moveDir.y > 0) {
 				direct = 2;
-			else if (moveDir.y < 0)
+				state = 2;
+			}
+			else if (moveDir.y < 0) {
 				direct = 3;
+				state = 3;
+			}
 		}
 
 		castAblt();
@@ -248,32 +235,11 @@ public class Player extends Entity {
 	}
 
 	public void render() {
-		switch (direct) {
-			case 0:
-				Game.gameGraphics.drawImage(
-						(damaged) ? Shader.reColor(playerRight[moving ? frames / 10 : 0], damagedHue)
-								: playerRight[moving ? frames / 10 : 0],
+		Game.gameGraphics.drawImage(
+			(damaged) ? Shader.reColor(animation[moving ? (frames / 10) + state * 4 : state * 4], damagedHue)
+								: animation[moving ? (frames / 10) + state * 4 : state * 4],
 						pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), null);
-				break;
-			case 1:
-				Game.gameGraphics.drawImage(
-						(damaged) ? Shader.reColor(playerLeft[moving ? frames / 10 : 0], damagedHue)
-								: playerLeft[moving ? frames / 10 : 0],
-						pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), null);
-				break;
-			case 2:
-				Game.gameGraphics.drawImage(
-						(damaged) ? Shader.reColor(playerDown[moving ? frames / 10 : 0], damagedHue)
-								: playerDown[moving ? frames / 10 : 0],
-						pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), null);
-				break;
-			case 3:
-				Game.gameGraphics.drawImage(
-						(damaged) ? Shader.reColor(playerUp[moving ? frames / 10 : 0], damagedHue)
-								: playerUp[moving ? frames / 10 : 0],
-						pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), null);
-				break;
-		}
+						
 		playerWeapon.render();
 	}
 }

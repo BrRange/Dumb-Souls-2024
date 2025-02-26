@@ -7,7 +7,7 @@ import main.Game;
 import world.World;
 
 public class Enemy_Mouth extends Enemy {
-	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemy_Mouth.png");
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemies/Enemy_Mouth.png");
 
 	public Enemy_Mouth(int x, int y) {
 		super(x, y, 16, 16, sheet.getSprite(0, 0, 16, 16));

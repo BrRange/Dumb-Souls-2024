@@ -3,6 +3,8 @@
 import java.awt.image.BufferedImage;
 import java.util.Comparator;
 
+import graphics.Shader;
+import graphics.Spritesheet;
 import main.Game;
 import world.Camera;
 
@@ -57,9 +59,10 @@ public abstract class Entity {
 
 	public Vector pos = new Vector(0, 0);
 	public double life, maxLife, damage, push, speed, maxSpeed, slowness, weight = 1.f;
-	public int width, height, depth, damagedFrames, maxDamagedFrames = 15, damagedHue;
+	public int width, height, depth, damagedFrames, maxDamagedFrames = 15, damagedHue, state = 0, hue = 0, index, maxIndex = 3;
 	public boolean damaged;
 	protected Rectangle mask = new Rectangle();
+	public BufferedImage[] animation;
 	
 	public BufferedImage sprite;
 	
@@ -73,6 +76,24 @@ public abstract class Entity {
 	public Entity(int x, int y, int w, int h) {
 		this(x, y, w, h, null);
 	}
+
+	protected void getAnimation(int x, int y, int width, int height, int frames, Spritesheet sheet) {
+		animation = new BufferedImage[frames];
+
+		for (int i = 0; i < animation.length; i++) {
+			animation[i] = Shader.reColor(sheet.getSprite(x, y, width, height), hue);
+			x += width;
+		}
+	}
+
+	protected void getAnimation(int x, int y, int width, int height, int frames, Spritesheet sheet, int states) {
+		animation = new BufferedImage[frames * states];
+
+	for(int i = y; i < states; i++)
+		for (int j = x; j < frames; j++)
+			animation[j + i * frames] = Shader.reColor(sheet.getSprite(width * j, height * i, width, height), hue);
+	}
+
 	
 	public static double calculateDistance(int x1, int y1, int x2, int y2) {
 		return Math.hypot(x1 - x2, y1 - y2);

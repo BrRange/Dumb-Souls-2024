@@ -5,7 +5,7 @@ import main.Game;
 
 public class Enemy_SpawnPod extends Enemy {
 	private Enemy owner;
-	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemy_SpawnPod.png");
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemies/Enemy_SpawnPod.png");
 	public Enemy_SpawnPod(int x, int y, int w, int h, int time, Enemy own) {
 		super(x, y, w, h, sheet.getSprite(0, 0, 32, 32));
 		owner = own;

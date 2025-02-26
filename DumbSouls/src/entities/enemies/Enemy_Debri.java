@@ -5,7 +5,7 @@ import main.Game;
 import world.World;
 
 public class Enemy_Debri extends Enemy {
-	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemy_Debri.png");
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemies/Enemy_Debri.png");
 
 	public Enemy_Debri(int x, int y, boolean specialRare) {
 		super(x, y, 16, 16, Game.sheet.getSprite(0, 0, 16, 16));

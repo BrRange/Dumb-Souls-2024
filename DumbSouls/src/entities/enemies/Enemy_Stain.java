@@ -7,7 +7,7 @@ import main.Game;
 import world.World;
 
 public class Enemy_Stain extends Enemy {
-	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemy_Stain.png");
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemies/Enemy_Stain.png");
 
 	public Enemy_Stain(int x, int y) {
 		super(x, y, 16, 16, sheet.getSprite(0, 0, 16, 16));

@@ -7,7 +7,7 @@ import main.Game;
 import world.World;
 
 public class Enemy_Barrier extends Enemy {
-	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemy_Barrier.png");
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemies/Enemy_Barrier.png");
 
 	public Enemy_Barrier(int x, int y) {
 		super(x, y, 48, 32, sheet.getSprite(0, 0, 48, 32));

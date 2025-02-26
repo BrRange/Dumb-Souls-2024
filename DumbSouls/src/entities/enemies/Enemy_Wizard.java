@@ -10,7 +10,7 @@ import main.Game;
 import world.World;
 
 public class Enemy_Wizard extends Enemy{
-    private static Spritesheet sheet = new Spritesheet("res/spriteSheets/Enemy_Wizard.png");
+    private static Spritesheet sheet = new Spritesheet("res/spriteSheets/Enemies/Enemy_Wizard.png");
     private double range;
    private static BufferedImage shotSprite = sheet.getSprite(0, 64, 16, 16);
 

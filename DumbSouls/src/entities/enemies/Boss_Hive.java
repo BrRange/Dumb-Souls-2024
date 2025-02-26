@@ -2,6 +2,7 @@ package entities.enemies;
 
 import entities.Player;
 import entities.orbs.Rune_Orb;
+import graphics.Spritesheet;
 import main.Game;
 import world.World;
 
@@ -9,12 +10,13 @@ public class Boss_Hive extends Enemy {
 
 	private int spawnX, spawnY, contPosition;
 	private boolean balance;
+	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Bosses/Boss_Hive.png");
 
 	public Boss_Hive(int x, int y) {
-		super(x, y, 32, 32, Game.sheet.getSprite(160, 192, 32, 32));
+		super(x, y, 32, 32, sheet.getSprite(0, 0, 32, 32));
 		spawnX = x;
 		spawnY = y;
-		getAnimation(160, 192, 32, 32, 3);
+		getAnimation(0, 0, 32, 32, 3, sheet);
 		expValue = 1800;
 		soulValue = 30;
 		maxLife = 600;
