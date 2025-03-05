@@ -21,6 +21,7 @@ public class Tile {
 	}
 	
 	public void render() {
+		if((x + 16 < Camera.getX() && y + 16 < Camera.getY()) || (x > Camera.getX() + Game.width && y > Camera.getY() + Game.height)) return;
 		Game.gameGraphics.drawImage(sprite, x - Camera.getX(), y - Camera.getY(), null);
 	}
 }

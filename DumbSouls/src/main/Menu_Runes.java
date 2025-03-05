@@ -2,18 +2,18 @@ package main;
 
 import entities.Player;
 import entities.runes.Rune;
-import graphics.TextObject;
+import graphics.elements.TextBox;
 
 import java.awt.Color;
 import java.awt.Font;
 
 public class Menu_Runes {
 
-	private static TextObject runeBox = new TextObject("arial", Font.BOLD, 9, "Rune", 30, 40, Color.white),
-			equipBox = new TextObject("arial", Font.BOLD, 9, "Equip", 30, 60, Color.white),
-			unequipBox = new TextObject("arial", Font.BOLD, 9, "Unequip", 30, 80, Color.white),
-			limitBox = new TextObject("arial", Font.BOLD, 9, "Rune slots", 30, 100, Color.white),
-			backBox = new TextObject("arial", Font.BOLD, 9, "Back", 30, 140, Color.white);
+	private static TextBox runeBox = new TextBox("arial", Font.BOLD, 9, "Rune", 30, 40, Color.white),
+			equipBox = new TextBox("arial", Font.BOLD, 9, "Equip", 30, 60, Color.white),
+			unequipBox = new TextBox("arial", Font.BOLD, 9, "Unequip", 30, 80, Color.white),
+			limitBox = new TextBox("arial", Font.BOLD, 9, "Rune slots", 30, 100, Color.white),
+			backBox = new TextBox("arial", Font.BOLD, 9, "Back", 30, 140, Color.white);
 	private static int cur = 0, curR = 0;
 	private static boolean clickR, clickL;
 

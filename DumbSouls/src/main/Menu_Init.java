@@ -3,14 +3,16 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 
-import graphics.TextObject;
+import graphics.elements.OptionArrow;
+import graphics.elements.TextBox;
 
 public class Menu_Init {
 	private static int cur = 0;
-	private static TextObject
-	newGameBox = new TextObject("arial", Font.BOLD, 10, "New Game", 120, 60, Color.white),
-	helpBox = new TextObject("arial", Font.BOLD, 10, "Help", 120, 85, Color.white),
-	exitBox = new TextObject("arial", Font.BOLD, 10, "Exit", 120, 110, Color.white);
+	private static TextBox
+	newGameBox = new TextBox("arial", Font.BOLD, 10, "New Game", 120, 60, Color.white),
+	helpBox = new TextBox("arial", Font.BOLD, 10, "Help", 120, 85, Color.white),
+	exitBox = new TextBox("arial", Font.BOLD, 10, "Exit", 120, 110, Color.white);
+	private static OptionArrow arrow = new OptionArrow("arial", Font.BOLD, 10, ">", Color.white, 90, 60, (double d) -> {return Math.sqrt(d);}, 10);
 	
 	public static void tick() {
 		if(newGameBox.hover()){
@@ -40,6 +42,34 @@ public class Menu_Init {
 			cur--;
 			if (cur < 0) cur = 2;
 		}
+		switch (cur) {
+		case 0:
+			arrow.setTarget(90, 60);	
+			break;
+		case 1:
+			arrow.setTarget(90, 85);
+			break;
+		case 2:
+			arrow.setTarget(90, 110);
+			break;
+		}
+		arrow.tick();
+		if (Game.keyController.contains(10)){
+			switch (cur) {
+			case 0:
+				Game.keyController.clear();
+				Menu_Player.startMenu();
+				Game.gameStateHandler = Game.gameState.MENUPLAYER;	
+				break;
+			case 1:
+				Game.keyController.clear();
+				Game.gameStateHandler = Game.gameState.MENUHELP;;
+				break;
+			case 2:
+				System.exit(1);;
+				break;
+			}
+		}
 		Game.keyController.clear();
 		Game.clickController.clear();
 	}
@@ -54,27 +84,6 @@ public class Menu_Init {
 		newGameBox.render();
 		helpBox.render();
 		exitBox.render();
-
-		if (cur == 0) {
-			Game.gameGraphics.drawString(">", 90, 60);
-			if (Game.keyController.contains(10)){
-				Game.keyController.clear();
-				Menu_Player.startMenu();
-				Game.gameStateHandler = Game.gameState.MENUPLAYER;
-			}
-		}
-		else if (cur == 1) {
-			Game.gameGraphics.drawString(">", 90, 85);
-			if (Game.keyController.contains(10)){
-				Game.keyController.clear();
-				Game.gameStateHandler = Game.gameState.MENUHELP;
-			}
-		}
-		else if (cur == 2) {
-			Game.gameGraphics.drawString(">", 90, 110);
-			if (Game.keyController.contains(10)){
-				System.exit(1);
-			}
-		}
+		arrow.render();
 	}
 }

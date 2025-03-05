@@ -6,7 +6,7 @@ import java.awt.Font;
 import entities.Player;
 import entities.runes.Rune;
 import entities.weapons.*;
-import graphics.TextObject;
+import graphics.elements.TextBox;
 import world.Camera;
 
 public class Menu_Player {
@@ -14,10 +14,10 @@ public class Menu_Player {
 	private static String[] weapons = { "Mana Weapon", "Fire Weapon", "Wind Weapon", "Ice Weapon", "Fisical Weapon",
 			"Poison Weapon" };
 	private static boolean clickR, clickL, weaponUnlocked, hasRunes;
-	private static TextObject bookBox = new TextObject("arial", Font.BOLD, 9, weapons[0], 30, 70, Color.white),
-			startBox = new TextObject("arial", Font.BOLD, 9, "Start", 30, 90, Color.white),
-			runesBox = new TextObject("arial", Font.BOLD, 9, "Runes", 30, 110, Color.white),
-			backBox = new TextObject("arial", Font.BOLD, 9, "Back", 30, 130, Color.white);
+	private static TextBox bookBox = new TextBox("arial", Font.BOLD, 9, weapons[0], 30, 70, Color.white),
+			startBox = new TextBox("arial", Font.BOLD, 9, "Start", 30, 90, Color.white),
+			runesBox = new TextBox("arial", Font.BOLD, 9, "Runes", 30, 110, Color.white),
+			backBox = new TextBox("arial", Font.BOLD, 9, "Back", 30, 130, Color.white);
 
 	public static void tick() {
 		boolean enter = Game.keyController.contains(10);

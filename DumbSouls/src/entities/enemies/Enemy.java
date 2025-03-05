@@ -94,6 +94,7 @@ public abstract class Enemy extends Entity {
 	}
 
 	public void render() {
+		if(offScreen()) return;
 		if (!damaged) {
 			Game.gameGraphics.drawImage(animation[index + state * maxIndex], pos.getX() - Camera.getX(),
 					pos.getY() - Camera.getY(), width,

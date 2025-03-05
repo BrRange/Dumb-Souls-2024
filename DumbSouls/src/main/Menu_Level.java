@@ -3,16 +3,16 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import entities.Player;
-import graphics.TextObject;
+import graphics.elements.TextBox;
 
 public class Menu_Level {
-	private static TextObject[] optionsBox;
+	private static TextBox[] optionsBox;
 	private static int cur, transitionTimer;
 
 	public Menu_Level(int numOP) {
-		optionsBox = new TextObject[numOP];
+		optionsBox = new TextBox[numOP];
 		for (int c = 0; c < numOP; c++) {
-			optionsBox[c] = new TextObject("arial", Font.BOLD, 10, "Blank", 120, 60 + 90 / numOP * c, Color.white);
+			optionsBox[c] = new TextBox("arial", Font.BOLD, 10, "Blank", 120, 60 + 90 / numOP * c, Color.white);
 		}
 	}
 	
@@ -51,7 +51,7 @@ public class Menu_Level {
 				cur = 0;
 		}
 		if (Game.keyController.contains(10) || optionsBox[cur].click()) {
-			Game.player.playerWeapon.checkOptions(optionsBox[cur].txt);
+			Game.player.playerWeapon.checkOptions(optionsBox[cur].getText());
 			Game.player.life = Game.player.maxLife;
 			Game.gameStateHandler = Game.gameState.NORMAL;
 			transitionTimer = 0;
@@ -69,7 +69,7 @@ public class Menu_Level {
 		Game.gameGraphics.setColor(Color.black);
 		Game.gameGraphics.fillRect(0, 0, Game.width * Game.scale, Game.height * Game.scale);
 			
-		for(TextObject opt : optionsBox){
+		for(TextBox opt : optionsBox){
 			opt.render();
 		}
 		

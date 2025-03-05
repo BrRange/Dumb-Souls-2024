@@ -2,12 +2,12 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 
-import graphics.TextObject;
+import graphics.elements.TextBox;
 
 public class Menu_Help {
 	
-	private static TextObject
-	backBox = new TextObject("arial", Font.BOLD, 10, "> Back", 10, 140, Color.white);
+	private static TextBox
+	backBox = new TextBox("arial", Font.BOLD, 10, "> Back", 10, 140, Color.white);
 
 	public static void tick() {
 		backBox.hover();
@@ -27,10 +27,10 @@ public class Menu_Help {
 		Game.gameGraphics.drawString("Controls", 120, 20);
 		
 		Game.gameGraphics.setFont(new Font("arial", Font.BOLD, 10));
-		Game.gameGraphics.drawString("Movement Controls: WASD (Menus also)", 40, 36);
+		Game.gameGraphics.drawString("Movement : WASD and arrows", 40, 36);
 		Game.gameGraphics.drawString("Dash : space", 40, 51);
-		Game.gameGraphics.drawString("Basic Attack : Any mouse button", 40, 66);
-		Game.gameGraphics.drawString("Skills : shift, control", 40, 81);
+		Game.gameGraphics.drawString("Basic Attack : Click", 40, 66);
+		Game.gameGraphics.drawString("Skills : Shift and Control", 40, 81);
 		Game.gameGraphics.drawString("Select : Enter", 40, 96);
 		Game.gameGraphics.drawString("Pause : Escape", 40, 111);
 		backBox.render();

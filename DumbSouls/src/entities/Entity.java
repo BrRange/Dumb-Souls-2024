@@ -26,6 +26,10 @@ public abstract class Entity {
 			return mag == 0 ? 1 : mag;
 		}
 
+		public static Vector offset(Vector a, Vector b){
+			return new Vector(a.x + b.x, a.y + b.y);
+		}
+
 		public Vector normal(){
 			final double mag = getMagnitude(x, y);
 			return new Vector(x / mag, y / mag);
@@ -54,6 +58,10 @@ public abstract class Entity {
 		public void move(double dx, double dy){
 			x += dx;
 			y += dy;
+		}
+
+		public Vector scale(double s){
+			return new Vector(x * s, y * s);
 		}
 	}
 
@@ -141,6 +149,7 @@ public abstract class Entity {
 	public abstract void tick();
 	
 	public void render() {
+		if(offScreen()) return;
 		Game.gameGraphics.drawImage(sprite, pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), null);
 	}
 
@@ -163,6 +172,10 @@ public abstract class Entity {
 		return Math.abs(centerX() - other.centerX()) + Math.abs(centerY() - other.centerY()) > Math.max(width, other.width) + Math.max(height, other.height);
 	}
 	
+	protected boolean offScreen(){
+		return (pos.getX() + width < Camera.getX() && pos.getY() + height < Camera.getY()) || (pos.getX() > Camera.getX() + Game.width && pos.getY() > Camera.getY() + Game.height);
+	}
+
 	public boolean isColiding(Entity other) {
 		if(outOfPerimeter(other)) return false;
 		Rectangle sourceHitBox = new Rectangle(pos.getX() + mask.x, pos.getY() + mask.y, mask.width, mask.height);

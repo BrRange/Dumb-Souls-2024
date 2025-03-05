@@ -4,13 +4,13 @@ import java.awt.Color;
 import java.awt.Font;
 
 import entities.Player;
-import graphics.TextObject;
+import graphics.elements.TextBox;
 
 public class Menu_Pause {
 	private static int cur;
-	private static TextObject
-	resumeBox = new TextObject("arial", Font.BOLD, 10, "Resume", 120, 60, Color.white),
-	initialMenuBox = new TextObject("arial", Font.BOLD, 10, "Initial Menu", 120, 90, Color.white);
+	private static TextBox
+	resumeBox = new TextBox("arial", Font.BOLD, 10, "Resume", 120, 60, Color.white),
+	initialMenuBox = new TextBox("arial", Font.BOLD, 10, "Initial Menu", 120, 90, Color.white);
 	
     public static void tick() {
 		if(resumeBox.hover()){
