@@ -26,8 +26,10 @@ public abstract class Entity {
 			return mag == 0 ? 1 : mag;
 		}
 
-		public static Vector offset(Vector a, Vector b){
-			return new Vector(a.x + b.x, a.y + b.y);
+		public static Vector interpolate(Vector a, Vector b, double s){
+			double dx = a.x == b.x ? a.x : a.x * (1 - s) + b.x * s;
+			double dy = a.y == b.y ? a.y : a.y * (1 - s) + b.y * s;
+			return new Vector(dx, dy);
 		}
 
 		public Vector normal(){

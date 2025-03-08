@@ -13,7 +13,9 @@ public class OptionArrow {
     private Vector pos, origin, target;
     Curve fx;
     public OptionArrow(String fontName, int fontStyle, int fontSize, String txt, Color color, double x, double y, Curve func, int frames){
-        origin = target = pos = new Vector(x, y);
+        origin = new Vector(x, y);
+        target = new Vector(x, y);
+        pos = new Vector(x, y);
         text = new Text(fontName, fontStyle, fontSize, txt, color);
         fx = func;
         this.frames = frames;
@@ -21,16 +23,16 @@ public class OptionArrow {
     public void tick(){
         if(time < 1.0){
             double t = fx.midPoint(time);
-            pos = Vector.offset(origin.scale(1 - t), target.scale(t));
+            pos = Vector.interpolate(origin, target, t);
             time += 1.0 / frames;
-            if(time == 1.0) pos = target;
         }
+        else pos = target;
     }
-    public void setTarget(int x, int y){
-        if(x == target.getX() && y == target.getY()) return;
-        origin = pos;
+    public void setTarget(double x, double y){
+        if(x == target.x && y == target.y) return;
         time = 0.0;
-        target = new Vector(x, y);
+        origin.set(pos.x, pos.y);
+        target.set(x, y);
     }
     public void render(){
         text.render(pos.getX(), pos.getY());

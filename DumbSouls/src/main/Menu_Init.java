@@ -12,7 +12,7 @@ public class Menu_Init {
 	newGameBox = new TextBox("arial", Font.BOLD, 10, "New Game", 120, 60, Color.white),
 	helpBox = new TextBox("arial", Font.BOLD, 10, "Help", 120, 85, Color.white),
 	exitBox = new TextBox("arial", Font.BOLD, 10, "Exit", 120, 110, Color.white);
-	private static OptionArrow arrow = new OptionArrow("arial", Font.BOLD, 10, ">", Color.white, 90, 60, (double d) -> {return Math.sqrt(d);}, 10);
+	private static OptionArrow arrow = new OptionArrow("arial", Font.BOLD, 10, ">", Color.white, 90, 60, (d) -> d * (2 - d), 20);
 	
 	public static void tick() {
 		if(newGameBox.hover()){
