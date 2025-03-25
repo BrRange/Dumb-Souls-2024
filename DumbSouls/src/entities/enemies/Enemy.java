@@ -2,6 +2,7 @@ package entities.enemies;
 
 import entities.Entity;
 import entities.shots.Shot;
+import entities.types.Vector;
 import graphics.Shader;
 import java.awt.image.BufferedImage;
 import main.Game;

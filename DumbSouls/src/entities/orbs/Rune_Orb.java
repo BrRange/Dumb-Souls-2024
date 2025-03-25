@@ -2,6 +2,7 @@ package entities.orbs;
 
 import entities.enemies.Enemy;
 import entities.runes.*;
+import entities.types.Collider;
 import main.Game;
 import entities.Player;
 import java.awt.image.BufferedImage;
@@ -34,7 +35,7 @@ public class Rune_Orb extends Enemy {
 				break;
 		}
 		speed = Game.player.maxSpeed * 1.2;
-		setMask(0, 0, 16, 16);
+		hitbox = new Collider.ColliderCircle(pos, 8);
 		depth = 1;
 	}
 

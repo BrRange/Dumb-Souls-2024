@@ -1,6 +1,9 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
+import entities.types.Collider.ColliderCircle;
+import entities.types.Vector;
+
 import java.util.function.Function;
 import main.Game;
 import world.Camera; 
@@ -17,7 +20,7 @@ public class AE_WindBarrage extends AE_Attack_Entity{
 		push = -8;
 		depth = 2;
 		getAnimation(128, 112, 16, 16, 1);
-		setMask(0, 0, 32, 32);
+		hitbox = new ColliderCircle(pos, 16);
 	}
 	
 	public void tick() {

@@ -3,6 +3,7 @@ package entities.shots;
 import java.awt.Color;
 import entities.Entity;
 import entities.AE.EAE_MortarShock;
+import entities.types.Collider.ColliderCircle;
 import main.Game;
 import world.Camera;
 
@@ -10,7 +11,7 @@ public class Shot_MortarShell extends Shot {
     private static Color shadowColor = new Color(0, 0, 0, 136);
     public Shot_MortarShell(int x, int y, double dx, double dy, double spd, double dmg){
         super(x, y, 9, 9, dx, dy, 0, spd, dmg, 90, Game.sheet.getSprite(3, 180, 9, 9));
-        setMask(0, 0, 0, 0);
+        hitbox = new ColliderCircle(pos, 0);
     }
 
     public void die(Entity target){

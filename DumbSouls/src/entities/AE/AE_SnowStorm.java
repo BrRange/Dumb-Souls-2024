@@ -1,6 +1,9 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
+import entities.types.Collider.ColliderSquare;
+import entities.types.Vector;
+
 import java.util.function.Function;
 import main.Game;
 import world.Camera;
@@ -13,7 +16,7 @@ public class AE_SnowStorm extends AE_Attack_Entity {
 		damage = dmg;
 		depth = 3;
 		getAnimation(96, 112, 16, 16, maxIndex);
-		setMask(0, 24, 64, 40);
+		hitbox = new ColliderSquare(pos, 0, 24, 64, 40);
 		maxFrames = 10;
 	}
 	

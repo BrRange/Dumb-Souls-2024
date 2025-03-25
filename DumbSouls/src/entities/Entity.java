@@ -3,75 +3,19 @@
 import java.awt.image.BufferedImage;
 import java.util.Comparator;
 
+import entities.types.Collider;
+import entities.types.Vector;
 import graphics.Shader;
 import graphics.Spritesheet;
 import main.Game;
 import world.Camera;
 
-import java.awt.Rectangle;
-import java.awt.geom.Line2D;
-
 public abstract class Entity {
-	
-	public static class Vector{
-		public double x, y;
-	
-		public Vector(double setx, double sety){
-			x = setx;
-			y = sety;
-		}
-
-		public static double getMagnitude(double dx, double dy){
-			final double mag = Math.hypot(dx, dy);
-			return mag == 0 ? 1 : mag;
-		}
-
-		public static Vector interpolate(Vector a, Vector b, double s){
-			double dx = a.x == b.x ? a.x : a.x * (1 - s) + b.x * s;
-			double dy = a.y == b.y ? a.y : a.y * (1 - s) + b.y * s;
-			return new Vector(dx, dy);
-		}
-
-		public Vector normal(){
-			final double mag = getMagnitude(x, y);
-			return new Vector(x / mag, y / mag);
-		}
-
-		public Vector normalize(){
-			final double mag = getMagnitude(x, y);
-			x /= mag;
-			y /= mag;
-			return this;
-		}
-
-		public int getX(){
-			return (int) x;
-		}
-
-		public int getY(){
-			return (int) y;
-		}
-
-		public void set(double setx, double sety){
-			x = setx;
-			y = sety;
-		}
-
-		public void move(double dx, double dy){
-			x += dx;
-			y += dy;
-		}
-
-		public Vector scale(double s){
-			return new Vector(x * s, y * s);
-		}
-	}
-
 	public Vector pos = new Vector(0, 0);
+	public Collider hitbox;
 	public double life, maxLife, damage, push, speed, maxSpeed, slowness, weight = 1.f;
 	public int width, height, depth, damagedFrames, maxDamagedFrames = 15, damagedHue, state = 0, hue = 0, index, maxIndex = 3;
 	public boolean damaged;
-	protected Rectangle mask = new Rectangle();
 	public BufferedImage[] animation;
 	
 	public BufferedImage sprite;
@@ -84,7 +28,9 @@ public abstract class Entity {
 	}
 
 	public Entity(int x, int y, int w, int h) {
-		this(x, y, w, h, null);
+		pos.set(x - w / 2, y - h / 2);
+		width = w;
+		height = h;
 	}
 
 	protected void getAnimation(int x, int y, int width, int height, int frames, Spritesheet sheet) {
@@ -154,20 +100,13 @@ public abstract class Entity {
 		if(offScreen()) return;
 		Game.gameGraphics.drawImage(sprite, pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), null);
 	}
-
-	protected Rectangle getMask(){
-		return mask;
+	
+	protected void updateHitbox(int mx, int my, int mw, int mh) {
+		hitbox.update(mx, my, mw, mh);
 	}
 	
-	protected void setMask(int mx, int my, int mw, int mh) {
-		mask.x = mx;
-		mask.y = my;
-		mask.width = mw;
-		mask.height = mh;
-	}
-
-	protected void setMask(Rectangle mask) {
-		this.mask = mask;
+	protected void updateHitbox(int r) {
+		hitbox.update(r);
 	}
 
 	private boolean outOfPerimeter(Entity other){
@@ -180,13 +119,7 @@ public abstract class Entity {
 
 	public boolean isColiding(Entity other) {
 		if(outOfPerimeter(other)) return false;
-		Rectangle sourceHitBox = new Rectangle(pos.getX() + mask.x, pos.getY() + mask.y, mask.width, mask.height);
-		return sourceHitBox.intersects(new Rectangle(other.pos.getX() + other.mask.x, other.pos.getY() + other.mask.y, other.mask.width, other.mask.height));
-	}
-	
-	public static boolean lineCollision(Line2D line, Entity ent) {
-		ent.mask = new Rectangle(ent.pos.getX() + ent.mask.x, ent.pos.getY() + ent.mask.y, ent.mask.width, ent.mask.height);
-		return line.intersects(ent.mask);
+		return hitbox.collide(other.hitbox);
 	}
 
 	public void applySlowness(double slow){

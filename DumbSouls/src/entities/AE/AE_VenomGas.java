@@ -1,6 +1,9 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
+import entities.types.Vector;
+import entities.types.Collider.ColliderCircle;
+
 import java.util.function.Function;
 
 public class AE_VenomGas extends AE_Attack_Entity {
@@ -13,7 +16,7 @@ public class AE_VenomGas extends AE_Attack_Entity {
 		dir.set(dirx, diry);
 		damage = dmg;
 		getAnimation(192, 112, 16, 16, 1);
-		setMask(2, 2, 4, 8);
+		hitbox = new ColliderCircle(pos, 4);
 		depth = 2;
 	}
 	

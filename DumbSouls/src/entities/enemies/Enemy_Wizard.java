@@ -4,6 +4,8 @@ import entities.Entity;
 import entities.Player;
 import entities.orbs.EXP_Orb;
 import entities.shots.Shot;
+import entities.types.Vector;
+import entities.types.Collider.ColliderSquare;
 import graphics.Spritesheet;
 import java.awt.image.BufferedImage;
 import main.Game;
@@ -29,7 +31,7 @@ public class Enemy_Wizard extends Enemy{
 		damage = 38 * specialMult + 0.38 * World.wave;
 		maxSpeed = 1.2 + (specialMult - 1) / 3;
 		speed = maxSpeed;
-		setMask(7, 2, 23, 30);
+		hitbox = new ColliderSquare(pos, 7, 2, 23, 30);
 		timeSpawn = 270;
 		weight = 3;
 	}

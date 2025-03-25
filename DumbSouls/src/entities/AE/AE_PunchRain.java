@@ -1,6 +1,9 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
+import entities.types.Collider.ColliderCircle;
+import entities.types.Vector;
+
 import java.util.function.Function;
 
 public class AE_PunchRain extends AE_Attack_Entity {
@@ -14,7 +17,7 @@ public class AE_PunchRain extends AE_Attack_Entity {
 		damage = dmg;
 		push = 0.5;
 		getAnimation(176, 112, 16, 16, 1);
-		setMask(2, 6, 3, 3);
+		hitbox = new ColliderCircle(pos, 2);
 		depth = 2;
 	}
 	

@@ -2,6 +2,7 @@ package entities.enemies;
 
 import entities.Player;
 import entities.orbs.EXP_Orb;
+import entities.types.Collider.ColliderSquare;
 import graphics.Spritesheet;
 import main.Game;
 import world.World;
@@ -23,7 +24,7 @@ public class Enemy_Barrier extends Enemy {
 		damage = 82 * specialMult + 0.82 * World.wave;
 		maxSpeed = 0.6 + (specialMult - 1) / 3;
 		speed = maxSpeed;
-		setMask(1, 1, 46, 30);
+		hitbox = new ColliderSquare(pos, 1, 1, 46, 30);
 		timeSpawn = 180;
 		maxIndex = 2;
 		maxFrames = 20;

@@ -1,6 +1,8 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
+import entities.types.Collider.ColliderCircle;
+
 import java.util.function.Function;
 import main.Game;
 import world.Camera;
@@ -9,7 +11,7 @@ public class AE_PoisonPool extends AE_Attack_Entity {
 
 	public AE_PoisonPool(int x, int y, int size, int time, int dmg) {
 		super(x, y, size, size, time);
-		setMask(0, 0, width, height);
+		hitbox = new ColliderCircle(pos, size / 2);
 		getAnimation(128, 128, 16, 16, 2);
 		damage = dmg;
 	}

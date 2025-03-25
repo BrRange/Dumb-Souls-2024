@@ -66,7 +66,6 @@ public class Save_Game{
 			Weapon_Ice.unlocked = intBitReader(weapons[0], 4);
 			Weapon_Fisical.unlocked = intBitReader(weapons[0], 8);
 			Weapon_Poison.unlocked = intBitReader(weapons[0], 16);
-			System.out.println(weapons[0]);
 			if(Player.runesInventory == null) InventoryMaker();
 			for(int i = 0; i < Rune.runesInGame; i++){
 				Player.runesInventory.get(i).collected = intBitReader(runes[0], 1 << i);

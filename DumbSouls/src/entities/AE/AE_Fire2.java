@@ -1,6 +1,9 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
+import entities.types.Vector;
+import entities.types.Collider.ColliderCircle;
+
 import java.util.function.Function;
 
 public class AE_Fire2 extends AE_Attack_Entity{
@@ -13,7 +16,7 @@ public class AE_Fire2 extends AE_Attack_Entity{
 		dir.set(dirx, diry);
 		damage = dmg;
 		getAnimation(2, 130, 11, 13, 1);
-		setMask(2, 0, 11, 13);
+		hitbox = new ColliderCircle(pos, 6);
 		depth = 2;
 	}
 

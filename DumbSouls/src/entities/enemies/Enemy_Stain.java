@@ -2,6 +2,7 @@ package entities.enemies;
 
 import entities.Player;
 import entities.orbs.EXP_Orb;
+import entities.types.Collider.ColliderSquare;
 import graphics.Spritesheet;
 import main.Game;
 import world.World;
@@ -23,7 +24,7 @@ public class Enemy_Stain extends Enemy {
 		damage = 8 * specialMult + 0.08 * World.wave;
 		maxSpeed = 1 + (specialMult - 1) / 3;
 		speed = maxSpeed;
-		setMask(2, 2, 10, 13);
+		hitbox = new ColliderSquare(pos, 2, 2, 12, 13);
 		timeSpawn = 150;
 	}
 

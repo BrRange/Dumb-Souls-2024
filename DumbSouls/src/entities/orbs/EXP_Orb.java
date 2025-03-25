@@ -2,6 +2,7 @@ package entities.orbs;
 
 import entities.Entity;
 import entities.enemies.Enemy;
+import entities.types.Collider;
 import main.Game;
 import world.World;
 
@@ -12,7 +13,7 @@ public class EXP_Orb extends Enemy{
 		getAnimation(0, 144, 16, 16, 3);
 		expValue = World.wave % 10 == 0 ? 0 : exp;
 		speed = 0.8;
-		setMask(0, 0, 16, 16);
+		hitbox = new Collider.ColliderCircle(pos, 8);
 		depth = 1;
 		maxFrames = 6;
 	}

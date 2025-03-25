@@ -1,6 +1,8 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
+import entities.types.Collider.ColliderCircle;
+
 import java.util.function.Function;
 import main.Game;
 import world.Camera;
@@ -10,7 +12,7 @@ public class AE_ManaExplosion extends AE_Attack_Entity{
 	public AE_ManaExplosion(int x, int y, double dmg, int knockback) {
 		super(x, y, 32, 32, 10);
 		getAnimation(160, 128, 16, 16, 2);
-		setMask(0, 0, width, height);
+		hitbox = new ColliderCircle(pos, 16);
 		damage = dmg;
 		push = knockback;
 		maxFrames = 5;

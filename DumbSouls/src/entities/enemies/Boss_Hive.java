@@ -2,6 +2,7 @@ package entities.enemies;
 
 import entities.Player;
 import entities.orbs.Rune_Orb;
+import entities.types.Collider.ColliderCircle;
 import graphics.Spritesheet;
 import main.Game;
 import world.World;
@@ -22,7 +23,7 @@ public class Boss_Hive extends Enemy {
 		maxLife = 600;
 		life = maxLife;
 		maxFrames = 40;
-		setMask(2, 4, 28, 26);
+		hitbox = new ColliderCircle(pos, 14);
 		weight = 5;
 	}
 

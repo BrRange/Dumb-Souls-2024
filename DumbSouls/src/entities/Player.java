@@ -2,6 +2,8 @@ package entities;
 
 import entities.runes.Rune;
 import entities.shots.Shot;
+import entities.types.Vector;
+import entities.types.Collider.ColliderSquare;
 import entities.weapons.Weapon;
 import graphics.Shader;
 import graphics.Spritesheet;
@@ -39,7 +41,7 @@ public class Player extends Entity {
 
 		getAnimation(0, 0, 16, 16, 4, sheet, 4);
 
-		setMask(4, 1, 8, 15);
+		hitbox = new ColliderSquare(pos, 4, 1, 8, 15);
 		depth = 1;
 		camXOffset = (width - Game.width) >> 1;
 		camYOffset = (height - Game.height) >> 1;

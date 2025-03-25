@@ -1,6 +1,8 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
+import entities.types.Collider.ColliderCircle;
+
 import java.util.function.Function;
 
 public class AE_IceSpike extends AE_Attack_Entity {
@@ -9,7 +11,7 @@ public class AE_IceSpike extends AE_Attack_Entity {
 		super(x, y, 6, 16, 60);
 		this.damage = damage;
 		getAnimation(48, 128, 16, 16, 1);
-		setMask(2, 4, 12, 12);
+		hitbox = new ColliderCircle(pos, 6);;
 	}
 
 	Function<Enemy, Void> attackCollision = (ene) -> { 

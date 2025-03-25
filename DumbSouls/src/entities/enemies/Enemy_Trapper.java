@@ -2,6 +2,7 @@ package entities.enemies;
 
 import entities.Player;
 import entities.orbs.EXP_Orb;
+import entities.types.Collider.ColliderSquare;
 import graphics.Shader;
 import graphics.Spritesheet;
 import main.Game;
@@ -40,7 +41,7 @@ public class Enemy_Trapper extends Enemy {
 
 	private void stage2() {
 		shotDamage();
-		setMask(1, 0, 14, 32);
+		hitbox = new ColliderSquare(pos, 1, 0, 14, 32);
 		animate();
 		cont++;
 		if (isColiding(Game.player)) {
@@ -70,7 +71,7 @@ public class Enemy_Trapper extends Enemy {
 			if (centerX() != xP && centerY() != yP && !isColiding(Game.player) && cont == 0) {
 				invulnerable = true;
 				objectiveMovement(xP, yP);
-				setMask(0, 16, 16, 16);
+				updateHitbox(0, 16, 16, 16);
 			} else {
 				invulnerable = false;
 				stage2();

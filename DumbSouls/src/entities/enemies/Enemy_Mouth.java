@@ -2,6 +2,7 @@ package entities.enemies;
 
 import entities.Player;
 import entities.orbs.EXP_Orb;
+import entities.types.Collider.ColliderSquare;
 import graphics.Spritesheet;
 import main.Game;
 import world.World;
@@ -24,7 +25,7 @@ public class Enemy_Mouth extends Enemy {
 		maxSpeed = 1.5 + (specialMult - 1) / 3;
 		speed = maxSpeed;
 		timeSpawn = 240;
-		setMask(1, 3, 14, 13);
+		hitbox = new ColliderSquare(pos, 1, 3, 14, 13);
 		weight = 0.6f;
 	}
 

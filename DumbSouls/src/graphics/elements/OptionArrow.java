@@ -1,7 +1,8 @@
 package graphics.elements;
 
-import entities.Entity.Vector;
 import java.awt.Color;
+
+import entities.types.Vector;
 
 public class OptionArrow {
     public static interface Curve{

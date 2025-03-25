@@ -5,6 +5,8 @@ import entities.Player;
 import entities.orbs.Rune_Orb;
 import entities.shots.Shot;
 import entities.shots.Shot_SuccubusVampireBat;
+import entities.types.Collider.ColliderSquare;
+import entities.types.Vector;
 import graphics.Shader;
 import graphics.Spritesheet;
 import java.awt.image.BufferedImage;
@@ -32,7 +34,7 @@ public class Boss_Sucubus extends Enemy {
 		speed = maxSpeed;
 		maxIndex = 2;
 		maxFrames = 40;
-		setMask(2, 0, 27, 32);
+		hitbox = new ColliderSquare(pos, 2, 0, 27, 32);
 		weight = 2;
 	}
 

@@ -5,6 +5,8 @@ import entities.Entity;
 import entities.Player;
 import entities.orbs.Rune_Orb;
 import entities.shots.Shot;
+import entities.types.Collider.ColliderSquare;
+import entities.types.Vector;
 import graphics.Shader;
 import graphics.Spritesheet;
 import java.awt.image.BufferedImage;
@@ -31,7 +33,7 @@ public class Boss_Duality extends Enemy {
 		life = maxLife;
 		speed = 0.8;
 		maxFrames = 40;
-		setMask(9, 3, 14, 21);
+		hitbox = new ColliderSquare(pos, 9, 3, 14, 21);
 		weight = 6;
 	}
 

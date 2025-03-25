@@ -1,5 +1,6 @@
 package entities.AE;
 
+import entities.types.Collider.ColliderSquare;
 import main.Game;
 import world.Camera;
 
@@ -10,7 +11,7 @@ public class BAE_Spike extends AE_Attack_Entity{
 		depth = 0;
 		damage = dmg;
 		getAnimation(16, 160, 16, 16, 3);
-		setMask(2, 0, 8, 16);
+		hitbox = new ColliderSquare(pos, 2, 0, 8, 16);
 	}
 	
 	public void tick() {

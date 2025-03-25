@@ -1,6 +1,8 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
+import entities.types.Collider.ColliderCircle;
+
 import java.util.function.Function;
 import main.Game;
 import world.Camera;
@@ -9,7 +11,7 @@ public class AE_Rupture extends AE_Attack_Entity {
 	
 	public AE_Rupture(int x, int y, int size, int time, int dmg) {
 		super(x, y, size, size, time);
-		setMask(0, 0, width, height);
+		hitbox = new ColliderCircle(pos, size / 2);
 		getAnimation(80, 128, 16, 16, 3);
 		damage = dmg;
 		depth = 0;

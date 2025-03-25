@@ -4,6 +4,8 @@ import entities.Entity;
 import entities.Player;
 import entities.orbs.EXP_Orb;
 import entities.shots.Shot;
+import entities.types.Vector;
+import entities.types.Collider.ColliderCircle;
 import graphics.Spritesheet;
 import main.Game;
 import world.World;
@@ -27,7 +29,7 @@ public class Enemy_Eye extends Enemy {
 		damage = 15 * specialMult + 0.15 * World.wave;
 		maxSpeed = 0.8 + (specialMult - 1) / 3;
 		speed = maxSpeed;
-		setMask(1, 3, 13, 11);
+		hitbox = new ColliderCircle(pos, 7);
 		timeSpawn = 180;
 		maxFrames = 15;
 		weight = 3;

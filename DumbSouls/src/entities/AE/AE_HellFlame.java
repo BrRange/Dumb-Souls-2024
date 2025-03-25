@@ -1,6 +1,9 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
+import entities.types.Vector;
+import entities.types.Collider.ColliderCircle;
+
 import java.util.function.Function;
 import main.Game;
 import world.Camera;
@@ -16,7 +19,7 @@ public class AE_HellFlame extends AE_Attack_Entity {
 		dir.set(dx, dy);
 		damage = dmg;
 		getAnimation(144, 112, 16, 16, 2);
-		setMask(0, 0, 48, 48);
+		hitbox = new ColliderCircle(pos, 24);
 		depth = 3;
 	}
 	

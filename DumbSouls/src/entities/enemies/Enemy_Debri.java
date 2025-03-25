@@ -1,5 +1,6 @@
 package entities.enemies;
 
+import entities.types.Collider.ColliderCircle;
 import graphics.Spritesheet;
 import main.Game;
 import world.World;
@@ -22,7 +23,7 @@ public class Enemy_Debri extends Enemy {
 		maxSpeed = 0.2 + (specialMult - 1) / 3;
 		speed = maxSpeed;
 		this.invulnerable = false;
-		setMask(1, 1, 14, 14);
+		hitbox = new ColliderCircle(pos, 7);
 		maxFrames = 6;
 		weight = 3;
 	}

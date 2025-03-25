@@ -1,5 +1,6 @@
 package entities.enemies;
 
+import entities.types.Collider.ColliderCircle;
 import graphics.Spritesheet;
 import main.Game;
 
@@ -14,6 +15,7 @@ public class Enemy_SpawnPod extends Enemy {
 		maxFrames = time / 3;
 		this.maxIndex = 3;
 		depth = 2;
+		hitbox = new ColliderCircle(pos, 0);
 	}
 
 	public void tick() {

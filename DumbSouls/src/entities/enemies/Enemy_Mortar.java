@@ -3,6 +3,8 @@ package entities.enemies;
 import entities.Player;
 import entities.orbs.EXP_Orb;
 import entities.shots.Shot_MortarShell;
+import entities.types.Vector;
+import entities.types.Collider.ColliderSquare;
 import graphics.Spritesheet;
 import main.Game;
 import world.World;
@@ -28,7 +30,7 @@ public class Enemy_Mortar extends Enemy {
 		range += 160f + 0.8 * World.wave;
 		maxSpeed = 0.3 + (specialMult - 1) / 3;
 		speed = maxSpeed;
-		setMask(2, 5, 24, 27);
+		hitbox = new ColliderSquare(pos, 2, 5, 24, 27);
 		timeSpawn = 210;
 		maxIndex = 2;
 		maxFrames = 30;
@@ -45,7 +47,7 @@ public class Enemy_Mortar extends Enemy {
 			life = 200;
 			this.owner = owner;
 			speed = owner.maxSpeed * 10;
-			setMask(0, 0, 0, 0);
+			hitbox = new ColliderSquare(pos, 0, 0, 0, 0);
 			weight = 4;
 		}
 

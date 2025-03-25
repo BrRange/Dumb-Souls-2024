@@ -3,6 +3,8 @@ package entities.shots;
 import java.awt.image.BufferedImage;
 
 import entities.Entity;
+import entities.types.Collider.ColliderCircle;
+import entities.types.Vector;
 import graphics.Shader;
 import main.Game;
 
@@ -17,7 +19,7 @@ public class Shot extends Entity{
 		damage = dmg;
 		maxLife = this.life = life;
 		sprite = Shader.rotate(sprite, ang);
-		setMask(0, 0, w, h);
+		hitbox = new ColliderCircle(pos, w / 2);
 	}
 
 	public void die(Entity target) {

@@ -4,6 +4,7 @@ import entities.Entity;
 import entities.enemies.Enemy;
 import entities.shots.Shot;
 import java.awt.image.BufferedImage;
+
 import java.util.function.Function;
 import main.Game;
 import world.Camera;

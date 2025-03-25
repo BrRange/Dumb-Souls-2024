@@ -1,6 +1,8 @@
 package entities.AE;
 
 import entities.enemies.Enemy;
+import entities.types.Collider.ColliderCircle;
+
 import java.util.function.Function;
 import main.Game;
 
@@ -9,7 +11,7 @@ public class AE_WindDS extends AE_Attack_Entity {
 	public AE_WindDS(int x, int y, int time) {
 		super(x, y, 16, 16, time);
 		push = 10;
-		setMask(0, 0, 16, 16);
+		hitbox = new ColliderCircle(pos, 8);
 		getAnimation(48, 112, 16, 16, 1);
 		depth = 2;
 	}
