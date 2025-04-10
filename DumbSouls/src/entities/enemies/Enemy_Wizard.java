@@ -4,8 +4,6 @@ import entities.Entity;
 import entities.Player;
 import entities.orbs.EXP_Orb;
 import entities.shots.Shot;
-import entities.types.Vector;
-import entities.types.Collider.ColliderSquare;
 import graphics.Spritesheet;
 import java.awt.image.BufferedImage;
 import main.Game;
@@ -17,12 +15,12 @@ public class Enemy_Wizard extends Enemy{
    private static BufferedImage shotSprite = sheet.getSprite(0, 64, 16, 16);
 
 	public Enemy_Wizard(int x, int y) {
-		super(x, y, 32, 32, null);
+		super(x, y, 16, 32, null);
 		if (specialRare) {
 			specialMult = 2;
 			hue = 0xFFFFFF;
 		}
-		getAnimation(0, 0, 32, 32, 3, sheet, 2);
+		getAnimation(0, 0, 16, 32, 3, sheet, 2);
 		expValue = 42 * specialMult;
 		soulValue = 18 * specialMult;
 		range += 70f + 0.035f * World.wave;
@@ -31,7 +29,7 @@ public class Enemy_Wizard extends Enemy{
 		damage = 38 * specialMult + 0.38 * World.wave;
 		maxSpeed = 1.2 + (specialMult - 1) / 3;
 		speed = maxSpeed;
-		hitbox = new ColliderSquare(pos, 7, 2, 23, 30);
+		setMask(7, 2, 23, 30);
 		timeSpawn = 270;
 		weight = 3;
 	}
