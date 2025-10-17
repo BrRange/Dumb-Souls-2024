@@ -1,8 +1,11 @@
 package entities.enemies;
 
+import java.awt.Color;
+
 import entities.Player;
 import entities.orbs.EXP_Orb;
 import entities.types.Collider.ColliderSquare;
+import entities.types.Collider.ColliderNone;
 import graphics.Shader;
 import graphics.Spritesheet;
 import main.Game;
@@ -11,6 +14,8 @@ import world.World;
 
 public class Enemy_Trapper extends Enemy {
 	private int xP = Game.player.centerX(), yP = Game.player.centerY(), cont = 120;
+	private ColliderSquare activeCollider;
+	private ColliderNone hiddenCollider;
 	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemies/Enemy_Trapper.png");
 
 	public Enemy_Trapper(int x, int y) {
@@ -30,6 +35,9 @@ public class Enemy_Trapper extends Enemy {
 		timeSpawn = 600;
 		maxIndex = 3;
 		maxFrames = 10;
+		activeCollider = new ColliderSquare(pos, 1, 17, 14, 14);
+		hiddenCollider = new ColliderNone(pos);
+		hitbox = hiddenCollider;
 		weight = 0;
 	}
 
@@ -41,7 +49,7 @@ public class Enemy_Trapper extends Enemy {
 
 	private void stage2() {
 		shotDamage();
-		hitbox = new ColliderSquare(pos, 1, 0, 14, 32);
+		hitbox = activeCollider;
 		animate();
 		cont++;
 		if (isColiding(Game.player)) {
@@ -49,6 +57,7 @@ public class Enemy_Trapper extends Enemy {
 		}
 		if (cont >= 120) {
 			cont = 0;
+			hitbox = hiddenCollider;
 			xP = Game.player.centerX();
 			yP = Game.player.centerY();
 		}
@@ -71,7 +80,6 @@ public class Enemy_Trapper extends Enemy {
 			if (centerX() != xP && centerY() != yP && !isColiding(Game.player) && cont == 0) {
 				invulnerable = true;
 				objectiveMovement(xP, yP);
-				updateHitbox(0, 16, 16, 16);
 			} else {
 				invulnerable = false;
 				stage2();

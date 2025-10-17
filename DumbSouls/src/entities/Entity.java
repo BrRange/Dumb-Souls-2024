@@ -100,14 +100,6 @@ public abstract class Entity {
 		if(offScreen()) return;
 		Game.gameGraphics.drawImage(sprite, pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), null);
 	}
-	
-	protected void updateHitbox(int mx, int my, int mw, int mh) {
-		hitbox.update(mx, my, mw, mh);
-	}
-	
-	protected void updateHitbox(int r) {
-		hitbox.update(r);
-	}
 
 	private boolean outOfPerimeter(Entity other){
 		return Math.abs(centerX() - other.centerX()) + Math.abs(centerY() - other.centerY()) > Math.max(width, other.width) + Math.max(height, other.height);

@@ -1,6 +1,10 @@
 package entities.types;
 
+import java.awt.Color;
 import java.awt.Rectangle;
+
+import main.Game;
+import world.Camera;
 
 public abstract class Collider {
     Vector pos;
@@ -13,7 +17,7 @@ public abstract class Collider {
     public abstract boolean collideSquare(ColliderSquare sqrColl);
     public abstract boolean collideCircle(ColliderCircle cirColl);
 
-    public abstract void update(int... args);
+    public abstract void debug(Color c);
 
     public static class ColliderSquare extends Collider {
         protected int offsetX, offsetY, width, height;
@@ -39,11 +43,9 @@ public abstract class Collider {
             return cirColl.collideSquare(this);
         }
 
-        public void update(int... args) {
-            offsetX = args[0];
-            offsetY = args[1];
-            width = args[2];
-            height = args[3];
+        public void debug(Color c){
+            Game.gameGraphics.setColor(c);
+            Game.gameGraphics.drawRect(pos.getX() - Camera.getX() + offsetX, pos.getY() - Camera.getY() + offsetY, width, height);
         }
     }
 
@@ -79,9 +81,33 @@ public abstract class Collider {
             int deltaR = radius + cirColl.radius;
             return Vector.squareDist(pos.offset(radius / 2, radius / 2), cirColl.pos.offset(cirColl.radius / 2, cirColl.radius / 2)) > deltaR * deltaR;
         }
-        
-        public void update(int... args) {
-            radius = args[0];
+
+        public void debug(Color c){
+            Game.gameGraphics.setColor(c);
+            Game.gameGraphics.drawOval(pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), 2 * radius, 2 * radius);
+        }
+    }
+
+    public static class ColliderNone extends Collider {
+        public ColliderNone(Vector ref){
+            super(ref);
+        }
+
+        public boolean collide(Collider coll){
+            return false;
+        }
+
+        public boolean collideSquare(ColliderSquare sqrColl){
+            return false;
+        }
+
+        public boolean collideCircle(ColliderCircle cirColl){
+            return false;
+        }
+
+        public void debug(Color c){
+            Game.gameGraphics.setColor(c);
+            Game.gameGraphics.drawRect(pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), 1, 1);
         }
     }
 }

@@ -131,7 +131,7 @@ public class Boss_Sucubus extends Enemy {
 			Game.gameGraphics.drawImage(animation[index], pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), null);
 		} else {
 			Game.gameGraphics.drawImage(Shader.reColor(animation[index], damagedHue), pos.getX() - Camera.getX(),
-					pos.getY() - Camera.getY(), null);
+			pos.getY() - Camera.getY(), null);
 		}
 		if (showAura) {
 			Game.gameGraphics.drawImage(aura, pos.getX() - Camera.getX(), pos.getY() - Camera.getY(), 32, 32, null);

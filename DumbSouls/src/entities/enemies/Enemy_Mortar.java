@@ -4,6 +4,7 @@ import entities.Player;
 import entities.orbs.EXP_Orb;
 import entities.shots.Shot_MortarShell;
 import entities.types.Vector;
+import entities.types.Collider.ColliderCircle;
 import entities.types.Collider.ColliderSquare;
 import graphics.Spritesheet;
 import main.Game;
@@ -16,7 +17,7 @@ public class Enemy_Mortar extends Enemy {
 	public static Spritesheet sheet = new Spritesheet("res/spritesheets/Enemies/Enemy_Mortar.png");
 
 	public Enemy_Mortar(int x, int y) {
-		super(x, y, 32, 32, sheet.getSprite(0, 0, 32, 32));
+		super(x, y, 32, 32, null);
 		if (specialRare) {
 			specialMult = 3;
 			hue = 0xFFFFFF;
@@ -47,7 +48,7 @@ public class Enemy_Mortar extends Enemy {
 			life = 200;
 			this.owner = owner;
 			speed = owner.maxSpeed * 10;
-			hitbox = new ColliderSquare(pos, 0, 0, 0, 0);
+			hitbox = new ColliderCircle(pos, 0);
 			weight = 4;
 		}
 
