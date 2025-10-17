@@ -7,18 +7,19 @@ import graphics.elements.TextBox;
 
 public class Menu_Level {
 	private static TextBox[] optionsBox;
-	private static int cur, transitionTimer;
+	private static int cur, transitionTimer, optionNum;
 
 	public Menu_Level(int numOP) {
+		optionNum = numOP;
 		optionsBox = new TextBox[numOP];
 		for (int c = 0; c < numOP; c++) {
 			optionsBox[c] = new TextBox("arial", Font.BOLD, 10, "Blank", 120, 60 + 90 / numOP * c, Color.white);
 		}
 	}
 	
-	private static void sortOptions(int numOP) {
+	private static void sortOptions() {
 		int opt = 0, lastOpt = -1;
-		for (int c = 0; c < numOP; c++) {
+		for (int c = 0; c < optionNum; c++) {
 			opt = Game.rand.nextInt(Game.player.playerWeapon.listNames.length);
 			while (opt == lastOpt) {
 				opt = Game.rand.nextInt(Game.player.playerWeapon.listNames.length);
@@ -30,7 +31,7 @@ public class Menu_Level {
 	
 	public static void tick() {
 		if (Game.player.levelUp) {
-			sortOptions(3);
+			sortOptions();
 			Game.player.levelUp = false;
 		}
 		if(transitionTimer < 45){
@@ -59,7 +60,7 @@ public class Menu_Level {
 		 
 		if (Game.keyController.contains(32) && Player.souls >= 20) {
 			Player.souls -= 20;
-			sortOptions(3);
+			sortOptions();
 		}
 		Game.keyController.clear();
 		Game.clickController.clear();
@@ -73,15 +74,7 @@ public class Menu_Level {
 			opt.render();
 		}
 		
-		if (cur == 0) {
-			Game.gameGraphics.drawString(">", 100, 60);
-		}
-		else if (cur == 1) {
-			Game.gameGraphics.drawString(">", 100, 90);
-		}
-		else if (cur == 2) {
-			Game.gameGraphics.drawString(">", 100, 120);
-		}
+		Game.gameGraphics.drawString(">", 100, 60 + 90 / optionNum * cur);
 		Game.gameGraphics.setColor(new Color(74, 52, 160));
 		Game.gameGraphics.drawString("Souls : " + Player.souls, 255, 20);
 		Game.gameGraphics.drawString("[space] Refresh -20 souls", 180, 150);

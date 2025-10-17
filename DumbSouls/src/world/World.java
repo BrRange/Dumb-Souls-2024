@@ -16,40 +16,43 @@ public class World {
 
 	private static enum waveBuckets {
 		WAVE5(
-				
-				//Debug Wave
-				//new Bucket(Enemy_Wizard.class, 1),
-				//new Bucket(Enemy_Trapper.class, 1),
-				//new Bucket(Enemy_Barrier.class, 1),
-				//new Bucket(Enemy_Mortar.class, 1)),
-				//new Bucket(Enemy_Stain.class, 1),
-				//new Bucket(Enemy_Eye.class, 1),
-				//new Bucket(Enemy_Mouth.class, 1)),
-				
-				
-				new Bucket(Enemy_Stain.class, 20),
-				new Bucket(Enemy_Eye.class, 3),
-				new Bucket(Enemy_Mouth.class, 1)),
+			//Debug Wave
+			//new Bucket(Enemy_Wizard.class, 1)
+			//new Bucket(Enemy_Trapper.class, 1)
+			//new Bucket(Enemy_Barrier.class, 1)
+			//new Bucket(Enemy_Mortar.class, 1)
+			//new Bucket(Enemy_Stain.class, 1)
+			//new Bucket(Enemy_Eye.class, 1)
+			//new Bucket(Enemy_Mouth.class, 1)
+			
+			//Normal Wave
+			new Bucket(Enemy_Stain.class, 20),
+			new Bucket(Enemy_Eye.class, 3),
+			new Bucket(Enemy_Mouth.class, 1)
+		),
 		WAVE10(
-				new Bucket(Enemy_Stain.class, 20),
-				new Bucket(Enemy_Eye.class, 14),
-				new Bucket(Enemy_Mouth.class, 10),
-				new Bucket(Enemy_Mortar.class, 2)),
+			new Bucket(Enemy_Stain.class, 20),
+			new Bucket(Enemy_Eye.class, 14),
+			new Bucket(Enemy_Mouth.class, 10),
+			new Bucket(Enemy_Mortar.class, 2)
+		),
 		WAVE17(
-				new Bucket(Enemy_Stain.class, 20),
-				new Bucket(Enemy_Eye.class, 14),
-				new Bucket(Enemy_Mouth.class, 10),
-				new Bucket(Enemy_Trapper.class, 5),
-				new Bucket(Enemy_Barrier.class, 3),
-				new Bucket(Enemy_Mortar.class, 2)),
+			new Bucket(Enemy_Stain.class, 20),
+			new Bucket(Enemy_Eye.class, 14),
+			new Bucket(Enemy_Mouth.class, 10),
+			new Bucket(Enemy_Trapper.class, 5),
+			new Bucket(Enemy_Barrier.class, 3),
+			new Bucket(Enemy_Mortar.class, 2)
+		),
 		WAVEPLUS(
-				new Bucket(Enemy_Stain.class, 20),
-				new Bucket(Enemy_Eye.class, 14),
-				new Bucket(Enemy_Mouth.class, 10),
-				new Bucket(Enemy_Trapper.class, 5),
-				new Bucket(Enemy_Barrier.class, 3),
-				new Bucket(Enemy_Mortar.class, 2),
-				new Bucket(Enemy_Wizard.class, 1));
+			new Bucket(Enemy_Stain.class, 20),
+			new Bucket(Enemy_Eye.class, 14),
+			new Bucket(Enemy_Mouth.class, 10),
+			new Bucket(Enemy_Trapper.class, 5),
+			new Bucket(Enemy_Barrier.class, 3),
+			new Bucket(Enemy_Mortar.class, 2),
+			new Bucket(Enemy_Wizard.class, 1)
+		);
 
 		private final Bucket[] buckets;
 
@@ -75,8 +78,7 @@ public class World {
 
 					int current = pixels[xx + (yy * WIDTH)];
 
-					tiles[xx + (yy * WIDTH)] = new Floor_Tile(xx * 16, yy * 16,
-							Tile.floor_sprite[Game.rand.nextInt(Tile.floor_sprite.length)]);
+					tiles[xx + (yy * WIDTH)] = new Floor_Tile(xx * 16, yy * 16, Tile.floor_sprite[Game.rand.nextInt(Tile.floor_sprite.length)]);
 
 					switch (current) {
 						case 0xFFFFFFFF:
@@ -92,7 +94,8 @@ public class World {
 					}
 				}
 			}
-		} catch (IOException exc) {
+		}
+		catch (IOException exc) {
 			exc.printStackTrace();
 		}
 	}
@@ -129,24 +132,24 @@ public class World {
 
 	private static class Bucket {
 		Class<? extends Enemy> eClass;
-		int poolWeight, poolMin, poolMax;
+		int pollWeight, pollMin, pollMax;
 
 		Bucket(Class<? extends Enemy> ene, int pw) {
 			eClass = ene;
-			poolWeight = pw;
+			pollWeight = pw;
 		}
 	};
 
-	private static Enemy poolEnemy(int x, int y, Bucket... buckets) {
+	private static Enemy pollEnemy(int x, int y, Bucket... buckets) {
 		int total = 0;
 		for (Bucket b : buckets) {
-			b.poolMin = total;
-			total += b.poolWeight;
-			b.poolMax = total - 1;
+			b.pollMin = total;
+			total += b.pollWeight;
+			b.pollMax = total - 1;
 		}
 		total = Game.rand.nextInt(total);
 		for (Bucket b : buckets) {
-			if (b.poolMin <= total && b.poolMax >= total) {
+			if (b.pollMin <= total && b.pollMax >= total) {
 				try {
 					return b.eClass.getConstructor(int.class, int.class).newInstance(x, y);
 				} catch (Exception exc) {
@@ -163,13 +166,13 @@ public class World {
 			int ey = Game.rand.nextInt(HEIGHT);
 			if (tiles[ex + (ey * WIDTH)] instanceof Floor_Tile) {
 				if (wave <= 5) {
-					Game.enemies.add(poolEnemy(ex * 16, ey * 16, waveBuckets.WAVE5.getVar()));
+					Game.enemies.add(pollEnemy(ex * 16, ey * 16, waveBuckets.WAVE5.getVar()));
 				} else if (wave <= 10) {
-					Game.enemies.add(poolEnemy(ex * 16, ey * 16, waveBuckets.WAVE10.getVar()));
+					Game.enemies.add(pollEnemy(ex * 16, ey * 16, waveBuckets.WAVE10.getVar()));
 				} else if (wave <= 17) {
-					Game.enemies.add(poolEnemy(ex * 16, ey * 16, waveBuckets.WAVE17.getVar()));
+					Game.enemies.add(pollEnemy(ex * 16, ey * 16, waveBuckets.WAVE17.getVar()));
 				} else {
-					Game.enemies.add(poolEnemy(ex * 16, ey * 16, waveBuckets.WAVEPLUS.getVar()));
+					Game.enemies.add(pollEnemy(ex * 16, ey * 16, waveBuckets.WAVEPLUS.getVar()));
 				}
 				break;
 			}
