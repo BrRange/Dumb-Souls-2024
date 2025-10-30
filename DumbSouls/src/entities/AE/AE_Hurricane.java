@@ -2,7 +2,7 @@ package entities.AE;
 
 import entities.enemies.Enemy;
 import entities.types.Vector;
-import entities.types.Collider.ColliderSquare;
+import entities.types.Collider.ColliderCircle;
 
 import java.util.function.Function;
 import main.Game;
@@ -17,7 +17,7 @@ public class AE_Hurricane extends AE_Attack_Entity{
 		push = -2;
 		depth = 2;
 		getAnimation(16, 128, 16, 16, maxIndex);
-		hitbox = new ColliderSquare(pos, 6, 0, 52, 32);
+		hitbox = new ColliderCircle(pos, 32);
 		maxFrames = 10;
 	}
 

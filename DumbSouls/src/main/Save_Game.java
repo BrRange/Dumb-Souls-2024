@@ -83,6 +83,7 @@ public class Save_Game{
 		Player.runesInventory.add(new Speed_Rune());
 		Player.runesInventory.add(new MultiAttack_Rune());
 		Player.runesInventory.add(new EXP_Rune());
+		Player.runesInventory.add(new Choice_Rune());
 		Player.runesEquipped = new ArrayList<Rune>(Rune.runesInGame);
 	}
 

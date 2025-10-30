@@ -146,7 +146,7 @@ public class Game extends Canvas
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.createBufferStrategy(3);
+		frame.createBufferStrategy(2);
 	}
 
 	private static void spawnEnemies() {
@@ -166,7 +166,7 @@ public class Game extends Canvas
 	private void baseRender() {
 		BufferStrategy bs = getBufferStrategy();
 		if (bs == null) {
-			createBufferStrategy(3);
+			createBufferStrategy(2);
 			return;
 		}
 		gameGraphics = Game.image.getGraphics();

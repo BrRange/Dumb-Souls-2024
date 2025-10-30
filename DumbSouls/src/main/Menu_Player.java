@@ -69,6 +69,7 @@ public class Menu_Player {
 					if (!weaponUnlocked)
 						Player.souls -= weaponCost;
 					Game.gameStateHandler = Game.gameState.NORMAL;
+					Menu_Level.optionNum = 3;
 					Camera.centerPlayer();
 					weaponVerification();
 					cur = 0;

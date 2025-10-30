@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import main.Game;
 import world.Camera;
 import entities.shots.Shot_PlayerIce;
+import entities.Player;
 import entities.AE.AE_IceDs;
 import entities.AE.AE_IceSpike;
 import entities.AE.AE_SnowStorm;
@@ -88,6 +89,8 @@ public class Weapon_Ice extends Weapon{
 					specialMoveSpd += 0.3;
 				}
 				break;
+			default:
+				Player.souls += 200;
 		}
 	}
 	

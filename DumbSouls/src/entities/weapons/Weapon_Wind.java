@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import main.Game;
 import world.Camera;
 import sounds.SoundPlayer;
+import entities.Player;
 import entities.AE.AE_Hurricane;
 import entities.AE.AE_WindBarrage;
 import entities.AE.AE_WindDS;
@@ -13,7 +14,7 @@ public class Weapon_Wind extends Weapon {
 	
 	public static BufferedImage shotFace;
 	public static BufferedImage sprite = Game.sheet.getSprite(64, 32, 16, 16);
-	private int hrcDamage = 1, ablt3Dmg = 6;
+	private int hrcDamage = 1, ablt3Dmg = 1;
 	private double hrcSpeed = 0.8, ablt3Spd = 5;
 	public static int soulCost = 100;
 	public static boolean unlocked = false;
@@ -90,10 +91,12 @@ public class Weapon_Wind extends Weapon {
 				availableSpecialMove = true;
 			}
 			else {
-				ablt3Dmg += 2;
+				ablt3Dmg += 1;
 				ablt3Spd += 0.3;
 			}
 			break;
+		default:
+			Player.souls += 200;
 		}
 	}
 	

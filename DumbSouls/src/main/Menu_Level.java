@@ -7,13 +7,14 @@ import graphics.elements.TextBox;
 
 public class Menu_Level {
 	private static TextBox[] optionsBox;
-	private static int cur, transitionTimer, optionNum;
+	private static int cur, transitionTimer;
+	public static int optionNum;
 
 	public Menu_Level(int numOP) {
 		optionNum = numOP;
 		optionsBox = new TextBox[numOP];
 		for (int c = 0; c < numOP; c++) {
-			optionsBox[c] = new TextBox("arial", Font.BOLD, 10, "Blank", 120, 60 + 90 / numOP * c, Color.white);
+			optionsBox[c] = new TextBox("arial", Font.BOLD, 10, "Introspection", 120, 60 + 90 / numOP * c, Color.white);
 		}
 	}
 	

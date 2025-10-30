@@ -2,6 +2,7 @@ package entities.weapons;
 
 import java.awt.image.BufferedImage;
 import main.Game;
+import entities.Player;
 import entities.AE.AE_Animation;
 import entities.AE.AE_ManaRay;
 import entities.shots.Shot_PlayerMana;
@@ -99,6 +100,8 @@ public class Weapon_Mana extends Weapon {
 					availableSpecialMove = true;
 				}
 				break;
+			default:
+				Player.souls += 200;
 		}
 	}
 

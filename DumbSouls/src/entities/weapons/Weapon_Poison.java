@@ -3,6 +3,7 @@ package entities.weapons;
 import java.awt.image.BufferedImage;
 import main.Game;
 import world.Camera;
+import entities.Player;
 import entities.AE.AE_PoisonDs;
 import entities.AE.AE_PoisonPool;
 import entities.AE.AE_VenomGas;
@@ -88,6 +89,8 @@ public class Weapon_Poison extends Weapon{
             		availableSpecialMove = true;
             	}
             	break;
+			default:
+				Player.souls += 200;
         }
     }
 

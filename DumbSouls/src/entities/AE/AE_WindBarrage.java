@@ -17,7 +17,7 @@ public class AE_WindBarrage extends AE_Attack_Entity{
 		speed = spd;
 		dir.set(dx, dy);
 		damage = dmg;
-		push = -8;
+		push = -6;
 		depth = 2;
 		getAnimation(128, 112, 16, 16, 1);
 		hitbox = new ColliderCircle(pos, 16);
@@ -30,7 +30,7 @@ public class AE_WindBarrage extends AE_Attack_Entity{
 			die();
 		}
 		
-		collisionEnemy(true, 5, attackCollision);
+		collisionEnemy(false, 0, attackCollision);
 	}
 
 	Function<Enemy, Void> attackCollision = (ene) -> { 

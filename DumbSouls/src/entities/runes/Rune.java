@@ -6,7 +6,7 @@ import main.Game;
 
 public abstract class Rune {
 
-	public static int runesInGame = 5;
+	public static int runesInGame = 6;
 	public BufferedImage sprite = Game.sheet.getSprite(0, 0, 16, 16);
 	public boolean collected = false, equipped = false;
 	public int index = 0;

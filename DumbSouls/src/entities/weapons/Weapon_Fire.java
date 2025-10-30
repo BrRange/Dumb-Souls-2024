@@ -3,6 +3,7 @@ package entities.weapons;
 import java.awt.image.BufferedImage;
 import main.Game;
 import world.Camera;
+import entities.Player;
 import entities.AE.AE_Fire;
 import entities.AE.AE_Fire2;
 import entities.AE.AE_HellFlame;
@@ -92,6 +93,8 @@ public class Weapon_Fire extends Weapon {
 					specialMoveSpd += 0.2;
 				}
 				break;
+			default:
+				Player.souls += 200;
 			}
 		}
 	

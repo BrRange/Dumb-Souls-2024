@@ -2,6 +2,7 @@ package entities.weapons;
 
 import java.awt.image.BufferedImage;
 
+import entities.Player;
 import entities.AE.AE_Animation;
 import entities.AE.AE_PunchRain;
 import entities.AE.AE_Rupture;
@@ -85,6 +86,8 @@ public class Weapon_Fisical extends Weapon {
 			case "Fisical Condition":
 				Game.player.lifeRec += 0.004;
 				break;
+			default:
+				Player.souls += 200;
 		}
 	}
 
